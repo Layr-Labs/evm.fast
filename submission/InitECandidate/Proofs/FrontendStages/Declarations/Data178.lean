@@ -1,0 +1,177 @@
+import InitECandidate.Proofs.FrontendComputation
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify162
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option cbv.maxSteps 1000000000
+set_option cbv.warning false
+open scoped InitECandidate.Proofs.FrontendComputation
+open Flapjack
+namespace InitECandidate.Proofs.FrontendStages.Declarations
+def body178_0 : Prog (BitVec 64) :=
+Flapjack.Prog.return (Flapjack.Exp.const 0#64)
+
+def body178_1 : Prog (BitVec 64) :=
+Flapjack.Prog.skip
+
+def body178_2 : Prog (BitVec 64) :=
+.ite (Flapjack.Exp.cmp Flapjack.Cmp.equal (Flapjack.Exp.rField 4 (Flapjack.Exp.var Flapjack.VarKind.local "xs"))
+  (Flapjack.Exp.const 1#64)) body178_0 body178_1
+
+def body178_3 : Prog (BitVec 64) :=
+Flapjack.Prog.assign Flapjack.VarKind.local "x"
+  (Flapjack.Exp.rStruct
+    [Flapjack.Exp.rField 0 (Flapjack.Exp.var Flapjack.VarKind.local "xs"),
+      Flapjack.Exp.rField 1 (Flapjack.Exp.var Flapjack.VarKind.local "xs"),
+      Flapjack.Exp.rField 2 (Flapjack.Exp.var Flapjack.VarKind.local "xs"),
+      Flapjack.Exp.rField 3 (Flapjack.Exp.var Flapjack.VarKind.local "xs")])
+
+def body178_4 : Prog (BitVec 64) :=
+.seq body178_2 body178_3
+
+def body178_5 : Prog (BitVec 64) :=
+.decCall ("xs") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("u256_add_carry") ([Flapjack.Exp.var Flapjack.VarKind.local "r",
+  Flapjack.Exp.rStruct
+    [Flapjack.Exp.const 13822214165235122497#64, Flapjack.Exp.const 13451932020343611451#64,
+      Flapjack.Exp.const 18446744073709551614#64, Flapjack.Exp.const 18446744073709551615#64]]) body178_4
+
+def body178_6 : Prog (BitVec 64) :=
+.ite (Flapjack.Exp.cmp Flapjack.Cmp.equal
+  (Flapjack.Exp.op Flapjack.BinOp.and
+    [Flapjack.Exp.shift Flapjack.Shift.lsr (Flapjack.Exp.var Flapjack.VarKind.local "recid") (Flapjack.Exp.const 1#64),
+      Flapjack.Exp.const 1#64])
+  (Flapjack.Exp.const 1#64)) body178_5 body178_1
+
+def body178_7 : Prog (BitVec 64) :=
+.ite (Flapjack.Exp.cmp Flapjack.Cmp.equal (Flapjack.Exp.var Flapjack.VarKind.local "xlt") (Flapjack.Exp.const 0#64)) body178_0 body178_1
+
+def body178_8 : Prog (BitVec 64) :=
+Flapjack.Prog.call (some (some (Flapjack.VarKind.local, "rhs"), none)) "fp_mul"
+  [Flapjack.Exp.var Flapjack.VarKind.local "rhs", Flapjack.Exp.var Flapjack.VarKind.local "x"]
+
+def body178_9 : Prog (BitVec 64) :=
+Flapjack.Prog.call (some (some (Flapjack.VarKind.local, "rhs"), none)) "fp_add"
+  [Flapjack.Exp.var Flapjack.VarKind.local "rhs",
+    Flapjack.Exp.rStruct
+      [Flapjack.Exp.const 7#64, Flapjack.Exp.const 0#64, Flapjack.Exp.const 0#64, Flapjack.Exp.const 0#64]]
+
+def body178_10 : Prog (BitVec 64) :=
+.ite (Flapjack.Exp.cmp Flapjack.Cmp.equal (Flapjack.Exp.var Flapjack.VarKind.local "sq") (Flapjack.Exp.const 0#64)) body178_0 body178_1
+
+def body178_11 : Prog (BitVec 64) :=
+Flapjack.Prog.call (some (some (Flapjack.VarKind.local, "y"), none)) "fp_neg"
+  [Flapjack.Exp.var Flapjack.VarKind.local "y0"]
+
+def body178_12 : Prog (BitVec 64) :=
+.ite (Flapjack.Exp.cmp Flapjack.Cmp.notEqual
+  (Flapjack.Exp.op Flapjack.BinOp.and
+    [Flapjack.Exp.rField 0 (Flapjack.Exp.var Flapjack.VarKind.local "y0"), Flapjack.Exp.const 1#64])
+  (Flapjack.Exp.op Flapjack.BinOp.and [Flapjack.Exp.var Flapjack.VarKind.local "recid", Flapjack.Exp.const 1#64])) body178_11 body178_1
+
+def body178_13 : Prog (BitVec 64) :=
+Flapjack.Prog.call (some (none, none)) "ec_set_affine"
+  [Flapjack.Exp.var Flapjack.VarKind.local "out", Flapjack.Exp.var Flapjack.VarKind.local "x",
+    Flapjack.Exp.var Flapjack.VarKind.local "y"]
+
+def body178_14 : Prog (BitVec 64) :=
+Flapjack.Prog.return (Flapjack.Exp.const 1#64)
+
+def body178_15 : Prog (BitVec 64) :=
+.seq body178_13 body178_14
+
+def body178_16 : Prog (BitVec 64) :=
+.seq body178_12 body178_15
+
+def body178_17 : Prog (BitVec 64) :=
+.dec ("y") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) (Flapjack.Exp.var Flapjack.VarKind.local "y0") body178_16
+
+def body178_18 : Prog (BitVec 64) :=
+.seq body178_10 body178_17
+
+def body178_19 : Prog (BitVec 64) :=
+.decCall ("sq") (Flapjack.Shape.one) ("u256_eq") ([Flapjack.Exp.var Flapjack.VarKind.local "chk", Flapjack.Exp.var Flapjack.VarKind.local "rhs"]) body178_18
+
+def body178_20 : Prog (BitVec 64) :=
+.decCall ("chk") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqr") ([Flapjack.Exp.var Flapjack.VarKind.local "y0"]) body178_19
+
+def body178_21 : Prog (BitVec 64) :=
+.decCall ("y0") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqrt") ([Flapjack.Exp.var Flapjack.VarKind.local "rhs"]) body178_20
+
+def body178_22 : Prog (BitVec 64) :=
+.seq body178_9 body178_21
+
+def body178_23 : Prog (BitVec 64) :=
+.seq body178_8 body178_22
+
+def body178_24 : Prog (BitVec 64) :=
+.decCall ("rhs") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqr") ([Flapjack.Exp.var Flapjack.VarKind.local "x"]) body178_23
+
+def body178_25 : Prog (BitVec 64) :=
+.seq body178_7 body178_24
+
+def body178_26 : Prog (BitVec 64) :=
+.decCall ("xlt") (Flapjack.Shape.one) ("u256_lt") ([Flapjack.Exp.var Flapjack.VarKind.local "x",
+  Flapjack.Exp.rStruct
+    [Flapjack.Exp.const 18446744069414583343#64, Flapjack.Exp.const 18446744073709551615#64,
+      Flapjack.Exp.const 18446744073709551615#64, Flapjack.Exp.const 18446744073709551615#64]]) body178_25
+
+def body178_27 : Prog (BitVec 64) :=
+.seq body178_6 body178_26
+
+def body178_28 : Prog (BitVec 64) :=
+.dec ("x") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) (Flapjack.Exp.var Flapjack.VarKind.local "r") body178_27
+
+def body178_29 : Prog (BitVec 64) :=
+.seq body178_8 body178_9
+
+def body178_30 : Prog (BitVec 64) :=
+.seq body178_12 body178_13
+
+def body178_31 : Prog (BitVec 64) :=
+.seq body178_30 body178_14
+
+def body178_32 : Prog (BitVec 64) :=
+.dec ("y") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) (Flapjack.Exp.var Flapjack.VarKind.local "y0") body178_31
+
+def body178_33 : Prog (BitVec 64) :=
+.seq body178_10 body178_32
+
+def body178_34 : Prog (BitVec 64) :=
+.decCall ("sq") (Flapjack.Shape.one) ("u256_eq") ([Flapjack.Exp.var Flapjack.VarKind.local "chk", Flapjack.Exp.var Flapjack.VarKind.local "rhs"]) body178_33
+
+def body178_35 : Prog (BitVec 64) :=
+.decCall ("chk") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqr") ([Flapjack.Exp.var Flapjack.VarKind.local "y0"]) body178_34
+
+def body178_36 : Prog (BitVec 64) :=
+.decCall ("y0") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqrt") ([Flapjack.Exp.var Flapjack.VarKind.local "rhs"]) body178_35
+
+def body178_37 : Prog (BitVec 64) :=
+.seq body178_29 body178_36
+
+def body178_38 : Prog (BitVec 64) :=
+.decCall ("rhs") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) ("fp_sqr") ([Flapjack.Exp.var Flapjack.VarKind.local "x"]) body178_37
+
+def body178_39 : Prog (BitVec 64) :=
+.seq body178_7 body178_38
+
+def body178_40 : Prog (BitVec 64) :=
+.decCall ("xlt") (Flapjack.Shape.one) ("u256_lt") ([Flapjack.Exp.var Flapjack.VarKind.local "x",
+  Flapjack.Exp.rStruct
+    [Flapjack.Exp.const 18446744069414583343#64, Flapjack.Exp.const 18446744073709551615#64,
+      Flapjack.Exp.const 18446744073709551615#64, Flapjack.Exp.const 18446744073709551615#64]]) body178_39
+
+def body178_41 : Prog (BitVec 64) :=
+.seq body178_6 body178_40
+
+def body178_42 : Prog (BitVec 64) :=
+.dec ("x") (Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]) (Flapjack.Exp.var Flapjack.VarKind.local "r") body178_41
+
+def originalData178 : Decl (BitVec 64) :=
+.function { name := "secp256k1_decompress_r", inline := false, exported := false, params := [("r", Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]),
+  ("recid", Flapjack.Shape.one), ("out", Flapjack.Shape.one)], body := body178_28, returnShape := (Flapjack.Shape.one) }
+def simplifiedData178 : Decl (BitVec 64) :=
+.function { name := "secp256k1_decompress_r", inline := false, exported := false, params := [("r", Flapjack.Shape.comb [Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one, Flapjack.Shape.one]),
+  ("recid", Flapjack.Shape.one), ("out", Flapjack.Shape.one)], body := body178_42, returnShape := (Flapjack.Shape.one) }
+def original178 := Pancake.PanLang.declToHOL originalData178
+def simplified178 := Pancake.PanLang.declToHOL simplifiedData178
+end InitECandidate.Proofs.FrontendStages.Declarations

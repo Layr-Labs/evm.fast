@@ -1,0 +1,634 @@
+{
+  "status": "standard_axiom_verification_pending",
+  "flapjack": {
+    "branch": "riscv-im",
+    "revision": "034bb5a1ed0b757082768d5406206bd2f8e31b7c"
+  },
+  "source_sha256": "ecb1d09e01fe1cb5e945a6a4c00fcf510d62d278f5eabee9979c0d83a34fe3d9",
+  "elf_sha256": "ed60494ff1264573f151431856c068ce29dd7d216652ec8cb37aa2bb7b3a625e",
+  "native_code_bytes": 979140,
+  "claimed_score": "pending_current_software_guest_verification",
+  "historical_results_scope": "EEST and outside verification records below concern the previous accelerated guest and do not certify this software guest revision.",
+  "eest": {
+    "tag": "tests-zkevm@v21.0.1",
+    "records": 33614,
+    "pass_full": 33605,
+    "pass_malformed": 9,
+    "failures": 0,
+    "errors": 0,
+    "results": "work/eest-challenge/zero-ram-final-results.json",
+    "artifact_recheck": {
+      "date": "2026-10-05",
+      "source_hash_matches": true,
+      "ast_hash_matches": true,
+      "tested_elf_hash_matches": true,
+      "regenerated_literal_modules": 236,
+      "literal_module_mismatches": 0,
+      "corpus_result_recount": {
+        "pass_full": 33605,
+        "pass_malformed": 9,
+        "nonzero_returncodes": 0,
+        "unexpected_output_mismatches": 0
+      },
+      "scope": "Rechecked retained corpus results and regenerated literals; did not rerun Spike."
+    }
+  },
+  "bitmap_words": 4603,
+  "native_image_bytes": 983348,
+  "bookkeeping_words": [
+    "0xa0020018",
+    "0xa0028ff0",
+    "0xa0028ff0",
+    "0x800f0134",
+    "0x800f1000"
+  ],
+  "source_evaluator": "Flapjack.PanSemStateFiniteExact.semanticsDecls",
+  "source_model": "InitE.sourceBehaviour",
+  "pending": [
+    "complete fresh isolated verification of the compact certificates with only the three standard axioms",
+    "record full isolated acceptance and measured results in the new compact-certificate PR"
+  ],
+  "submitted_image_bytes": 1028080,
+  "bootstrap_bytes": 208,
+  "bootstrap_instruction_steps": 23077,
+  "initial_ram": "zero",
+  "initial_integer_registers": "zero",
+  "certificate": "InitE.Challenge.certificate",
+  "stack_bound_words": 7480,
+  "trust": {
+    "finite_checks": "kernel-checked proofs; full outside build and standard-three-axiom audit passed",
+    "axiom_manifest": "verifier/trusted-axioms.json",
+    "axiom_names": 3
+  },
+  "source_contract": {
+    "kind": "literal_ast",
+    "declarations": "Guest.Software.guestAst",
+    "file": "Guest/SoftwareAst.lean",
+    "sha256": "583518b4e9e07ade266736ef16f1e2311b865ba62bb92ccc651c49f6929528e1",
+    "text_provenance": "Guest/guest-software.pp.pnk",
+    "parser_agreement": "pending current baseline audit"
+  },
+  "standard_axiom_attempt": {
+    "status": "trusted_build_failed_oom",
+    "work": "verifier/runs/riscv-im-16cpu-1hour",
+    "logical_cpus": 16,
+    "runtime_limit_seconds": 3600,
+    "memory_limit_gib": 64,
+    "wall_seconds": 1105,
+    "source_contract": "before removal of the required parser-agreement proof"
+  },
+  "verification_limits": {
+    "logical_cpus": 16,
+    "runtime_limit_seconds": 28800,
+    "memory_limit_gib": 112,
+    "swap_limit_bytes": 0,
+    "active_lean_compilers": 16,
+    "tasks_max": 16384
+  },
+  "outside_verification": {
+    "status": "passed",
+    "unit": "init-e-outside-full-standard3-retry2.service",
+    "invocation_id": "b519198a606e42f49e5580f24adfd17f",
+    "targets": [
+      "InitE",
+      "Submission",
+      "InitE.Audit"
+    ],
+    "log": "work/lean-perf/outside-full-standard3-retry2-build.log",
+    "time_log": "work/lean-perf/outside-full-standard3-retry2-build.time",
+    "scope": "Incremental full-target continuation with the installed small-literal admission proof; earlier successful stages cached",
+    "limits": {
+      "logical_cpus": 16,
+      "runtime_limit_seconds": 28800,
+      "memory_limit_gib": 112,
+      "swap_limit_bytes": 0,
+      "active_lean_compilers": 16,
+      "tasks_max": 16384
+    },
+    "elapsed_seconds": 93.65,
+    "user_cpu_seconds": 87.37,
+    "system_cpu_seconds": 13.72,
+    "cgroup_memory_peak_bytes": 5704183808,
+    "cgroup_cpu_seconds": 101.103375,
+    "exit_code": 0,
+    "jobs": 53272,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "cold_build": false,
+    "superseded_by_compact_certificates": true
+  },
+  "stack_bound_is_upper_bound": true,
+  "stack_bound_exact_diagnostic_words": 538,
+  "historical_isolated_verification": {
+    "status": "verified",
+    "work": "verifier/runs/host-upgrade-baseline-5",
+    "contract_sha256": "540dcf0e0a2c9349597090a38dbfe988360d5faec7a2e190663da55742359218",
+    "systemd": "259.5",
+    "trusted_audit_memory_limit_gib": 24,
+    "comparator_memory_limit_gib": 64,
+    "axiom_names": 49,
+    "flapjack_revision": "7ef58a0e940088c06e6a283bde681c5754fce262",
+    "logical_cpus": 2,
+    "runtime_limit_seconds": 14400
+  },
+  "isolated_verification": {
+    "status": "pending",
+    "axiom_names": 3
+  },
+  "standard_axiom_milestones": {
+    "source_stack": {
+      "status": "passed",
+      "theorem": "InitE.sourceLogicalStackBound_bounded",
+      "upper_bound_words": 7480,
+      "axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "elapsed_seconds": 47.742,
+      "cpu_seconds": 51.193,
+      "memory_peak_reported": "3G",
+      "log": "work/lean-perf/word-stages/source-stack-certificate-constrained-repaired-build.log"
+    },
+    "compiler_correctness": {
+      "status": "passed",
+      "theorem": "InitE.baseline_behaviour_eq",
+      "axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "elapsed_seconds": 27.742,
+      "cpu_seconds": 31.797,
+      "memory_peak_reported": "2.8G",
+      "log": "work/lean-perf/word-stages/baseline-correctness-constrained-build.log"
+    },
+    "challenge": {
+      "status": "passed",
+      "target": "InitE.Challenge",
+      "elapsed_seconds": 7.433,
+      "cpu_seconds": 11.838,
+      "memory_peak_reported": "911.8M",
+      "log": "work/lean-perf/word-stages/challenge-constrained-build.log"
+    },
+    "timing_scope": "incremental builds with checked dependencies; not a cold full submission or isolated verification",
+    "raw_call_lowering": {
+      "status": "passed",
+      "theorem": "InitE.BackendStages.Raw.compile_eq",
+      "functions": 826,
+      "composition_chunks": 52,
+      "axiom_names": [
+        "propext",
+        "Quot.sound"
+      ],
+      "aggregate_check_seconds": 3.78,
+      "scope": "Resumed per-function checks and final aggregate; full backend still pending"
+    },
+    "allocation_lowering": {
+      "status": "passed",
+      "theorem": "InitE.BackendStages.Alloc.compile_eq",
+      "functions": 826,
+      "axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "scope": "Per-function and full allocation lowering certified; full backend pending"
+    },
+    "target_encoding": {
+      "status": "passed",
+      "theorems": [
+        "InitE.BackendStages.TargetChecks.Phase0.encode_eq",
+        "InitE.BackendStages.TargetChecks.Phase1.encode_eq",
+        "InitE.BackendStages.TargetChecks.Phase0.labels_eq",
+        "InitE.BackendStages.TargetChecks.Phase1.labels_eq"
+      ],
+      "axiom_names": [
+        "propext",
+        "Quot.sound"
+      ],
+      "corrected_suffix_sections": 294,
+      "aggregate_modules": 108,
+      "phase0_elapsed_seconds": 3.63,
+      "phase1_elapsed_seconds": 4.32,
+      "labels0_elapsed_seconds": 28.67,
+      "labels1_elapsed_seconds": 30.89,
+      "scope": "Both exact encoding passes and label maps; final alignment/byte agreement and whole artifact still pending",
+      "obsolete_original_alias_failures": [
+        648,
+        671,
+        683,
+        684
+      ],
+      "obsolete_original_alias_repairs": "All four aliases and eight old encoding/phase endpoints now kernel checked; original failure logs preserved. Canonical composition uses Correct modules."
+    },
+    "native_byte_agreement": {
+      "status": "passed",
+      "theorem": "InitE.BackendStages.BytePieces.nativeCode_eq",
+      "native_code_bytes": 904056,
+      "axiom_names": [
+        "propext"
+      ],
+      "elapsed_seconds": 2.9,
+      "scope": "Final padded program byte literals agree with submitted native byte literals; complete source-to-artifact composition pending"
+    },
+    "final_assembly": {
+      "status": "passed",
+      "sections": 832,
+      "final_aggregate_seconds": 3.5,
+      "byte_aggregate_seconds": 3.45,
+      "zero_label_aggregate_seconds": 19.49,
+      "byte_and_zero_axiom_names": [
+        "propext",
+        "Quot.sound"
+      ],
+      "scope": "All final leaves and whole final/byte/zero-label aggregates; lower/metadata/origin endpoints and full artifact remain pending"
+    },
+    "backend_artifact": {
+      "status": "passed",
+      "theorem": "InitE.BackendStages.Artifact.fromStack_eq",
+      "elapsed_seconds": 10.1516,
+      "axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "native_code_bytes": 904056,
+      "scope": "Direct kernel check of the full parametric fromStack artifact; actual Lake rebuild pending"
+    },
+    "source_artifact_integration": {
+      "status": "passed",
+      "theorem": "InitE.baseline_compiler_artifact_eq",
+      "elapsed_seconds": 32.99,
+      "cpu_seconds": 33.081041,
+      "cgroup_memory_peak_bytes": 4769820672,
+      "max_individual_rss_kib": 37685644,
+      "axiom_names": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "scope": "Direct kernel check with existing checked imports; not full Lake rebuild",
+      "log": "work/lean-perf/outside-artifact-integration.log"
+    },
+    "full_correctness_audit": {
+      "status": "passed",
+      "scope": "Actual Lake target InitE.Audit in the measured full-build continuation; submission admission and full target completion still pending",
+      "unit": "init-e-outside-full-standard3-retry1.service",
+      "invocation_id": "6953d6ccd9bf491a90cc1c4c2af52a72",
+      "log": "work/lean-perf/outside-full-standard3-retry1-build.log",
+      "permitted_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "audited_roots": [
+        "InitE.full_baseline_correct",
+        "InitE.full_baseline_terminates",
+        "InitE.outputByte_final",
+        "InitE.bootstrap_zero_after_headers",
+        "InitE.BootstrapAsmComposition.checked_trace_evaluator"
+      ]
+    },
+    "admission_small_literal_prototype": {
+      "status": "passed_scratch_kernel_check",
+      "elapsed_seconds": 31.07,
+      "user_cpu_seconds": 24.89,
+      "system_cpu_seconds": 6.51,
+      "cgroup_memory_peak_bytes": 4786425856,
+      "unit": "init-e-admission-fallback-helpers3.service",
+      "invocation_id": "a129b26113c84ccabd716d77b2b9b76e",
+      "source": "work/lean-perf/admission-facts-fallback-helpers.lean",
+      "source_sha256": "d78f91d6177dcfae44158b5d587b5e697595e87f9fa49c35dd0bbf3dc76b3140",
+      "log": "work/lean-perf/admission-facts-fallback-helpers3.log",
+      "time_log": "work/lean-perf/admission-facts-fallback-helpers3.time",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "scope": "Unchanged public baseline_submission_finite statement, with13 MMIO/33 entry-PC literal aliases and ordinary kernel decide on small predicates; not yet installed into the source because the original full build remains active",
+      "installation_status": "Installed; actual full Lake build and Solution target pass"
+    }
+  },
+  "development_branches": {
+    "backend_artifact_stages": "643559785120fd67fc604b912fc21c14c5e6f4fe",
+    "backend_metadata": "35eeaafcd2066c55a56aaddf378e6decbd6bf55a",
+    "backend_target_checks": "ba72d737fea985d064a32563a12a041a42b5e84a",
+    "scope": "Scoped remote development snapshots and combined standard-axiom snapshot published; full outside build passed, isolated verification and final measured results pending",
+    "standard_axiom_integration": "c1684cc7144c03457ed9ac6198f5757f132e48a2",
+    "admission_facts": {
+      "branch": "perf/admission-facts",
+      "commit": "5a274ad3e38e4aabd0b94ebf8aace0064826cb64",
+      "scope": "InitE/BaselineSubmissionFacts.lean only; integrated locally and full outside build passed"
+    }
+  },
+  "outside_verification_attempts": [
+    {
+      "status": "failed",
+      "unit": "init-e-outside-full-standard3.service",
+      "invocation_id": "83e73ad32c9b471280eed47d041ccd1f",
+      "targets": [
+        "InitE",
+        "Submission",
+        "InitE.Audit"
+      ],
+      "log": "work/lean-perf/outside-full-standard3-build.log",
+      "time_log": "work/lean-perf/outside-full-standard3-build.time",
+      "scope": "Actual Lake rebuild with existing frontend/optimizer caches; backend direct-check oleans have no Lake traces",
+      "limits": {
+        "logical_cpus": 16,
+        "runtime_limit_seconds": 28800,
+        "memory_limit_gib": 112,
+        "swap_limit_bytes": 0,
+        "active_lean_compilers": 16,
+        "tasks_max": 16384
+      },
+      "elapsed_seconds": 3836,
+      "user_cpu_seconds": 43357.45,
+      "system_cpu_seconds": 12693.55,
+      "cgroup_memory_peak_bytes": 70017769472,
+      "exit_code": 1,
+      "failure": "BaselineInstallationFacts.baseline_literal_layout hit maximum recursion depth while recomputing whole-image lengths"
+    },
+    {
+      "status": "superseded",
+      "unit": "init-e-outside-full-standard3-retry1.service",
+      "invocation_id": "6953d6ccd9bf491a90cc1c4c2af52a72",
+      "targets": [
+        "InitE",
+        "Submission",
+        "InitE.Audit"
+      ],
+      "log": "work/lean-perf/outside-full-standard3-retry1-build.log",
+      "time_log": "work/lean-perf/outside-full-standard3-retry1-build.time",
+      "scope": "Incremental continuation after replacing repeated whole-image length computation with existing checked chunk length facts; all successful first-attempt stages cached",
+      "limits": {
+        "logical_cpus": 16,
+        "runtime_limit_seconds": 28800,
+        "memory_limit_gib": 112,
+        "swap_limit_bytes": 0,
+        "active_lean_compilers": 16,
+        "tasks_max": 16384
+      },
+      "reason": "Superseded with user authorization by the kernel-checked small-literal admission proof",
+      "cgroup_memory_peak_bytes": 29266784256,
+      "cgroup_cpu_seconds": 2810.776191,
+      "resource_snapshot": "work/lean-perf/outside-full-standard3-retry1-superseded.json"
+    }
+  ],
+  "current_standard_axiom_verification": {
+    "status": "running",
+    "flapjack_revision": "034bb5a1ed0b757082768d5406206bd2f8e31b7c",
+    "branch": "perf/compact-computation-proofs",
+    "axiom_count": 3,
+    "memory_limit_gib": 112,
+    "logical_cpus": 16,
+    "active_lean_compilers": 16,
+    "inner_runtime_limit_seconds": 28800,
+    "stage": "Mandatory isolation probe passed; fresh isolated project is staging before cold TrustedAxioms build and comparator replay",
+    "scope": "Outside full-target continuation passed. Fresh isolated comparator acceptance remains pending.",
+    "outside_build_unit": "init-e-compact-full-outside-retry2-20261006.service",
+    "unit": "init-e-full-verifier-compact-5e0e78c2.service",
+    "invocation_id": "c4626cb5d8ae43c6b326a84e09cfd02c",
+    "source_commit": "1f8d0751a704daacaeeb7e39d1524469536275fb",
+    "work": "verifier/runs/full-compact-5e0e78c2-20261006",
+    "outer_runtime_limit_seconds": 64800,
+    "completion_waker": {
+      "unit": "init-e-full-verifier-compact-5e0e78c2-waker.service",
+      "target_thread": "01a107bb-47af-7960-b576-efd9678059da",
+      "exact_invocation": "c4626cb5d8ae43c6b326a84e09cfd02c"
+    }
+  },
+  "published_standard_axiom_snapshot": {
+    "commit": "1eecd1778a5646c9613097220e21e25a4bb67103",
+    "pr": 14,
+    "state": "merged",
+    "source_agreement": {
+      "trusted_and_configuration_files_checked": 56470,
+      "supplement_files_checked": 241,
+      "mismatches": 0,
+      "evidence": "work/lean-perf/published-frozen-source-agreement.json",
+      "scope": "Frozen sources and submission agree; this is not verifier acceptance"
+    },
+    "readiness_note": "PR 14 merged by user; recorded source agreement and audit apply to the previous Flapjack pin."
+  },
+  "standard_axiom_verification_attempts": [
+    {
+      "status": "rejected",
+      "unit": "init-e-full-verifier-standard3.service",
+      "invocation_id": "e971a80e80ed4dd68dee057b90644b50",
+      "work": "verifier/runs/full-standard3-20261006",
+      "log": "work/lean-perf/full-verifier-standard3.log",
+      "time_log": "work/lean-perf/full-verifier-standard3.time",
+      "stage": "Trusted audit and solution build passed; buffered comparator export OOM-killed",
+      "axiom_count": 3,
+      "memory_limit_gib": 112,
+      "logical_cpus": 16,
+      "active_lean_compilers": 16,
+      "inner_runtime_limit_seconds": 28800,
+      "outer_runtime_limit_seconds": 64800,
+      "resource_snapshots": "work/lean-perf/full-verifier-standard3-resources.jsonl",
+      "trusted_audit": {
+        "status": "passed",
+        "observed_at": "2026-10-06T01:43:34.503234+00:00",
+        "unit": "init-e-verify-1bb782b22538.service",
+        "invocation_id": "fa21ef1f298d4d5cbfc65f32ad77e107",
+        "jobs": 53263,
+        "permitted_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "cpu_seconds": 147050.743233,
+        "memory_peak_bytes": 117086064640,
+        "memory_swap_peak_bytes": 0,
+        "elapsed_seconds": 9802.874174,
+        "accounting_message": "init-e-verify-1bb782b22538.service: Consumed 1d 16h 50min 50.743s CPU time over 2h 43min 22.873s wall clock time, 109G memory peak.",
+        "scope": "Cold rebuild of workspace proof namespaces; upstream dependencies and trusted tool caches reused. Comparator acceptance remains pending."
+      },
+      "comparator": {
+        "status": "oom-kill",
+        "unit": "init-e-verify-d934e6dd4875.service",
+        "invocation_id": "b349fc705f0b48a2bbaffac39bb99251",
+        "cpu_seconds": 7252.766618,
+        "memory_peak_bytes": 120259084288,
+        "memory_swap_peak_bytes": 0,
+        "elapsed_seconds": 9594.84435,
+        "accounting_message": "init-e-verify-d934e6dd4875.service: Consumed 2h 52.766s CPU time over 2h 39min 54.844s wall clock time, 112G memory peak.",
+        "scope": "Solution built successfully (53268 jobs), but buffered proof export failed at112GiB; no comparator acceptance."
+      },
+      "outer_elapsed_seconds": 19453,
+      "retry_status": "Transport-only file-spool patch installed; fresh isolated verification pending"
+    },
+    {
+      "status": "superseded_by_user",
+      "unit": "init-e-full-verifier-spool-standard3.service",
+      "invocation_id": "95281914a9f845369accdafc9ea6424b",
+      "work": "verifier/runs/full-spool-standard3-20261006",
+      "log": "work/lean-perf/full-verifier-spool-standard3.log",
+      "time_log": "work/lean-perf/full-verifier-spool-standard3.time",
+      "stage": "Stopped at user request before repin; no full comparator acceptance",
+      "axiom_count": 3,
+      "memory_limit_gib": 112,
+      "logical_cpus": 16,
+      "active_lean_compilers": 16,
+      "inner_runtime_limit_seconds": 28800,
+      "outer_runtime_limit_seconds": 64800,
+      "source_commit": "e6bb936d",
+      "resource_snapshots": "work/lean-perf/full-verifier-spool-standard3-resources.jsonl",
+      "transport_patch_sha256": "de157a76ea8749d19456b32b48fab4ba60cf2ac1615d907a0e395b75ac7d2d4a",
+      "scope": "Fresh cold rebuild of workspace proof namespaces, upstream caches reused. No full acceptance claimed.",
+      "trusted_audit": {
+        "status": "passed",
+        "observed_at": "2026-10-06T07:09:49.769751+00:00",
+        "unit": "init-e-verify-347a1343b753.service",
+        "invocation_id": "e2229476ed104caeb07e4d2a917761a4",
+        "jobs": 53263,
+        "permitted_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "cpu_seconds": 143573.824268,
+        "memory_peak_bytes": 118107770880,
+        "memory_swap_peak_bytes": 0,
+        "elapsed_seconds": 9502.804642,
+        "accounting_message": "init-e-verify-347a1343b753.service: Consumed 1d 15h 52min 53.824s CPU time over 2h 38min 22.804s wall clock time, 109.9G memory peak.",
+        "scope": "Cold rebuild of workspace proof namespaces; upstream dependencies and trusted tool caches reused. Full disk-spooling comparator acceptance remains pending."
+      },
+      "comparator_snapshot": {
+        "status": "running",
+        "observed_at": "2026-10-06T08:56:01.153250+00:00",
+        "unit": "init-e-verify-bed444a03767.service",
+        "invocation_id": "bbefec5ce3e64843a60cd3c3f193354b",
+        "memory_current_bytes": 103270871040,
+        "memory_peak_bytes": 111525384192,
+        "cpu_seconds": 6445.408146,
+        "spool_file_sizes_bytes": {
+          "tmp.XXU0W8m6": 49470701568,
+          "tmp.XXPL3MWI": 29505716
+        },
+        "disk_free_bytes": 64068276224,
+        "scope": "Interim live measurements, not terminal accounting or acceptance."
+      },
+      "completion_waker": {
+        "unit": "init-e-full-verifier-spool-standard3-waker.service",
+        "invocation_id": "15052944d6f0471a890f9566c55fb549",
+        "target_thread": "01a107bb-47af-7960-b576-efd9678059da",
+        "scope": "One-shot herdr prompt after the exact outer verifier invocation terminates"
+      },
+      "superseded_result": {
+        "status": "superseded_by_user",
+        "observed_at": "2026-10-06T08:58:57.368183+00:00",
+        "reason": "User requested stopping the old-pin verifier and running a fresh verifier after Flapjack repin. No full acceptance or resource failure claimed.",
+        "stages": [
+          {
+            "unit": "init-e-full-verifier-spool-standard3.service",
+            "invocation_id": "95281914a9f845369accdafc9ea6424b",
+            "status": "stopped_by_user",
+            "cpu_seconds": 43.135674,
+            "memory_peak_bytes": 37155291136,
+            "memory_swap_peak_bytes": 0,
+            "elapsed_seconds": 16179.07876
+          },
+          {
+            "unit": "init-e-verify-bed444a03767.service",
+            "invocation_id": "bbefec5ce3e64843a60cd3c3f193354b",
+            "status": "stopped_by_user",
+            "cpu_seconds": 6555.527439,
+            "memory_peak_bytes": 111525384192,
+            "memory_swap_peak_bytes": 0,
+            "elapsed_seconds": 6612.445188
+          }
+        ]
+      }
+    },
+    {
+      "status": "superseded_by_user",
+      "unit": "init-e-full-verifier-riscv-im-034bb5a1.service",
+      "invocation_id": "92688cf3b01a454d82aadb8e857bdeb4",
+      "work": "verifier/runs/full-riscv-im-034bb5a1-20261006",
+      "log": "work/lean-perf/full-verifier-riscv-im-034bb5a1.log",
+      "time_log": "work/lean-perf/full-verifier-riscv-im-034bb5a1.time",
+      "source_commit": "be28eb472322c3e0af7c420e6ffc4d5abb505293",
+      "flapjack_revision": "034bb5a1ed0b757082768d5406206bd2f8e31b7c",
+      "stage": "Stopped at user request before compact computation certificate propagation; no acceptance result",
+      "axiom_count": 3,
+      "memory_limit_gib": 112,
+      "logical_cpus": 16,
+      "active_lean_compilers": 16,
+      "inner_runtime_limit_seconds": 28800,
+      "outer_runtime_limit_seconds": 64800,
+      "completion_waker": {
+        "unit": "init-e-full-verifier-riscv-im-034bb5a1-waker.service",
+        "invocation_id": "24cc72b1ea2a43369bfc7fc70972b8e4",
+        "target_thread": "01a107bb-47af-7960-b576-efd9678059da",
+        "status": "stopped_before_verifier"
+      },
+      "scope": "Fresh new-pin isolated build and full comparison; old-pin evidence does not establish acceptance.",
+      "stop_evidence": "work/lean-perf/full-verifier-riscv-im-034bb5a1-stop-request.json"
+    }
+  ],
+  "flapjack_repin": {
+    "previous_revision": "7981f765cdadecf9b2857f326a65bae47371ab15",
+    "revision": "034bb5a1ed0b757082768d5406206bd2f8e31b7c",
+    "status": "smoke_passed_full_verification_pending",
+    "upstream_change": "Remove unsupported RV64 word operations other than ADDIW; prove compressed-instruction rejection",
+    "scope": "Old-pin audit and verifier evidence do not certify this revision.",
+    "smoke_build": {
+      "status": "passed",
+      "jobs": 3616,
+      "targets": [
+        "InitE.Challenge",
+        "InitE.MachineWordMemory",
+        "Flapjack.RiscV.L3.Step.NoCompressed"
+      ],
+      "command": "tools/build-lean.sh --quick InitE.Challenge InitE.MachineWordMemory Flapjack.RiscV.L3.Step.NoCompressed",
+      "timeout_seconds": 600,
+      "log": "work/lean-perf/flapjack-repin-034bb5a1-smoke.log"
+    },
+    "verifier_regression_tests": {
+      "status": "passed",
+      "count": 21,
+      "elapsed_seconds": 8.463
+    },
+    "full_verifier_status": "pending_compact_certificate_integration"
+  },
+  "compact_computation_certificates": {
+    "status": "outside_full_build_and_standard_axiom_audit_passed",
+    "tactic": "InitE.CompactComputation.kernel_rfl",
+    "kernel_regression": "Tools/KernelComputationCheck.lean",
+    "evidence": "work/lean-perf/compact-guest/root-full-stage-results.json",
+    "scope": "Submitted Eq.refl terms are fully checked by the kernel. Shared bridge lemmas preserve original evaluators where direct conversion is unsuitable.",
+    "frontend_evidence": "work/lean-perf/compact-frontend/structural-bridge-results.json",
+    "ssa_evidence": "work/lean-perf/compact-small-ssa/word-results.json",
+    "contract_audit": "work/lean-perf/compact-frontend/PROPAGATION-AUDIT.md",
+    "outside_result": "work/lean-perf/compact-guest/full-outside-retry2-build-result.json"
+  },
+  "compact_outside_verification": {
+    "status": "passed",
+    "implementation_commit": "5e0e78c20d44e80bba14f7340a67db491a08855b",
+    "unit": "init-e-compact-full-outside-retry2-20261006.service",
+    "invocation_id": "a1c28505d6574a75bec188ea4ddeb8bf",
+    "targets": [
+      "InitE",
+      "Submission",
+      "InitE.Audit"
+    ],
+    "jobs": 53282,
+    "elapsed_seconds": 814.023806810379,
+    "cpu_seconds": 1702.500435,
+    "memory_peak_bytes": 32581480448,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "log": "work/lean-perf/compact-guest/full-outside-retry2-build.log",
+    "scope": "Successful full-target incremental continuation; earlier successful stages cached. Two truncated disk-full artifacts were regenerated from unchanged source before this pass."
+  }
+}

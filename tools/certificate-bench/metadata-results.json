@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "date": "2026-10-07",
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "trials": 2,
+    "timeout_seconds": 180,
+    "scope": "Only InitE.baseline_finite_facts; complete exported dependency closure; existing common build artifacts.",
+    "axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "validation": {
+      "comparator_accepted": true,
+      "compiler_installation_metadata_direct_build": true,
+      "bootstrap_copy_guards_direct_build": true,
+      "theorem_statement_changed": false,
+      "full_comparator_run": false
+    }
+  },
+  "summary": {
+    "Control": {
+      "median_wall_seconds": 18.090830555492408,
+      "median_parse_ms": 11828,
+      "median_compare_ms": 933,
+      "median_replay_ms": 4491,
+      "median_peak_kib": 1987446,
+      "build_seconds": 61.20268275501439,
+      "build_bytes": 30594048,
+      "export_bytes": 65347596,
+      "constants": 5603
+    },
+    "Compact": {
+      "median_wall_seconds": 11.552136078506708,
+      "median_parse_ms": 8107,
+      "median_compare_ms": 426,
+      "median_replay_ms": 2204,
+      "median_peak_kib": 1691230,
+      "build_seconds": 32.11974382598419,
+      "build_bytes": 32952,
+      "export_bytes": 34014216,
+      "constants": 5413
+    }
+  },
+  "runs": [
+    {"case": "Control", "trial": 0, "wall_seconds": 18.229955554998014, "parse_ms": 11954, "compare_ms": 947, "replay_ms": 4491, "peak_kib": 1987488},
+    {"case": "Compact", "trial": 0, "wall_seconds": 11.541300526994746, "parse_ms": 8109, "compare_ms": 425, "replay_ms": 2195, "peak_kib": 1691072},
+    {"case": "Compact", "trial": 1, "wall_seconds": 11.562971631006803, "parse_ms": 8105, "compare_ms": 427, "replay_ms": 2213, "peak_kib": 1691388},
+    {"case": "Control", "trial": 1, "wall_seconds": 17.951705855986802, "parse_ms": 11702, "compare_ms": 919, "replay_ms": 4491, "peak_kib": 1987404}
+  ]
+}

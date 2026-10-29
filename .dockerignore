@@ -1,0 +1,27 @@
+# Lean build cache (rebuilt fresh inside Docker via lake)
+.lake/
+
+# Guest build artifacts and local test/work output (rebuilt inside Docker)
+guest/build/
+tools/spike/spike_run
+tools/spike/*.so
+tools/spike/handler.o
+tools/spike/handler.elf
+tools/spike/handler.bin
+tools/spike/handler_bin.h
+work/
+
+# Flapjack is fetched by Lake; only Spike remains a submodule.
+cakeml/
+flapjack/
+evm-asm/
+riscv-isa-sim/build/
+
+# VCS and dev tooling
+.git/
+.claude/
+__pycache__/
+*.pyc
+
+# Local verification tool builds are regenerated, not shipped in testing images.
+verifier/.tools/

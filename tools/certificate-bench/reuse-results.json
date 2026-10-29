@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "source_sha256": {
+      "InitE/WordStages/Parallel79/Data3.lean": "dda03fe823b7bd24d5cab8c03bef1d5ec7c2f53ef27cbcff7d5ce6e0a3d15bc3",
+      "InitE/WordStages/Pass79_4.lean": "4a3a3483982dd817d4c3fb0eff1718653ce21e2696d2612792db2c52eca8cc21",
+      "InitE/WordStages/Pass79_5.lean": "c936454d870e225d7c47a4be638b9894863ab2d72f37a7f1183531f8c58f5de7"
+    },
+    "copies": [
+      1,
+      4
+    ],
+    "trials": 1,
+    "scope": "Controlled repeated obligations on guest function 79; no claim that the full guest currently repeats this whole-function equation."
+  },
+  "results": [
+    {
+      "case": "ReuseData",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 1.6265533539990429,
+      "user": 1.25,
+      "system": 0.37,
+      "peak_kib": 1812708.0,
+      "artifact_bytes": 295592,
+      "log": ""
+    },
+    {
+      "case": "Recompute1",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.581601937010419,
+      "user": 4.18,
+      "system": 0.39,
+      "peak_kib": 2774548.0,
+      "artifact_bytes": 9208,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Reuse1",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.53537649899954,
+      "user": 4.12,
+      "system": 0.4,
+      "peak_kib": 2774612.0,
+      "artifact_bytes": 9208,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Recompute4",
+      "trial": 0,
+      "exit": 0,
+      "wall": 16.077075459004845,
+      "user": 15.59,
+      "system": 0.47,
+      "peak_kib": 2774908.0,
+      "artifact_bytes": 11544,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Reuse4",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.563924124988262,
+      "user": 4.14,
+      "system": 0.41,
+      "peak_kib": 2774616.0,
+      "artifact_bytes": 11544,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Recompute1Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.280480877001537,
+      "user": 4.9,
+      "system": 0.37,
+      "peak_kib": 2643940.0,
+      "artifact_bytes": 6569449,
+      "log": "parse_ms=825, replay_ms=3692, constants=2164, kernel=accepted\n"
+    },
+    {
+      "case": "Reuse1Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.28335403901292,
+      "user": 4.86,
+      "system": 0.41,
+      "peak_kib": 2643916.0,
+      "artifact_bytes": 6569449,
+      "log": "parse_ms=821, replay_ms=3682, constants=2164, kernel=accepted\n"
+    },
+    {
+      "case": "Recompute4Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 15.609806452004705,
+      "user": 15.12,
+      "system": 0.48,
+      "peak_kib": 2643468.0,
+      "artifact_bytes": 6569936,
+      "log": "parse_ms=841, replay_ms=14002, constants=2167, kernel=accepted\n"
+    },
+    {
+      "case": "Reuse4Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.2011049919819925,
+      "user": 4.82,
+      "system": 0.37,
+      "peak_kib": 2643576.0,
+      "artifact_bytes": 6569936,
+      "log": "parse_ms=820, replay_ms=3621, constants=2167, kernel=accepted\n"
+    }
+  ]
+}

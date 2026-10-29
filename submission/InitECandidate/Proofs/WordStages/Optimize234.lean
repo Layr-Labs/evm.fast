@@ -1,0 +1,27 @@
+import InitECandidate.Proofs.WordStages.Pass234_10
+import InitECandidate.Proofs.CompilerStages
+set_option autoImplicit false
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+open Flapjack Flapjack.Compiler.Backend Flapjack.Compiler.Encoders.RiscV.Target
+namespace InitECandidate.Proofs.WordStages
+
+def oracle234 : Option (Spt Nat) := proposed234
+def optimized234 : Nat × Nat × WordLangProgHOL (BitVec 64) :=
+  (234, 1, pass234_10)
+
+theorem optimize234_eq : WordToWord.fullCompileSingleWith
+    RegAlloc.regAllocExecutable riscvConfig.twoRegArith
+    (riscvConfig.regCount - (5 + riscvConfig.avoidRegs.length))
+    RiscVConfig.pancakeRiscVBackendConfig.wordToWordConf.regAlg
+    riscvConfig (source234, oracle234) = optimized234 := by
+  rw [InitECandidate.Proofs.CompilerStages.fullCompile_expanded]
+  dsimp only
+  have name_eq : source234.1 = 234 := by rfl
+  have argc_eq : source234.2.1 = 1 := by rfl
+  have oracle_eq : oracle234 = proposed234 := by rfl
+  rw [name_eq, argc_eq, oracle_eq, pass234_0_eq, pass234_1_eq, pass234_2_eq, pass234_3_eq, pass234_4_eq, pass234_5_eq, pass234_6_eq, pass234_7_eq, pass234_8_eq, pass234_9_eq, pass234_10_eq]
+  rfl
+#print axioms optimize234_eq
+end InitECandidate.Proofs.WordStages

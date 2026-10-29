@@ -1,0 +1,8 @@
+{
+  "challenge_module": "VerifierChallenge",
+  "solution_module": "Solution",
+  "theorem_names": ["InitE.Challenge.certificate"],
+  "definition_names": ["InitE.Challenge.submission"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": false
+}

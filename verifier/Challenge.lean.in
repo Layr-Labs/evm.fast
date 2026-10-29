@@ -1,0 +1,11 @@
+import InitE.Challenge
+
+namespace InitE.Challenge
+
+noncomputable def submission : InitE.Submission := sorry
+
+def claimedScore : InitE.NatE := {{SCORE}}
+
+theorem certificate : InitE.Certificate submission claimedScore := sorry
+
+end InitE.Challenge

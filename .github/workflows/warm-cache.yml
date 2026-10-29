@@ -1,0 +1,77 @@
+name: Warm verifier cache
+# Yukon dispatches benchmark.yml on baseline and submission branches. Those runs can restore
+# caches saved on the default branch but never save their own, so this workflow publishes the
+# trusted build from main. Submissions hit only while main's key inputs match the benchmark's
+# imported commit. Rewarm after eviction with `gh workflow run warm-cache.yml --ref main`.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - lean-toolchain
+      - lakefile.toml
+      - lake-manifest.json
+      - Guest.lean
+      - "Guest/**"
+      - InitE.lean
+      - "InitE/**"
+      - "verifier/**"
+      - tools/build-lean.sh
+      - tools/limited-lake.py
+      - tools/lean-process-limit.c
+      - scripts/setup.sh
+      - scripts/blacksmith.sh
+      - scripts/vm-setup.sh
+      - .github/workflows/warm-cache.yml
+permissions:
+  contents: read
+concurrency:
+  group: warm-verifier-cache
+  cancel-in-progress: false
+jobs:
+  warm:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: blacksmith-32vcpu-ubuntu-2404
+    # A cold setup took 25 minutes on the 2026-10-22 run on main.
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      # Submissions restore with the key computed in benchmark.yml; a different key here would
+      # publish an entry nobody reads.
+      - name: Cache key matches benchmark.yml
+        run: |
+          key() { grep -m1 -E '^ +key: verifier-ubuntu26-vm-' "$1" | sed -E 's/^ +//'; }
+          test -n "$(key .github/workflows/benchmark.yml)"
+          test "$(key .github/workflows/benchmark.yml)" = "$(key .github/workflows/warm-cache.yml)"
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        id: cache
+        with:
+          path: work/trusted-cache.tar.zst
+          key: verifier-ubuntu26-vm-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lakefile.toml', 'lake-manifest.json', 'Guest.lean', 'Guest/**', 'InitE.lean', 'InitE/**', 'verifier/**', 'tools/build-lean.sh', 'tools/limited-lake.py', 'tools/lean-process-limit.c', 'scripts/setup.sh', 'scripts/blacksmith.sh', 'scripts/vm-setup.sh') }}-v1
+      - name: Start verifier VM
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: bash scripts/blacksmith.sh start
+      - name: Setup
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: bash scripts/blacksmith.sh setup
+      - name: Export trusted cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: bash scripts/blacksmith.sh cache
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          path: work/trusted-cache.tar.zst
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+      - name: Upload VM console log
+        if: always() && steps.cache.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: vm-console
+          path: work/vm-console.log
+          if-no-files-found: ignore
+      - name: Stop verifier VM
+        if: always() && steps.cache.outputs.cache-hit != 'true'
+        run: bash scripts/blacksmith.sh stop

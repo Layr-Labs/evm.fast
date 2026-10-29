@@ -1,0 +1,11 @@
+import InitECandidate.Proofs.BackendStages.Padded599
+import InitECandidate.Proofs.BackendStages.BytesData599
+set_option autoImplicit false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+open Flapjack Flapjack.Compiler.Backend
+namespace InitECandidate.Proofs.BackendStages
+theorem sectionBytes599_eq : (Padded599.lines.map LabToTarget.lineBytes).flatten = ByteData.bytes599 := by
+  with_unfolding_all rfl
+#print axioms sectionBytes599_eq
+end InitECandidate.Proofs.BackendStages

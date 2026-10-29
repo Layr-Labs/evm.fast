@@ -1,0 +1,194 @@
+[
+  {
+    "case": "Original79",
+    "trial": 0,
+    "exit": 0,
+    "wall": 0.8444623829855118,
+    "artifact_bytes": 15320,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original79_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original79.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused79",
+    "trial": 0,
+    "exit": 0,
+    "wall": 0.8338589770137332,
+    "artifact_bytes": 16456,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused79_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused79.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original461",
+    "trial": 0,
+    "exit": 0,
+    "wall": 1.38102003899985,
+    "artifact_bytes": 15352,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original461_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original461.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused461",
+    "trial": 0,
+    "exit": 0,
+    "wall": 0.8005301209923346,
+    "artifact_bytes": 16488,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused461_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused461.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused461",
+    "trial": 1,
+    "exit": 0,
+    "wall": 0.7890416230075061,
+    "artifact_bytes": 16488,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused461_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused461.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original461",
+    "trial": 1,
+    "exit": 0,
+    "wall": 1.3861291249922942,
+    "artifact_bytes": 15352,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original461_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original461.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused79",
+    "trial": 1,
+    "exit": 0,
+    "wall": 0.7893592010077555,
+    "artifact_bytes": 16456,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused79_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused79.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original79",
+    "trial": 1,
+    "exit": 0,
+    "wall": 0.821769536996726,
+    "artifact_bytes": 15320,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original79_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original79.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original79",
+    "trial": 2,
+    "exit": 0,
+    "wall": 0.8390246139897499,
+    "artifact_bytes": 15320,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original79_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original79.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused79",
+    "trial": 2,
+    "exit": 0,
+    "wall": 0.8062228370108642,
+    "artifact_bytes": 16456,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused79_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused79.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original461",
+    "trial": 2,
+    "exit": 0,
+    "wall": 1.3905039929959457,
+    "artifact_bytes": 15352,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Original461_eq' depends on axioms: [propext]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Original461.lean:17:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Reused461",
+    "trial": 2,
+    "exit": 0,
+    "wall": 0.8310156369989272,
+    "artifact_bytes": 16488,
+    "log": "'InitE.BackendStages.TargetChecks.Correct.Reused461_eq' depends on axioms: [propext, Quot.sound]\n/home/zksecurity/trim-space/init-e/work/lean-perf/label-reuse-measured/Reused461.lean:24:0: warning: Definition `certificate` is a proposition; use `theorem` instead of `def`\n\nNote: This linter can be disabled with `set_option linter.defProp false`\n'LabelBench.certificate' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "case": "Original79Replay",
+    "trial": 0,
+    "exit": 0,
+    "wall": 2.369287103996612,
+    "artifact_bytes": 9550107,
+    "log": "parse_ms=1322, replay_ms=289, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Original79Replay",
+    "trial": 1,
+    "exit": 0,
+    "wall": 2.3856635430129245,
+    "artifact_bytes": 9550107,
+    "log": "parse_ms=1317, replay_ms=301, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Original79Replay",
+    "trial": 2,
+    "exit": 0,
+    "wall": 2.405830422998406,
+    "artifact_bytes": 9550107,
+    "log": "parse_ms=1323, replay_ms=307, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Reused79Replay",
+    "trial": 0,
+    "exit": 0,
+    "wall": 2.3921462279977277,
+    "artifact_bytes": 9928469,
+    "log": "parse_ms=1359, replay_ms=289, constants=1556, kernel=accepted\n"
+  },
+  {
+    "case": "Reused79Replay",
+    "trial": 1,
+    "exit": 0,
+    "wall": 2.4031745760003105,
+    "artifact_bytes": 9928469,
+    "log": "parse_ms=1367, replay_ms=294, constants=1556, kernel=accepted\n"
+  },
+  {
+    "case": "Reused79Replay",
+    "trial": 2,
+    "exit": 0,
+    "wall": 2.41001507799956,
+    "artifact_bytes": 9928469,
+    "log": "parse_ms=1363, replay_ms=298, constants=1556, kernel=accepted\n"
+  },
+  {
+    "case": "Original461Replay",
+    "trial": 0,
+    "exit": 0,
+    "wall": 3.7942694789962843,
+    "artifact_bytes": 10664348,
+    "log": "parse_ms=1445, replay_ms=1583, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Original461Replay",
+    "trial": 1,
+    "exit": 0,
+    "wall": 3.718481789022917,
+    "artifact_bytes": 10664348,
+    "log": "parse_ms=1420, replay_ms=1528, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Original461Replay",
+    "trial": 2,
+    "exit": 0,
+    "wall": 3.7203903830086347,
+    "artifact_bytes": 10664348,
+    "log": "parse_ms=1416, replay_ms=1536, constants=1513, kernel=accepted\n"
+  },
+  {
+    "case": "Reused461Replay",
+    "trial": 0,
+    "exit": 0,
+    "wall": 3.6485989240172785,
+    "artifact_bytes": 11042710,
+    "log": "parse_ms=1430, replay_ms=1474, constants=1556, kernel=accepted\n"
+  },
+  {
+    "case": "Reused461Replay",
+    "trial": 1,
+    "exit": 0,
+    "wall": 3.698893983004382,
+    "artifact_bytes": 11042710,
+    "log": "parse_ms=1452, replay_ms=1462, constants=1556, kernel=accepted\n"
+  },
+  {
+    "case": "Reused461Replay",
+    "trial": 2,
+    "exit": 0,
+    "wall": 3.639964672998758,
+    "artifact_bytes": 11042710,
+    "log": "parse_ms=1443, replay_ms=1437, constants=1556, kernel=accepted\n"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "name": "evm-fast",
+  "tracks": [
+    {
+      "name": "lean",
+      "description": "Prove RISC-V bytecode equivalent to the fixed Pancake EVM guest in Lean, and minimize the certified execution step bound K. The initial submission claims infinity.",
+      "category": "lean",
+      "direction": "-",
+      "editablePaths": [
+        "submission/Solution.lean",
+        "submission/claim.json",
+        "submission/InitECandidate/Solver"
+      ],
+      "optionalEditablePaths": [
+        "submission/InitECandidate/Solver"
+      ],
+      "setupCommand": [
+        "bash",
+        "scripts/setup.sh"
+      ],
+      "benchmarkCommand": [
+        "python3",
+        "scripts/run.py"
+      ],
+      "scorePath": "scripts/score.json",
+      "exactScores": true,
+      "hardware": "Official runs: Linux guest with systemd 257+ and Landlock ABI 3+, up to 30 Lean processes, 112 GiB memory cap per build unit, no verifier time limit (23-hour job timeout). The initial submission takes hours to build and writes about 120 GB of build output. Use a case-sensitive file system (paths differ only by case).",
+      "runner": {
+        "provider": "github-actions",
+        "workflow": "benchmark.yml"
+      }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+--- a/Main.lean
++++ b/Main.lean
+@@ -132,6 +132,29 @@
+     executablePaths := #[leanPrefix, gitLocation]
+   }
+ 
++
++partial def copy64 (src dst : IO.FS.Handle) : IO Unit := do
++  let chunk ← src.read 65536
++  unless chunk.isEmpty do
++    dst.write chunk
++    copy64 src dst
++
++def spoolProcess (args : IO.Process.SpawnArgs) (dst : IO.FS.Handle) : IO Unit := do
++  let proc ← IO.Process.spawn { args with stdout := .piped, stderr := .inherit, stdin := .null }
++  copy64 proc.stdout dst
++  let status ← proc.wait
++  if status != 0 then throw <| IO.userError s!"Child exited with {status}"
++  dst.flush
++  dst.rewind
++
++def runSandBoxedToFile (spawnArgs : LandrunArgs) (dst : IO.FS.Handle) : M Unit := do
++  spoolProcess {
++    cmd := (← read).whichLandrun
++    args := buildLandrunArgs spawnArgs
++    env := spawnArgs.envOverride
++    cwd := (← getProjectDir)
++  } dst
++
+ def safeExport (module : Lean.Name) (decls : Array Lean.Name) : M String := do
+   IO.println s!"Exporting {decls} from {module}"
+   let baseArgs := #[module.toString, "--"]
+@@ -149,6 +172,24 @@
+     writablePaths := #[]
+     executablePaths := #[leanPrefix]
+   }
++
++def safeExportFile (module : Lean.Name) (decls : Array Lean.Name) (dst : IO.FS.Handle) : M Unit := do
++  IO.println s!"Exporting {decls} from {module}"
++  let baseArgs := #[module.toString, "--"]
++  let args := decls.foldl (·.push <| ·.toString) baseArgs
++
++  let leanPrefix ← getLeanPrefix
++  let projectDir ← getProjectDir
++  let dotLakeDir := projectDir / ".lake"
++  runSandBoxedToFile {
++    cmd := (← read).whichLean4Export
++    args := args,
++    envPass := #["PATH", "HOME", "LEAN_PATH", "LEAN_ABORT_ON_PANIC"]
++    envOverride := #[("LEAN_ABORT_ON_PANIC", some "1")]
++    readablePaths := #[projectDir, dotLakeDir]
++    writablePaths := #[]
++    executablePaths := #[leanPrefix]
++  } dst
+ 
+ def runNanoda (solutionExport : String) : M (Option String) := do
+   IO.println "Running nanoda kernel on solution"
+@@ -270,7 +311,7 @@
+   if let some error := result then
+     throw <| IO.userError error
+ 
+-def compareIt : M Unit := do
++def compareItBuffered : M Unit := do
+   let exportTargets := (← builtinTargets) ++ (← getTheoremNames) ++ (← getLegalAxioms)
+     ++ (← primitiveTargets) ++ (← getDefinitionNames)
+ 
+@@ -285,6 +326,33 @@
+   verifyMatch challengeExport solutionExport
+ 
+   IO.println "Your solution is okay!"
++
++def verifyFiles (challengeFile solutionFile : IO.FS.Handle) : M Unit := do
++  let challenge ← Export.parseStream (IO.FS.Stream.ofHandle challengeFile)
++  let solution ← Export.parseStream (IO.FS.Stream.ofHandle solutionFile)
++  let theoremNames ← getTheoremNames
++  let definitionNames ← getDefinitionNames
++  let targets := theoremNames ++ (← getLegalAxioms)
++  IO.ofExcept <| Comparator.compareAt challenge solution targets definitionNames (← primitiveTargets)
++  IO.ofExcept <| Comparator.checkAxioms solution theoremNames definitionNames (← getLegalAxioms)
++  if let some error ← runKernel solution then throw <| IO.userError error
++
++def compareIt : M Unit := do
++  if ← getNanodaEnabled then
++    compareItBuffered
++  else
++    IO.FS.withTempFile fun challengeFile _ =>
++      IO.FS.withTempFile fun solutionFile _ => do
++        let targets := (← builtinTargets) ++ (← getTheoremNames) ++ (← getLegalAxioms)
++          ++ (← primitiveTargets) ++ (← getDefinitionNames)
++        let challengeModule ← getChallengeModule
++        safeLakeBuild challengeModule
++        safeExportFile challengeModule targets challengeFile
++        let solutionModule ← getSolutionModule
++        safeLakeBuild solutionModule
++        safeExportFile solutionModule targets solutionFile
++        verifyFiles challengeFile solutionFile
++        IO.println "Your solution is okay!"
+ 
+ structure Config where
+   challenge_module : String

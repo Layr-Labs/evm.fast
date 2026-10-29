@@ -1,0 +1,10 @@
+import InitECandidate.Proofs.WordStages.Pass818_5
+import InitECandidate.Proofs.CompilerComputation
+open scoped InitECandidate.Proofs.CompilerComputation
+open Flapjack Flapjack.Compiler.Backend Flapjack.Compiler.Encoders.RiscV.Target
+namespace InitECandidate.Proofs.WordStages
+def pass818_6 : WordLangProgHOL (BitVec 64) := pass818_5
+theorem pass818_6_eq : WordInst.threeToTwoRegProg riscvConfig.twoRegArith pass818_5 = pass818_6 := by
+  simp only [WordInst.threeToTwoRegProg, riscvConfig, Bool.false_eq_true, if_false, pass818_6]
+#print axioms pass818_6_eq
+end InitECandidate.Proofs.WordStages

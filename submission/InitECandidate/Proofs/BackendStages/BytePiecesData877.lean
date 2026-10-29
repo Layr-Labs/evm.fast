@@ -1,0 +1,13 @@
+import InitECandidate.Proofs.ComputationCache
+import Std
+set_option autoImplicit false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+namespace InitECandidate.Proofs.BackendStages.BytePieces
+def raw877_0 : List (BitVec 8) := [19#8, 12#8, 140#8, 254#8, 99#8, 120#8, 156#8, 1#8]
+def piece877_0 : List (BitVec 8) := (InitECandidate.Proofs.ComputationCache.boxedValue raw877_0).val
+theorem piece877_0_eq : piece877_0 = raw877_0 := InitECandidate.Proofs.ComputationCache.boxedValue_eq raw877_0
+def raw877_1 : List (BitVec 8) := [19#8, 101#8, 32#8, 0#8, 111#8, 0#8, 209#8, 254#8, 19#8, 0#8, 0#8, 0#8, 147#8, 101#8, 16#8, 0#8, 35#8, 52#8, 28#8, 0#8, 35#8, 56#8, 188#8, 0#8, 55#8, 27#8, 0#8, 0#8, 19#8, 11#8, 187#8, 31#8, 35#8, 48#8, 108#8, 1#8, 19#8, 12#8, 140#8, 254#8, 99#8, 120#8, 156#8, 1#8, 19#8, 101#8, 32#8, 0#8, 111#8, 0#8, 17#8, 252#8, 19#8, 0#8, 0#8, 0#8, 19#8, 107#8, 16#8, 0#8, 35#8, 48#8, 108#8, 1#8, 23#8, 11#8, 0#8, 0#8, 19#8, 11#8, 139#8, 4#8, 35#8, 52#8, 108#8, 1#8, 3#8, 187#8, 140#8, 252#8, 35#8, 56#8, 108#8, 1#8, 51#8, 107#8, 140#8, 1#8, 51#8, 11#8, 155#8, 65#8, 19#8, 91#8, 59#8, 0#8, 35#8, 180#8, 108#8, 253#8, 151#8, 0#8, 0#8, 0#8, 147#8, 128#8, 192#8, 0#8, 111#8, 240#8, 95#8, 235#8, 3#8, 59#8, 12#8, 1#8, 35#8, 180#8, 108#8, 253#8, 19#8, 12#8, 140#8, 1#8, 131#8, 48#8, 12#8, 1#8, 3#8, 54#8, 140#8, 0#8, 111#8, 0#8, 64#8, 3#8, 3#8, 54#8, 140#8, 0#8, 147#8, 111#8, 144#8, 0#8, 99#8, 6#8, 245#8, 1#8, 111#8, 16#8, 129#8, 169#8, 19#8, 0#8, 0#8, 0#8, 3#8, 181#8, 140#8, 247#8, 147#8, 96#8, 0#8, 0#8, 131#8, 181#8, 140#8, 254#8, 147#8, 149#8, 21#8, 0#8, 179#8, 133#8, 165#8, 1#8, 147#8, 133#8, 133#8, 222#8, 35#8, 176#8, 165#8, 0#8, 51#8, 229#8, 16#8, 0#8, 19#8, 12#8, 140#8, 1#8, 103#8, 0#8, 6#8, 0#8]
+def piece877_1 : List (BitVec 8) := (InitECandidate.Proofs.ComputationCache.boxedValue raw877_1).val
+theorem piece877_1_eq : piece877_1 = raw877_1 := InitECandidate.Proofs.ComputationCache.boxedValue_eq raw877_1
+end InitECandidate.Proofs.BackendStages.BytePieces

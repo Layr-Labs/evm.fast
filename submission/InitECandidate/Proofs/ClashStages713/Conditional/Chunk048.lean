@@ -1,0 +1,1405 @@
+import InitECandidate.Proofs.CompactComputation
+import InitECandidate.Proofs.ClashStages713.Data
+import InitECandidate.Proofs.ClashComputation
+import Flapjack.Compiler.Backend.WordAlloc.TotalColour
+set_option autoImplicit false
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option cbv.maxSteps 1000000000
+set_option cbv.warning false
+open scoped InitECandidate.Proofs.ClashComputation
+namespace InitECandidate.Proofs.ClashStages713
+theorem tree4608_agree_conditional
+    (child0 : tree4606 = literal4606)
+    (child1 : tree4607 = literal4607) : tree4608 = literal4608 := by
+  rw [tree4608_def, child0, child1]
+  rfl
+theorem node4608_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4606 live4606 coloured4606 = result4606)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4607 live4607 coloured4607 = result4607) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4608 live4608 coloured4608 = result4608 := by
+  rw [tree4608_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4606 coloured4606 at child
+  try dsimp only [live4608, coloured4608]
+  rw [child]
+  dsimp only [result4606]
+  have child := child1
+  unfold live4607 coloured4607 at child
+  try dsimp only [live4608, coloured4608]
+  rw [child]
+  dsimp only [result4607]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4609_agree_conditional : tree4609 = literal4609 := by
+  rw [tree4609_def]
+  rfl
+theorem node4609_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4609 live4609 coloured4609 = result4609 := by
+  rw [tree4609_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4610_agree_conditional
+    (child0 : tree4608 = literal4608)
+    (child1 : tree4609 = literal4609) : tree4610 = literal4610 := by
+  rw [tree4610_def, child0, child1]
+  rfl
+theorem node4610_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4608 live4608 coloured4608 = result4608)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4609 live4609 coloured4609 = result4609) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4610 live4610 coloured4610 = result4610 := by
+  rw [tree4610_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4608 coloured4608 at child
+  try dsimp only [live4610, coloured4610]
+  rw [child]
+  dsimp only [result4608]
+  have child := child1
+  unfold live4609 coloured4609 at child
+  try dsimp only [live4610, coloured4610]
+  rw [child]
+  dsimp only [result4609]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4611_agree_conditional : tree4611 = literal4611 := by
+  rw [tree4611_def]
+  rfl
+theorem node4611_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4611 live4611 coloured4611 = result4611 := by
+  rw [tree4611_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4612_agree_conditional
+    (child0 : tree4610 = literal4610)
+    (child1 : tree4611 = literal4611) : tree4612 = literal4612 := by
+  rw [tree4612_def, child0, child1]
+  rfl
+theorem node4612_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4610 live4610 coloured4610 = result4610)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4611 live4611 coloured4611 = result4611) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4612 live4612 coloured4612 = result4612 := by
+  rw [tree4612_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4610 coloured4610 at child
+  try dsimp only [live4612, coloured4612]
+  rw [child]
+  dsimp only [result4610]
+  have child := child1
+  unfold live4611 coloured4611 at child
+  try dsimp only [live4612, coloured4612]
+  rw [child]
+  dsimp only [result4611]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4613_agree_conditional : tree4613 = literal4613 := by
+  rw [tree4613_def]
+  rfl
+theorem node4613_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4613 live4613 coloured4613 = result4613 := by
+  rw [tree4613_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4614_agree_conditional
+    (child0 : tree4612 = literal4612)
+    (child1 : tree4613 = literal4613) : tree4614 = literal4614 := by
+  rw [tree4614_def, child0, child1]
+  rfl
+theorem node4614_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4612 live4612 coloured4612 = result4612)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4613 live4613 coloured4613 = result4613) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4614 live4614 coloured4614 = result4614 := by
+  rw [tree4614_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4612 coloured4612 at child
+  try dsimp only [live4614, coloured4614]
+  rw [child]
+  dsimp only [result4612]
+  have child := child1
+  unfold live4613 coloured4613 at child
+  try dsimp only [live4614, coloured4614]
+  rw [child]
+  dsimp only [result4613]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4615_agree_conditional : tree4615 = literal4615 := by
+  rw [tree4615_def]
+  rfl
+theorem node4615_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4615 live4615 coloured4615 = result4615 := by
+  rw [tree4615_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4616_agree_conditional
+    (child0 : tree4614 = literal4614)
+    (child1 : tree4615 = literal4615) : tree4616 = literal4616 := by
+  rw [tree4616_def, child0, child1]
+  rfl
+theorem node4616_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4614 live4614 coloured4614 = result4614)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4615 live4615 coloured4615 = result4615) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4616 live4616 coloured4616 = result4616 := by
+  rw [tree4616_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4614 coloured4614 at child
+  try dsimp only [live4616, coloured4616]
+  rw [child]
+  dsimp only [result4614]
+  have child := child1
+  unfold live4615 coloured4615 at child
+  try dsimp only [live4616, coloured4616]
+  rw [child]
+  dsimp only [result4615]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4617_agree_conditional : tree4617 = literal4617 := by
+  rw [tree4617_def]
+  rfl
+theorem node4617_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4617 live4617 coloured4617 = result4617 := by
+  rw [tree4617_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4618_agree_conditional
+    (child0 : tree4616 = literal4616)
+    (child1 : tree4617 = literal4617) : tree4618 = literal4618 := by
+  rw [tree4618_def, child0, child1]
+  rfl
+theorem node4618_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4616 live4616 coloured4616 = result4616)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4617 live4617 coloured4617 = result4617) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4618 live4618 coloured4618 = result4618 := by
+  rw [tree4618_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4616 coloured4616 at child
+  try dsimp only [live4618, coloured4618]
+  rw [child]
+  dsimp only [result4616]
+  have child := child1
+  unfold live4617 coloured4617 at child
+  try dsimp only [live4618, coloured4618]
+  rw [child]
+  dsimp only [result4617]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4619_agree_conditional : tree4619 = literal4619 := by
+  rw [tree4619_def]
+  rfl
+theorem node4619_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4619 live4619 coloured4619 = result4619 := by
+  rw [tree4619_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4620_agree_conditional
+    (child0 : tree4618 = literal4618)
+    (child1 : tree4619 = literal4619) : tree4620 = literal4620 := by
+  rw [tree4620_def, child0, child1]
+  rfl
+theorem node4620_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4618 live4618 coloured4618 = result4618)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4619 live4619 coloured4619 = result4619) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4620 live4620 coloured4620 = result4620 := by
+  rw [tree4620_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4618 coloured4618 at child
+  try dsimp only [live4620, coloured4620]
+  rw [child]
+  dsimp only [result4618]
+  have child := child1
+  unfold live4619 coloured4619 at child
+  try dsimp only [live4620, coloured4620]
+  rw [child]
+  dsimp only [result4619]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4621_agree_conditional : tree4621 = literal4621 := by
+  rw [tree4621_def]
+  rfl
+theorem node4621_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4621 live4621 coloured4621 = result4621 := by
+  rw [tree4621_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4622_agree_conditional
+    (child0 : tree4620 = literal4620)
+    (child1 : tree4621 = literal4621) : tree4622 = literal4622 := by
+  rw [tree4622_def, child0, child1]
+  rfl
+theorem node4622_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4620 live4620 coloured4620 = result4620)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4621 live4621 coloured4621 = result4621) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4622 live4622 coloured4622 = result4622 := by
+  rw [tree4622_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4620 coloured4620 at child
+  try dsimp only [live4622, coloured4622]
+  rw [child]
+  dsimp only [result4620]
+  have child := child1
+  unfold live4621 coloured4621 at child
+  try dsimp only [live4622, coloured4622]
+  rw [child]
+  dsimp only [result4621]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4623_agree_conditional : tree4623 = literal4623 := by
+  rw [tree4623_def]
+  rfl
+theorem node4623_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4623 live4623 coloured4623 = result4623 := by
+  rw [tree4623_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4624_agree_conditional
+    (child0 : tree4622 = literal4622)
+    (child1 : tree4623 = literal4623) : tree4624 = literal4624 := by
+  rw [tree4624_def, child0, child1]
+  rfl
+theorem node4624_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4622 live4622 coloured4622 = result4622)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4623 live4623 coloured4623 = result4623) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4624 live4624 coloured4624 = result4624 := by
+  rw [tree4624_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4622 coloured4622 at child
+  try dsimp only [live4624, coloured4624]
+  rw [child]
+  dsimp only [result4622]
+  have child := child1
+  unfold live4623 coloured4623 at child
+  try dsimp only [live4624, coloured4624]
+  rw [child]
+  dsimp only [result4623]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4625_agree_conditional : tree4625 = literal4625 := by
+  rw [tree4625_def]
+  rfl
+theorem node4625_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4625 live4625 coloured4625 = result4625 := by
+  rw [tree4625_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4626_agree_conditional
+    (child0 : tree4624 = literal4624)
+    (child1 : tree4625 = literal4625) : tree4626 = literal4626 := by
+  rw [tree4626_def, child0, child1]
+  rfl
+theorem node4626_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4624 live4624 coloured4624 = result4624)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4625 live4625 coloured4625 = result4625) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4626 live4626 coloured4626 = result4626 := by
+  rw [tree4626_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4624 coloured4624 at child
+  try dsimp only [live4626, coloured4626]
+  rw [child]
+  dsimp only [result4624]
+  have child := child1
+  unfold live4625 coloured4625 at child
+  try dsimp only [live4626, coloured4626]
+  rw [child]
+  dsimp only [result4625]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4627_agree_conditional : tree4627 = literal4627 := by
+  rw [tree4627_def]
+  rfl
+theorem node4627_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4627 live4627 coloured4627 = result4627 := by
+  rw [tree4627_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4628_agree_conditional
+    (child0 : tree4626 = literal4626)
+    (child1 : tree4627 = literal4627) : tree4628 = literal4628 := by
+  rw [tree4628_def, child0, child1]
+  rfl
+theorem node4628_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4626 live4626 coloured4626 = result4626)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4627 live4627 coloured4627 = result4627) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4628 live4628 coloured4628 = result4628 := by
+  rw [tree4628_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4626 coloured4626 at child
+  try dsimp only [live4628, coloured4628]
+  rw [child]
+  dsimp only [result4626]
+  have child := child1
+  unfold live4627 coloured4627 at child
+  try dsimp only [live4628, coloured4628]
+  rw [child]
+  dsimp only [result4627]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4629_agree_conditional : tree4629 = literal4629 := by
+  rw [tree4629_def]
+  rfl
+theorem node4629_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4629 live4629 coloured4629 = result4629 := by
+  rw [tree4629_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4630_agree_conditional
+    (child0 : tree4628 = literal4628)
+    (child1 : tree4629 = literal4629) : tree4630 = literal4630 := by
+  rw [tree4630_def, child0, child1]
+  rfl
+theorem node4630_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4628 live4628 coloured4628 = result4628)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4629 live4629 coloured4629 = result4629) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4630 live4630 coloured4630 = result4630 := by
+  rw [tree4630_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4628 coloured4628 at child
+  try dsimp only [live4630, coloured4630]
+  rw [child]
+  dsimp only [result4628]
+  have child := child1
+  unfold live4629 coloured4629 at child
+  try dsimp only [live4630, coloured4630]
+  rw [child]
+  dsimp only [result4629]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4631_agree_conditional : tree4631 = literal4631 := by
+  rw [tree4631_def]
+  rfl
+theorem node4631_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4631 live4631 coloured4631 = result4631 := by
+  rw [tree4631_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4632_agree_conditional
+    (child0 : tree4630 = literal4630)
+    (child1 : tree4631 = literal4631) : tree4632 = literal4632 := by
+  rw [tree4632_def, child0, child1]
+  rfl
+theorem node4632_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4630 live4630 coloured4630 = result4630)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4631 live4631 coloured4631 = result4631) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4632 live4632 coloured4632 = result4632 := by
+  rw [tree4632_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4630 coloured4630 at child
+  try dsimp only [live4632, coloured4632]
+  rw [child]
+  dsimp only [result4630]
+  have child := child1
+  unfold live4631 coloured4631 at child
+  try dsimp only [live4632, coloured4632]
+  rw [child]
+  dsimp only [result4631]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4633_agree_conditional : tree4633 = literal4633 := by
+  rw [tree4633_def]
+  rfl
+theorem node4633_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4633 live4633 coloured4633 = result4633 := by
+  rw [tree4633_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4634_agree_conditional
+    (child0 : tree4632 = literal4632)
+    (child1 : tree4633 = literal4633) : tree4634 = literal4634 := by
+  rw [tree4634_def, child0, child1]
+  rfl
+theorem node4634_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4632 live4632 coloured4632 = result4632)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4633 live4633 coloured4633 = result4633) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4634 live4634 coloured4634 = result4634 := by
+  rw [tree4634_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4632 coloured4632 at child
+  try dsimp only [live4634, coloured4634]
+  rw [child]
+  dsimp only [result4632]
+  have child := child1
+  unfold live4633 coloured4633 at child
+  try dsimp only [live4634, coloured4634]
+  rw [child]
+  dsimp only [result4633]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4635_agree_conditional : tree4635 = literal4635 := by
+  rw [tree4635_def]
+  rfl
+theorem node4635_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4635 live4635 coloured4635 = result4635 := by
+  rw [tree4635_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4636_agree_conditional
+    (child0 : tree4634 = literal4634)
+    (child1 : tree4635 = literal4635) : tree4636 = literal4636 := by
+  rw [tree4636_def, child0, child1]
+  rfl
+theorem node4636_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4634 live4634 coloured4634 = result4634)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4635 live4635 coloured4635 = result4635) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4636 live4636 coloured4636 = result4636 := by
+  rw [tree4636_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4634 coloured4634 at child
+  try dsimp only [live4636, coloured4636]
+  rw [child]
+  dsimp only [result4634]
+  have child := child1
+  unfold live4635 coloured4635 at child
+  try dsimp only [live4636, coloured4636]
+  rw [child]
+  dsimp only [result4635]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4637_agree_conditional : tree4637 = literal4637 := by
+  rw [tree4637_def]
+  rfl
+theorem node4637_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4637 live4637 coloured4637 = result4637 := by
+  rw [tree4637_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4638_agree_conditional
+    (child0 : tree4636 = literal4636)
+    (child1 : tree4637 = literal4637) : tree4638 = literal4638 := by
+  rw [tree4638_def, child0, child1]
+  rfl
+theorem node4638_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4636 live4636 coloured4636 = result4636)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4637 live4637 coloured4637 = result4637) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4638 live4638 coloured4638 = result4638 := by
+  rw [tree4638_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4636 coloured4636 at child
+  try dsimp only [live4638, coloured4638]
+  rw [child]
+  dsimp only [result4636]
+  have child := child1
+  unfold live4637 coloured4637 at child
+  try dsimp only [live4638, coloured4638]
+  rw [child]
+  dsimp only [result4637]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4639_agree_conditional : tree4639 = literal4639 := by
+  rw [tree4639_def]
+  rfl
+theorem node4639_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4639 live4639 coloured4639 = result4639 := by
+  rw [tree4639_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4640_agree_conditional
+    (child0 : tree4638 = literal4638)
+    (child1 : tree4639 = literal4639) : tree4640 = literal4640 := by
+  rw [tree4640_def, child0, child1]
+  rfl
+theorem node4640_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4638 live4638 coloured4638 = result4638)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4639 live4639 coloured4639 = result4639) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4640 live4640 coloured4640 = result4640 := by
+  rw [tree4640_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4638 coloured4638 at child
+  try dsimp only [live4640, coloured4640]
+  rw [child]
+  dsimp only [result4638]
+  have child := child1
+  unfold live4639 coloured4639 at child
+  try dsimp only [live4640, coloured4640]
+  rw [child]
+  dsimp only [result4639]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4641_agree_conditional : tree4641 = literal4641 := by
+  rw [tree4641_def]
+  rfl
+theorem node4641_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4641 live4641 coloured4641 = result4641 := by
+  rw [tree4641_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4642_agree_conditional
+    (child0 : tree4640 = literal4640)
+    (child1 : tree4641 = literal4641) : tree4642 = literal4642 := by
+  rw [tree4642_def, child0, child1]
+  rfl
+theorem node4642_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4640 live4640 coloured4640 = result4640)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4641 live4641 coloured4641 = result4641) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4642 live4642 coloured4642 = result4642 := by
+  rw [tree4642_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4640 coloured4640 at child
+  try dsimp only [live4642, coloured4642]
+  rw [child]
+  dsimp only [result4640]
+  have child := child1
+  unfold live4641 coloured4641 at child
+  try dsimp only [live4642, coloured4642]
+  rw [child]
+  dsimp only [result4641]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4643_agree_conditional : tree4643 = literal4643 := by
+  rw [tree4643_def]
+  rfl
+theorem node4643_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4643 live4643 coloured4643 = result4643 := by
+  rw [tree4643_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4644_agree_conditional
+    (child0 : tree4642 = literal4642)
+    (child1 : tree4643 = literal4643) : tree4644 = literal4644 := by
+  rw [tree4644_def, child0, child1]
+  rfl
+theorem node4644_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4642 live4642 coloured4642 = result4642)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4643 live4643 coloured4643 = result4643) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4644 live4644 coloured4644 = result4644 := by
+  rw [tree4644_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4642 coloured4642 at child
+  try dsimp only [live4644, coloured4644]
+  rw [child]
+  dsimp only [result4642]
+  have child := child1
+  unfold live4643 coloured4643 at child
+  try dsimp only [live4644, coloured4644]
+  rw [child]
+  dsimp only [result4643]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4645_agree_conditional : tree4645 = literal4645 := by
+  rw [tree4645_def]
+  rfl
+theorem node4645_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4645 live4645 coloured4645 = result4645 := by
+  rw [tree4645_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4646_agree_conditional
+    (child0 : tree4644 = literal4644)
+    (child1 : tree4645 = literal4645) : tree4646 = literal4646 := by
+  rw [tree4646_def, child0, child1]
+  rfl
+theorem node4646_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4644 live4644 coloured4644 = result4644)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4645 live4645 coloured4645 = result4645) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4646 live4646 coloured4646 = result4646 := by
+  rw [tree4646_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4644 coloured4644 at child
+  try dsimp only [live4646, coloured4646]
+  rw [child]
+  dsimp only [result4644]
+  have child := child1
+  unfold live4645 coloured4645 at child
+  try dsimp only [live4646, coloured4646]
+  rw [child]
+  dsimp only [result4645]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4647_agree_conditional : tree4647 = literal4647 := by
+  rw [tree4647_def]
+  rfl
+theorem node4647_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4647 live4647 coloured4647 = result4647 := by
+  rw [tree4647_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4648_agree_conditional
+    (child0 : tree4646 = literal4646)
+    (child1 : tree4647 = literal4647) : tree4648 = literal4648 := by
+  rw [tree4648_def, child0, child1]
+  rfl
+theorem node4648_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4646 live4646 coloured4646 = result4646)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4647 live4647 coloured4647 = result4647) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4648 live4648 coloured4648 = result4648 := by
+  rw [tree4648_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4646 coloured4646 at child
+  try dsimp only [live4648, coloured4648]
+  rw [child]
+  dsimp only [result4646]
+  have child := child1
+  unfold live4647 coloured4647 at child
+  try dsimp only [live4648, coloured4648]
+  rw [child]
+  dsimp only [result4647]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4649_agree_conditional : tree4649 = literal4649 := by
+  rw [tree4649_def]
+  rfl
+theorem node4649_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4649 live4649 coloured4649 = result4649 := by
+  rw [tree4649_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4650_agree_conditional
+    (child0 : tree4648 = literal4648)
+    (child1 : tree4649 = literal4649) : tree4650 = literal4650 := by
+  rw [tree4650_def, child0, child1]
+  rfl
+theorem node4650_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4648 live4648 coloured4648 = result4648)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4649 live4649 coloured4649 = result4649) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4650 live4650 coloured4650 = result4650 := by
+  rw [tree4650_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4648 coloured4648 at child
+  try dsimp only [live4650, coloured4650]
+  rw [child]
+  dsimp only [result4648]
+  have child := child1
+  unfold live4649 coloured4649 at child
+  try dsimp only [live4650, coloured4650]
+  rw [child]
+  dsimp only [result4649]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4651_agree_conditional : tree4651 = literal4651 := by
+  rw [tree4651_def]
+  rfl
+theorem node4651_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4651 live4651 coloured4651 = result4651 := by
+  rw [tree4651_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4652_agree_conditional
+    (child0 : tree4650 = literal4650)
+    (child1 : tree4651 = literal4651) : tree4652 = literal4652 := by
+  rw [tree4652_def, child0, child1]
+  rfl
+theorem node4652_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4650 live4650 coloured4650 = result4650)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4651 live4651 coloured4651 = result4651) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4652 live4652 coloured4652 = result4652 := by
+  rw [tree4652_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4650 coloured4650 at child
+  try dsimp only [live4652, coloured4652]
+  rw [child]
+  dsimp only [result4650]
+  have child := child1
+  unfold live4651 coloured4651 at child
+  try dsimp only [live4652, coloured4652]
+  rw [child]
+  dsimp only [result4651]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4653_agree_conditional : tree4653 = literal4653 := by
+  rw [tree4653_def]
+  rfl
+theorem node4653_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4653 live4653 coloured4653 = result4653 := by
+  rw [tree4653_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4654_agree_conditional
+    (child0 : tree4652 = literal4652)
+    (child1 : tree4653 = literal4653) : tree4654 = literal4654 := by
+  rw [tree4654_def, child0, child1]
+  rfl
+theorem node4654_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4652 live4652 coloured4652 = result4652)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4653 live4653 coloured4653 = result4653) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4654 live4654 coloured4654 = result4654 := by
+  rw [tree4654_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4652 coloured4652 at child
+  try dsimp only [live4654, coloured4654]
+  rw [child]
+  dsimp only [result4652]
+  have child := child1
+  unfold live4653 coloured4653 at child
+  try dsimp only [live4654, coloured4654]
+  rw [child]
+  dsimp only [result4653]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4655_agree_conditional : tree4655 = literal4655 := by
+  rw [tree4655_def]
+  rfl
+theorem node4655_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4655 live4655 coloured4655 = result4655 := by
+  rw [tree4655_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4656_agree_conditional
+    (child0 : tree4654 = literal4654)
+    (child1 : tree4655 = literal4655) : tree4656 = literal4656 := by
+  rw [tree4656_def, child0, child1]
+  rfl
+theorem node4656_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4654 live4654 coloured4654 = result4654)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4655 live4655 coloured4655 = result4655) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4656 live4656 coloured4656 = result4656 := by
+  rw [tree4656_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4654 coloured4654 at child
+  try dsimp only [live4656, coloured4656]
+  rw [child]
+  dsimp only [result4654]
+  have child := child1
+  unfold live4655 coloured4655 at child
+  try dsimp only [live4656, coloured4656]
+  rw [child]
+  dsimp only [result4655]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4657_agree_conditional : tree4657 = literal4657 := by
+  rw [tree4657_def]
+  rfl
+theorem node4657_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4657 live4657 coloured4657 = result4657 := by
+  rw [tree4657_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4658_agree_conditional
+    (child0 : tree4656 = literal4656)
+    (child1 : tree4657 = literal4657) : tree4658 = literal4658 := by
+  rw [tree4658_def, child0, child1]
+  rfl
+theorem node4658_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4656 live4656 coloured4656 = result4656)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4657 live4657 coloured4657 = result4657) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4658 live4658 coloured4658 = result4658 := by
+  rw [tree4658_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4656 coloured4656 at child
+  try dsimp only [live4658, coloured4658]
+  rw [child]
+  dsimp only [result4656]
+  have child := child1
+  unfold live4657 coloured4657 at child
+  try dsimp only [live4658, coloured4658]
+  rw [child]
+  dsimp only [result4657]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4659_agree_conditional : tree4659 = literal4659 := by
+  rw [tree4659_def]
+  rfl
+theorem node4659_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4659 live4659 coloured4659 = result4659 := by
+  rw [tree4659_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4660_agree_conditional
+    (child0 : tree4658 = literal4658)
+    (child1 : tree4659 = literal4659) : tree4660 = literal4660 := by
+  rw [tree4660_def, child0, child1]
+  rfl
+theorem node4660_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4658 live4658 coloured4658 = result4658)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4659 live4659 coloured4659 = result4659) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4660 live4660 coloured4660 = result4660 := by
+  rw [tree4660_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4658 coloured4658 at child
+  try dsimp only [live4660, coloured4660]
+  rw [child]
+  dsimp only [result4658]
+  have child := child1
+  unfold live4659 coloured4659 at child
+  try dsimp only [live4660, coloured4660]
+  rw [child]
+  dsimp only [result4659]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4661_agree_conditional : tree4661 = literal4661 := by
+  rw [tree4661_def]
+  rfl
+theorem node4661_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4661 live4661 coloured4661 = result4661 := by
+  rw [tree4661_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4662_agree_conditional
+    (child0 : tree4660 = literal4660)
+    (child1 : tree4661 = literal4661) : tree4662 = literal4662 := by
+  rw [tree4662_def, child0, child1]
+  rfl
+theorem node4662_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4660 live4660 coloured4660 = result4660)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4661 live4661 coloured4661 = result4661) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4662 live4662 coloured4662 = result4662 := by
+  rw [tree4662_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4660 coloured4660 at child
+  try dsimp only [live4662, coloured4662]
+  rw [child]
+  dsimp only [result4660]
+  have child := child1
+  unfold live4661 coloured4661 at child
+  try dsimp only [live4662, coloured4662]
+  rw [child]
+  dsimp only [result4661]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4663_agree_conditional : tree4663 = literal4663 := by
+  rw [tree4663_def]
+  rfl
+theorem node4663_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4663 live4663 coloured4663 = result4663 := by
+  rw [tree4663_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4664_agree_conditional
+    (child0 : tree4662 = literal4662)
+    (child1 : tree4663 = literal4663) : tree4664 = literal4664 := by
+  rw [tree4664_def, child0, child1]
+  rfl
+theorem node4664_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4662 live4662 coloured4662 = result4662)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4663 live4663 coloured4663 = result4663) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4664 live4664 coloured4664 = result4664 := by
+  rw [tree4664_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4662 coloured4662 at child
+  try dsimp only [live4664, coloured4664]
+  rw [child]
+  dsimp only [result4662]
+  have child := child1
+  unfold live4663 coloured4663 at child
+  try dsimp only [live4664, coloured4664]
+  rw [child]
+  dsimp only [result4663]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4665_agree_conditional : tree4665 = literal4665 := by
+  rw [tree4665_def]
+  rfl
+theorem node4665_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4665 live4665 coloured4665 = result4665 := by
+  rw [tree4665_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4666_agree_conditional
+    (child0 : tree4664 = literal4664)
+    (child1 : tree4665 = literal4665) : tree4666 = literal4666 := by
+  rw [tree4666_def, child0, child1]
+  rfl
+theorem node4666_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4664 live4664 coloured4664 = result4664)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4665 live4665 coloured4665 = result4665) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4666 live4666 coloured4666 = result4666 := by
+  rw [tree4666_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4664 coloured4664 at child
+  try dsimp only [live4666, coloured4666]
+  rw [child]
+  dsimp only [result4664]
+  have child := child1
+  unfold live4665 coloured4665 at child
+  try dsimp only [live4666, coloured4666]
+  rw [child]
+  dsimp only [result4665]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4667_agree_conditional : tree4667 = literal4667 := by
+  rw [tree4667_def]
+  rfl
+theorem node4667_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4667 live4667 coloured4667 = result4667 := by
+  rw [tree4667_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4668_agree_conditional
+    (child0 : tree4666 = literal4666)
+    (child1 : tree4667 = literal4667) : tree4668 = literal4668 := by
+  rw [tree4668_def, child0, child1]
+  rfl
+theorem node4668_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4666 live4666 coloured4666 = result4666)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4667 live4667 coloured4667 = result4667) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4668 live4668 coloured4668 = result4668 := by
+  rw [tree4668_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4666 coloured4666 at child
+  try dsimp only [live4668, coloured4668]
+  rw [child]
+  dsimp only [result4666]
+  have child := child1
+  unfold live4667 coloured4667 at child
+  try dsimp only [live4668, coloured4668]
+  rw [child]
+  dsimp only [result4667]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4669_agree_conditional : tree4669 = literal4669 := by
+  rw [tree4669_def]
+  rfl
+theorem node4669_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4669 live4669 coloured4669 = result4669 := by
+  rw [tree4669_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4670_agree_conditional
+    (child0 : tree4668 = literal4668)
+    (child1 : tree4669 = literal4669) : tree4670 = literal4670 := by
+  rw [tree4670_def, child0, child1]
+  rfl
+theorem node4670_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4668 live4668 coloured4668 = result4668)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4669 live4669 coloured4669 = result4669) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4670 live4670 coloured4670 = result4670 := by
+  rw [tree4670_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4668 coloured4668 at child
+  try dsimp only [live4670, coloured4670]
+  rw [child]
+  dsimp only [result4668]
+  have child := child1
+  unfold live4669 coloured4669 at child
+  try dsimp only [live4670, coloured4670]
+  rw [child]
+  dsimp only [result4669]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4671_agree_conditional : tree4671 = literal4671 := by
+  rw [tree4671_def]
+  rfl
+theorem node4671_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4671 live4671 coloured4671 = result4671 := by
+  rw [tree4671_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4672_agree_conditional
+    (child0 : tree4670 = literal4670)
+    (child1 : tree4671 = literal4671) : tree4672 = literal4672 := by
+  rw [tree4672_def, child0, child1]
+  rfl
+theorem node4672_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4670 live4670 coloured4670 = result4670)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4671 live4671 coloured4671 = result4671) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4672 live4672 coloured4672 = result4672 := by
+  rw [tree4672_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4670 coloured4670 at child
+  try dsimp only [live4672, coloured4672]
+  rw [child]
+  dsimp only [result4670]
+  have child := child1
+  unfold live4671 coloured4671 at child
+  try dsimp only [live4672, coloured4672]
+  rw [child]
+  dsimp only [result4671]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4673_agree_conditional : tree4673 = literal4673 := by
+  rw [tree4673_def]
+  rfl
+theorem node4673_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4673 live4673 coloured4673 = result4673 := by
+  rw [tree4673_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4674_agree_conditional
+    (child0 : tree4672 = literal4672)
+    (child1 : tree4673 = literal4673) : tree4674 = literal4674 := by
+  rw [tree4674_def, child0, child1]
+  rfl
+theorem node4674_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4672 live4672 coloured4672 = result4672)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4673 live4673 coloured4673 = result4673) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4674 live4674 coloured4674 = result4674 := by
+  rw [tree4674_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4672 coloured4672 at child
+  try dsimp only [live4674, coloured4674]
+  rw [child]
+  dsimp only [result4672]
+  have child := child1
+  unfold live4673 coloured4673 at child
+  try dsimp only [live4674, coloured4674]
+  rw [child]
+  dsimp only [result4673]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4675_agree_conditional : tree4675 = literal4675 := by
+  rw [tree4675_def]
+  rfl
+theorem node4675_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4675 live4675 coloured4675 = result4675 := by
+  rw [tree4675_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4676_agree_conditional
+    (child0 : tree4674 = literal4674)
+    (child1 : tree4675 = literal4675) : tree4676 = literal4676 := by
+  rw [tree4676_def, child0, child1]
+  rfl
+theorem node4676_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4674 live4674 coloured4674 = result4674)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4675 live4675 coloured4675 = result4675) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4676 live4676 coloured4676 = result4676 := by
+  rw [tree4676_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4674 coloured4674 at child
+  try dsimp only [live4676, coloured4676]
+  rw [child]
+  dsimp only [result4674]
+  have child := child1
+  unfold live4675 coloured4675 at child
+  try dsimp only [live4676, coloured4676]
+  rw [child]
+  dsimp only [result4675]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4677_agree_conditional : tree4677 = literal4677 := by
+  rw [tree4677_def]
+  rfl
+theorem node4677_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4677 live4677 coloured4677 = result4677 := by
+  rw [tree4677_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4678_agree_conditional
+    (child0 : tree4676 = literal4676)
+    (child1 : tree4677 = literal4677) : tree4678 = literal4678 := by
+  rw [tree4678_def, child0, child1]
+  rfl
+theorem node4678_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4676 live4676 coloured4676 = result4676)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4677 live4677 coloured4677 = result4677) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4678 live4678 coloured4678 = result4678 := by
+  rw [tree4678_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4676 coloured4676 at child
+  try dsimp only [live4678, coloured4678]
+  rw [child]
+  dsimp only [result4676]
+  have child := child1
+  unfold live4677 coloured4677 at child
+  try dsimp only [live4678, coloured4678]
+  rw [child]
+  dsimp only [result4677]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4679_agree_conditional : tree4679 = literal4679 := by
+  rw [tree4679_def]
+  rfl
+theorem node4679_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4679 live4679 coloured4679 = result4679 := by
+  rw [tree4679_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4680_agree_conditional
+    (child0 : tree4678 = literal4678)
+    (child1 : tree4679 = literal4679) : tree4680 = literal4680 := by
+  rw [tree4680_def, child0, child1]
+  rfl
+theorem node4680_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4678 live4678 coloured4678 = result4678)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4679 live4679 coloured4679 = result4679) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4680 live4680 coloured4680 = result4680 := by
+  rw [tree4680_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4678 coloured4678 at child
+  try dsimp only [live4680, coloured4680]
+  rw [child]
+  dsimp only [result4678]
+  have child := child1
+  unfold live4679 coloured4679 at child
+  try dsimp only [live4680, coloured4680]
+  rw [child]
+  dsimp only [result4679]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4681_agree_conditional : tree4681 = literal4681 := by
+  rw [tree4681_def]
+  rfl
+theorem node4681_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4681 live4681 coloured4681 = result4681 := by
+  rw [tree4681_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4682_agree_conditional
+    (child0 : tree4680 = literal4680)
+    (child1 : tree4681 = literal4681) : tree4682 = literal4682 := by
+  rw [tree4682_def, child0, child1]
+  rfl
+theorem node4682_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4680 live4680 coloured4680 = result4680)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4681 live4681 coloured4681 = result4681) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4682 live4682 coloured4682 = result4682 := by
+  rw [tree4682_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4680 coloured4680 at child
+  try dsimp only [live4682, coloured4682]
+  rw [child]
+  dsimp only [result4680]
+  have child := child1
+  unfold live4681 coloured4681 at child
+  try dsimp only [live4682, coloured4682]
+  rw [child]
+  dsimp only [result4681]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4683_agree_conditional : tree4683 = literal4683 := by
+  rw [tree4683_def]
+  rfl
+theorem node4683_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4683 live4683 coloured4683 = result4683 := by
+  rw [tree4683_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4684_agree_conditional
+    (child0 : tree4682 = literal4682)
+    (child1 : tree4683 = literal4683) : tree4684 = literal4684 := by
+  rw [tree4684_def, child0, child1]
+  rfl
+theorem node4684_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4682 live4682 coloured4682 = result4682)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4683 live4683 coloured4683 = result4683) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4684 live4684 coloured4684 = result4684 := by
+  rw [tree4684_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4682 coloured4682 at child
+  try dsimp only [live4684, coloured4684]
+  rw [child]
+  dsimp only [result4682]
+  have child := child1
+  unfold live4683 coloured4683 at child
+  try dsimp only [live4684, coloured4684]
+  rw [child]
+  dsimp only [result4683]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4685_agree_conditional : tree4685 = literal4685 := by
+  rw [tree4685_def]
+  rfl
+theorem node4685_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4685 live4685 coloured4685 = result4685 := by
+  rw [tree4685_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4686_agree_conditional
+    (child0 : tree4684 = literal4684)
+    (child1 : tree4685 = literal4685) : tree4686 = literal4686 := by
+  rw [tree4686_def, child0, child1]
+  rfl
+theorem node4686_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4684 live4684 coloured4684 = result4684)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4685 live4685 coloured4685 = result4685) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4686 live4686 coloured4686 = result4686 := by
+  rw [tree4686_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4684 coloured4684 at child
+  try dsimp only [live4686, coloured4686]
+  rw [child]
+  dsimp only [result4684]
+  have child := child1
+  unfold live4685 coloured4685 at child
+  try dsimp only [live4686, coloured4686]
+  rw [child]
+  dsimp only [result4685]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4687_agree_conditional : tree4687 = literal4687 := by
+  rw [tree4687_def]
+  rfl
+theorem node4687_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4687 live4687 coloured4687 = result4687 := by
+  rw [tree4687_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4688_agree_conditional
+    (child0 : tree4686 = literal4686)
+    (child1 : tree4687 = literal4687) : tree4688 = literal4688 := by
+  rw [tree4688_def, child0, child1]
+  rfl
+theorem node4688_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4686 live4686 coloured4686 = result4686)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4687 live4687 coloured4687 = result4687) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4688 live4688 coloured4688 = result4688 := by
+  rw [tree4688_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4686 coloured4686 at child
+  try dsimp only [live4688, coloured4688]
+  rw [child]
+  dsimp only [result4686]
+  have child := child1
+  unfold live4687 coloured4687 at child
+  try dsimp only [live4688, coloured4688]
+  rw [child]
+  dsimp only [result4687]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4689_agree_conditional : tree4689 = literal4689 := by
+  rw [tree4689_def]
+  rfl
+theorem node4689_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4689 live4689 coloured4689 = result4689 := by
+  rw [tree4689_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4690_agree_conditional
+    (child0 : tree4688 = literal4688)
+    (child1 : tree4689 = literal4689) : tree4690 = literal4690 := by
+  rw [tree4690_def, child0, child1]
+  rfl
+theorem node4690_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4688 live4688 coloured4688 = result4688)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4689 live4689 coloured4689 = result4689) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4690 live4690 coloured4690 = result4690 := by
+  rw [tree4690_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4688 coloured4688 at child
+  try dsimp only [live4690, coloured4690]
+  rw [child]
+  dsimp only [result4688]
+  have child := child1
+  unfold live4689 coloured4689 at child
+  try dsimp only [live4690, coloured4690]
+  rw [child]
+  dsimp only [result4689]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4691_agree_conditional : tree4691 = literal4691 := by
+  rw [tree4691_def]
+  rfl
+theorem node4691_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4691 live4691 coloured4691 = result4691 := by
+  rw [tree4691_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4692_agree_conditional
+    (child0 : tree4690 = literal4690)
+    (child1 : tree4691 = literal4691) : tree4692 = literal4692 := by
+  rw [tree4692_def, child0, child1]
+  rfl
+theorem node4692_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4690 live4690 coloured4690 = result4690)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4691 live4691 coloured4691 = result4691) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4692 live4692 coloured4692 = result4692 := by
+  rw [tree4692_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4690 coloured4690 at child
+  try dsimp only [live4692, coloured4692]
+  rw [child]
+  dsimp only [result4690]
+  have child := child1
+  unfold live4691 coloured4691 at child
+  try dsimp only [live4692, coloured4692]
+  rw [child]
+  dsimp only [result4691]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4693_agree_conditional : tree4693 = literal4693 := by
+  rw [tree4693_def]
+  rfl
+theorem node4693_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4693 live4693 coloured4693 = result4693 := by
+  rw [tree4693_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4694_agree_conditional
+    (child0 : tree4692 = literal4692)
+    (child1 : tree4693 = literal4693) : tree4694 = literal4694 := by
+  rw [tree4694_def, child0, child1]
+  rfl
+theorem node4694_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4692 live4692 coloured4692 = result4692)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4693 live4693 coloured4693 = result4693) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4694 live4694 coloured4694 = result4694 := by
+  rw [tree4694_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4692 coloured4692 at child
+  try dsimp only [live4694, coloured4694]
+  rw [child]
+  dsimp only [result4692]
+  have child := child1
+  unfold live4693 coloured4693 at child
+  try dsimp only [live4694, coloured4694]
+  rw [child]
+  dsimp only [result4693]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4695_agree_conditional : tree4695 = literal4695 := by
+  rw [tree4695_def]
+  rfl
+theorem node4695_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4695 live4695 coloured4695 = result4695 := by
+  rw [tree4695_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4696_agree_conditional
+    (child0 : tree4694 = literal4694)
+    (child1 : tree4695 = literal4695) : tree4696 = literal4696 := by
+  rw [tree4696_def, child0, child1]
+  rfl
+theorem node4696_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4694 live4694 coloured4694 = result4694)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4695 live4695 coloured4695 = result4695) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4696 live4696 coloured4696 = result4696 := by
+  rw [tree4696_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4694 coloured4694 at child
+  try dsimp only [live4696, coloured4696]
+  rw [child]
+  dsimp only [result4694]
+  have child := child1
+  unfold live4695 coloured4695 at child
+  try dsimp only [live4696, coloured4696]
+  rw [child]
+  dsimp only [result4695]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4697_agree_conditional : tree4697 = literal4697 := by
+  rw [tree4697_def]
+  rfl
+theorem node4697_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4697 live4697 coloured4697 = result4697 := by
+  rw [tree4697_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4698_agree_conditional
+    (child0 : tree4696 = literal4696)
+    (child1 : tree4697 = literal4697) : tree4698 = literal4698 := by
+  rw [tree4698_def, child0, child1]
+  rfl
+theorem node4698_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4696 live4696 coloured4696 = result4696)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4697 live4697 coloured4697 = result4697) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4698 live4698 coloured4698 = result4698 := by
+  rw [tree4698_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4696 coloured4696 at child
+  try dsimp only [live4698, coloured4698]
+  rw [child]
+  dsimp only [result4696]
+  have child := child1
+  unfold live4697 coloured4697 at child
+  try dsimp only [live4698, coloured4698]
+  rw [child]
+  dsimp only [result4697]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4699_agree_conditional : tree4699 = literal4699 := by
+  rw [tree4699_def]
+  rfl
+theorem node4699_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4699 live4699 coloured4699 = result4699 := by
+  rw [tree4699_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4700_agree_conditional
+    (child0 : tree4698 = literal4698)
+    (child1 : tree4699 = literal4699) : tree4700 = literal4700 := by
+  rw [tree4700_def, child0, child1]
+  rfl
+theorem node4700_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4698 live4698 coloured4698 = result4698)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4699 live4699 coloured4699 = result4699) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4700 live4700 coloured4700 = result4700 := by
+  rw [tree4700_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4698 coloured4698 at child
+  try dsimp only [live4700, coloured4700]
+  rw [child]
+  dsimp only [result4698]
+  have child := child1
+  unfold live4699 coloured4699 at child
+  try dsimp only [live4700, coloured4700]
+  rw [child]
+  dsimp only [result4699]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4701_agree_conditional : tree4701 = literal4701 := by
+  rw [tree4701_def]
+  rfl
+theorem node4701_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4701 live4701 coloured4701 = result4701 := by
+  rw [tree4701_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4702_agree_conditional
+    (child0 : tree4700 = literal4700)
+    (child1 : tree4701 = literal4701) : tree4702 = literal4702 := by
+  rw [tree4702_def, child0, child1]
+  rfl
+theorem node4702_eq_conditional
+    (child0 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4700 live4700 coloured4700 = result4700)
+    (child1 : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4701 live4701 coloured4701 = result4701) : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4702 live4702 coloured4702 = result4702 := by
+  rw [tree4702_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := child0
+  unfold live4700 coloured4700 at child
+  try dsimp only [live4702, coloured4702]
+  rw [child]
+  dsimp only [result4700]
+  have child := child1
+  unfold live4701 coloured4701 at child
+  try dsimp only [live4702, coloured4702]
+  rw [child]
+  dsimp only [result4701]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+theorem tree4703_agree_conditional : tree4703 = literal4703 := by
+  rw [tree4703_def]
+  rfl
+theorem node4703_eq_conditional : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree4703 live4703 coloured4703 = result4703 := by
+  rw [tree4703_def]
+  try simp only [Flapjack.RegAlloc.checkClashTree]
+  all_goals kernel_rfl
+end InitECandidate.Proofs.ClashStages713

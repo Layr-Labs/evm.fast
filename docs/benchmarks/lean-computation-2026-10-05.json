@@ -1,0 +1,677 @@
+{
+  "utf8": {
+    "family": "utf8",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "utf8_baseline_256",
+        "size": 256,
+        "shortcut": false,
+        "exit_code": 0,
+        "wall_seconds": 20.328,
+        "user_seconds": 9.44,
+        "system_seconds": 0.37,
+        "peak_rss_kib": 2210408,
+        "log": "utf8_baseline_256.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Quot.sound]"
+        ]
+      },
+      {
+        "name": "utf8_shortcut_256",
+        "size": 256,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 0.717,
+        "user_seconds": 0.38,
+        "system_seconds": 0.32,
+        "peak_rss_kib": 1614464,
+        "log": "utf8_shortcut_256.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Quot.sound]"
+        ]
+      },
+      {
+        "name": "utf8_baseline_1024",
+        "size": 1024,
+        "shortcut": false,
+        "exit_code": 124,
+        "wall_seconds": 30.081,
+        "user_seconds": 29.72,
+        "system_seconds": 0.35,
+        "peak_rss_kib": 2641172,
+        "log": "utf8_baseline_1024.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "utf8_shortcut_1024",
+        "size": 1024,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 0.875,
+        "user_seconds": 0.54,
+        "system_seconds": 0.32,
+        "peak_rss_kib": 1660036,
+        "log": "utf8_shortcut_1024.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Quot.sound]"
+        ]
+      },
+      {
+        "name": "utf8_baseline_4096",
+        "size": 4096,
+        "shortcut": false,
+        "exit_code": 124,
+        "wall_seconds": 30.08,
+        "user_seconds": 29.71,
+        "system_seconds": 0.36,
+        "peak_rss_kib": 2278884,
+        "log": "utf8_baseline_4096.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "utf8_shortcut_4096",
+        "size": 4096,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 1.528,
+        "user_seconds": 1.2,
+        "system_seconds": 0.31,
+        "peak_rss_kib": 1851116,
+        "log": "utf8_shortcut_4096.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Quot.sound]"
+        ]
+      },
+      {
+        "name": "utf8_baseline_16384",
+        "size": 16384,
+        "shortcut": false,
+        "exit_code": 124,
+        "wall_seconds": 30.081,
+        "user_seconds": 29.59,
+        "system_seconds": 0.48,
+        "peak_rss_kib": 2142400,
+        "log": "utf8_baseline_16384.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "utf8_shortcut_16384",
+        "size": 16384,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 4.837,
+        "user_seconds": 4.45,
+        "system_seconds": 0.38,
+        "peak_rss_kib": 2616960,
+        "log": "utf8_shortcut_16384.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Quot.sound]"
+        ]
+      }
+    ]
+  },
+  "compiler": {
+    "family": "compiler",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "expression_depth": 32,
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "compiler_baseline_1",
+        "size": 1,
+        "shortcut": false,
+        "exit_code": 1,
+        "wall_seconds": 11.847,
+        "user_seconds": 11.1,
+        "system_seconds": 0.73,
+        "peak_rss_kib": 2822096,
+        "log": "compiler_baseline_1.log",
+        "status": "failed"
+      },
+      {
+        "name": "compiler_shortcut_1",
+        "size": 1,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 27.209,
+        "user_seconds": 26.17,
+        "system_seconds": 1.02,
+        "peak_rss_kib": 5901136,
+        "log": "compiler_shortcut_1.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "compiler_baseline_4",
+        "size": 4,
+        "shortcut": false,
+        "exit_code": 1,
+        "wall_seconds": 11.733,
+        "user_seconds": 11.02,
+        "system_seconds": 0.7,
+        "peak_rss_kib": 2785288,
+        "log": "compiler_baseline_4.log",
+        "status": "failed"
+      },
+      {
+        "name": "compiler_shortcut_4",
+        "size": 4,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 27.994,
+        "user_seconds": 26.91,
+        "system_seconds": 1.07,
+        "peak_rss_kib": 6033480,
+        "log": "compiler_shortcut_4.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "compiler_baseline_16",
+        "size": 16,
+        "shortcut": false,
+        "exit_code": 1,
+        "wall_seconds": 11.826,
+        "user_seconds": 11.1,
+        "system_seconds": 0.71,
+        "peak_rss_kib": 2779672,
+        "log": "compiler_baseline_16.log",
+        "status": "failed"
+      },
+      {
+        "name": "compiler_shortcut_16",
+        "size": 16,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.122,
+        "user_seconds": 29.09,
+        "system_seconds": 1.01,
+        "peak_rss_kib": 6476940,
+        "log": "compiler_shortcut_16.log",
+        "status": "timed_out"
+      }
+    ]
+  },
+  "compiler_pure_larger": {
+    "family": "compiler",
+    "cpu": 0,
+    "timeout_seconds": 60,
+    "expression_depth": 32,
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "compiler_shortcut_16",
+        "size": 16,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 30.723,
+        "user_seconds": 29.64,
+        "system_seconds": 1.07,
+        "peak_rss_kib": 6462864,
+        "log": "compiler_shortcut_16.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "compiler_shortcut_64",
+        "size": 64,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 44.976,
+        "user_seconds": 43.77,
+        "system_seconds": 1.19,
+        "peak_rss_kib": 8678184,
+        "log": "compiler_shortcut_64.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      }
+    ]
+  },
+  "metadata_distinct_bodies": {
+    "family": "metadata",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "expression_depth": 128,
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "metadata_baseline_8",
+        "size": 8,
+        "shortcut": false,
+        "exit_code": 0,
+        "wall_seconds": 1.312,
+        "user_seconds": 0.96,
+        "system_seconds": 0.34,
+        "peak_rss_kib": 1713132,
+        "log": "metadata_baseline_8.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "metadata_shortcut_8",
+        "size": 8,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 1.226,
+        "user_seconds": 0.88,
+        "system_seconds": 0.33,
+        "peak_rss_kib": 1715028,
+        "log": "metadata_shortcut_8.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "metadata_baseline_32",
+        "size": 32,
+        "shortcut": false,
+        "exit_code": 0,
+        "wall_seconds": 3.387,
+        "user_seconds": 3.05,
+        "system_seconds": 0.32,
+        "peak_rss_kib": 1944012,
+        "log": "metadata_baseline_32.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "metadata_shortcut_32",
+        "size": 32,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 2.988,
+        "user_seconds": 2.64,
+        "system_seconds": 0.34,
+        "peak_rss_kib": 1881980,
+        "log": "metadata_shortcut_32.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "metadata_baseline_128",
+        "size": 128,
+        "shortcut": false,
+        "exit_code": 0,
+        "wall_seconds": 16.742,
+        "user_seconds": 16.12,
+        "system_seconds": 0.61,
+        "peak_rss_kib": 2917480,
+        "log": "metadata_baseline_128.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "metadata_shortcut_128",
+        "size": 128,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 14.226,
+        "user_seconds": 13.72,
+        "system_seconds": 0.49,
+        "peak_rss_kib": 2665860,
+        "log": "metadata_shortcut_128.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      }
+    ]
+  },
+  "distinct_names_quadratic_fingerprints": {
+    "family": "distinct",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "expression_depth": 0,
+    "batch": 1,
+    "elab_async": "yes",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "distinct_baseline_64",
+        "size": 64,
+        "shortcut": false,
+        "exit_code": 0,
+        "wall_seconds": 29.288,
+        "user_seconds": 28.85,
+        "system_seconds": 0.42,
+        "peak_rss_kib": 3706832,
+        "log": "distinct_baseline_64.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_64",
+        "size": 64,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 5.207,
+        "user_seconds": 4.84,
+        "system_seconds": 0.36,
+        "peak_rss_kib": 2884036,
+        "log": "distinct_shortcut_64.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_baseline_128",
+        "size": 128,
+        "shortcut": false,
+        "exit_code": 124,
+        "wall_seconds": 30.084,
+        "user_seconds": 29.7,
+        "system_seconds": 0.37,
+        "peak_rss_kib": 2986616,
+        "log": "distinct_baseline_128.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "distinct_shortcut_128",
+        "size": 128,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 11.713,
+        "user_seconds": 11.23,
+        "system_seconds": 0.47,
+        "peak_rss_kib": 4190040,
+        "log": "distinct_shortcut_128.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_baseline_256",
+        "size": 256,
+        "shortcut": false,
+        "exit_code": 124,
+        "wall_seconds": 30.077,
+        "user_seconds": 29.68,
+        "system_seconds": 0.39,
+        "peak_rss_kib": 2990872,
+        "log": "distinct_baseline_256.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "distinct_shortcut_256",
+        "size": 256,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.098,
+        "user_seconds": 29.49,
+        "system_seconds": 0.59,
+        "peak_rss_kib": 7164992,
+        "log": "distinct_shortcut_256.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "distinct_baseline_512",
+        "size": 512,
+        "shortcut": false,
+        "exit_code": 1,
+        "wall_seconds": 0.328,
+        "user_seconds": 0.11,
+        "system_seconds": 0.21,
+        "peak_rss_kib": 559388,
+        "log": "distinct_baseline_512.log",
+        "status": "failed"
+      },
+      {
+        "name": "distinct_shortcut_512",
+        "size": 512,
+        "shortcut": true,
+        "exit_code": 1,
+        "wall_seconds": 0.325,
+        "user_seconds": 0.11,
+        "system_seconds": 0.2,
+        "peak_rss_kib": 559436,
+        "log": "distinct_shortcut_512.log",
+        "status": "failed"
+      }
+    ],
+    "note": "The 512-name cases failed because the helper was being rebuilt; those two failures are not performance results."
+  },
+  "distinct_names_sorted_fingerprints": {
+    "family": "distinct",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "expression_depth": 0,
+    "batch": 1,
+    "elab_async": "yes",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "distinct_shortcut_64",
+        "size": 64,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 4.799,
+        "user_seconds": 4.39,
+        "system_seconds": 0.4,
+        "peak_rss_kib": 2819968,
+        "log": "distinct_shortcut_64.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_128",
+        "size": 128,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 9.16,
+        "user_seconds": 8.72,
+        "system_seconds": 0.43,
+        "peak_rss_kib": 4081348,
+        "log": "distinct_shortcut_128.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_256",
+        "size": 256,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 19.206,
+        "user_seconds": 18.58,
+        "system_seconds": 0.61,
+        "peak_rss_kib": 6577812,
+        "log": "distinct_shortcut_256.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_512",
+        "size": 512,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.174,
+        "user_seconds": 29.07,
+        "system_seconds": 1.09,
+        "peak_rss_kib": 11542360,
+        "log": "distinct_shortcut_512.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "distinct_shortcut_1024",
+        "size": 1024,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.104,
+        "user_seconds": 29.39,
+        "system_seconds": 0.7,
+        "peak_rss_kib": 9085500,
+        "log": "distinct_shortcut_1024.log",
+        "status": "timed_out"
+      }
+    ]
+  },
+  "distinct_names_projected": {
+    "family": "distinct",
+    "cpu": 0,
+    "timeout_seconds": 30,
+    "expression_depth": 0,
+    "batch": 1,
+    "elab_async": "yes",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "distinct_shortcut_64",
+        "size": 64,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 4.554,
+        "user_seconds": 4.15,
+        "system_seconds": 0.4,
+        "peak_rss_kib": 2822872,
+        "log": "distinct_shortcut_64.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_128",
+        "size": 128,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 9.012,
+        "user_seconds": 8.54,
+        "system_seconds": 0.46,
+        "peak_rss_kib": 4031852,
+        "log": "distinct_shortcut_128.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_256",
+        "size": 256,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 19.031,
+        "user_seconds": 18.06,
+        "system_seconds": 0.96,
+        "peak_rss_kib": 6521732,
+        "log": "distinct_shortcut_256.log",
+        "status": "passed",
+        "axioms": [
+          "'measured' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      },
+      {
+        "name": "distinct_shortcut_512",
+        "size": 512,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.169,
+        "user_seconds": 28.98,
+        "system_seconds": 1.17,
+        "peak_rss_kib": 11458876,
+        "log": "distinct_shortcut_512.log",
+        "status": "timed_out"
+      },
+      {
+        "name": "distinct_shortcut_1024",
+        "size": 1024,
+        "shortcut": true,
+        "exit_code": 124,
+        "wall_seconds": 30.109,
+        "user_seconds": 29.36,
+        "system_seconds": 0.74,
+        "peak_rss_kib": 10713616,
+        "log": "distinct_shortcut_1024.log",
+        "status": "timed_out"
+      }
+    ]
+  },
+  "compiler_batch_async": {
+    "family": "compiler",
+    "cpu": 0,
+    "timeout_seconds": 90,
+    "expression_depth": 32,
+    "batch": 2,
+    "elab_async": "yes",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "compiler_shortcut_1",
+        "size": 1,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 40.935,
+        "user_seconds": 39.53,
+        "system_seconds": 1.39,
+        "peak_rss_kib": 6089808,
+        "log": "compiler_shortcut_1.log",
+        "status": "passed",
+        "axioms": [
+          "'measured_0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+          "'measured_1' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      }
+    ]
+  },
+  "compiler_batch_serial": {
+    "family": "compiler",
+    "cpu": 0,
+    "timeout_seconds": 90,
+    "expression_depth": 32,
+    "batch": 2,
+    "elab_async": "no",
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "cases": [
+      {
+        "name": "compiler_shortcut_1",
+        "size": 1,
+        "shortcut": true,
+        "exit_code": 0,
+        "wall_seconds": 39.943,
+        "user_seconds": 38.61,
+        "system_seconds": 1.32,
+        "peak_rss_kib": 5923900,
+        "log": "compiler_shortcut_1.log",
+        "status": "passed",
+        "axioms": [
+          "'measured_0' depends on axioms: [propext, Classical.choice, Quot.sound]",
+          "'measured_1' depends on axioms: [propext, Classical.choice, Quot.sound]"
+        ]
+      }
+    ]
+  }
+}

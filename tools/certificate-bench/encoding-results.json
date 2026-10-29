@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "function": 461,
+    "count": 256,
+    "distinct": 128,
+    "source_sha256": {
+      "InitE/BackendStages/Filtered461.lean": "b68bc96231bbc080b51ef26cd6597c5206412c7ccdcf9d990e95579c46e02cd4",
+      "InitE/BackendStages/Encoded461.lean": "84d3cacedbce2f4611a3722089607c0d7969807b5f5989ea6fa871af72dcaeaf"
+    },
+    "scope": "Ordered ordinary-asm subsequence of actual Filtered/Encoded function; excludes labels and jumps. Complete cache and source/target bridges are exported."
+  },
+  "measurements": [
+    {
+      "case": "EncodingData",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 2.1925008530088235,
+      "user": 1.84,
+      "system": 0.35,
+      "peak_kib": 1813364.0,
+      "artifact_bytes": 254032,
+      "log": ""
+    },
+    {
+      "case": "Original",
+      "trial": 0,
+      "exit": 0,
+      "wall": 0.8912158220191486,
+      "user": 0.55,
+      "system": 0.33,
+      "peak_kib": 1769992.0,
+      "artifact_bytes": 5136,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Reused",
+      "trial": 0,
+      "exit": 0,
+      "wall": 1.9923001460265368,
+      "user": 1.62,
+      "system": 0.41,
+      "peak_kib": 1841232.0,
+      "artifact_bytes": 714680,
+      "log": "'EncodingReuse.certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Reused",
+      "trial": 1,
+      "exit": 0,
+      "wall": 1.9343481899995822,
+      "user": 1.62,
+      "system": 0.36,
+      "peak_kib": 1840848.0,
+      "artifact_bytes": 714680,
+      "log": "'EncodingReuse.certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Original",
+      "trial": 1,
+      "exit": 0,
+      "wall": 0.907975901995087,
+      "user": 0.57,
+      "system": 0.32,
+      "peak_kib": 1772176.0,
+      "artifact_bytes": 5136,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Original",
+      "trial": 2,
+      "exit": 0,
+      "wall": 0.8795369709841907,
+      "user": 0.53,
+      "system": 0.34,
+      "peak_kib": 1770412.0,
+      "artifact_bytes": 5136,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Reused",
+      "trial": 2,
+      "exit": 0,
+      "wall": 1.9259480919863563,
+      "user": 1.59,
+      "system": 0.38,
+      "peak_kib": 1840320.0,
+      "artifact_bytes": 714680,
+      "log": "'EncodingReuse.certificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "OriginalReplay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 1.2678102909994777,
+      "user": 0.92,
+      "system": 0.33,
+      "peak_kib": 1612380.0,
+      "artifact_bytes": 3030497,
+      "log": "parse_ms=339, replay_ms=165, constants=1414, kernel=accepted\n"
+    },
+    {
+      "case": "ReusedReplay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 1.4766699730244,
+      "user": 1.14,
+      "system": 0.33,
+      "peak_kib": 1593824.0,
+      "artifact_bytes": 3470501,
+      "log": "parse_ms=422, replay_ms=301, constants=2560, kernel=accepted\n"
+    },
+    {
+      "case": "ReusedReplay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 1.4813315809878986,
+      "user": 1.17,
+      "system": 0.31,
+      "peak_kib": 1592924.0,
+      "artifact_bytes": 3470501,
+      "log": "parse_ms=431, replay_ms=303, constants=2560, kernel=accepted\n"
+    },
+    {
+      "case": "OriginalReplay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 1.271963267994579,
+      "user": 0.95,
+      "system": 0.31,
+      "peak_kib": 1611184.0,
+      "artifact_bytes": 3030497,
+      "log": "parse_ms=344, replay_ms=164, constants=1414, kernel=accepted\n"
+    },
+    {
+      "case": "OriginalReplay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 1.2840068869991228,
+      "user": 0.94,
+      "system": 0.33,
+      "peak_kib": 1611732.0,
+      "artifact_bytes": 3030497,
+      "log": "parse_ms=343, replay_ms=164, constants=1414, kernel=accepted\n"
+    },
+    {
+      "case": "ReusedReplay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 1.48329225400812,
+      "user": 1.15,
+      "system": 0.31,
+      "peak_kib": 1593472.0,
+      "artifact_bytes": 3470501,
+      "log": "parse_ms=432, replay_ms=298, constants=2560, kernel=accepted\n"
+    }
+  ]
+}

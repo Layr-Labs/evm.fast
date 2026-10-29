@@ -1,0 +1,42 @@
+/* Smoke test for the accelerators that use CakeML's foreign-call convention.
+   One @keccakf and one @sha256f call on known inputs; the results are written to
+   the output region; tools/accel-ffi-smoke.py runs the compiled program on spike_run
+   and compares the output with hashlib. */
+fun 1 main() {
+  var p = @base;
+  var i = 0;
+  while i < 25 {
+    st p + i * 8, 0;
+    i = i + 1;
+  }
+  /* SHA3-256 padding block of the empty message: byte 0 = 0x06, byte 135 = 0x80 */
+  st p, 6;
+  st p + 128, -9223372036854775808;
+  @keccakf(p, 0, p, 200);
+  i = 0;
+  while i < 4 {
+    !stw 2688614400 + i * 8, lds 1 (p + i * 8);
+    i = i + 1;
+  }
+  /* one SHA-256 compression of the padded block of "abc" from the IV */
+  var q = @base + 4096;
+  st q + 0, -4942790177982912921;
+  st q + 8, -6534734903820487822;
+  st q + 16, -7276294671082564993;
+  st q + 24, 6620516960021240235;
+  st q + 32, 2153996897;
+  st q + 40, 0;
+  st q + 48, 0;
+  st q + 56, 0;
+  st q + 64, 0;
+  st q + 72, 0;
+  st q + 80, 0;
+  st q + 88, 1729382256910270464;
+  @sha256f(q, 0, q, 96);
+  i = 0;
+  while i < 4 {
+    !stw 2688614400 + 32 + i * 8, lds 1 (q + i * 8);
+    i = i + 1;
+  }
+  return 0;
+}

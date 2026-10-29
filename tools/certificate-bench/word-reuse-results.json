@@ -1,0 +1,160 @@
+{
+  "scope": "Actual paired guest optimizer certificates, full exported dependency closure, two alternating kernel replay trials each. Common dependencies prebuilt for scoped module compilation; no cold full-build timing claim.",
+  "baseline_revisions": [
+    "b2d063a22",
+    "7704dcf16"
+  ],
+  "baseline_revision_note": "Word source bodies and original optimizer proofs are the same in these revisions; original scoped compilation sources were read from git HEAD before this reuse implementation.",
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "existing_data_definitions_and_theorem_statements": "unchanged",
+  "kernel_replay": [
+    {
+      "pair": [
+        225,
+        649
+      ],
+      "mode": "Before",
+      "trial": 0,
+      "parse_ms": 6315,
+      "replay_ms": 7980,
+      "constants": 9247,
+      "cpu_seconds": 15.090000000000002,
+      "kernel": "accepted",
+      "export_bytes": 52110828
+    },
+    {
+      "pair": [
+        225,
+        649
+      ],
+      "mode": "Before",
+      "trial": 1,
+      "parse_ms": 6356,
+      "replay_ms": 7964,
+      "constants": 9247,
+      "cpu_seconds": 15.120000000000001,
+      "kernel": "accepted",
+      "export_bytes": 52110828
+    },
+    {
+      "pair": [
+        225,
+        649
+      ],
+      "mode": "Fused",
+      "trial": 0,
+      "parse_ms": 6248,
+      "replay_ms": 6824,
+      "constants": 8680,
+      "cpu_seconds": 13.85,
+      "kernel": "accepted",
+      "export_bytes": 51955615
+    },
+    {
+      "pair": [
+        225,
+        649
+      ],
+      "mode": "Fused",
+      "trial": 1,
+      "parse_ms": 6467,
+      "replay_ms": 6644,
+      "constants": 8680,
+      "cpu_seconds": 13.909999999999998,
+      "kernel": "accepted",
+      "export_bytes": 51955615
+    },
+    {
+      "pair": [
+        226,
+        650
+      ],
+      "mode": "Before",
+      "trial": 0,
+      "parse_ms": 6394,
+      "replay_ms": 8529,
+      "constants": 9267,
+      "cpu_seconds": 15.72,
+      "kernel": "accepted",
+      "export_bytes": 52128706
+    },
+    {
+      "pair": [
+        226,
+        650
+      ],
+      "mode": "Before",
+      "trial": 1,
+      "parse_ms": 6339,
+      "replay_ms": 8179,
+      "constants": 9267,
+      "cpu_seconds": 15.33,
+      "kernel": "accepted",
+      "export_bytes": 52128706
+    },
+    {
+      "pair": [
+        226,
+        650
+      ],
+      "mode": "Fused",
+      "trial": 0,
+      "parse_ms": 6340,
+      "replay_ms": 7009,
+      "constants": 8654,
+      "cpu_seconds": 14.15,
+      "kernel": "accepted",
+      "export_bytes": 51958281
+    },
+    {
+      "pair": [
+        226,
+        650
+      ],
+      "mode": "Fused",
+      "trial": 1,
+      "parse_ms": 6316,
+      "replay_ms": 7081,
+      "constants": 8654,
+      "cpu_seconds": 14.17,
+      "kernel": "accepted",
+      "export_bytes": 51958281
+    }
+  ],
+  "build_accounting": {
+    "original_module_cpu": 18.15,
+    "shared_module_cpu": 15.6,
+    "original_modules": 10,
+    "shared_modules": 11,
+    "scope": "Sequential direct module compilation with already built common dependencies. Original versions built from git HEAD; new versions include shared OracleReuse setup. Not a cold full-build timing.",
+    "original": {
+      "Original-SmallStages-Compact650-Exact.build.time": 1.24,
+      "Original-WordStages-Optimize649.build.time": 1.58,
+      "Original-SmallStages-Compact650-Complete.build.time": 1.3599999999999999,
+      "Original-SmallStages-Compact649-Exact.build.time": 1.4,
+      "Original-WordStages-Optimize226.build.time": 3.7800000000000002,
+      "Original-WordStages-Optimize650.build.time": 1.5,
+      "Original-WordStages-Optimize225.build.time": 2.86,
+      "Original-SmallStages-Compact650-Pass10.build.time": 1.4,
+      "Original-SmallStages-Compact649-Complete.build.time": 1.63,
+      "Original-SmallStages-Compact649-Pass10.build.time": 1.4
+    },
+    "shared": {
+      "WordStages-OracleReuse.build.time": 1.12,
+      "SmallStages-Compact649-Pass10.build.time": 1.33,
+      "Fused-SmallStages-Compact649-Complete.build.time": 1.92,
+      "Fused-SmallStages-Compact649-Exact.build.time": 1.11,
+      "Fused-WordStages-Optimize649.build.time": 1.28,
+      "Fused-WordStages-Optimize225.build.time": 1.2999999999999998,
+      "SmallStages-Compact650-Pass10.build.time": 1.71,
+      "Fused-SmallStages-Compact650-Complete.build.time": 2.1,
+      "Fused-SmallStages-Compact650-Exact.build.time": 1.1400000000000001,
+      "Fused-WordStages-Optimize650.build.time": 1.29,
+      "Fused-WordStages-Optimize226.build.time": 1.3
+    }
+  }
+}

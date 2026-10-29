@@ -1,0 +1,502 @@
+{
+  "metadata": {
+    "source_sha256": {
+      "submission/InitECandidate/Proofs/WordStages/Source79.lean": "8c60d0c4edcea8f36e18e0266fa6422c9f787c3c3b350ce3014713cd832f205b",
+      "submission/InitECandidate/Proofs/WordStages/Optimize79.lean": "996dd5a1fdcd95d6cd0af1bea581ddd6a82d154d776c850dc17021872fa9956c",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_0.lean": "e85544852b2261bf5ed37891d0a020f10d635e900a82bcf2f37e94bed2964fd1",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_1.lean": "ccd2f3d3eb41176ca1ce438edeeeffce812ca726c3e68ef186f4f41fd9e7435c",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_2.lean": "275f669d188db5528ea4184a98680ea29f9dbaaf108c2113533ed99580b3013c",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_3.lean": "7023256e24a7e46a69c45f820f5337ba2f82c49bc6bb8c578f7399f489b3bfc9",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_4.lean": "654bd07cfc84e92c5955bf691d20d1362ce2454a61d37a6bc40ebaa6aedf7bbe",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_5.lean": "542546435277f158d9c94d56866b0f3db99099fb75215ca80095455ab7257232",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_6.lean": "50b68d5dcd653ce5f6a0003d8e2afef5cdc22e92fdf67116b2c175b0d9d76b89",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_7.lean": "2e5d2506085987d8a570a9c7a0557acd88026a2f7ba3f5112161a4849cdf58b6",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_8.lean": "83db3f531ccb266672fd8832dddef2953071459bf9b1cd7e054174c6abbb1b4a",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_9.lean": "30800bc11c81b09a00e972a39addfd420e90b370f4ca4da2246342e64272add9",
+      "submission/InitECandidate/Proofs/WordStages/Pass79_10.lean": "98baac71ff0c7ff82d87b9b9395f3517cb3e7103f0a7ca644c3a67f9013da3cc"
+    },
+    "scope": "one optimizer, function 79; no whole submission replay",
+    "runner": "work/lean-perf/value-sharing-native/compare-replay",
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "base_revision": "ea78cf9af"
+  },
+  "rows": [
+    {
+      "case": "Challenge79",
+      "phase": "build",
+      "wall": 1.7408045420015696,
+      "exit": 0,
+      "log": "/home/zksecurity/trim-space/init-e/work/lean-perf/representative-profile/Challenge79.lean:7:8: warning: declaration uses `sorry`\n"
+    },
+    {
+      "case": "Challenge79",
+      "phase": "export",
+      "wall": 2.545668543985812,
+      "exit": 0,
+      "log": "",
+      "bytes": 47399882
+    },
+    {
+      "case": "Original79",
+      "phase": "build",
+      "wall": 1.73639824098791,
+      "exit": 0,
+      "log": ""
+    },
+    {
+      "case": "Original79",
+      "phase": "export",
+      "wall": 3.7860343730135355,
+      "exit": 0,
+      "log": "",
+      "bytes": 87455624
+    },
+    {
+      "case": "Direct79",
+      "phase": "build",
+      "wall": 21.613866033992963,
+      "exit": 0,
+      "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "case": "Direct79",
+      "phase": "export",
+      "wall": 2.5255073830194306,
+      "exit": 0,
+      "log": "",
+      "bytes": 47396859
+    },
+    {
+      "case": "Bundle79",
+      "phase": "build",
+      "wall": 19.290670673013665,
+      "exit": 0,
+      "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "case": "Bundle79",
+      "phase": "export",
+      "wall": 3.807468226994388,
+      "exit": 0,
+      "log": "",
+      "bytes": 87461168
+    },
+    {
+      "case": "CompactBundle79",
+      "phase": "build",
+      "wall": 21.64526491399738,
+      "exit": 0,
+      "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "case": "CompactBundle79",
+      "phase": "export",
+      "wall": 2.839534503989853,
+      "exit": 0,
+      "log": "",
+      "bytes": 59055459
+    },
+    {
+      "case": "Original79",
+      "phase": "compare0",
+      "wall": 30.829057285009185,
+      "exit": 0,
+      "log": "parse_ms=2440, compare_ms=696, replay_ms=27554, constants=38055, comparator=accepted\n",
+      "parse_ms": 2440,
+      "compare_ms": 696,
+      "replay_ms": 27554,
+      "constants": 38055
+    },
+    {
+      "case": "Direct79",
+      "phase": "compare0",
+      "wall": 25.389011669001775,
+      "exit": 0,
+      "log": "parse_ms=1750, compare_ms=493, replay_ms=23052, constants=9003, comparator=accepted\n",
+      "parse_ms": 1750,
+      "compare_ms": 493,
+      "replay_ms": 23052,
+      "constants": 9003
+    },
+    {
+      "case": "Bundle79",
+      "phase": "compare0",
+      "wall": 29.76308804299333,
+      "exit": 0,
+      "log": "parse_ms=2415, compare_ms=693, replay_ms=26517, constants=38044, comparator=accepted\n",
+      "parse_ms": 2415,
+      "compare_ms": 693,
+      "replay_ms": 26517,
+      "constants": 38044
+    },
+    {
+      "case": "CompactBundle79",
+      "phase": "compare0",
+      "wall": 26.374597031011945,
+      "exit": 0,
+      "log": "parse_ms=1949, compare_ms=533, replay_ms=23788, constants=18421, comparator=accepted\n",
+      "parse_ms": 1949,
+      "compare_ms": 533,
+      "replay_ms": 23788,
+      "constants": 18421
+    },
+    {
+      "case": "Direct79",
+      "phase": "compare1",
+      "wall": 25.340938280016417,
+      "exit": 0,
+      "log": "parse_ms=1728, compare_ms=490, replay_ms=23029, constants=9003, comparator=accepted\n",
+      "parse_ms": 1728,
+      "compare_ms": 490,
+      "replay_ms": 23029,
+      "constants": 9003
+    },
+    {
+      "case": "Bundle79",
+      "phase": "compare1",
+      "wall": 29.911155131005216,
+      "exit": 0,
+      "log": "parse_ms=2429, compare_ms=695, replay_ms=26652, constants=38044, comparator=accepted\n",
+      "parse_ms": 2429,
+      "compare_ms": 695,
+      "replay_ms": 26652,
+      "constants": 38044
+    },
+    {
+      "case": "CompactBundle79",
+      "phase": "compare1",
+      "wall": 26.408000437018927,
+      "exit": 0,
+      "log": "parse_ms=1947, compare_ms=538, replay_ms=23817, constants=18421, comparator=accepted\n",
+      "parse_ms": 1947,
+      "compare_ms": 538,
+      "replay_ms": 23817,
+      "constants": 18421
+    },
+    {
+      "case": "Original79",
+      "phase": "compare1",
+      "wall": 30.91311257999041,
+      "exit": 0,
+      "log": "parse_ms=2421, compare_ms=691, replay_ms=27665, constants=38055, comparator=accepted\n",
+      "parse_ms": 2421,
+      "compare_ms": 691,
+      "replay_ms": 27665,
+      "constants": 38055
+    },
+    {
+      "case": "Bundle79",
+      "phase": "compare2",
+      "wall": 29.788685979990987,
+      "exit": 0,
+      "log": "parse_ms=2430, compare_ms=699, replay_ms=26523, constants=38044, comparator=accepted\n",
+      "parse_ms": 2430,
+      "compare_ms": 699,
+      "replay_ms": 26523,
+      "constants": 38044
+    },
+    {
+      "case": "CompactBundle79",
+      "phase": "compare2",
+      "wall": 26.45725900499383,
+      "exit": 0,
+      "log": "parse_ms=1964, compare_ms=532, replay_ms=23855, constants=18421, comparator=accepted\n",
+      "parse_ms": 1964,
+      "compare_ms": 532,
+      "replay_ms": 23855,
+      "constants": 18421
+    },
+    {
+      "case": "Original79",
+      "phase": "compare2",
+      "wall": 30.889216437004507,
+      "exit": 0,
+      "log": "parse_ms=2414, compare_ms=689, replay_ms=27648, constants=38055, comparator=accepted\n",
+      "parse_ms": 2414,
+      "compare_ms": 689,
+      "replay_ms": 27648,
+      "constants": 38055
+    },
+    {
+      "case": "Direct79",
+      "phase": "compare2",
+      "wall": 25.32448059800663,
+      "exit": 0,
+      "log": "parse_ms=1751, compare_ms=488, replay_ms=22988, constants=9003, comparator=accepted\n",
+      "parse_ms": 1751,
+      "compare_ms": 488,
+      "replay_ms": 22988,
+      "constants": 9003
+    }
+  ],
+  "small_group_screen": {
+    "metadata": {
+      "base_revision": "ea78cf9af4e84d8985a9495705d380ff619f98ce",
+      "labels": [
+        156,
+        746,
+        855
+      ],
+      "variants": [
+        "Original",
+        "Direct",
+        "DirectSsa"
+      ],
+      "trials": 1,
+      "timeout": 90,
+      "source_sha256": {
+        "submission/InitECandidate/Proofs/WordStages/Optimize156.lean": "be7c5ecb59982a2e0650c0d947fe6332629464edeb87f1e51dffe45fdffc0bf3",
+        "submission/InitECandidate/Proofs/WordStages/Source156.lean": "3c3cf554ef8c25e628f9600417afb3dcb4ee70d5cd46757ef5fdb36452c6a89c",
+        "submission/InitECandidate/Proofs/WordStages/Optimize746.lean": "33e962ca723e3410b3643439b1bb3f657b81c335472d90520c03da1e463dd2fc",
+        "submission/InitECandidate/Proofs/WordStages/Source746.lean": "97f48f0f640746bd44bb97a627dac0b8496e0d9039921361aaf1a9dce1ad19e7",
+        "submission/InitECandidate/Proofs/WordStages/Optimize855.lean": "c80a74d50c2850a85fda21d12981d34e48c61e909a92681978e88ff4204714e4",
+        "submission/InitECandidate/Proofs/WordStages/Source855.lean": "f6bbc55a4a30885be3fe3b1e45712606b4748509a0ed86addfa0ccb1fded2e40"
+      },
+      "toolchain": "leanprover/lean4:v4.33.1",
+      "native_object_sha256": {
+        "verifier/.tools/comparator/.lake/build/ir/Comparator/Axioms.c.o.export": "4e427cd5d9f3bc0515ce1559b9331a9f395ee952662c3695b4b90f1e0b662c24",
+        "verifier/.tools/comparator/.lake/build/ir/Comparator/Compare.c.o.export": "4d1a8cef4794856f152e08c73ea15003c66db2ab64ea7a30abc9ee1ac6b9483c",
+        "verifier/.tools/comparator/.lake/build/ir/Comparator/Util.c.o.export": "447bb85e446b3d8202f200169a2e92c89409aea9f9341506ae232c149359b1a9",
+        "verifier/.tools/comparator/.lake/build/ir/Comparator.c.o.export": "48a0b8e68ad0309b10cdd1bf704f714b19469e0f719bfea1dffaccb1485d76ad",
+        "verifier/.tools/comparator/.lake/packages/lean4export/.lake/build/ir/Export/Parse.c.o.export": "bffc486078b2947c20d3604082e436802957d172bb47fdcbb36fbd32d02235c1",
+        "verifier/.tools/comparator/.lake/packages/lean4export/.lake/build/ir/Export.c.o.export": "d6c02eeabbf39c4e344bb5bded90ba9e6bf5870e645bbf7498b17b460529608b"
+      }
+    },
+    "rows": [
+      {
+        "case": "Runner",
+        "phase": "generate-c",
+        "trial": 0,
+        "wall": 0.7090508629917167,
+        "exit": 0,
+        "log": "",
+        "user": 0.43,
+        "system": 0.27,
+        "peak_kib": 1613076.0
+      },
+      {
+        "case": "Runner",
+        "phase": "link",
+        "trial": 0,
+        "wall": 0.5812738520035055,
+        "exit": 0,
+        "log": "",
+        "user": 0.74,
+        "system": 0.69,
+        "peak_kib": 869648.0
+      },
+      {
+        "case": "Challenge",
+        "phase": "build",
+        "trial": 0,
+        "wall": 1.208086058992194,
+        "exit": 0,
+        "log": "/home/zksecurity/trim-space/init-e/work/lean-perf/optimizer-boundaries-small/Challenge.lean:21:8: warning: declaration uses `sorry`\n",
+        "user": 0.69,
+        "system": 0.51,
+        "peak_kib": 2496244.0
+      },
+      {
+        "case": "Challenge",
+        "phase": "export",
+        "trial": 0,
+        "wall": 2.4678166750236414,
+        "exit": 0,
+        "log": "",
+        "user": 1.84,
+        "system": 0.62,
+        "peak_kib": 2473588.0,
+        "artifact_bytes": 47270623
+      },
+      {
+        "case": "Original",
+        "phase": "build",
+        "trial": 0,
+        "wall": 1.3898298470012378,
+        "exit": 0,
+        "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+        "user": 0.85,
+        "system": 0.53,
+        "peak_kib": 2562252.0
+      },
+      {
+        "case": "Original",
+        "phase": "export",
+        "trial": 0,
+        "wall": 2.642349692003336,
+        "exit": 0,
+        "log": "",
+        "user": 2.0,
+        "system": 0.63,
+        "peak_kib": 2480192.0,
+        "artifact_bytes": 53034611
+      },
+      {
+        "case": "Direct",
+        "phase": "build",
+        "trial": 0,
+        "wall": 6.54558245599037,
+        "exit": 0,
+        "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+        "user": 5.99,
+        "system": 0.54,
+        "peak_kib": 3629712.0
+      },
+      {
+        "case": "Direct",
+        "phase": "export",
+        "trial": 0,
+        "wall": 2.4748846809961833,
+        "exit": 0,
+        "log": "",
+        "user": 1.87,
+        "system": 0.59,
+        "peak_kib": 2472228.0,
+        "artifact_bytes": 47268583
+      },
+      {
+        "case": "DirectSsa",
+        "phase": "build",
+        "trial": 0,
+        "wall": 6.663215606997255,
+        "exit": 0,
+        "log": "'certificate' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+        "user": 6.06,
+        "system": 0.59,
+        "peak_kib": 3632360.0
+      },
+      {
+        "case": "DirectSsa",
+        "phase": "export",
+        "trial": 0,
+        "wall": 2.5783040350070223,
+        "exit": 0,
+        "log": "",
+        "user": 1.96,
+        "system": 0.6,
+        "peak_kib": 2479384.0,
+        "artifact_bytes": 51989830
+      },
+      {
+        "case": "Original",
+        "phase": "compare",
+        "trial": 0,
+        "wall": 13.613009377993876,
+        "exit": 0,
+        "log": "parse_ms=1838, compare_ms=503, replay_ms=11185, constants=11668, comparator=accepted\n",
+        "user": 13.45,
+        "system": 0.15,
+        "peak_kib": 505644.0,
+        "parse_ms": 1838,
+        "compare_ms": 503,
+        "replay_ms": 11185,
+        "constants": 11668
+      },
+      {
+        "case": "Direct",
+        "phase": "compare",
+        "trial": 0,
+        "wall": 12.452805559005355,
+        "exit": 0,
+        "log": "parse_ms=1764, compare_ms=489, replay_ms=10121, constants=8449, comparator=accepted\n",
+        "user": 12.3,
+        "system": 0.14,
+        "peak_kib": 1291608.0,
+        "parse_ms": 1764,
+        "compare_ms": 489,
+        "replay_ms": 10121,
+        "constants": 8449
+      },
+      {
+        "case": "DirectSsa",
+        "phase": "compare",
+        "trial": 0,
+        "wall": 12.819990453019273,
+        "exit": 0,
+        "log": "parse_ms=1845, compare_ms=492, replay_ms=10403, constants=8567, comparator=accepted\n",
+        "user": 12.69,
+        "system": 0.12,
+        "peak_kib": 1293620.0,
+        "parse_ms": 1845,
+        "compare_ms": 492,
+        "replay_ms": 10403,
+        "constants": 8567
+      },
+      {
+        "case": "Runner",
+        "phase": "reject-axiom",
+        "trial": 0,
+        "wall": 2.128056260989979,
+        "exit": 1,
+        "log": "uncaught exception: Illegal axiom detected: 'sorryAx'\n",
+        "user": 2.09,
+        "system": 0.03,
+        "peak_kib": 204304.0
+      }
+    ]
+  },
+  "production_validation": [
+    {
+      "case": "build-production",
+      "wall": 22.850581687001977,
+      "exit": 0,
+      "log": "'InitECandidate.Proofs.WordStages.optimize79_eq' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+      "user": 21.75,
+      "system": 1.15,
+      "peak_kib": 8470764.0
+    },
+    {
+      "case": "build-generator",
+      "wall": 6.658795061986893,
+      "exit": 0,
+      "log": "",
+      "user": 5.81,
+      "system": 0.89,
+      "peak_kib": 2933436.0
+    },
+    {
+      "case": "build-consumer",
+      "wall": 1.8027247069985606,
+      "exit": 0,
+      "log": "",
+      "user": 1.03,
+      "system": 0.81,
+      "peak_kib": 2728752.0
+    },
+    {
+      "case": "export-production",
+      "wall": 2.4908973420097027,
+      "exit": 0,
+      "log": "",
+      "user": 1.9,
+      "system": 0.58,
+      "peak_kib": 2658860.0
+    },
+    {
+      "case": "compare-original",
+      "wall": 32.34342845500214,
+      "exit": 0,
+      "log": "parse_ms=3169, compare_ms=745, replay_ms=28284, constants=38054, comparator=accepted\n",
+      "user": 31.95,
+      "system": 0.38,
+      "peak_kib": 1545592.0,
+      "parse_ms": 3169,
+      "compare_ms": 745,
+      "replay_ms": 28284,
+      "constants": 38054
+    },
+    {
+      "case": "compare-production",
+      "wall": 26.233942519989796,
+      "exit": 0,
+      "log": "parse_ms=2501, compare_ms=561, replay_ms=23071, constants=9003, comparator=accepted\n",
+      "user": 25.77,
+      "system": 0.45,
+      "peak_kib": 6052540.0,
+      "parse_ms": 2501,
+      "compare_ms": 561,
+      "replay_ms": 23071,
+      "constants": 9003
+    }
+  ]
+}
