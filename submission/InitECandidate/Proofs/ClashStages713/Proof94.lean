@@ -1,0 +1,1304 @@
+import InitECandidate.Proofs.ClashStages713.Proof93
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option cbv.maxSteps 1000000000
+set_option cbv.warning false
+namespace InitECandidate.Proofs.ClashStages713
+theorem tree9024_agree : tree9024 = literal9024 := by
+  rw [tree9024_def, tree9022_agree, tree9023_agree]
+  rfl
+theorem node9024_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9024 live9024 coloured9024 = result9024 := by
+  rw [tree9024_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9022_eq
+  unfold live9022 coloured9022 at child
+  try dsimp only [live9024, coloured9024]
+  rw [child]
+  dsimp only [result9022]
+  have child := node9023_eq
+  unfold live9023 coloured9023 at child
+  try dsimp only [live9024, coloured9024]
+  rw [child]
+  dsimp only [result9023]
+  try dsimp only [colour, result9024]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9025_agree : tree9025 = literal9025 := by
+  rw [tree9025_def]
+  rfl
+theorem node9025_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9025 live9025 coloured9025 = result9025 := by
+  rw [tree9025_def]
+  try dsimp only [colour, result9025]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9026_agree : tree9026 = literal9026 := by
+  rw [tree9026_def, tree9024_agree, tree9025_agree]
+  rfl
+theorem node9026_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9026 live9026 coloured9026 = result9026 := by
+  rw [tree9026_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9024_eq
+  unfold live9024 coloured9024 at child
+  try dsimp only [live9026, coloured9026]
+  rw [child]
+  dsimp only [result9024]
+  have child := node9025_eq
+  unfold live9025 coloured9025 at child
+  try dsimp only [live9026, coloured9026]
+  rw [child]
+  dsimp only [result9025]
+  try dsimp only [colour, result9026]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9027_agree : tree9027 = literal9027 := by
+  rw [tree9027_def]
+  rfl
+theorem node9027_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9027 live9027 coloured9027 = result9027 := by
+  rw [tree9027_def]
+  try dsimp only [colour, result9027]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9028_agree : tree9028 = literal9028 := by
+  rw [tree9028_def, tree9026_agree, tree9027_agree]
+  rfl
+theorem node9028_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9028 live9028 coloured9028 = result9028 := by
+  rw [tree9028_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9026_eq
+  unfold live9026 coloured9026 at child
+  try dsimp only [live9028, coloured9028]
+  rw [child]
+  dsimp only [result9026]
+  have child := node9027_eq
+  unfold live9027 coloured9027 at child
+  try dsimp only [live9028, coloured9028]
+  rw [child]
+  dsimp only [result9027]
+  try dsimp only [colour, result9028]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9029_agree : tree9029 = literal9029 := by
+  rw [tree9029_def]
+  rfl
+theorem node9029_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9029 live9029 coloured9029 = result9029 := by
+  rw [tree9029_def]
+  try dsimp only [colour, result9029]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9030_agree : tree9030 = literal9030 := by
+  rw [tree9030_def, tree9028_agree, tree9029_agree]
+  rfl
+theorem node9030_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9030 live9030 coloured9030 = result9030 := by
+  rw [tree9030_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9028_eq
+  unfold live9028 coloured9028 at child
+  try dsimp only [live9030, coloured9030]
+  rw [child]
+  dsimp only [result9028]
+  have child := node9029_eq
+  unfold live9029 coloured9029 at child
+  try dsimp only [live9030, coloured9030]
+  rw [child]
+  dsimp only [result9029]
+  try dsimp only [colour, result9030]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9031_agree : tree9031 = literal9031 := by
+  rw [tree9031_def]
+  rfl
+theorem node9031_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9031 live9031 coloured9031 = result9031 := by
+  rw [tree9031_def]
+  try dsimp only [colour, result9031]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9032_agree : tree9032 = literal9032 := by
+  rw [tree9032_def, tree9030_agree, tree9031_agree]
+  rfl
+theorem node9032_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9032 live9032 coloured9032 = result9032 := by
+  rw [tree9032_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9030_eq
+  unfold live9030 coloured9030 at child
+  try dsimp only [live9032, coloured9032]
+  rw [child]
+  dsimp only [result9030]
+  have child := node9031_eq
+  unfold live9031 coloured9031 at child
+  try dsimp only [live9032, coloured9032]
+  rw [child]
+  dsimp only [result9031]
+  try dsimp only [colour, result9032]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9033_agree : tree9033 = literal9033 := by
+  rw [tree9033_def]
+  rfl
+theorem node9033_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9033 live9033 coloured9033 = result9033 := by
+  rw [tree9033_def]
+  try dsimp only [colour, result9033]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9034_agree : tree9034 = literal9034 := by
+  rw [tree9034_def, tree9032_agree, tree9033_agree]
+  rfl
+theorem node9034_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9034 live9034 coloured9034 = result9034 := by
+  rw [tree9034_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9032_eq
+  unfold live9032 coloured9032 at child
+  try dsimp only [live9034, coloured9034]
+  rw [child]
+  dsimp only [result9032]
+  have child := node9033_eq
+  unfold live9033 coloured9033 at child
+  try dsimp only [live9034, coloured9034]
+  rw [child]
+  dsimp only [result9033]
+  try dsimp only [colour, result9034]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9035_agree : tree9035 = literal9035 := by
+  rw [tree9035_def]
+  rfl
+theorem node9035_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9035 live9035 coloured9035 = result9035 := by
+  rw [tree9035_def]
+  try dsimp only [colour, result9035]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9036_agree : tree9036 = literal9036 := by
+  rw [tree9036_def, tree9034_agree, tree9035_agree]
+  rfl
+theorem node9036_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9036 live9036 coloured9036 = result9036 := by
+  rw [tree9036_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9034_eq
+  unfold live9034 coloured9034 at child
+  try dsimp only [live9036, coloured9036]
+  rw [child]
+  dsimp only [result9034]
+  have child := node9035_eq
+  unfold live9035 coloured9035 at child
+  try dsimp only [live9036, coloured9036]
+  rw [child]
+  dsimp only [result9035]
+  try dsimp only [colour, result9036]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9037_agree : tree9037 = literal9037 := by
+  rw [tree9037_def]
+  rfl
+theorem node9037_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9037 live9037 coloured9037 = result9037 := by
+  rw [tree9037_def]
+  try dsimp only [colour, result9037]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9038_agree : tree9038 = literal9038 := by
+  rw [tree9038_def, tree9036_agree, tree9037_agree]
+  rfl
+theorem node9038_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9038 live9038 coloured9038 = result9038 := by
+  rw [tree9038_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9036_eq
+  unfold live9036 coloured9036 at child
+  try dsimp only [live9038, coloured9038]
+  rw [child]
+  dsimp only [result9036]
+  have child := node9037_eq
+  unfold live9037 coloured9037 at child
+  try dsimp only [live9038, coloured9038]
+  rw [child]
+  dsimp only [result9037]
+  try dsimp only [colour, result9038]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9039_agree : tree9039 = literal9039 := by
+  rw [tree9039_def]
+  rfl
+theorem node9039_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9039 live9039 coloured9039 = result9039 := by
+  rw [tree9039_def]
+  try dsimp only [colour, result9039]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9040_agree : tree9040 = literal9040 := by
+  rw [tree9040_def, tree9038_agree, tree9039_agree]
+  rfl
+theorem node9040_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9040 live9040 coloured9040 = result9040 := by
+  rw [tree9040_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9038_eq
+  unfold live9038 coloured9038 at child
+  try dsimp only [live9040, coloured9040]
+  rw [child]
+  dsimp only [result9038]
+  have child := node9039_eq
+  unfold live9039 coloured9039 at child
+  try dsimp only [live9040, coloured9040]
+  rw [child]
+  dsimp only [result9039]
+  try dsimp only [colour, result9040]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9041_agree : tree9041 = literal9041 := by
+  rw [tree9041_def]
+  rfl
+theorem node9041_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9041 live9041 coloured9041 = result9041 := by
+  rw [tree9041_def]
+  try dsimp only [colour, result9041]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9042_agree : tree9042 = literal9042 := by
+  rw [tree9042_def, tree9040_agree, tree9041_agree]
+  rfl
+theorem node9042_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9042 live9042 coloured9042 = result9042 := by
+  rw [tree9042_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9040_eq
+  unfold live9040 coloured9040 at child
+  try dsimp only [live9042, coloured9042]
+  rw [child]
+  dsimp only [result9040]
+  have child := node9041_eq
+  unfold live9041 coloured9041 at child
+  try dsimp only [live9042, coloured9042]
+  rw [child]
+  dsimp only [result9041]
+  try dsimp only [colour, result9042]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9043_agree : tree9043 = literal9043 := by
+  rw [tree9043_def]
+  rfl
+theorem node9043_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9043 live9043 coloured9043 = result9043 := by
+  rw [tree9043_def]
+  try dsimp only [colour, result9043]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9044_agree : tree9044 = literal9044 := by
+  rw [tree9044_def, tree9042_agree, tree9043_agree]
+  rfl
+theorem node9044_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9044 live9044 coloured9044 = result9044 := by
+  rw [tree9044_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9042_eq
+  unfold live9042 coloured9042 at child
+  try dsimp only [live9044, coloured9044]
+  rw [child]
+  dsimp only [result9042]
+  have child := node9043_eq
+  unfold live9043 coloured9043 at child
+  try dsimp only [live9044, coloured9044]
+  rw [child]
+  dsimp only [result9043]
+  try dsimp only [colour, result9044]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9045_agree : tree9045 = literal9045 := by
+  rw [tree9045_def]
+  rfl
+theorem node9045_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9045 live9045 coloured9045 = result9045 := by
+  rw [tree9045_def]
+  try dsimp only [colour, result9045]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9046_agree : tree9046 = literal9046 := by
+  rw [tree9046_def, tree9044_agree, tree9045_agree]
+  rfl
+theorem node9046_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9046 live9046 coloured9046 = result9046 := by
+  rw [tree9046_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9044_eq
+  unfold live9044 coloured9044 at child
+  try dsimp only [live9046, coloured9046]
+  rw [child]
+  dsimp only [result9044]
+  have child := node9045_eq
+  unfold live9045 coloured9045 at child
+  try dsimp only [live9046, coloured9046]
+  rw [child]
+  dsimp only [result9045]
+  try dsimp only [colour, result9046]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9047_agree : tree9047 = literal9047 := by
+  rw [tree9047_def]
+  rfl
+theorem node9047_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9047 live9047 coloured9047 = result9047 := by
+  rw [tree9047_def]
+  try dsimp only [colour, result9047]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9048_agree : tree9048 = literal9048 := by
+  rw [tree9048_def, tree9046_agree, tree9047_agree]
+  rfl
+theorem node9048_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9048 live9048 coloured9048 = result9048 := by
+  rw [tree9048_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9046_eq
+  unfold live9046 coloured9046 at child
+  try dsimp only [live9048, coloured9048]
+  rw [child]
+  dsimp only [result9046]
+  have child := node9047_eq
+  unfold live9047 coloured9047 at child
+  try dsimp only [live9048, coloured9048]
+  rw [child]
+  dsimp only [result9047]
+  try dsimp only [colour, result9048]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9049_agree : tree9049 = literal9049 := by
+  rw [tree9049_def]
+  rfl
+theorem node9049_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9049 live9049 coloured9049 = result9049 := by
+  rw [tree9049_def]
+  try dsimp only [colour, result9049]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9050_agree : tree9050 = literal9050 := by
+  rw [tree9050_def, tree9048_agree, tree9049_agree]
+  rfl
+theorem node9050_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9050 live9050 coloured9050 = result9050 := by
+  rw [tree9050_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9048_eq
+  unfold live9048 coloured9048 at child
+  try dsimp only [live9050, coloured9050]
+  rw [child]
+  dsimp only [result9048]
+  have child := node9049_eq
+  unfold live9049 coloured9049 at child
+  try dsimp only [live9050, coloured9050]
+  rw [child]
+  dsimp only [result9049]
+  try dsimp only [colour, result9050]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9051_agree : tree9051 = literal9051 := by
+  rw [tree9051_def]
+  rfl
+theorem node9051_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9051 live9051 coloured9051 = result9051 := by
+  rw [tree9051_def]
+  try dsimp only [colour, result9051]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9052_agree : tree9052 = literal9052 := by
+  rw [tree9052_def, tree9050_agree, tree9051_agree]
+  rfl
+theorem node9052_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9052 live9052 coloured9052 = result9052 := by
+  rw [tree9052_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9050_eq
+  unfold live9050 coloured9050 at child
+  try dsimp only [live9052, coloured9052]
+  rw [child]
+  dsimp only [result9050]
+  have child := node9051_eq
+  unfold live9051 coloured9051 at child
+  try dsimp only [live9052, coloured9052]
+  rw [child]
+  dsimp only [result9051]
+  try dsimp only [colour, result9052]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9053_agree : tree9053 = literal9053 := by
+  rw [tree9053_def]
+  rfl
+theorem node9053_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9053 live9053 coloured9053 = result9053 := by
+  rw [tree9053_def]
+  try dsimp only [colour, result9053]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9054_agree : tree9054 = literal9054 := by
+  rw [tree9054_def, tree9052_agree, tree9053_agree]
+  rfl
+theorem node9054_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9054 live9054 coloured9054 = result9054 := by
+  rw [tree9054_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9052_eq
+  unfold live9052 coloured9052 at child
+  try dsimp only [live9054, coloured9054]
+  rw [child]
+  dsimp only [result9052]
+  have child := node9053_eq
+  unfold live9053 coloured9053 at child
+  try dsimp only [live9054, coloured9054]
+  rw [child]
+  dsimp only [result9053]
+  try dsimp only [colour, result9054]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9055_agree : tree9055 = literal9055 := by
+  rw [tree9055_def]
+  rfl
+theorem node9055_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9055 live9055 coloured9055 = result9055 := by
+  rw [tree9055_def]
+  try dsimp only [colour, result9055]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9056_agree : tree9056 = literal9056 := by
+  rw [tree9056_def, tree9054_agree, tree9055_agree]
+  rfl
+theorem node9056_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9056 live9056 coloured9056 = result9056 := by
+  rw [tree9056_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9054_eq
+  unfold live9054 coloured9054 at child
+  try dsimp only [live9056, coloured9056]
+  rw [child]
+  dsimp only [result9054]
+  have child := node9055_eq
+  unfold live9055 coloured9055 at child
+  try dsimp only [live9056, coloured9056]
+  rw [child]
+  dsimp only [result9055]
+  try dsimp only [colour, result9056]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9057_agree : tree9057 = literal9057 := by
+  rw [tree9057_def]
+  rfl
+theorem node9057_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9057 live9057 coloured9057 = result9057 := by
+  rw [tree9057_def]
+  try dsimp only [colour, result9057]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9058_agree : tree9058 = literal9058 := by
+  rw [tree9058_def, tree9056_agree, tree9057_agree]
+  rfl
+theorem node9058_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9058 live9058 coloured9058 = result9058 := by
+  rw [tree9058_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9056_eq
+  unfold live9056 coloured9056 at child
+  try dsimp only [live9058, coloured9058]
+  rw [child]
+  dsimp only [result9056]
+  have child := node9057_eq
+  unfold live9057 coloured9057 at child
+  try dsimp only [live9058, coloured9058]
+  rw [child]
+  dsimp only [result9057]
+  try dsimp only [colour, result9058]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9059_agree : tree9059 = literal9059 := by
+  rw [tree9059_def]
+  rfl
+theorem node9059_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9059 live9059 coloured9059 = result9059 := by
+  rw [tree9059_def]
+  try dsimp only [colour, result9059]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9060_agree : tree9060 = literal9060 := by
+  rw [tree9060_def, tree9058_agree, tree9059_agree]
+  rfl
+theorem node9060_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9060 live9060 coloured9060 = result9060 := by
+  rw [tree9060_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9058_eq
+  unfold live9058 coloured9058 at child
+  try dsimp only [live9060, coloured9060]
+  rw [child]
+  dsimp only [result9058]
+  have child := node9059_eq
+  unfold live9059 coloured9059 at child
+  try dsimp only [live9060, coloured9060]
+  rw [child]
+  dsimp only [result9059]
+  try dsimp only [colour, result9060]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9061_agree : tree9061 = literal9061 := by
+  rw [tree9061_def]
+  rfl
+theorem node9061_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9061 live9061 coloured9061 = result9061 := by
+  rw [tree9061_def]
+  try dsimp only [colour, result9061]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9062_agree : tree9062 = literal9062 := by
+  rw [tree9062_def, tree9060_agree, tree9061_agree]
+  rfl
+theorem node9062_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9062 live9062 coloured9062 = result9062 := by
+  rw [tree9062_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9060_eq
+  unfold live9060 coloured9060 at child
+  try dsimp only [live9062, coloured9062]
+  rw [child]
+  dsimp only [result9060]
+  have child := node9061_eq
+  unfold live9061 coloured9061 at child
+  try dsimp only [live9062, coloured9062]
+  rw [child]
+  dsimp only [result9061]
+  try dsimp only [colour, result9062]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9063_agree : tree9063 = literal9063 := by
+  rw [tree9063_def]
+  rfl
+theorem node9063_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9063 live9063 coloured9063 = result9063 := by
+  rw [tree9063_def]
+  try dsimp only [colour, result9063]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9064_agree : tree9064 = literal9064 := by
+  rw [tree9064_def, tree9062_agree, tree9063_agree]
+  rfl
+theorem node9064_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9064 live9064 coloured9064 = result9064 := by
+  rw [tree9064_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9062_eq
+  unfold live9062 coloured9062 at child
+  try dsimp only [live9064, coloured9064]
+  rw [child]
+  dsimp only [result9062]
+  have child := node9063_eq
+  unfold live9063 coloured9063 at child
+  try dsimp only [live9064, coloured9064]
+  rw [child]
+  dsimp only [result9063]
+  try dsimp only [colour, result9064]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9065_agree : tree9065 = literal9065 := by
+  rw [tree9065_def]
+  rfl
+theorem node9065_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9065 live9065 coloured9065 = result9065 := by
+  rw [tree9065_def]
+  try dsimp only [colour, result9065]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9066_agree : tree9066 = literal9066 := by
+  rw [tree9066_def, tree9064_agree, tree9065_agree]
+  rfl
+theorem node9066_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9066 live9066 coloured9066 = result9066 := by
+  rw [tree9066_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9064_eq
+  unfold live9064 coloured9064 at child
+  try dsimp only [live9066, coloured9066]
+  rw [child]
+  dsimp only [result9064]
+  have child := node9065_eq
+  unfold live9065 coloured9065 at child
+  try dsimp only [live9066, coloured9066]
+  rw [child]
+  dsimp only [result9065]
+  try dsimp only [colour, result9066]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9067_agree : tree9067 = literal9067 := by
+  rw [tree9067_def]
+  rfl
+theorem node9067_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9067 live9067 coloured9067 = result9067 := by
+  rw [tree9067_def]
+  try dsimp only [colour, result9067]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9068_agree : tree9068 = literal9068 := by
+  rw [tree9068_def, tree9066_agree, tree9067_agree]
+  rfl
+theorem node9068_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9068 live9068 coloured9068 = result9068 := by
+  rw [tree9068_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9066_eq
+  unfold live9066 coloured9066 at child
+  try dsimp only [live9068, coloured9068]
+  rw [child]
+  dsimp only [result9066]
+  have child := node9067_eq
+  unfold live9067 coloured9067 at child
+  try dsimp only [live9068, coloured9068]
+  rw [child]
+  dsimp only [result9067]
+  try dsimp only [colour, result9068]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9069_agree : tree9069 = literal9069 := by
+  rw [tree9069_def]
+  rfl
+theorem node9069_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9069 live9069 coloured9069 = result9069 := by
+  rw [tree9069_def]
+  try dsimp only [colour, result9069]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9070_agree : tree9070 = literal9070 := by
+  rw [tree9070_def, tree9068_agree, tree9069_agree]
+  rfl
+theorem node9070_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9070 live9070 coloured9070 = result9070 := by
+  rw [tree9070_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9068_eq
+  unfold live9068 coloured9068 at child
+  try dsimp only [live9070, coloured9070]
+  rw [child]
+  dsimp only [result9068]
+  have child := node9069_eq
+  unfold live9069 coloured9069 at child
+  try dsimp only [live9070, coloured9070]
+  rw [child]
+  dsimp only [result9069]
+  try dsimp only [colour, result9070]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9071_agree : tree9071 = literal9071 := by
+  rw [tree9071_def]
+  rfl
+theorem node9071_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9071 live9071 coloured9071 = result9071 := by
+  rw [tree9071_def]
+  try dsimp only [colour, result9071]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9072_agree : tree9072 = literal9072 := by
+  rw [tree9072_def, tree9070_agree, tree9071_agree]
+  rfl
+theorem node9072_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9072 live9072 coloured9072 = result9072 := by
+  rw [tree9072_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9070_eq
+  unfold live9070 coloured9070 at child
+  try dsimp only [live9072, coloured9072]
+  rw [child]
+  dsimp only [result9070]
+  have child := node9071_eq
+  unfold live9071 coloured9071 at child
+  try dsimp only [live9072, coloured9072]
+  rw [child]
+  dsimp only [result9071]
+  try dsimp only [colour, result9072]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9073_agree : tree9073 = literal9073 := by
+  rw [tree9073_def]
+  rfl
+theorem node9073_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9073 live9073 coloured9073 = result9073 := by
+  rw [tree9073_def]
+  try dsimp only [colour, result9073]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9074_agree : tree9074 = literal9074 := by
+  rw [tree9074_def, tree9072_agree, tree9073_agree]
+  rfl
+theorem node9074_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9074 live9074 coloured9074 = result9074 := by
+  rw [tree9074_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9072_eq
+  unfold live9072 coloured9072 at child
+  try dsimp only [live9074, coloured9074]
+  rw [child]
+  dsimp only [result9072]
+  have child := node9073_eq
+  unfold live9073 coloured9073 at child
+  try dsimp only [live9074, coloured9074]
+  rw [child]
+  dsimp only [result9073]
+  try dsimp only [colour, result9074]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9075_agree : tree9075 = literal9075 := by
+  rw [tree9075_def]
+  rfl
+theorem node9075_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9075 live9075 coloured9075 = result9075 := by
+  rw [tree9075_def]
+  try dsimp only [colour, result9075]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9076_agree : tree9076 = literal9076 := by
+  rw [tree9076_def, tree9074_agree, tree9075_agree]
+  rfl
+theorem node9076_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9076 live9076 coloured9076 = result9076 := by
+  rw [tree9076_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9074_eq
+  unfold live9074 coloured9074 at child
+  try dsimp only [live9076, coloured9076]
+  rw [child]
+  dsimp only [result9074]
+  have child := node9075_eq
+  unfold live9075 coloured9075 at child
+  try dsimp only [live9076, coloured9076]
+  rw [child]
+  dsimp only [result9075]
+  try dsimp only [colour, result9076]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9077_agree : tree9077 = literal9077 := by
+  rw [tree9077_def]
+  rfl
+theorem node9077_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9077 live9077 coloured9077 = result9077 := by
+  rw [tree9077_def]
+  try dsimp only [colour, result9077]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9078_agree : tree9078 = literal9078 := by
+  rw [tree9078_def, tree9076_agree, tree9077_agree]
+  rfl
+theorem node9078_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9078 live9078 coloured9078 = result9078 := by
+  rw [tree9078_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9076_eq
+  unfold live9076 coloured9076 at child
+  try dsimp only [live9078, coloured9078]
+  rw [child]
+  dsimp only [result9076]
+  have child := node9077_eq
+  unfold live9077 coloured9077 at child
+  try dsimp only [live9078, coloured9078]
+  rw [child]
+  dsimp only [result9077]
+  try dsimp only [colour, result9078]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9079_agree : tree9079 = literal9079 := by
+  rw [tree9079_def]
+  rfl
+theorem node9079_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9079 live9079 coloured9079 = result9079 := by
+  rw [tree9079_def]
+  try dsimp only [colour, result9079]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9080_agree : tree9080 = literal9080 := by
+  rw [tree9080_def, tree9078_agree, tree9079_agree]
+  rfl
+theorem node9080_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9080 live9080 coloured9080 = result9080 := by
+  rw [tree9080_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9078_eq
+  unfold live9078 coloured9078 at child
+  try dsimp only [live9080, coloured9080]
+  rw [child]
+  dsimp only [result9078]
+  have child := node9079_eq
+  unfold live9079 coloured9079 at child
+  try dsimp only [live9080, coloured9080]
+  rw [child]
+  dsimp only [result9079]
+  try dsimp only [colour, result9080]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9081_agree : tree9081 = literal9081 := by
+  rw [tree9081_def]
+  rfl
+theorem node9081_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9081 live9081 coloured9081 = result9081 := by
+  rw [tree9081_def]
+  try dsimp only [colour, result9081]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9082_agree : tree9082 = literal9082 := by
+  rw [tree9082_def, tree9080_agree, tree9081_agree]
+  rfl
+theorem node9082_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9082 live9082 coloured9082 = result9082 := by
+  rw [tree9082_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9080_eq
+  unfold live9080 coloured9080 at child
+  try dsimp only [live9082, coloured9082]
+  rw [child]
+  dsimp only [result9080]
+  have child := node9081_eq
+  unfold live9081 coloured9081 at child
+  try dsimp only [live9082, coloured9082]
+  rw [child]
+  dsimp only [result9081]
+  try dsimp only [colour, result9082]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9083_agree : tree9083 = literal9083 := by
+  rw [tree9083_def]
+  rfl
+theorem node9083_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9083 live9083 coloured9083 = result9083 := by
+  rw [tree9083_def]
+  try dsimp only [colour, result9083]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9084_agree : tree9084 = literal9084 := by
+  rw [tree9084_def, tree9082_agree, tree9083_agree]
+  rfl
+theorem node9084_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9084 live9084 coloured9084 = result9084 := by
+  rw [tree9084_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9082_eq
+  unfold live9082 coloured9082 at child
+  try dsimp only [live9084, coloured9084]
+  rw [child]
+  dsimp only [result9082]
+  have child := node9083_eq
+  unfold live9083 coloured9083 at child
+  try dsimp only [live9084, coloured9084]
+  rw [child]
+  dsimp only [result9083]
+  try dsimp only [colour, result9084]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9085_agree : tree9085 = literal9085 := by
+  rw [tree9085_def]
+  rfl
+theorem node9085_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9085 live9085 coloured9085 = result9085 := by
+  rw [tree9085_def]
+  try dsimp only [colour, result9085]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9086_agree : tree9086 = literal9086 := by
+  rw [tree9086_def, tree9084_agree, tree9085_agree]
+  rfl
+theorem node9086_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9086 live9086 coloured9086 = result9086 := by
+  rw [tree9086_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9084_eq
+  unfold live9084 coloured9084 at child
+  try dsimp only [live9086, coloured9086]
+  rw [child]
+  dsimp only [result9084]
+  have child := node9085_eq
+  unfold live9085 coloured9085 at child
+  try dsimp only [live9086, coloured9086]
+  rw [child]
+  dsimp only [result9085]
+  try dsimp only [colour, result9086]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9087_agree : tree9087 = literal9087 := by
+  rw [tree9087_def]
+  rfl
+theorem node9087_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9087 live9087 coloured9087 = result9087 := by
+  rw [tree9087_def]
+  try dsimp only [colour, result9087]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9088_agree : tree9088 = literal9088 := by
+  rw [tree9088_def, tree9086_agree, tree9087_agree]
+  rfl
+theorem node9088_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9088 live9088 coloured9088 = result9088 := by
+  rw [tree9088_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9086_eq
+  unfold live9086 coloured9086 at child
+  try dsimp only [live9088, coloured9088]
+  rw [child]
+  dsimp only [result9086]
+  have child := node9087_eq
+  unfold live9087 coloured9087 at child
+  try dsimp only [live9088, coloured9088]
+  rw [child]
+  dsimp only [result9087]
+  try dsimp only [colour, result9088]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9089_agree : tree9089 = literal9089 := by
+  rw [tree9089_def]
+  rfl
+theorem node9089_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9089 live9089 coloured9089 = result9089 := by
+  rw [tree9089_def]
+  try dsimp only [colour, result9089]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9090_agree : tree9090 = literal9090 := by
+  rw [tree9090_def, tree9088_agree, tree9089_agree]
+  rfl
+theorem node9090_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9090 live9090 coloured9090 = result9090 := by
+  rw [tree9090_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9088_eq
+  unfold live9088 coloured9088 at child
+  try dsimp only [live9090, coloured9090]
+  rw [child]
+  dsimp only [result9088]
+  have child := node9089_eq
+  unfold live9089 coloured9089 at child
+  try dsimp only [live9090, coloured9090]
+  rw [child]
+  dsimp only [result9089]
+  try dsimp only [colour, result9090]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9091_agree : tree9091 = literal9091 := by
+  rw [tree9091_def]
+  rfl
+theorem node9091_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9091 live9091 coloured9091 = result9091 := by
+  rw [tree9091_def]
+  try dsimp only [colour, result9091]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9092_agree : tree9092 = literal9092 := by
+  rw [tree9092_def, tree9090_agree, tree9091_agree]
+  rfl
+theorem node9092_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9092 live9092 coloured9092 = result9092 := by
+  rw [tree9092_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9090_eq
+  unfold live9090 coloured9090 at child
+  try dsimp only [live9092, coloured9092]
+  rw [child]
+  dsimp only [result9090]
+  have child := node9091_eq
+  unfold live9091 coloured9091 at child
+  try dsimp only [live9092, coloured9092]
+  rw [child]
+  dsimp only [result9091]
+  try dsimp only [colour, result9092]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9093_agree : tree9093 = literal9093 := by
+  rw [tree9093_def]
+  rfl
+theorem node9093_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9093 live9093 coloured9093 = result9093 := by
+  rw [tree9093_def]
+  try dsimp only [colour, result9093]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9094_agree : tree9094 = literal9094 := by
+  rw [tree9094_def, tree9092_agree, tree9093_agree]
+  rfl
+theorem node9094_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9094 live9094 coloured9094 = result9094 := by
+  rw [tree9094_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9092_eq
+  unfold live9092 coloured9092 at child
+  try dsimp only [live9094, coloured9094]
+  rw [child]
+  dsimp only [result9092]
+  have child := node9093_eq
+  unfold live9093 coloured9093 at child
+  try dsimp only [live9094, coloured9094]
+  rw [child]
+  dsimp only [result9093]
+  try dsimp only [colour, result9094]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9095_agree : tree9095 = literal9095 := by
+  rw [tree9095_def]
+  rfl
+theorem node9095_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9095 live9095 coloured9095 = result9095 := by
+  rw [tree9095_def]
+  try dsimp only [colour, result9095]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9096_agree : tree9096 = literal9096 := by
+  rw [tree9096_def, tree9094_agree, tree9095_agree]
+  rfl
+theorem node9096_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9096 live9096 coloured9096 = result9096 := by
+  rw [tree9096_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9094_eq
+  unfold live9094 coloured9094 at child
+  try dsimp only [live9096, coloured9096]
+  rw [child]
+  dsimp only [result9094]
+  have child := node9095_eq
+  unfold live9095 coloured9095 at child
+  try dsimp only [live9096, coloured9096]
+  rw [child]
+  dsimp only [result9095]
+  try dsimp only [colour, result9096]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9097_agree : tree9097 = literal9097 := by
+  rw [tree9097_def]
+  rfl
+theorem node9097_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9097 live9097 coloured9097 = result9097 := by
+  rw [tree9097_def]
+  try dsimp only [colour, result9097]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9098_agree : tree9098 = literal9098 := by
+  rw [tree9098_def, tree9096_agree, tree9097_agree]
+  rfl
+theorem node9098_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9098 live9098 coloured9098 = result9098 := by
+  rw [tree9098_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9096_eq
+  unfold live9096 coloured9096 at child
+  try dsimp only [live9098, coloured9098]
+  rw [child]
+  dsimp only [result9096]
+  have child := node9097_eq
+  unfold live9097 coloured9097 at child
+  try dsimp only [live9098, coloured9098]
+  rw [child]
+  dsimp only [result9097]
+  try dsimp only [colour, result9098]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9099_agree : tree9099 = literal9099 := by
+  rw [tree9099_def]
+  rfl
+theorem node9099_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9099 live9099 coloured9099 = result9099 := by
+  rw [tree9099_def]
+  try dsimp only [colour, result9099]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9100_agree : tree9100 = literal9100 := by
+  rw [tree9100_def, tree9098_agree, tree9099_agree]
+  rfl
+theorem node9100_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9100 live9100 coloured9100 = result9100 := by
+  rw [tree9100_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9098_eq
+  unfold live9098 coloured9098 at child
+  try dsimp only [live9100, coloured9100]
+  rw [child]
+  dsimp only [result9098]
+  have child := node9099_eq
+  unfold live9099 coloured9099 at child
+  try dsimp only [live9100, coloured9100]
+  rw [child]
+  dsimp only [result9099]
+  try dsimp only [colour, result9100]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9101_agree : tree9101 = literal9101 := by
+  rw [tree9101_def]
+  rfl
+theorem node9101_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9101 live9101 coloured9101 = result9101 := by
+  rw [tree9101_def]
+  try dsimp only [colour, result9101]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9102_agree : tree9102 = literal9102 := by
+  rw [tree9102_def, tree9100_agree, tree9101_agree]
+  rfl
+theorem node9102_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9102 live9102 coloured9102 = result9102 := by
+  rw [tree9102_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9100_eq
+  unfold live9100 coloured9100 at child
+  try dsimp only [live9102, coloured9102]
+  rw [child]
+  dsimp only [result9100]
+  have child := node9101_eq
+  unfold live9101 coloured9101 at child
+  try dsimp only [live9102, coloured9102]
+  rw [child]
+  dsimp only [result9101]
+  try dsimp only [colour, result9102]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9103_agree : tree9103 = literal9103 := by
+  rw [tree9103_def]
+  rfl
+theorem node9103_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9103 live9103 coloured9103 = result9103 := by
+  rw [tree9103_def]
+  try dsimp only [colour, result9103]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9104_agree : tree9104 = literal9104 := by
+  rw [tree9104_def, tree9102_agree, tree9103_agree]
+  rfl
+theorem node9104_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9104 live9104 coloured9104 = result9104 := by
+  rw [tree9104_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9102_eq
+  unfold live9102 coloured9102 at child
+  try dsimp only [live9104, coloured9104]
+  rw [child]
+  dsimp only [result9102]
+  have child := node9103_eq
+  unfold live9103 coloured9103 at child
+  try dsimp only [live9104, coloured9104]
+  rw [child]
+  dsimp only [result9103]
+  try dsimp only [colour, result9104]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9105_agree : tree9105 = literal9105 := by
+  rw [tree9105_def]
+  rfl
+theorem node9105_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9105 live9105 coloured9105 = result9105 := by
+  rw [tree9105_def]
+  try dsimp only [colour, result9105]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9106_agree : tree9106 = literal9106 := by
+  rw [tree9106_def, tree9104_agree, tree9105_agree]
+  rfl
+theorem node9106_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9106 live9106 coloured9106 = result9106 := by
+  rw [tree9106_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9104_eq
+  unfold live9104 coloured9104 at child
+  try dsimp only [live9106, coloured9106]
+  rw [child]
+  dsimp only [result9104]
+  have child := node9105_eq
+  unfold live9105 coloured9105 at child
+  try dsimp only [live9106, coloured9106]
+  rw [child]
+  dsimp only [result9105]
+  try dsimp only [colour, result9106]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9107_agree : tree9107 = literal9107 := by
+  rw [tree9107_def]
+  rfl
+theorem node9107_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9107 live9107 coloured9107 = result9107 := by
+  rw [tree9107_def]
+  try dsimp only [colour, result9107]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9108_agree : tree9108 = literal9108 := by
+  rw [tree9108_def, tree9106_agree, tree9107_agree]
+  rfl
+theorem node9108_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9108 live9108 coloured9108 = result9108 := by
+  rw [tree9108_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9106_eq
+  unfold live9106 coloured9106 at child
+  try dsimp only [live9108, coloured9108]
+  rw [child]
+  dsimp only [result9106]
+  have child := node9107_eq
+  unfold live9107 coloured9107 at child
+  try dsimp only [live9108, coloured9108]
+  rw [child]
+  dsimp only [result9107]
+  try dsimp only [colour, result9108]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9109_agree : tree9109 = literal9109 := by
+  rw [tree9109_def]
+  rfl
+theorem node9109_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9109 live9109 coloured9109 = result9109 := by
+  rw [tree9109_def]
+  try dsimp only [colour, result9109]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9110_agree : tree9110 = literal9110 := by
+  rw [tree9110_def, tree9108_agree, tree9109_agree]
+  rfl
+theorem node9110_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9110 live9110 coloured9110 = result9110 := by
+  rw [tree9110_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9108_eq
+  unfold live9108 coloured9108 at child
+  try dsimp only [live9110, coloured9110]
+  rw [child]
+  dsimp only [result9108]
+  have child := node9109_eq
+  unfold live9109 coloured9109 at child
+  try dsimp only [live9110, coloured9110]
+  rw [child]
+  dsimp only [result9109]
+  try dsimp only [colour, result9110]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9111_agree : tree9111 = literal9111 := by
+  rw [tree9111_def]
+  rfl
+theorem node9111_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9111 live9111 coloured9111 = result9111 := by
+  rw [tree9111_def]
+  try dsimp only [colour, result9111]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9112_agree : tree9112 = literal9112 := by
+  rw [tree9112_def, tree9110_agree, tree9111_agree]
+  rfl
+theorem node9112_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9112 live9112 coloured9112 = result9112 := by
+  rw [tree9112_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9110_eq
+  unfold live9110 coloured9110 at child
+  try dsimp only [live9112, coloured9112]
+  rw [child]
+  dsimp only [result9110]
+  have child := node9111_eq
+  unfold live9111 coloured9111 at child
+  try dsimp only [live9112, coloured9112]
+  rw [child]
+  dsimp only [result9111]
+  try dsimp only [colour, result9112]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9113_agree : tree9113 = literal9113 := by
+  rw [tree9113_def]
+  rfl
+theorem node9113_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9113 live9113 coloured9113 = result9113 := by
+  rw [tree9113_def]
+  try dsimp only [colour, result9113]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9114_agree : tree9114 = literal9114 := by
+  rw [tree9114_def, tree9112_agree, tree9113_agree]
+  rfl
+theorem node9114_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9114 live9114 coloured9114 = result9114 := by
+  rw [tree9114_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9112_eq
+  unfold live9112 coloured9112 at child
+  try dsimp only [live9114, coloured9114]
+  rw [child]
+  dsimp only [result9112]
+  have child := node9113_eq
+  unfold live9113 coloured9113 at child
+  try dsimp only [live9114, coloured9114]
+  rw [child]
+  dsimp only [result9113]
+  try dsimp only [colour, result9114]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9115_agree : tree9115 = literal9115 := by
+  rw [tree9115_def]
+  rfl
+theorem node9115_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9115 live9115 coloured9115 = result9115 := by
+  rw [tree9115_def]
+  try dsimp only [colour, result9115]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9116_agree : tree9116 = literal9116 := by
+  rw [tree9116_def, tree9114_agree, tree9115_agree]
+  rfl
+theorem node9116_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9116 live9116 coloured9116 = result9116 := by
+  rw [tree9116_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9114_eq
+  unfold live9114 coloured9114 at child
+  try dsimp only [live9116, coloured9116]
+  rw [child]
+  dsimp only [result9114]
+  have child := node9115_eq
+  unfold live9115 coloured9115 at child
+  try dsimp only [live9116, coloured9116]
+  rw [child]
+  dsimp only [result9115]
+  try dsimp only [colour, result9116]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9117_agree : tree9117 = literal9117 := by
+  rw [tree9117_def]
+  rfl
+theorem node9117_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9117 live9117 coloured9117 = result9117 := by
+  rw [tree9117_def]
+  try dsimp only [colour, result9117]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9118_agree : tree9118 = literal9118 := by
+  rw [tree9118_def, tree9116_agree, tree9117_agree]
+  rfl
+theorem node9118_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9118 live9118 coloured9118 = result9118 := by
+  rw [tree9118_def]
+  rw [Flapjack.RegAlloc.checkClashTree]
+  have child := node9116_eq
+  unfold live9116 coloured9116 at child
+  try dsimp only [live9118, coloured9118]
+  rw [child]
+  dsimp only [result9116]
+  have child := node9117_eq
+  unfold live9117 coloured9117 at child
+  try dsimp only [live9118, coloured9118]
+  rw [child]
+  dsimp only [result9117]
+  try dsimp only [colour, result9118]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+theorem tree9119_agree : tree9119 = literal9119 := by
+  rw [tree9119_def]
+  rfl
+theorem node9119_eq : Flapjack.RegAlloc.checkClashTree (Flapjack.WordAlloc.totalColour colour) tree9119 live9119 coloured9119 = result9119 := by
+  rw [tree9119_def]
+  try dsimp only [colour, result9119]
+  all_goals (conv => lhs; cbv)
+  all_goals rfl
+end InitECandidate.Proofs.ClashStages713

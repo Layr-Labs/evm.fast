@@ -1,0 +1,11 @@
+work/
+guest/build/
+__pycache__/
+*.pyc
+.lake/
+
+# Former submodule checkouts are no longer challenge dependencies.
+cakeml/
+evm-asm/
+flapjack/
+work-*.log

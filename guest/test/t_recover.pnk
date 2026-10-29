@@ -1,0 +1,56 @@
+/* t_recover.pnk -- verify transaction sender recovery.
+
+   The guest recovers the sender of every payload transaction from its
+   signature, with the input's chain id. Each output record is the recovered
+   sender address, or zeroes when the transaction path raises TxErr. */
+#include "config.h"
+#include "types.h"
+#include "lib/mem.pnk"
+#include "lib/arith.pnk"
+#include "lib/u256.pnk"
+#include "lib/sha256.pnk"
+#include "lib/keccak.pnk"
+#include "lib/rlp.pnk"
+#include "ssz.pnk"
+#include "tx.pnk"
+#include "lib/secp256k1.pnk"
+
+fun 1 recover_one(1 txp, 1 txn, 1 chain_id, 1 out20) {
+  memzero(out20, 20);
+  var 1 code = 0;
+  var 1 tx = 0;
+  try tx = decode_transaction(txp, txn)
+  catch TxErr => code {
+    return 0;
+  }
+  try recover_sender_with_chain_id(tx, chain_id, out20)
+  catch TxErr => code {
+    memzero(out20, 20);
+    return 0;
+  }
+  return 0;
+}
+
+fun 1 main() {
+  mem_init();
+  sha256_init();
+  keccak_init();
+  u256_ws_init();
+  secp256k1_init();
+  ssz_init();
+  var {1,1} inp = input_blob();
+  var 1 si = decode_stateless_input(inp.0, inp.1);
+  var 1 pl = lds 1 (si + SI_PL);
+  var 1 txs = lds 1 (pl + PL_TXS);
+  var 1 ntx = lds 1 (pl + PL_TXS_N);
+  var 1 out = alloc(ntx * 20 + 8);
+  memzero(out, ntx * 20 + 8);
+  var i = 0;
+  while i <+ ntx {
+    recover_one(SLICE_PTR(txs, i), SLICE_LEN(txs, i), lds 1 (si + SI_CHAIN_ID), out + i * 20);
+    i = i + 1;
+  }
+  output_write(out, ntx * 20);
+  @halt(@base, 0, @base, 0);
+  return 0;
+}

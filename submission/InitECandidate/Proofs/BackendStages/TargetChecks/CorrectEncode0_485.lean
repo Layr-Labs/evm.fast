@@ -1,0 +1,12 @@
+import InitECandidate.Proofs.BackendStages.TargetChecks.CorrectData0_485
+import InitECandidate.Proofs.BackendStages.TargetChecks.Encode0_485
+set_option autoImplicit false
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+open Flapjack Flapjack.Compiler.Backend Flapjack.Compiler.Encoders.RiscV.Target
+open InitECandidate.Proofs.BackendStages
+namespace InitECandidate.Proofs.BackendStages.TargetChecks.Correct
+theorem Reencode0_485_eq : LabToTarget.encLinesAgain Target.labels0 Target.ffis 398880 riscvConfig.encode Initial485.lines [] true = (Reencode0_485.lines, 399764, true) := by
+  exact InitECandidate.Proofs.BackendStages.TargetChecks.Reencode0_485_eq
+end InitECandidate.Proofs.BackendStages.TargetChecks.Correct

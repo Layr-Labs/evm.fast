@@ -1,0 +1,20 @@
+{
+  "exit": 0,
+  "wall": 581.6167152230046,
+  "artifact_cache": false,
+  "slots": 16,
+  "timeout": 3600,
+  "User time (seconds)": 1527.76,
+  "System time (seconds)": 179.92,
+  "Maximum resident set size (kbytes)": 42911520.0,
+  "command": "lake build InitE Submission InitE.Audit",
+  "jobs": 53269,
+  "checked_axiom_closures": 34497,
+  "solution_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "code_revision": "9daaeb97eb95284ae177339f415f901791807026",
+  "scope": "Outside isolation, integration rebuild with existing common artifacts; not a cold-build timing or isolated comparator acceptance."
+}

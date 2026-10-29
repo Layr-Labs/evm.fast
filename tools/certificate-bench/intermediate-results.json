@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "source_sha256": {
+      "InitE/WordStages/Parallel79/Data3.lean": "dda03fe823b7bd24d5cab8c03bef1d5ec7c2f53ef27cbcff7d5ce6e0a3d15bc3",
+      "InitE/WordStages/Pass79_4.lean": "4a3a3483982dd817d4c3fb0eff1718653ce21e2696d2612792db2c52eca8cc21",
+      "InitE/WordStages/Pass79_5.lean": "c936454d870e225d7c47a4be638b9894863ab2d72f37a7f1183531f8c58f5de7"
+    },
+    "configuration": {
+      "work": "/home/zksecurity/trim-space/init-e/work/lean-perf/intermediate-pruning-v2",
+      "trials": 3,
+      "timeout": 180
+    },
+    "definitions": {
+      "DataNamed": {
+        "count": 3072,
+        "source_bytes": 399618,
+        "largest_body_chars": 3421
+      },
+      "Data512": {
+        "count": 238,
+        "source_bytes": 181882,
+        "largest_body_chars": 3816
+      },
+      "Data2048": {
+        "count": 96,
+        "source_bytes": 170974,
+        "largest_body_chars": 5438
+      },
+      "Data8192": {
+        "count": 46,
+        "source_bytes": 167120,
+        "largest_body_chars": 14176
+      }
+    }
+  },
+  "results": [
+    {
+      "case": "DataNamed",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 3.1888653569913004,
+      "user": 2.84,
+      "system": 0.41,
+      "peak_kib": 1983400.0,
+      "log": "",
+      "artifact_bytes": 1860696
+    },
+    {
+      "case": "Data512",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 1.7297344399848953,
+      "user": 1.34,
+      "system": 0.39,
+      "peak_kib": 1821408.0,
+      "log": "",
+      "artifact_bytes": 369744
+    },
+    {
+      "case": "Data512Agreement",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 0.7881411189737264,
+      "user": 0.42,
+      "system": 0.36,
+      "peak_kib": 1763212.0,
+      "log": "'same3' does not depend on any axioms\n'same4' does not depend on any axioms\n'same5' does not depend on any axioms\n",
+      "artifact_bytes": 7520
+    },
+    {
+      "case": "Data2048",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 1.6324798059940804,
+      "user": 1.26,
+      "system": 0.36,
+      "peak_kib": 1812804.0,
+      "log": "",
+      "artifact_bytes": 295592
+    },
+    {
+      "case": "Data2048Agreement",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 0.7965661640046164,
+      "user": 0.42,
+      "system": 0.37,
+      "peak_kib": 1762808.0,
+      "log": "'same3' does not depend on any axioms\n'same4' does not depend on any axioms\n'same5' does not depend on any axioms\n",
+      "artifact_bytes": 7528
+    },
+    {
+      "case": "Data8192",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 1.589917412988143,
+      "user": 1.21,
+      "system": 0.37,
+      "peak_kib": 1809096.0,
+      "log": "",
+      "artifact_bytes": 269528
+    },
+    {
+      "case": "Data8192Agreement",
+      "trial": "setup",
+      "exit": 0,
+      "wall": 0.8011306510015856,
+      "user": 0.44,
+      "system": 0.35,
+      "peak_kib": 1763252.0,
+      "log": "'same3' does not depend on any axioms\n'same4' does not depend on any axioms\n'same5' does not depend on any axioms\n",
+      "artifact_bytes": 7528
+    },
+    {
+      "case": "Staged",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.368477386015002,
+      "user": 3.97,
+      "system": 0.39,
+      "peak_kib": 2342404.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 9400
+    },
+    {
+      "case": "FusedNamed",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.4387144049978815,
+      "user": 4.06,
+      "system": 0.37,
+      "peak_kib": 2775736.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused512",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.488244817010127,
+      "user": 4.1,
+      "system": 0.38,
+      "peak_kib": 2774972.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6680
+    },
+    {
+      "case": "Fused2048",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.441996495006606,
+      "user": 4.04,
+      "system": 0.39,
+      "peak_kib": 2774496.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused8192",
+      "trial": 0,
+      "exit": 0,
+      "wall": 4.4543793789925985,
+      "user": 4.04,
+      "system": 0.41,
+      "peak_kib": 2774680.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused8192",
+      "trial": 1,
+      "exit": 0,
+      "wall": 4.448603666009149,
+      "user": 4.05,
+      "system": 0.39,
+      "peak_kib": 2774392.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused2048",
+      "trial": 1,
+      "exit": 0,
+      "wall": 4.521730059001129,
+      "user": 4.13,
+      "system": 0.38,
+      "peak_kib": 2774320.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused512",
+      "trial": 1,
+      "exit": 0,
+      "wall": 4.539179943007184,
+      "user": 4.13,
+      "system": 0.4,
+      "peak_kib": 2774944.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6680
+    },
+    {
+      "case": "FusedNamed",
+      "trial": 1,
+      "exit": 0,
+      "wall": 4.498905184009345,
+      "user": 4.09,
+      "system": 0.4,
+      "peak_kib": 2775756.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Staged",
+      "trial": 1,
+      "exit": 0,
+      "wall": 4.436793315020623,
+      "user": 4.04,
+      "system": 0.38,
+      "peak_kib": 2343264.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 9400
+    },
+    {
+      "case": "Staged",
+      "trial": 2,
+      "exit": 0,
+      "wall": 4.449812813021708,
+      "user": 4.06,
+      "system": 0.38,
+      "peak_kib": 2343220.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 9400
+    },
+    {
+      "case": "FusedNamed",
+      "trial": 2,
+      "exit": 0,
+      "wall": 4.512661924993154,
+      "user": 4.1,
+      "system": 0.4,
+      "peak_kib": 2776404.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused512",
+      "trial": 2,
+      "exit": 0,
+      "wall": 4.493512750021182,
+      "user": 4.09,
+      "system": 0.39,
+      "peak_kib": 2774476.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6680
+    },
+    {
+      "case": "Fused2048",
+      "trial": 2,
+      "exit": 0,
+      "wall": 4.495473228977062,
+      "user": 4.1,
+      "system": 0.38,
+      "peak_kib": 2774800.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "Fused8192",
+      "trial": 2,
+      "exit": 0,
+      "wall": 4.519488276011543,
+      "user": 4.1,
+      "system": 0.4,
+      "peak_kib": 2774664.0,
+      "log": "'certificate' depends on axioms: [propext, Quot.sound]\n",
+      "artifact_bytes": 6688
+    },
+    {
+      "case": "StagedReplay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.2301259740197565,
+      "user": 4.86,
+      "system": 0.35,
+      "peak_kib": 2197620.0,
+      "log": "parse_ms=868, replay_ms=3597, constants=5170, kernel=accepted\n",
+      "artifact_bytes": 7303709
+    },
+    {
+      "case": "StagedReplay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 5.241590724006528,
+      "user": 4.85,
+      "system": 0.38,
+      "peak_kib": 2197452.0,
+      "log": "parse_ms=870, replay_ms=3597, constants=5170, kernel=accepted\n",
+      "artifact_bytes": 7303709
+    },
+    {
+      "case": "StagedReplay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 5.23298428900307,
+      "user": 4.85,
+      "system": 0.37,
+      "peak_kib": 2198112.0,
+      "log": "parse_ms=866, replay_ms=3616, constants=5170, kernel=accepted\n",
+      "artifact_bytes": 7303709
+    },
+    {
+      "case": "FusedNamedReplay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.2381502040079795,
+      "user": 4.84,
+      "system": 0.39,
+      "peak_kib": 2646176.0,
+      "log": "parse_ms=843, replay_ms=3649, constants=4143, kernel=accepted\n",
+      "artifact_bytes": 7017440
+    },
+    {
+      "case": "FusedNamedReplay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 5.308243544015568,
+      "user": 4.91,
+      "system": 0.39,
+      "peak_kib": 2646032.0,
+      "log": "parse_ms=855, replay_ms=3671, constants=4143, kernel=accepted\n",
+      "artifact_bytes": 7017440
+    },
+    {
+      "case": "FusedNamedReplay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 5.2879048959875945,
+      "user": 4.88,
+      "system": 0.4,
+      "peak_kib": 2646096.0,
+      "log": "parse_ms=853, replay_ms=3667, constants=4143, kernel=accepted\n",
+      "artifact_bytes": 7017440
+    },
+    {
+      "case": "Fused512Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.194717645994388,
+      "user": 4.78,
+      "system": 0.4,
+      "peak_kib": 2644220.0,
+      "log": "parse_ms=807, replay_ms=3620, constants=2257, kernel=accepted\n",
+      "artifact_bytes": 6590061
+    },
+    {
+      "case": "Fused512Replay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 5.19681762799155,
+      "user": 4.79,
+      "system": 0.39,
+      "peak_kib": 2643708.0,
+      "log": "parse_ms=812, replay_ms=3617, constants=2257, kernel=accepted\n",
+      "artifact_bytes": 6590061
+    },
+    {
+      "case": "Fused512Replay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 5.207869403006043,
+      "user": 4.81,
+      "system": 0.39,
+      "peak_kib": 2643596.0,
+      "log": "parse_ms=821, replay_ms=3623, constants=2257, kernel=accepted\n",
+      "artifact_bytes": 6590061
+    },
+    {
+      "case": "Fused2048Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.16911696101306,
+      "user": 4.77,
+      "system": 0.38,
+      "peak_kib": 2644748.0,
+      "log": "parse_ms=808, replay_ms=3592, constants=2161, kernel=accepted\n",
+      "artifact_bytes": 6568807
+    },
+    {
+      "case": "Fused2048Replay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 5.172022843995364,
+      "user": 4.76,
+      "system": 0.4,
+      "peak_kib": 2644040.0,
+      "log": "parse_ms=817, replay_ms=3594, constants=2161, kernel=accepted\n",
+      "artifact_bytes": 6568807
+    },
+    {
+      "case": "Fused2048Replay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 5.176584496017313,
+      "user": 4.79,
+      "system": 0.37,
+      "peak_kib": 2643964.0,
+      "log": "parse_ms=817, replay_ms=3594, constants=2161, kernel=accepted\n",
+      "artifact_bytes": 6568807
+    },
+    {
+      "case": "Fused8192Replay",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.1924015959957615,
+      "user": 4.78,
+      "system": 0.4,
+      "peak_kib": 2644352.0,
+      "log": "parse_ms=819, replay_ms=3607, constants=2128, kernel=accepted\n",
+      "artifact_bytes": 6561513
+    },
+    {
+      "case": "Fused8192Replay",
+      "trial": 1,
+      "exit": 0,
+      "wall": 5.192401504988084,
+      "user": 4.79,
+      "system": 0.39,
+      "peak_kib": 2643900.0,
+      "log": "parse_ms=806, replay_ms=3614, constants=2128, kernel=accepted\n",
+      "artifact_bytes": 6561513
+    },
+    {
+      "case": "Fused8192Replay",
+      "trial": 2,
+      "exit": 0,
+      "wall": 5.179232113994658,
+      "user": 4.81,
+      "system": 0.36,
+      "peak_kib": 2644268.0,
+      "log": "parse_ms=807, replay_ms=3618, constants=2128, kernel=accepted\n",
+      "artifact_bytes": 6561513
+    }
+  ]
+}

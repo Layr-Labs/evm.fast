@@ -1,0 +1,945 @@
+/* ssz.pnk -- SSZ decoding (SszCodec.lean deserializeAux, Ssz.lean
+   ssz_to_* conversions) and merkleization (hashTreeRoot) for the stateless
+   guest. Decoding errors raise SszErr, which the shell maps to the
+   deserialize-failure sentinel (Guest.lean run_stateless_guest). */
+
+exception SszErr : 1;
+
+var 1 zero_hashes = 0;   /* 64 chunks: Z_d = sha256(Z_{d-1} || Z_{d-1}) */
+var 1 ssz_len_chunk = 0; /* scratch for mix_in_length */
+var 1 ssz_offs = 0;      /* scratch for up to 8 container offsets */
+
+/* Z_0 = 0, Z_{d+1} = sha256(Z_d || Z_d): precomputed (generated with
+   Python hashlib; equal by definition to the reference recurrence). */
+fun 1 ssz_init() {
+  if zero_hashes != 0 {
+    return 0;
+  }
+  ssz_len_chunk = alloc(32);
+  ssz_offs = alloc(64);
+  zero_hashes = alloc(64 * 32);
+  st zero_hashes + 0, 0;
+  st zero_hashes + 8, 0;
+  st zero_hashes + 16, 0;
+  st zero_hashes + 24, 0;
+  st zero_hashes + 32, 3467889160079910389;
+  st zero_hashes + 40, -7235303472643467225;
+  st zero_hashes + 48, -1661589530446331837;
+  st zero_hashes + 56, 5475067798876166378;
+  st zero_hashes + 64, -4479677551575214373;
+  st zero_hashes + 72, -6284391804564841224;
+  st zero_hashes + 80, -6210204736731575918;
+  st zero_hashes + 88, 8168838631237148268;
+  st zero_hashes + 96, 7693696211446497479;
+  st zero_hashes + 104, 6026757510069940497;
+  st zero_hashes + 112, 5425962768908068266;
+  st zero_hashes + 120, 4373938691328204737;
+  st zero_hashes + 128, 7336695293655149907;
+  st zero_hashes + 136, -7672703395263783515;
+  st zero_hashes + 144, 6265190034888290884;
+  st zero_hashes + 152, 4328568599408950463;
+  st zero_hashes + 160, -6970985451937006178;
+  st zero_hashes + 168, -4118627823726754386;
+  st zero_hashes + 176, 5369876075554645581;
+  st zero_hashes + 184, 3462437173510048856;
+  st zero_hashes + 192, 8478027213065653720;
+  st zero_hashes + 200, 9100017011721934421;
+  st zero_hashes + 208, 1092431190279867409;
+  st zero_hashes + 216, -6836740803776747887;
+  st zero_hashes + 224, -705518515803788409;
+  st zero_hashes + 232, 6462564319743149778;
+  st zero_hashes + 240, 7227379955731391093;
+  st zero_hashes + 248, 3206371696687016891;
+  st zero_hashes + 256, 5387818071436330022;
+  st zero_hashes + 264, 4922937313274119005;
+  st zero_hashes + 272, -5090254792391957262;
+  st zero_hashes + 280, -7804318633916077103;
+  st zero_hashes + 288, 370461946040184144;
+  st zero_hashes + 296, -4624411136677035848;
+  st zero_hashes + 304, -8648981274373826286;
+  st zero_hashes + 312, -2210899037950690079;
+  st zero_hashes + 320, 3420301289996353535;
+  st zero_hashes + 328, -4256159171591719787;
+  st zero_hashes + 336, 307632198917377537;
+  st zero_hashes + 344, 3164220818431763392;
+  st zero_hashes + 352, 2036759370292916332;
+  st zero_hashes + 360, 2919949194864112600;
+  st zero_hashes + 368, 3071707933450340712;
+  st zero_hashes + 376, 2324585789792679604;
+  st zero_hashes + 384, 2810268568004841655;
+  st zero_hashes + 392, -8882370442789629457;
+  st zero_hashes + 400, 3486387617714376654;
+  st zero_hashes + 408, 6890280984553970309;
+  st zero_hashes + 416, -1626965240032433441;
+  st zero_hashes + 424, 8322863097767693039;
+  st zero_hashes + 432, 8027430070029584534;
+  st zero_hashes + 440, 6820710890943096971;
+  st zero_hashes + 448, 4336430283471490485;
+  st zero_hashes + 456, 8605430690499325776;
+  st zero_hashes + 464, 2537147804892644646;
+  st zero_hashes + 472, -8919614737644754493;
+  st zero_hashes + 480, 3796763180038200020;
+  st zero_hashes + 488, -3890963394085774069;
+  st zero_hashes + 496, -2350197335534763728;
+  st zero_hashes + 504, -4903636057696040803;
+  st zero_hashes + 512, -3188453349356607857;
+  st zero_hashes + 520, -6762400313527765883;
+  st zero_hashes + 528, -4496921121239197396;
+  st zero_hashes + 536, -1500849256500178063;
+  st zero_hashes + 544, -8800391430789722739;
+  st zero_hashes + 552, -327011679253635063;
+  st zero_hashes + 560, -1439470621211582113;
+  st zero_hashes + 568, -6123921301983986004;
+  st zero_hashes + 576, -3113603737570447723;
+  st zero_hashes + 584, 5107348632695414249;
+  st zero_hashes + 592, -3782421789044072607;
+  st zero_hashes + 600, -6560294896340194196;
+  st zero_hashes + 608, -5299197921728031752;
+  st zero_hashes + 616, -6781370673812734165;
+  st zero_hashes + 624, 92424688682962637;
+  st zero_hashes + 632, 9219292227730439048;
+  st zero_hashes + 640, 3680535539744234445;
+  st zero_hashes + 648, 1892576147470926227;
+  st zero_hashes + 656, -5612204295675695169;
+  st zero_hashes + 664, -6130796990868744062;
+  st zero_hashes + 672, 624466185408187786;
+  st zero_hashes + 680, 6274640398404646490;
+  st zero_hashes + 688, 3032155653827377631;
+  st zero_hashes + 696, -7133943705914428464;
+  st zero_hashes + 704, 8005893631376602110;
+  st zero_hashes + 712, -3899745312134594369;
+  st zero_hashes + 720, -4638452715862205415;
+  st zero_hashes + 728, 7426889803764604373;
+  st zero_hashes + 736, -2364738089038241817;
+  st zero_hashes + 744, -3858457613647742274;
+  st zero_hashes + 752, -717978207052228475;
+  st zero_hashes + 760, -2949675823732375386;
+  st zero_hashes + 768, 7690828795371003953;
+  st zero_hashes + 776, 1324886602002475454;
+  st zero_hashes + 784, -123302768992572895;
+  st zero_hashes + 792, -4590389711778311477;
+  st zero_hashes + 800, -1594857232620899039;
+  st zero_hashes + 808, 769057034638164883;
+  st zero_hashes + 816, -5687284396743859394;
+  st zero_hashes + 824, 4950902458522835297;
+  st zero_hashes + 832, 8966028197115305569;
+  st zero_hashes + 840, 7266436947758633777;
+  st zero_hashes + 848, -8375266287375128925;
+  st zero_hashes + 856, 7306989794471028984;
+  st zero_hashes + 864, 7084305315825048956;
+  st zero_hashes + 872, 7029210297249303693;
+  st zero_hashes + 880, -4558608941952801135;
+  st zero_hashes + 888, -4269004621680274609;
+  st zero_hashes + 896, -4194354853533677180;
+  st zero_hashes + 904, -8635657700882554554;
+  st zero_hashes + 912, 4148236750813913193;
+  st zero_hashes + 920, -2176510749382855895;
+  st zero_hashes + 928, -4500026067796399736;
+  st zero_hashes + 936, 3711126838644903941;
+  st zero_hashes + 944, -1687437087943442904;
+  st zero_hashes + 952, 3933481249500794299;
+  st zero_hashes + 960, 1118330456063409845;
+  st zero_hashes + 968, -1755921266039826298;
+  st zero_hashes + 976, -8125033899676885068;
+  st zero_hashes + 984, 6645715209169319136;
+  st zero_hashes + 992, -3447312616503746920;
+  st zero_hashes + 1000, 9193974944397644221;
+  st zero_hashes + 1008, -7449436965486953383;
+  st zero_hashes + 1016, -594445656995021357;
+  st zero_hashes + 1024, -4764275254245787962;
+  st zero_hashes + 1032, -913235624346732049;
+  st zero_hashes + 1040, 5119082511933781574;
+  st zero_hashes + 1048, -62373609226448351;
+  st zero_hashes + 1056, -5455882312963155428;
+  st zero_hashes + 1064, 45569211422086573;
+  st zero_hashes + 1072, 1420783178076928847;
+  st zero_hashes + 1080, -4185194420365843321;
+  st zero_hashes + 1088, 8028620891772028719;
+  st zero_hashes + 1096, 3012752997787233642;
+  st zero_hashes + 1104, 6485064407427613008;
+  st zero_hashes + 1112, 9024665051920482203;
+  st zero_hashes + 1120, 509635415706274098;
+  st zero_hashes + 1128, 513790109098180968;
+  st zero_hashes + 1136, 6654427682542765749;
+  st zero_hashes + 1144, 3185811144024273606;
+  st zero_hashes + 1152, 2642828698713700799;
+  st zero_hashes + 1160, 8403734739674248209;
+  st zero_hashes + 1168, 4570195437231161528;
+  st zero_hashes + 1176, 2865159620061659274;
+  st zero_hashes + 1184, -6612486537957615531;
+  st zero_hashes + 1192, -7207833127968033633;
+  st zero_hashes + 1200, 5051471170685666284;
+  st zero_hashes + 1208, 8388529781081192817;
+  st zero_hashes + 1216, 4111925609465979383;
+  st zero_hashes + 1224, 6127044969543437945;
+  st zero_hashes + 1232, 6753662340923002970;
+  st zero_hashes + 1240, 8574440873971553187;
+  st zero_hashes + 1248, -52417245083262547;
+  st zero_hashes + 1256, -8291256532365653277;
+  st zero_hashes + 1264, 1481155093728913364;
+  st zero_hashes + 1272, 8007640090153561430;
+  st zero_hashes + 1280, -5244649796378165653;
+  st zero_hashes + 1288, 3699131559765823562;
+  st zero_hashes + 1296, -4918102542917579362;
+  st zero_hashes + 1304, 340637930261636494;
+  st zero_hashes + 1312, -2576033591096184153;
+  st zero_hashes + 1320, -1274688559302767582;
+  st zero_hashes + 1328, -4313723946702090646;
+  st zero_hashes + 1336, 3965534581494204130;
+  st zero_hashes + 1344, 3173447334197983662;
+  st zero_hashes + 1352, -4078210330827437684;
+  st zero_hashes + 1360, -6031546515378551721;
+  st zero_hashes + 1368, -6710542218808909838;
+  st zero_hashes + 1376, -1969772320876903782;
+  st zero_hashes + 1384, -1001536439989009390;
+  st zero_hashes + 1392, 1013143465238215583;
+  st zero_hashes + 1400, 424026453363255084;
+  st zero_hashes + 1408, -3478635668745378095;
+  st zero_hashes + 1416, -7892565056369355497;
+  st zero_hashes + 1424, 7501102438331281009;
+  st zero_hashes + 1432, -6013625226687438023;
+  st zero_hashes + 1440, 690731836760980218;
+  st zero_hashes + 1448, -7868455972101109822;
+  st zero_hashes + 1456, 6123628888509943429;
+  st zero_hashes + 1464, 5094693348458656889;
+  st zero_hashes + 1472, 6516980136051946547;
+  st zero_hashes + 1480, 91644931610378662;
+  st zero_hashes + 1488, -2978100855834889107;
+  st zero_hashes + 1496, 6210536894189389677;
+  st zero_hashes + 1504, -599454398908885497;
+  st zero_hashes + 1512, 3106964598684577348;
+  st zero_hashes + 1520, 8402432595930871483;
+  st zero_hashes + 1528, 3207977348847941336;
+  st zero_hashes + 1536, 6118280012185379707;
+  st zero_hashes + 1544, -2892354810560179109;
+  st zero_hashes + 1552, 825768116663620526;
+  st zero_hashes + 1560, 7259264309575870851;
+  st zero_hashes + 1568, 4116471800096853880;
+  st zero_hashes + 1576, 3220628530898328474;
+  st zero_hashes + 1584, 785148066790290254;
+  st zero_hashes + 1592, -2587698766343977301;
+  st zero_hashes + 1600, -8365893216547425304;
+  st zero_hashes + 1608, -973613890136651276;
+  st zero_hashes + 1616, 5280875127751342706;
+  st zero_hashes + 1624, -4968574218510682425;
+  st zero_hashes + 1632, 1470386339905773104;
+  st zero_hashes + 1640, -382905219033795335;
+  st zero_hashes + 1648, 6581698550652646368;
+  st zero_hashes + 1656, 105682938938997452;
+  st zero_hashes + 1664, 7315579702113888802;
+  st zero_hashes + 1672, -333772753320196954;
+  st zero_hashes + 1680, 8240209784894197942;
+  st zero_hashes + 1688, 6744886295492200972;
+  st zero_hashes + 1696, 8539428888738900801;
+  st zero_hashes + 1704, 3697187765683852069;
+  st zero_hashes + 1712, 2390323488676383742;
+  st zero_hashes + 1720, -575428736478306822;
+  st zero_hashes + 1728, -6439848446443377596;
+  st zero_hashes + 1736, 6664420376411809383;
+  st zero_hashes + 1744, -3499255494771933501;
+  st zero_hashes + 1752, 7602290591698202650;
+  st zero_hashes + 1760, 7843373463766933664;
+  st zero_hashes + 1768, -2194806549311135443;
+  st zero_hashes + 1776, -1955459052166193866;
+  st zero_hashes + 1784, 8388552398802175010;
+  st zero_hashes + 1792, -4725109784628218755;
+  st zero_hashes + 1800, -6723247815041552373;
+  st zero_hashes + 1808, 8290189175361551552;
+  st zero_hashes + 1816, 4618397651472586894;
+  st zero_hashes + 1824, 7571141537874358586;
+  st zero_hashes + 1832, 4867171076863847426;
+  st zero_hashes + 1840, 8351873792473709480;
+  st zero_hashes + 1848, -664004647242775423;
+  st zero_hashes + 1856, 4526876414717359258;
+  st zero_hashes + 1864, -8172475608866412882;
+  st zero_hashes + 1872, -1622535020551582476;
+  st zero_hashes + 1880, 7786711905802725111;
+  st zero_hashes + 1888, -1963790024881251214;
+  st zero_hashes + 1896, 9134525602405993810;
+  st zero_hashes + 1904, -3842090363869547300;
+  st zero_hashes + 1912, 2300633297700838512;
+  st zero_hashes + 1920, 7100965087805631020;
+  st zero_hashes + 1928, -792974887257277304;
+  st zero_hashes + 1936, -5011978589082820897;
+  st zero_hashes + 1944, -4338366131370227115;
+  st zero_hashes + 1952, 2113714948559937023;
+  st zero_hashes + 1960, -8404705342682625899;
+  st zero_hashes + 1968, -5624822632000887582;
+  st zero_hashes + 1976, 9192677158497032927;
+  st zero_hashes + 1984, 2440275331481373231;
+  st zero_hashes + 1992, 6965264199319123290;
+  st zero_hashes + 2000, 1932755011918763066;
+  st zero_hashes + 2008, 2449361547660069867;
+  st zero_hashes + 2016, 4134045736763573740;
+  st zero_hashes + 2024, 8017606045960358736;
+  st zero_hashes + 2032, -3587129069517364095;
+  st zero_hashes + 2040, -2788967411742721567;
+  return 0;
+}
+
+/* ---- merkleization ------------------------------------------------- */
+
+/* merkleize(chunks, limitChunks): root of the depth-ceil(log2 limit) tree
+   whose first n leaves are the 32-byte chunks at p. Writes 32 bytes at out
+   (out may alias p). SszCodec.lean merkleize. */
+fun 1 merkleize(1 p, 1 n, 1 limit, 1 out) {
+  var 1 dl = ceil_log2(limit);
+  var 1 dn = ceil_log2(n);
+  var target = max(dl, dn);
+  if n == 0 {
+    memcpy(out, zero_hashes + target * 32, 32);
+    return 0;
+  }
+  var 1 mark = heap_mark();
+  var size = 1 << dn;
+  var 1 buf = alloc(size * 32);
+  memcpy(buf, p, n * 32);
+  memzero(buf + n * 32, (size - n) * 32);
+  var cur = size;
+  while cur > 1 {
+    var half = cur >>> 1;
+    var j = 0;
+    while j < half {
+      sha256_pair(buf + j * 64, buf + j * 64 + 32, buf + j * 32);
+      j = j + 1;
+    }
+    cur = half;
+  }
+  var d = dn;
+  while d < target {
+    sha256_pair(buf, zero_hashes + d * 32, buf);
+    d = d + 1;
+  }
+  memcpy(out, buf, 32);
+  heap_release(mark);
+  return 0;
+}
+
+/* mix_in_length(root, len) -> out (may alias root). */
+fun 1 mix_in_length(1 root, 1 len, 1 out) {
+  memzero(ssz_len_chunk, 32);
+  st_le64(ssz_len_chunk, len);
+  sha256_pair(root, ssz_len_chunk, out);
+  return 0;
+}
+
+/* merkleize_progressive(chunks) (EIP-7916): the chunks are split into
+   subtrees of 1, 4, 16, ... leaves; the root is
+   H(merkleize(first subtree), merkleize_progressive(rest)), with an empty
+   rest contributing 32 zero bytes. Writes 32 bytes at out. */
+fun 1 merkleize_progressive(1 p, 1 n, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 roots = alloc(24 * 32);
+  var 1 acc = alloc(32);
+  var k = 0;
+  var off = 0;
+  var size = 1;
+  while off <+ n {
+    var cnt = n - off;
+    if size <+ cnt {
+      cnt = size;
+    }
+    merkleize(p + off * 32, cnt, size, roots + k * 32);
+    off = off + size;
+    size = size << 2;
+    k = k + 1;
+  }
+  memzero(acc, 32);
+  while k != 0 {
+    k = k - 1;
+    sha256_pair(roots + k * 32, acc, acc);
+  }
+  memcpy(out, acc, 32);
+  heap_release(mark);
+  return 0;
+}
+
+/* Root of a ProgressiveList whose element roots (or packed chunks) are the
+   n 32-byte words at roots; len is the list length mixed in. */
+fun 1 htr_plist_chunks(1 roots, 1 n, 1 len, 1 out) {
+  merkleize_progressive(roots, n, out);
+  mix_in_length(out, len, out);
+  return 0;
+}
+
+/* hash_tree_root of a ProgressiveByteList. */
+fun 1 htr_pbytes(1 p, 1 n, 1 out) {
+  var 1 mark = heap_mark();
+  var {1,1} pk = pack_bytes(p, n);
+  htr_plist_chunks(pk.0, pk.1, n, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* Root of a ProgressiveContainer with n (all active) fields whose field
+   roots are the n 32-byte words at ch: H(merkleize_progressive(ch),
+   active_fields bitvector chunk). */
+fun 1 htr_pcontainer(1 ch, 1 n, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 tmp = alloc(64);
+  merkleize_progressive(ch, n, tmp);
+  var 1 act = tmp + 32;
+  memzero(act, 32);
+  var i = 0;
+  while i < n {
+    st8 act + (i >>> 3), (ld8 (act + (i >>> 3))) | (1 << (i & 7));
+    i = i + 1;
+  }
+  sha256_pair(tmp, act, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* Pack the n bytes at p into zero-padded 32-byte chunks in a fresh buffer.
+   Returns <chunks, count>. Caller owns the heap mark. */
+fun {1,1} pack_bytes(1 p, 1 n) {
+  var count = (n + 31) >>> 5;
+  var 1 buf = alloc(count * 32);
+  memcpy(buf, p, n);
+  memzero(buf + n, count * 32 - n);
+  return <buf, count>;
+}
+
+/* hash_tree_root of ByteVector[n]: merkleize(pack(data), chunkCount(n)). */
+fun 1 htr_bytes_vector(1 p, 1 n, 1 out) {
+  if n <=+ 32 {
+    memzero(out, 32);
+    memcpy(out, p, n);
+    return 0;
+  }
+  var 1 mark = heap_mark();
+  var {1,1} pk = pack_bytes(p, n);
+  merkleize(pk.0, pk.1, pk.1, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* hash_tree_root of ByteList[limit] (limit given in chunks). */
+fun 1 htr_bytes_list(1 p, 1 n, 1 limit_chunks, 1 out) {
+  var 1 mark = heap_mark();
+  var {1,1} pk = pack_bytes(p, n);
+  merkleize(pk.0, pk.1, limit_chunks, out);
+  heap_release(mark);
+  mix_in_length(out, n, out);
+  return 0;
+}
+
+/* hash_tree_root of a uint64 stored little-endian at p. */
+fun 1 htr_u64_at(1 p, 1 out) {
+  memzero(out, 32);
+  memcpy(out, p, 8);
+  return 0;
+}
+
+/* ---- decoding primitives ------------------------------------------- */
+
+fun 1 ssz_fail(1 code) {
+  throw SszErr code;
+  return 0;
+}
+
+/* Read a byte from the host input without copying the blob.  Host reads are
+   word-sized, so align the address before selecting the byte.  Callers prove
+   the requested bytes lie in the declared input length. */
+fun 1 host_input_byte(1 i) {
+  var w = 0;
+  !ldw w, INPUT_DATA_ADDR + (i & (0 - 8));
+  return (w >>> ((i & 7) * 8)) & 255;
+}
+
+fun 1 host_input_le32(1 i) {
+  var b0 = host_input_byte(i);
+  var b1 = host_input_byte(i + 1);
+  var b2 = host_input_byte(i + 2);
+  var b3 = host_input_byte(i + 3);
+  return b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
+}
+
+/* Reject malformed fixed SSZ headers before input_blob copies the full input.
+   Check in decoder order and use the same SszErr codes.  Each nested header is
+   read only after its enclosing offsets and fixed length have been checked. */
+fun 1 precheck_host_ssz_header() {
+  var len = 0;
+  !ldw len, INPUT_LEN_ADDR;
+  if len >+ MAX_INPUT_LEN {
+    return 0;                 /* input_blob retains its length trap */
+  }
+  if len <+ 2 {
+    ssz_fail(1);
+  }
+  var schema = host_input_byte(0);
+  var version = host_input_byte(1);
+  if (schema != 21) || (version != 1) {
+    ssz_fail(2);
+  }
+  var body_len = len - 2;
+  if body_len <+ SI_FIXED {
+    ssz_fail(80);
+  }
+  var o_npr = host_input_le32(2);
+  var o_wit = host_input_le32(6);
+  st ssz_offs, o_npr;
+  st ssz_offs + 8, o_wit;
+  ssz_check_offsets(ssz_offs, 2, SI_FIXED, body_len);
+  var nlen = o_wit - o_npr;
+  if nlen <+ NPR_FIXED {
+    ssz_fail(81);
+  }
+  var np = 2 + o_npr;
+  var o_pl = host_input_le32(np);
+  var o_vh = host_input_le32(np + 4);
+  var o_rq = host_input_le32(np + 40);
+  st ssz_offs, o_pl;
+  st ssz_offs + 8, o_vh;
+  st ssz_offs + 16, o_rq;
+  ssz_check_offsets(ssz_offs, 3, NPR_FIXED, nlen);
+  var payload_len = o_vh - o_pl;
+  if payload_len <+ PL_FIXED {
+    ssz_fail(50);
+  }
+  var payload = np + o_pl;
+  var o_extra = host_input_le32(payload + PLO_EXTRA_OFF);
+  var o_txs = host_input_le32(payload + PLO_TXS_OFF);
+  var o_wd = host_input_le32(payload + PLO_WD_OFF);
+  var o_bal = host_input_le32(payload + PLO_BAL_OFF);
+  st ssz_offs, o_extra;
+  st ssz_offs + 8, o_txs;
+  st ssz_offs + 16, o_wd;
+  st ssz_offs + 24, o_bal;
+  ssz_check_offsets(ssz_offs, 4, PL_FIXED, payload_len);
+  return 0;
+}
+
+fun 1 decode_host_input() {
+  precheck_host_ssz_header();
+  var {1,1} inp = input_blob();
+  return decode_stateless_input(inp.0, inp.1);
+}
+
+/* Container offset checks (deserializeAux .container): every variable
+   offset in [fixed, len], nondecreasing, first == fixed. offs is a word
+   array of the n variable-field offsets in field order. */
+fun 1 ssz_check_offsets(1 offs, 1 n, 1 fixed, 1 len) {
+  if n == 0 {
+    return 0;
+  }
+  var i = 0;
+  while i < n {
+    var o = lds 1 (offs + i * 8);
+    if (o <+ fixed) || (len <+ o) {
+      ssz_fail(10);
+    }
+    if i > 0 {
+      if o <+ (lds 1 (offs + i * 8 - 8)) {
+        ssz_fail(11);
+      }
+    }
+    i = i + 1;
+  }
+  if (lds 1 offs) != fixed {
+    ssz_fail(12);
+  }
+  return 0;
+}
+
+/* Split a serialized List[variable elem, lim] into slices. Returns
+   <slice array, count>. */
+fun {1,1} ssz_split_var_list(1 p, 1 len, 1 lim) {
+  if len == 0 {
+    return <0, 0>;
+  }
+  if len <+ 4 {
+    ssz_fail(20);
+  }
+  var first = LD_LE32(p);
+  if (first == 0) || ((first & 3) != 0) || (len <+ first) {
+    ssz_fail(21);
+  }
+  var count = first >>> 2;
+  if count >+ lim {
+    ssz_fail(22);
+  }
+  var 1 arr = alloc(count * 16);
+  var i = 0;
+  var prev = first;
+  while i < count {
+    var o = LD_LE32(p + i * 4);
+    if (o <+ first) || (len <+ o) || (o <+ prev) {
+      ssz_fail(23);
+    }
+    if i > 0 {
+      st arr + (i - 1) * 16 + 8, o - prev;
+    }
+    st arr + i * 16, p + o;
+    prev = o;
+    i = i + 1;
+  }
+  st arr + (count - 1) * 16 + 8, len - prev;
+  return <arr, count>;
+}
+
+/* Element count of a serialized List[fixed elem of size sz, lim]. */
+fun 1 ssz_fixed_list_count(1 len, 1 sz, 1 lim) {
+  var {1,1} qr = udivmod(len, sz);
+  if qr.1 != 0 {
+    ssz_fail(30);
+  }
+  if qr.0 >+ lim {
+    ssz_fail(31);
+  }
+  return qr.0;
+}
+
+/* ---- ExecutionPayload ------------------------------------------------ */
+
+fun 1 decode_payload(1 p, 1 len) {
+  if len <+ PL_FIXED {
+    ssz_fail(50);
+  }
+  var 1 pl = alloc(PL_SIZE);
+  st pl + PL_RAW, p;
+  st pl + PL_RAW_LEN, len;
+  var o_extra = LD_LE32(p + PLO_EXTRA_OFF);
+  var o_txs = LD_LE32(p + PLO_TXS_OFF);
+  var o_wd = LD_LE32(p + PLO_WD_OFF);
+  var o_bal = LD_LE32(p + PLO_BAL_OFF);
+  st ssz_offs, o_extra;
+  st ssz_offs + 8, o_txs;
+  st ssz_offs + 16, o_wd;
+  st ssz_offs + 24, o_bal;
+  ssz_check_offsets(ssz_offs, 4, PL_FIXED, len);
+  /* extra_data: ByteList[32] */
+  if (o_txs - o_extra) >+ MAX_EXTRA_DATA_BYTES {
+    ssz_fail(51);
+  }
+  st pl + PL_EXTRA, p + o_extra;
+  st pl + PL_EXTRA_N, o_txs - o_extra;
+  /* transactions: ProgressiveList[ProgressiveByteList] (no limits) */
+  var {1,1} txs = ssz_split_var_list(p + o_txs, o_wd - o_txs, SSZ_UNBOUNDED);
+  st pl + PL_TXS, txs.0;
+  st pl + PL_TXS_N, txs.1;
+  /* withdrawals: ProgressiveList[Withdrawal(44 bytes)] */
+  var 1 nwd = ssz_fixed_list_count(o_bal - o_wd, WITHDRAWAL_SIZE, SSZ_UNBOUNDED);
+  st pl + PL_WD, p + o_wd;
+  st pl + PL_WD_N, nwd;
+  /* block_access_list: ProgressiveByteList */
+  st pl + PL_BAL, p + o_bal;
+  st pl + PL_BAL_N, len - o_bal;
+  st pl + PL_NUMBER, LD_LE64(p + PLO_NUMBER);
+  st pl + PL_GAS_LIMIT, LD_LE64(p + PLO_GAS_LIMIT);
+  st pl + PL_GAS_USED, LD_LE64(p + PLO_GAS_USED);
+  st pl + PL_TIMESTAMP, LD_LE64(p + PLO_TIMESTAMP);
+  st pl + PL_BLOB_GAS_USED, LD_LE64(p + PLO_BLOB_GAS_USED);
+  st pl + PL_EXCESS_BLOB_GAS, LD_LE64(p + PLO_EXCESS_BLOB_GAS);
+  st pl + PL_SLOT, LD_LE64(p + PLO_SLOT);
+  return pl;
+}
+
+/* ---- ExecutionRequests ---------------------------------------------- */
+
+fun 1 decode_requests(1 p, 1 len) {
+  if len <+ REQ_FIXED {
+    ssz_fail(60);
+  }
+  var i = 0;
+  while i < 5 {
+    st ssz_offs + i * 8, LD_LE32(p + i * 4);
+    i = i + 1;
+  }
+  ssz_check_offsets(ssz_offs, 5, REQ_FIXED, len);
+  var 1 rq = alloc(REQ_SIZE);
+  var o0 = lds 1 ssz_offs;
+  var o1 = lds 1 (ssz_offs + 8);
+  var o2 = lds 1 (ssz_offs + 16);
+  var o3 = lds 1 (ssz_offs + 24);
+  var o4 = lds 1 (ssz_offs + 32);
+  var 1 n0 = ssz_fixed_list_count(o1 - o0, DEPOSIT_SIZE, SSZ_UNBOUNDED);
+  var 1 n1 = ssz_fixed_list_count(o2 - o1, WDREQ_SIZE, SSZ_UNBOUNDED);
+  var 1 n2 = ssz_fixed_list_count(o3 - o2, CONS_SIZE, SSZ_UNBOUNDED);
+  var 1 n3 = ssz_fixed_list_count(o4 - o3, BDEP_SIZE, SSZ_UNBOUNDED);
+  var 1 n4 = ssz_fixed_list_count(len - o4, BEXIT_SIZE, SSZ_UNBOUNDED);
+  st rq + REQ_DEP, p + o0;
+  st rq + REQ_DEP_N, n0;
+  st rq + REQ_WDR, p + o1;
+  st rq + REQ_WDR_N, n1;
+  st rq + REQ_CONS, p + o2;
+  st rq + REQ_CONS_N, n2;
+  st rq + REQ_BDEP, p + o3;
+  st rq + REQ_BDEP_N, n3;
+  st rq + REQ_BEXIT, p + o4;
+  st rq + REQ_BEXIT_N, n4;
+  return rq;
+}
+
+/* ---- StatelessInput --------------------------------------------------- */
+
+/* Decode a List[ByteList[maxb], lim] into a slice array. */
+fun {1,1} decode_bytes_list(1 p, 1 len, 1 lim, 1 maxb) {
+  var {1,1} r = ssz_split_var_list(p, len, lim);
+  var i = 0;
+  while i < r.1 {
+    if SLICE_LEN(r.0, i) >+ maxb {
+      ssz_fail(70);
+    }
+    i = i + 1;
+  }
+  return r;
+}
+
+/* deserialize_stateless_input: schema id + SSZ body.
+   StatelessInput = Container[new_payload_request, witness, chain_id: uint64]. */
+fun 1 decode_stateless_input(1 p, 1 len) {
+  if len <+ 2 {
+    ssz_fail(1);   /* missingSchemaId */
+  }
+  if ((ld8 p) != 21) || ((ld8 (p + 1)) != 1) {
+    ssz_fail(2);   /* unsupportedSchemaId */
+  }
+  p = p + 2;
+  len = len - 2;
+  if len <+ SI_FIXED {
+    ssz_fail(80);
+  }
+  st ssz_offs, LD_LE32(p);
+  st ssz_offs + 8, LD_LE32(p + 4);
+  ssz_check_offsets(ssz_offs, 2, SI_FIXED, len);
+  var o_npr = lds 1 ssz_offs;
+  var o_wit = lds 1 (ssz_offs + 8);
+  var 1 si = alloc(SI_SIZE);
+  st si + SI_CHAIN_ID, LD_LE64(p + 8);
+  /* NewPayloadRequest */
+  var np = p + o_npr;
+  var nlen = o_wit - o_npr;
+  if nlen <+ NPR_FIXED {
+    ssz_fail(81);
+  }
+  var o_pl = LD_LE32(np);
+  var o_vh = LD_LE32(np + 4);
+  var o_rq = LD_LE32(np + 40);
+  st ssz_offs, o_pl;
+  st ssz_offs + 8, o_vh;
+  st ssz_offs + 16, o_rq;
+  ssz_check_offsets(ssz_offs, 3, NPR_FIXED, nlen);
+  var 1 pl = decode_payload(np + o_pl, o_vh - o_pl);
+  st si + SI_PL, pl;
+  var 1 nvh = ssz_fixed_list_count(o_rq - o_vh, 32, SSZ_UNBOUNDED);
+  st si + SI_VH, np + o_vh;
+  st si + SI_VH_N, nvh;
+  st si + SI_PBBR, np + 8;
+  var 1 rq = decode_requests(np + o_rq, nlen - o_rq);
+  st si + SI_REQ, rq;
+  /* ExecutionWitness */
+  var wp = p + o_wit;
+  var wlen = len - o_wit;
+  if wlen <+ 12 {
+    ssz_fail(82);
+  }
+  var i = 0;
+  while i < 3 {
+    st ssz_offs + i * 8, LD_LE32(wp + i * 4);
+    i = i + 1;
+  }
+  ssz_check_offsets(ssz_offs, 3, 12, wlen);
+  var w0 = lds 1 ssz_offs;
+  var w1 = lds 1 (ssz_offs + 8);
+  var w2 = lds 1 (ssz_offs + 16);
+  var {1,1} st0 = decode_bytes_list(wp + w0, w1 - w0, SSZ_UNBOUNDED, MAX_BYTES_PER_WITNESS_NODE);
+  st si + SI_STATE, st0.0;
+  st si + SI_STATE_N, st0.1;
+  var {1,1} cd = decode_bytes_list(wp + w1, w2 - w1, SSZ_UNBOUNDED, MAX_BYTES_PER_CODE);
+  st si + SI_CODES, cd.0;
+  st si + SI_CODES_N, cd.1;
+  var {1,1} hd = decode_bytes_list(wp + w2, wlen - w2, MAX_WITNESS_HEADERS, MAX_BYTES_PER_HEADER);
+  st si + SI_HEADERS, hd.0;
+  st si + SI_HEADERS_N, hd.1;
+  return si;
+}
+
+/* ---- hash_tree_root(NewPayloadRequest) ------------------------------- */
+
+/* Root of a Withdrawal container from its 44 serialized bytes. */
+fun 1 htr_withdrawal(1 w, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(4 * 32);
+  htr_u64_at(w, ch);
+  htr_u64_at(w + 8, ch + 32);
+  htr_bytes_vector(w + 16, 20, ch + 64);
+  htr_u64_at(w + 36, ch + 96);
+  merkleize(ch, 4, 4, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* List of fixed-size containers whose roots are already in `roots`. */
+fun 1 htr_list_roots(1 roots, 1 n, 1 lim, 1 out) {
+  merkleize(roots, n, lim, out);
+  mix_in_length(out, n, out);
+  return 0;
+}
+
+fun 1 htr_payload(1 pl, 1 out) {
+  var raw = lds 1 (pl + PL_RAW);
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(19 * 32);
+  memcpy(ch, raw + PLO_PARENT_HASH, 32);
+  htr_bytes_vector(raw + PLO_FEE_RECIPIENT, 20, ch + 32);
+  memcpy(ch + 64, raw + PLO_STATE_ROOT, 32);
+  memcpy(ch + 96, raw + PLO_RECEIPTS_ROOT, 32);
+  htr_bytes_vector(raw + PLO_LOGS_BLOOM, 256, ch + 128);
+  memcpy(ch + 160, raw + PLO_PREV_RANDAO, 32);
+  htr_u64_at(raw + PLO_NUMBER, ch + 192);
+  htr_u64_at(raw + PLO_GAS_LIMIT, ch + 224);
+  htr_u64_at(raw + PLO_GAS_USED, ch + 256);
+  htr_u64_at(raw + PLO_TIMESTAMP, ch + 288);
+  htr_bytes_list(lds 1 (pl + PL_EXTRA), lds 1 (pl + PL_EXTRA_N), 1, ch + 320);
+  memcpy(ch + 352, raw + PLO_BASE_FEE, 32);
+  memcpy(ch + 384, raw + PLO_BLOCK_HASH, 32);
+  /* transactions */
+  var txs = lds 1 (pl + PL_TXS);
+  var ntx = lds 1 (pl + PL_TXS_N);
+  var 1 m2 = heap_mark();
+  var 1 roots = alloc(ntx * 32 + 32);
+  var i = 0;
+  while i < ntx {
+    htr_pbytes(SLICE_PTR(txs, i), SLICE_LEN(txs, i), roots + i * 32);
+    i = i + 1;
+  }
+  htr_plist_chunks(roots, ntx, ntx, ch + 416);
+  heap_release(m2);
+  /* withdrawals */
+  var wd = lds 1 (pl + PL_WD);
+  var nwd = lds 1 (pl + PL_WD_N);
+  roots = alloc(nwd * 32 + 32);
+  i = 0;
+  while i < nwd {
+    htr_withdrawal(wd + i * WITHDRAWAL_SIZE, roots + i * 32);
+    i = i + 1;
+  }
+  htr_plist_chunks(roots, nwd, nwd, ch + 448);
+  heap_release(m2);
+  htr_u64_at(raw + PLO_BLOB_GAS_USED, ch + 480);
+  htr_u64_at(raw + PLO_EXCESS_BLOB_GAS, ch + 512);
+  htr_pbytes(lds 1 (pl + PL_BAL), lds 1 (pl + PL_BAL_N), ch + 544);
+  htr_u64_at(raw + PLO_SLOT, ch + 576);
+  htr_pcontainer(ch, 19, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* Request element roots (all fixed-size containers of byte vectors/u64). */
+fun 1 htr_deposit(1 e, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(5 * 32);
+  htr_bytes_vector(e, 48, ch);
+  memcpy(ch + 32, e + 48, 32);
+  htr_u64_at(e + 80, ch + 64);
+  htr_bytes_vector(e + 88, 96, ch + 96);
+  htr_u64_at(e + 184, ch + 128);
+  merkleize(ch, 5, 5, out);
+  heap_release(mark);
+  return 0;
+}
+
+fun 1 htr_wdreq(1 e, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(3 * 32);
+  htr_bytes_vector(e, 20, ch);
+  htr_bytes_vector(e + 20, 48, ch + 32);
+  htr_u64_at(e + 68, ch + 64);
+  merkleize(ch, 3, 3, out);
+  heap_release(mark);
+  return 0;
+}
+
+fun 1 htr_cons(1 e, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(3 * 32);
+  htr_bytes_vector(e, 20, ch);
+  htr_bytes_vector(e + 20, 48, ch + 32);
+  htr_bytes_vector(e + 68, 48, ch + 64);
+  merkleize(ch, 3, 3, out);
+  heap_release(mark);
+  return 0;
+}
+
+fun 1 htr_bdep(1 e, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(4 * 32);
+  htr_bytes_vector(e, 48, ch);
+  memcpy(ch + 32, e + 48, 32);
+  htr_u64_at(e + 80, ch + 64);
+  htr_bytes_vector(e + 88, 96, ch + 96);
+  merkleize(ch, 4, 4, out);
+  heap_release(mark);
+  return 0;
+}
+
+fun 1 htr_bexit(1 e, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(2 * 32);
+  htr_bytes_vector(e, 20, ch);
+  htr_bytes_vector(e + 20, 48, ch + 32);
+  merkleize(ch, 2, 2, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* kind: 0 deposit, 1 withdrawal, 2 consolidation, 3 builder deposit,
+   4 builder exit. Root of ProgressiveList[container]. */
+fun 1 htr_request_list(1 kind, 1 p, 1 n, 1 sz, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 roots = alloc(n * 32 + 32);
+  var i = 0;
+  while i < n {
+    if kind == 0 { htr_deposit(p + i * sz, roots + i * 32); }
+    if kind == 1 { htr_wdreq(p + i * sz, roots + i * 32); }
+    if kind == 2 { htr_cons(p + i * sz, roots + i * 32); }
+    if kind == 3 { htr_bdep(p + i * sz, roots + i * 32); }
+    if kind == 4 { htr_bexit(p + i * sz, roots + i * 32); }
+    i = i + 1;
+  }
+  htr_plist_chunks(roots, n, n, out);
+  heap_release(mark);
+  return 0;
+}
+
+fun 1 htr_requests(1 rq, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(5 * 32);
+  htr_request_list(0, lds 1 (rq + REQ_DEP), lds 1 (rq + REQ_DEP_N), DEPOSIT_SIZE, ch);
+  htr_request_list(1, lds 1 (rq + REQ_WDR), lds 1 (rq + REQ_WDR_N), WDREQ_SIZE, ch + 32);
+  htr_request_list(2, lds 1 (rq + REQ_CONS), lds 1 (rq + REQ_CONS_N), CONS_SIZE, ch + 64);
+  htr_request_list(3, lds 1 (rq + REQ_BDEP), lds 1 (rq + REQ_BDEP_N), BDEP_SIZE, ch + 96);
+  htr_request_list(4, lds 1 (rq + REQ_BEXIT), lds 1 (rq + REQ_BEXIT_N), BEXIT_SIZE, ch + 128);
+  htr_pcontainer(ch, 5, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* compute_new_payload_request_root (Stateless.lean). */
+fun 1 htr_new_payload_request(1 si, 1 out) {
+  var 1 mark = heap_mark();
+  var 1 ch = alloc(4 * 32);
+  htr_payload(lds 1 (si + SI_PL), ch);
+  /* versioned hashes: ProgressiveList[Bytes32]; each root is the hash itself */
+  htr_plist_chunks(lds 1 (si + SI_VH), lds 1 (si + SI_VH_N), lds 1 (si + SI_VH_N), ch + 32);
+  memcpy(ch + 64, lds 1 (si + SI_PBBR), 32);
+  htr_requests(lds 1 (si + SI_REQ), ch + 96);
+  merkleize(ch, 4, 4, out);
+  heap_release(mark);
+  return 0;
+}
+
+/* ---- StatelessValidationResult serialization -------------------------- */
+
+/* serialize_stateless_output: StatelessValidationResult = Container[root:
+   Bytes32, successful_validation: bool, chain_id: uint64, schema_id: uint16],
+   43 bytes. The decode-failure sentinel is passed as zeros (schema_id 0). */
+fun 1 serialize_result(1 out, 1 root, 1 succ, 1 chain_id, 1 schema_id) {
+  memcpy(out, root, 32);
+  st8 out + 32, succ;
+  st_le64(out + 33, chain_id);
+  st8 out + 41, schema_id & 255;
+  st8 out + 42, schema_id >>> 8;
+  return 43;
+}

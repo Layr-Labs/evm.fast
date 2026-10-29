@@ -1,0 +1,45 @@
+import InitECandidate.Proofs.FrontendStages.Crep.Translate214
+import InitECandidate.Proofs.FrontendStages.Crep.Context
+set_option autoImplicit false
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option cbv.maxSteps 1000000000
+set_option cbv.warning false
+open Flapjack Flapjack.Pancake.PanLang
+namespace InitECandidate.Proofs.FrontendStages.Crep
+def crepBody230_0 : CrepProg (BitVec 64) :=
+Flapjack.CrepProg.call (some ([2, 3], none)) "htab_get" [Flapjack.CrepExp.var 0, Flapjack.CrepExp.var 1]
+
+def crepBody230_1 : CrepProg (BitVec 64) :=
+Flapjack.CrepProg.return [Flapjack.CrepExp.const 0#64, Flapjack.CrepExp.const 0#64, Flapjack.CrepExp.const 0#64]
+
+def crepBody230_2 : CrepProg (BitVec 64) :=
+Flapjack.CrepProg.skip
+
+def crepBody230_3 : CrepProg (BitVec 64) :=
+.ite (Flapjack.CrepExp.cmp Flapjack.Cmp.equal (Flapjack.CrepExp.var 2) (Flapjack.CrepExp.const 0#64)) crepBody230_1 crepBody230_2
+
+def crepBody230_4 : CrepProg (BitVec 64) :=
+Flapjack.CrepProg.return
+  [Flapjack.CrepExp.const 1#64, Flapjack.CrepExp.load (Flapjack.CrepExp.var 3),
+    Flapjack.CrepExp.load
+      (Flapjack.CrepExp.op Flapjack.BinOp.add [Flapjack.CrepExp.var 3, Flapjack.CrepExp.const 8#64])]
+
+def crepBody230_5 : CrepProg (BitVec 64) :=
+.seq crepBody230_3 crepBody230_4
+
+def crepBody230_6 : CrepProg (BitVec 64) :=
+.seq crepBody230_0 crepBody230_5
+
+def crepBody230_7 : CrepProg (BitVec 64) :=
+.dec 3 (Flapjack.CrepExp.const 0#64) crepBody230_6
+
+def crepBody230_8 : CrepProg (BitVec 64) :=
+.dec 2 (Flapjack.CrepExp.const 0#64) crepBody230_7
+
+def data230 : CrepProg (BitVec 64) := crepBody230_8
+def output230 : MlS × List Nat × CrepProgHOL 64 :=
+  (Flapjack.Basis.Pure.MlString.MlString.implode
+  [110#8, 111#8, 100#8, 101#8, 100#8, 98#8, 95#8, 108#8, 111#8, 111#8, 107#8, 117#8, 112#8], [0, 1], crepProgToHOL data230)
+end InitECandidate.Proofs.FrontendStages.Crep

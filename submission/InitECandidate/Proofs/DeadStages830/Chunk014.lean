@@ -1,0 +1,6381 @@
+import InitECandidate.Proofs.DeadStages830.Chunk013
+import InitECandidate.Proofs.ComputationCache
+import InitECandidate.Proofs.DeadBranchComputation
+set_option Elab.async false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+set_option cbv.maxSteps 1000000000
+set_option cbv.warning false
+open scoped InitECandidate.Proofs.CompilerComputation
+namespace InitECandidate.Proofs.DeadStages830
+@[irreducible, cbv_opaque] def input3584 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3583 input3580)).val
+theorem input3584_def : input3584 = (.seq input3583 input3580) := by
+  unfold input3584
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3584 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3583 output3580)).val
+theorem output3584_def : output3584 = (.seq output3583 output3580) := by
+  unfold output3584
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3584_skip : Flapjack.WordAlloc.isSkip output3584 = false := by
+  rw [output3584_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3584_eq : Flapjack.WordAlloc.removeDeadStructural input3584 value1794 value1 value2 = (output3584, value5, value1) := by
+  rw [input3584_def, output3584_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3580_eq]
+  try dsimp only
+  rw [node3583_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3585 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3584 input3579)).val
+theorem input3585_def : input3585 = (.seq input3584 input3579) := by
+  unfold input3585
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3585 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3584 output3579)).val
+theorem output3585_def : output3585 = (.seq output3584 output3579) := by
+  unfold output3585
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3585_skip : Flapjack.WordAlloc.isSkip output3585 = false := by
+  rw [output3585_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3585_eq : Flapjack.WordAlloc.removeDeadStructural input3585 value1793 value1 value2 = (output3585, value5, value1) := by
+  rw [input3585_def, output3585_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3579_eq]
+  try dsimp only
+  rw [node3584_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1797 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)
+        Flapjack.Spt.ln)
+      (Flapjack.Spt.bn
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3586 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.store 153 (Flapjack.WordLangAddr.addr 157 0#64)))).val
+theorem input3586_def : input3586 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.store 153 (Flapjack.WordLangAddr.addr 157 0#64))) := by
+  unfold input3586
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3586 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.store 153 (Flapjack.WordLangAddr.addr 157 0#64)))).val
+theorem output3586_def : output3586 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.store 153 (Flapjack.WordLangAddr.addr 157 0#64))) := by
+  unfold output3586
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3586_skip : Flapjack.WordAlloc.isSkip output3586 = false := by
+  rw [output3586_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3586_eq : Flapjack.WordAlloc.removeDeadStructural input3586 value5 value1 value2 = (output3586, value1797, value1) := by
+  rw [input3586_def, output3586_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1798 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn Flapjack.Spt.ln
+      (Flapjack.Spt.bn
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3587 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(157, 145)])).val
+theorem input3587_def : input3587 = (Flapjack.WordLangProgHOL.move 0 [(157, 145)]) := by
+  unfold input3587
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3587 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(157, 145)])).val
+theorem output3587_def : output3587 = (Flapjack.WordLangProgHOL.move 0 [(157, 145)]) := by
+  unfold output3587
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3587_skip : Flapjack.WordAlloc.isSkip output3587 = false := by
+  rw [output3587_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3587_eq : Flapjack.WordAlloc.removeDeadStructural input3587 value1797 value1 value2 = (output3587, value1798, value1) := by
+  rw [input3587_def, output3587_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3588 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3587 input3586)).val
+theorem input3588_def : input3588 = (.seq input3587 input3586) := by
+  unfold input3588
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3588 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3587 output3586)).val
+theorem output3588_def : output3588 = (.seq output3587 output3586) := by
+  unfold output3588
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3588_skip : Flapjack.WordAlloc.isSkip output3588 = false := by
+  rw [output3588_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3588_eq : Flapjack.WordAlloc.removeDeadStructural input3588 value5 value1 value2 = (output3588, value1798, value1) := by
+  rw [input3588_def, output3588_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3586_eq]
+  try dsimp only
+  rw [node3587_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1799 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln))
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3589 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(153, 149)])).val
+theorem input3589_def : input3589 = (Flapjack.WordLangProgHOL.move 0 [(153, 149)]) := by
+  unfold input3589
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3589 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(153, 149)])).val
+theorem output3589_def : output3589 = (Flapjack.WordLangProgHOL.move 0 [(153, 149)]) := by
+  unfold output3589
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3589_skip : Flapjack.WordAlloc.isSkip output3589 = false := by
+  rw [output3589_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3589_eq : Flapjack.WordAlloc.removeDeadStructural input3589 value1798 value1 value2 = (output3589, value1799, value1) := by
+  rw [input3589_def, output3589_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1800 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+        Flapjack.Spt.ln)
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn
+          (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+          Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3590 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(149, 125)])).val
+theorem input3590_def : input3590 = (Flapjack.WordLangProgHOL.move 0 [(149, 125)]) := by
+  unfold input3590
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3590 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(149, 125)])).val
+theorem output3590_def : output3590 = (Flapjack.WordLangProgHOL.move 0 [(149, 125)]) := by
+  unfold output3590
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3590_skip : Flapjack.WordAlloc.isSkip output3590 = false := by
+  rw [output3590_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3590_eq : Flapjack.WordAlloc.removeDeadStructural input3590 value1799 value1 value2 = (output3590, value1800, value1) := by
+  rw [input3590_def, output3590_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1801 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln)
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit))))
+        Flapjack.Spt.ln)
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3591 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith
+    (Flapjack.WordLangArith.binop Flapjack.BinOp.add 145 141 (Flapjack.WordRegImm.imm 18446744073709551008#64))))).val
+theorem input3591_def : input3591 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith
+    (Flapjack.WordLangArith.binop Flapjack.BinOp.add 145 141 (Flapjack.WordRegImm.imm 18446744073709551008#64)))) := by
+  unfold input3591
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3591 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith
+    (Flapjack.WordLangArith.binop Flapjack.BinOp.add 145 141 (Flapjack.WordRegImm.imm 18446744073709551008#64))))).val
+theorem output3591_def : output3591 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith
+    (Flapjack.WordLangArith.binop Flapjack.BinOp.add 145 141 (Flapjack.WordRegImm.imm 18446744073709551008#64)))) := by
+  unfold output3591
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3591_skip : Flapjack.WordAlloc.isSkip output3591 = false := by
+  rw [output3591_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3591_eq : Flapjack.WordAlloc.removeDeadStructural input3591 value1800 value1 value2 = (output3591, value1801, value1) := by
+  rw [input3591_def, output3591_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1802 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+        Flapjack.Spt.ln)
+      (Flapjack.Spt.bn
+        (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit))))
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3592 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 141 137)).val
+theorem input3592_def : input3592 = (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 141 137) := by
+  unfold input3592
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3592 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 141 137)).val
+theorem output3592_def : output3592 = (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 141 137) := by
+  unfold output3592
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3592_skip : Flapjack.WordAlloc.isSkip output3592 = false := by
+  rw [output3592_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3592_eq : Flapjack.WordAlloc.removeDeadStructural input3592 value1801 value1 value2 = (output3592, value1802, value1) := by
+  rw [input3592_def, output3592_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1803 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+        (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))))
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3593 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 137 133 (Flapjack.WordRegImm.imm 1#64))))).val
+theorem input3593_def : input3593 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 137 133 (Flapjack.WordRegImm.imm 1#64)))) := by
+  unfold input3593
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3593 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 137 133 (Flapjack.WordRegImm.imm 1#64))))).val
+theorem output3593_def : output3593 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 137 133 (Flapjack.WordRegImm.imm 1#64)))) := by
+  unfold output3593
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3593_skip : Flapjack.WordAlloc.isSkip output3593 = false := by
+  rw [output3593_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3593_eq : Flapjack.WordAlloc.removeDeadStructural input3593 value1802 value1 value2 = (output3593, value1803, value1) := by
+  rw [input3593_def, output3593_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1804 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+        Flapjack.Spt.ln)
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3594 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.get 133 Flapjack.WordStore.heapLength)).val
+theorem input3594_def : input3594 = (Flapjack.WordLangProgHOL.get 133 Flapjack.WordStore.heapLength) := by
+  unfold input3594
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3594 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.get 133 Flapjack.WordStore.heapLength)).val
+theorem output3594_def : output3594 = (Flapjack.WordLangProgHOL.get 133 Flapjack.WordStore.heapLength) := by
+  unfold output3594
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3594_skip : Flapjack.WordAlloc.isSkip output3594 = false := by
+  rw [output3594_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3594_eq : Flapjack.WordAlloc.removeDeadStructural input3594 value1803 value1 value2 = (output3594, value1804, value1) := by
+  rw [input3594_def, output3594_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3595 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3594 input3593)).val
+theorem input3595_def : input3595 = (.seq input3594 input3593) := by
+  unfold input3595
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3595 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3594 output3593)).val
+theorem output3595_def : output3595 = (.seq output3594 output3593) := by
+  unfold output3595
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3595_skip : Flapjack.WordAlloc.isSkip output3595 = false := by
+  rw [output3595_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3595_eq : Flapjack.WordAlloc.removeDeadStructural input3595 value1802 value1 value2 = (output3595, value1804, value1) := by
+  rw [input3595_def, output3595_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3593_eq]
+  try dsimp only
+  rw [node3594_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3596 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3595 input3592)).val
+theorem input3596_def : input3596 = (.seq input3595 input3592) := by
+  unfold input3596
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3596 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3595 output3592)).val
+theorem output3596_def : output3596 = (.seq output3595 output3592) := by
+  unfold output3596
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3596_skip : Flapjack.WordAlloc.isSkip output3596 = false := by
+  rw [output3596_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3596_eq : Flapjack.WordAlloc.removeDeadStructural input3596 value1801 value1 value2 = (output3596, value1804, value1) := by
+  rw [input3596_def, output3596_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3592_eq]
+  try dsimp only
+  rw [node3595_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3597 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3596 input3591)).val
+theorem input3597_def : input3597 = (.seq input3596 input3591) := by
+  unfold input3597
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3597 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3596 output3591)).val
+theorem output3597_def : output3597 = (.seq output3596 output3591) := by
+  unfold output3597
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3597_skip : Flapjack.WordAlloc.isSkip output3597 = false := by
+  rw [output3597_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3597_eq : Flapjack.WordAlloc.removeDeadStructural input3597 value1800 value1 value2 = (output3597, value1804, value1) := by
+  rw [input3597_def, output3597_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3591_eq]
+  try dsimp only
+  rw [node3596_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3598 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem input3598_def : input3598 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold input3598
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3598 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem output3598_def : output3598 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold output3598
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3598_skip : Flapjack.WordAlloc.isSkip output3598 = false := by
+  rw [output3598_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3598_eq : Flapjack.WordAlloc.removeDeadStructural input3598 value1804 value1 value2 = (output3598, value1804, value1) := by
+  rw [input3598_def, output3598_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1805 : Flapjack.NumSet :=
+Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit)
+  (Flapjack.Spt.bn Flapjack.Spt.ln
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+        Flapjack.Spt.ln)
+      Flapjack.Spt.ln))
+
+@[irreducible, cbv_opaque] def input3599 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+                Flapjack.Spt.ln)
+              Flapjack.Spt.ln)),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(117, 2)]) Flapjack.WordLangProgHOL.skip))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip (Flapjack.WordLangProgHOL.move 1 [(125, 117)]))
+            (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 129 0#64)))),
+      830, 4))
+  (some 68) [2]
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(121, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 121)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip
+              (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 125 0#64)))
+            (Flapjack.WordLangProgHOL.move 1 [(129, 121)]))),
+      830, 5)))).val
+theorem input3599_def : input3599 = (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+                Flapjack.Spt.ln)
+              Flapjack.Spt.ln)),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(117, 2)]) Flapjack.WordLangProgHOL.skip))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip (Flapjack.WordLangProgHOL.move 1 [(125, 117)]))
+            (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 129 0#64)))),
+      830, 4))
+  (some 68) [2]
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(121, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 121)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip
+              (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 125 0#64)))
+            (Flapjack.WordLangProgHOL.move 1 [(129, 121)]))),
+      830, 5))) := by
+  unfold input3599
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3599 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+                Flapjack.Spt.ln)
+              Flapjack.Spt.ln)),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.move 1 [(117, 2)]))
+        (Flapjack.WordLangProgHOL.move 1 [(125, 117)]),
+      830, 4))
+  (some 68) [2]
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(121, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 121)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 125 0#64)),
+      830, 5)))).val
+theorem output3599_def : output3599 = (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+                Flapjack.Spt.ln)
+              Flapjack.Spt.ln)),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.move 1 [(117, 2)]))
+        (Flapjack.WordLangProgHOL.move 1 [(125, 117)]),
+      830, 4))
+  (some 68) [2]
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(113, 107)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(121, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 121)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 125 0#64)),
+      830, 5))) := by
+  unfold output3599
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3599_skip : Flapjack.WordAlloc.isSkip output3599 = false := by
+  rw [output3599_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3599_eq : Flapjack.WordAlloc.removeDeadStructural input3599 value1804 value1 value2 = (output3599, value1805, value1) := by
+  rw [input3599_def, output3599_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1806 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+        (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln)))
+      Flapjack.Spt.ln)
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+        Flapjack.Spt.ln)
+      Flapjack.Spt.ln))
+
+@[irreducible, cbv_opaque] def input3600 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [(2, 101)])).val
+theorem input3600_def : input3600 = (Flapjack.WordLangProgHOL.move 1 [(2, 101)]) := by
+  unfold input3600
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3600 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [(2, 101)])).val
+theorem output3600_def : output3600 = (Flapjack.WordLangProgHOL.move 1 [(2, 101)]) := by
+  unfold output3600
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3600_skip : Flapjack.WordAlloc.isSkip output3600 = false := by
+  rw [output3600_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3600_eq : Flapjack.WordAlloc.removeDeadStructural input3600 value1805 value1 value2 = (output3600, value1806, value1) := by
+  rw [input3600_def, output3600_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3601 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3600 input3599)).val
+theorem input3601_def : input3601 = (.seq input3600 input3599) := by
+  unfold input3601
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3601 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3600 output3599)).val
+theorem output3601_def : output3601 = (.seq output3600 output3599) := by
+  unfold output3601
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3601_skip : Flapjack.WordAlloc.isSkip output3601 = false := by
+  rw [output3601_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3601_eq : Flapjack.WordAlloc.removeDeadStructural input3601 value1804 value1 value2 = (output3601, value1806, value1) := by
+  rw [input3601_def, output3601_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3599_eq]
+  try dsimp only
+  rw [node3600_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1807 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+        (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln)))
+      Flapjack.Spt.ln)
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3602 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(107, 77)])).val
+theorem input3602_def : input3602 = (Flapjack.WordLangProgHOL.move 0 [(107, 77)]) := by
+  unfold input3602
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3602 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(107, 77)])).val
+theorem output3602_def : output3602 = (Flapjack.WordLangProgHOL.move 0 [(107, 77)]) := by
+  unfold output3602
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3602_skip : Flapjack.WordAlloc.isSkip output3602 = false := by
+  rw [output3602_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3602_eq : Flapjack.WordAlloc.removeDeadStructural input3602 value1806 value1 value2 = (output3602, value1807, value1) := by
+  rw [input3602_def, output3602_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3603 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3602 input3601)).val
+theorem input3603_def : input3603 = (.seq input3602 input3601) := by
+  unfold input3603
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3603 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3602 output3601)).val
+theorem output3603_def : output3603 = (.seq output3602 output3601) := by
+  unfold output3603
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3603_skip : Flapjack.WordAlloc.isSkip output3603 = false := by
+  rw [output3603_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3603_eq : Flapjack.WordAlloc.removeDeadStructural input3603 value1804 value1 value2 = (output3603, value1807, value1) := by
+  rw [input3603_def, output3603_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3601_eq]
+  try dsimp only
+  rw [node3602_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1808 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bn (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+        Flapjack.Spt.ln)
+      Flapjack.Spt.ln)
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3604 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 101 2048#64))).val
+theorem input3604_def : input3604 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 101 2048#64)) := by
+  unfold input3604
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3604 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 101 2048#64))).val
+theorem output3604_def : output3604 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 101 2048#64)) := by
+  unfold output3604
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3604_skip : Flapjack.WordAlloc.isSkip output3604 = false := by
+  rw [output3604_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3604_eq : Flapjack.WordAlloc.removeDeadStructural input3604 value1807 value1 value2 = (output3604, value1808, value1) := by
+  rw [input3604_def, output3604_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3605 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3604 input3603)).val
+theorem input3605_def : input3605 = (.seq input3604 input3603) := by
+  unfold input3605
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3605 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3604 output3603)).val
+theorem output3605_def : output3605 = (.seq output3604 output3603) := by
+  unfold output3605
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3605_skip : Flapjack.WordAlloc.isSkip output3605 = false := by
+  rw [output3605_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3605_eq : Flapjack.WordAlloc.removeDeadStructural input3605 value1804 value1 value2 = (output3605, value1808, value1) := by
+  rw [input3605_def, output3605_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3603_eq]
+  try dsimp only
+  rw [node3604_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3606 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 97 2048#64))).val
+theorem input3606_def : input3606 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 97 2048#64)) := by
+  unfold input3606
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3606 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3606_def : output3606 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3606
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3606_skip : Flapjack.WordAlloc.isSkip output3606 = true := by
+  rw [output3606_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3606_eq : Flapjack.WordAlloc.removeDeadStructural input3606 value1808 value1 value2 = (output3606, value1808, value1) := by
+  rw [input3606_def, output3606_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3607 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem input3607_def : input3607 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold input3607
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3607 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem output3607_def : output3607 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold output3607
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3607_skip : Flapjack.WordAlloc.isSkip output3607 = false := by
+  rw [output3607_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3607_eq : Flapjack.WordAlloc.removeDeadStructural input3607 value1808 value1 value2 = (output3607, value1808, value1) := by
+  rw [input3607_def, output3607_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1809 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn Flapjack.Spt.ln
+    (Flapjack.Spt.bn Flapjack.Spt.ln
+      (Flapjack.Spt.bn (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+        Flapjack.Spt.ln)))
+
+@[irreducible, cbv_opaque] def input3608 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn Flapjack.Spt.ln
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+                Flapjack.Spt.ln))),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(81, 2)]) Flapjack.WordLangProgHOL.skip))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip (Flapjack.WordLangProgHOL.move 1 [(89, 81)]))
+            (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 93 0#64)))),
+      830, 2))
+  (some 821) []
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(85, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 85)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip
+              (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 89 0#64)))
+            (Flapjack.WordLangProgHOL.move 1 [(93, 85)]))),
+      830, 3)))).val
+theorem input3608_def : input3608 = (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn Flapjack.Spt.ln
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+                Flapjack.Spt.ln))),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(81, 2)]) Flapjack.WordLangProgHOL.skip))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip (Flapjack.WordLangProgHOL.move 1 [(89, 81)]))
+            (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 93 0#64)))),
+      830, 2))
+  (some 821) []
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(85, 2)])
+            (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 85)])
+              (Flapjack.WordLangProgHOL.raise 2))))
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [])
+          (Flapjack.WordLangProgHOL.seq
+            (Flapjack.WordLangProgHOL.seq Flapjack.WordLangProgHOL.skip
+              (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 89 0#64)))
+            (Flapjack.WordLangProgHOL.move 1 [(93, 85)]))),
+      830, 3))) := by
+  unfold input3608
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3608 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn Flapjack.Spt.ln
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+                Flapjack.Spt.ln))),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.move 0 [(77, 71)], 830, 2))
+  (some 821) []
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(85, 2)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 85)])
+            (Flapjack.WordLangProgHOL.raise 2))),
+      830, 3)))).val
+theorem output3608_def : output3608 = (Flapjack.WordLangProgHOL.call
+  (some
+    ([2],
+      (Flapjack.Spt.bn Flapjack.Spt.ln
+          (Flapjack.Spt.bn Flapjack.Spt.ln
+            (Flapjack.Spt.bn Flapjack.Spt.ln
+              (Flapjack.Spt.bn
+                (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+                Flapjack.Spt.ln))),
+        Flapjack.Spt.ln),
+      Flapjack.WordLangProgHOL.move 0 [(77, 71)], 830, 2))
+  (some 821) []
+  (some
+    (2,
+      Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 0 [(77, 71)])
+        (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(85, 2)])
+          (Flapjack.WordLangProgHOL.seq (Flapjack.WordLangProgHOL.move 1 [(2, 85)])
+            (Flapjack.WordLangProgHOL.raise 2))),
+      830, 3))) := by
+  unfold output3608
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3608_skip : Flapjack.WordAlloc.isSkip output3608 = false := by
+  rw [output3608_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3608_eq : Flapjack.WordAlloc.removeDeadStructural input3608 value1808 value1 value2 = (output3608, value1809, value1) := by
+  rw [input3608_def, output3608_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3609 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [])).val
+theorem input3609_def : input3609 = (Flapjack.WordLangProgHOL.move 1 []) := by
+  unfold input3609
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3609 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3609_def : output3609 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3609
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3609_skip : Flapjack.WordAlloc.isSkip output3609 = true := by
+  rw [output3609_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3609_eq : Flapjack.WordAlloc.removeDeadStructural input3609 value1809 value1 value2 = (output3609, value1809, value1) := by
+  rw [input3609_def, output3609_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3610 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3609 input3608)).val
+theorem input3610_def : input3610 = (.seq input3609 input3608) := by
+  unfold input3610
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3610 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3608)).val
+theorem output3610_def : output3610 = (output3608) := by
+  unfold output3610
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3610_skip : Flapjack.WordAlloc.isSkip output3610 = false := by
+  rw [output3610_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3610_eq : Flapjack.WordAlloc.removeDeadStructural input3610 value1808 value1 value2 = (output3610, value1809, value1) := by
+  rw [input3610_def, output3610_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3608_eq]
+  try dsimp only
+  rw [node3609_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1810 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3611 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(71, 13)])).val
+theorem input3611_def : input3611 = (Flapjack.WordLangProgHOL.move 0 [(71, 13)]) := by
+  unfold input3611
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3611 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(71, 13)])).val
+theorem output3611_def : output3611 = (Flapjack.WordLangProgHOL.move 0 [(71, 13)]) := by
+  unfold output3611
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3611_skip : Flapjack.WordAlloc.isSkip output3611 = false := by
+  rw [output3611_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3611_eq : Flapjack.WordAlloc.removeDeadStructural input3611 value1809 value1 value2 = (output3611, value1810, value1) := by
+  rw [input3611_def, output3611_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3612 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3611 input3610)).val
+theorem input3612_def : input3612 = (.seq input3611 input3610) := by
+  unfold input3612
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3612 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3611 output3610)).val
+theorem output3612_def : output3612 = (.seq output3611 output3610) := by
+  unfold output3612
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3612_skip : Flapjack.WordAlloc.isSkip output3612 = false := by
+  rw [output3612_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3612_eq : Flapjack.WordAlloc.removeDeadStructural input3612 value1808 value1 value2 = (output3612, value1810, value1) := by
+  rw [input3612_def, output3612_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3610_eq]
+  try dsimp only
+  rw [node3611_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3613 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem input3613_def : input3613 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold input3613
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3613 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem output3613_def : output3613 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold output3613
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3613_skip : Flapjack.WordAlloc.isSkip output3613 = false := by
+  rw [output3613_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3613_eq : Flapjack.WordAlloc.removeDeadStructural input3613 value1810 value1 value2 = (output3613, value1810, value1) := by
+  rw [input3613_def, output3613_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3614 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 65 0#64))).val
+theorem input3614_def : input3614 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 65 0#64)) := by
+  unfold input3614
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3614 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3614_def : output3614 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3614
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3614_skip : Flapjack.WordAlloc.isSkip output3614 = true := by
+  rw [output3614_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3614_eq : Flapjack.WordAlloc.removeDeadStructural input3614 value1810 value1 value2 = (output3614, value1810, value1) := by
+  rw [input3614_def, output3614_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3615 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem input3615_def : input3615 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold input3615
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3615 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem output3615_def : output3615 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold output3615
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3615_skip : Flapjack.WordAlloc.isSkip output3615 = false := by
+  rw [output3615_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3615_eq : Flapjack.WordAlloc.removeDeadStructural input3615 value1810 value1 value2 = (output3615, value1810, value1) := by
+  rw [input3615_def, output3615_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3616 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 61 0#64))).val
+theorem input3616_def : input3616 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 61 0#64)) := by
+  unfold input3616
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3616 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3616_def : output3616 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3616
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3616_skip : Flapjack.WordAlloc.isSkip output3616 = true := by
+  rw [output3616_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3616_eq : Flapjack.WordAlloc.removeDeadStructural input3616 value1810 value1 value2 = (output3616, value1810, value1) := by
+  rw [input3616_def, output3616_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3617 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3616 input3615)).val
+theorem input3617_def : input3617 = (.seq input3616 input3615) := by
+  unfold input3617
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3617 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3615)).val
+theorem output3617_def : output3617 = (output3615) := by
+  unfold output3617
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3617_skip : Flapjack.WordAlloc.isSkip output3617 = false := by
+  rw [output3617_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3617_eq : Flapjack.WordAlloc.removeDeadStructural input3617 value1810 value1 value2 = (output3617, value1810, value1) := by
+  rw [input3617_def, output3617_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3615_eq]
+  try dsimp only
+  rw [node3616_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3618 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3617 input3614)).val
+theorem input3618_def : input3618 = (.seq input3617 input3614) := by
+  unfold input3618
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3618 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3617)).val
+theorem output3618_def : output3618 = (output3617) := by
+  unfold output3618
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3618_skip : Flapjack.WordAlloc.isSkip output3618 = false := by
+  rw [output3618_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3618_eq : Flapjack.WordAlloc.removeDeadStructural input3618 value1810 value1 value2 = (output3618, value1810, value1) := by
+  rw [input3618_def, output3618_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3614_eq]
+  try dsimp only
+  rw [node3617_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3619 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [(57, 45)])).val
+theorem input3619_def : input3619 = (Flapjack.WordLangProgHOL.move 1 [(57, 45)]) := by
+  unfold input3619
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3619 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3619_def : output3619 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3619
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3619_skip : Flapjack.WordAlloc.isSkip output3619 = true := by
+  rw [output3619_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3619_eq : Flapjack.WordAlloc.removeDeadStructural input3619 value1810 value1 value2 = (output3619, value1810, value1) := by
+  rw [input3619_def, output3619_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3620 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [(53, 41)])).val
+theorem input3620_def : input3620 = (Flapjack.WordLangProgHOL.move 1 [(53, 41)]) := by
+  unfold input3620
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3620 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3620_def : output3620 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3620
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3620_skip : Flapjack.WordAlloc.isSkip output3620 = true := by
+  rw [output3620_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3620_eq : Flapjack.WordAlloc.removeDeadStructural input3620 value1810 value1 value2 = (output3620, value1810, value1) := by
+  rw [input3620_def, output3620_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3621 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem input3621_def : input3621 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold input3621
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3621 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3621_def : output3621 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3621
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3621_skip : Flapjack.WordAlloc.isSkip output3621 = true := by
+  rw [output3621_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3621_eq : Flapjack.WordAlloc.removeDeadStructural input3621 value1810 value1 value2 = (output3621, value1810, value1) := by
+  rw [input3621_def, output3621_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3622 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3621 input3620)).val
+theorem input3622_def : input3622 = (.seq input3621 input3620) := by
+  unfold input3622
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3622 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3620)).val
+theorem output3622_def : output3622 = (output3620) := by
+  unfold output3622
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3622_skip : Flapjack.WordAlloc.isSkip output3622 = true := by
+  rw [output3622_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3622_eq : Flapjack.WordAlloc.removeDeadStructural input3622 value1810 value1 value2 = (output3622, value1810, value1) := by
+  rw [input3622_def, output3622_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3620_eq]
+  try dsimp only
+  rw [node3621_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3623 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3622 input3619)).val
+theorem input3623_def : input3623 = (.seq input3622 input3619) := by
+  unfold input3623
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3623 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3619)).val
+theorem output3623_def : output3623 = (output3619) := by
+  unfold output3623
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3623_skip : Flapjack.WordAlloc.isSkip output3623 = true := by
+  rw [output3623_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3623_eq : Flapjack.WordAlloc.removeDeadStructural input3623 value1810 value1 value2 = (output3623, value1810, value1) := by
+  rw [input3623_def, output3623_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3619_eq]
+  try dsimp only
+  rw [node3622_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3624 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 1 [(49, 37)])).val
+theorem input3624_def : input3624 = (Flapjack.WordLangProgHOL.move 1 [(49, 37)]) := by
+  unfold input3624
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3624 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3624_def : output3624 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3624
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3624_skip : Flapjack.WordAlloc.isSkip output3624 = true := by
+  rw [output3624_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3624_eq : Flapjack.WordAlloc.removeDeadStructural input3624 value1810 value1 value2 = (output3624, value1810, value1) := by
+  rw [input3624_def, output3624_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3625 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3624 input3623)).val
+theorem input3625_def : input3625 = (.seq input3624 input3623) := by
+  unfold input3625
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3625 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3623)).val
+theorem output3625_def : output3625 = (output3623) := by
+  unfold output3625
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3625_skip : Flapjack.WordAlloc.isSkip output3625 = true := by
+  rw [output3625_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3625_eq : Flapjack.WordAlloc.removeDeadStructural input3625 value1810 value1 value2 = (output3625, value1810, value1) := by
+  rw [input3625_def, output3625_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3623_eq]
+  try dsimp only
+  rw [node3624_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1811 : Flapjack.NumSet :=
+Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit)
+  (Flapjack.Spt.bn (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln) Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3626 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.return 13 [2])).val
+theorem input3626_def : input3626 = (Flapjack.WordLangProgHOL.return 13 [2]) := by
+  unfold input3626
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3626 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.return 13 [2])).val
+theorem output3626_def : output3626 = (Flapjack.WordLangProgHOL.return 13 [2]) := by
+  unfold output3626
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3626_skip : Flapjack.WordAlloc.isSkip output3626 = false := by
+  rw [output3626_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3626_eq : Flapjack.WordAlloc.removeDeadStructural input3626 value1810 value1 value2 = (output3626, value1811, value1) := by
+  rw [input3626_def, output3626_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1812 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn
+      (Flapjack.Spt.bs (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)) PUnit.unit Flapjack.Spt.ln)
+      Flapjack.Spt.ln)
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3627 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(2, 45)])).val
+theorem input3627_def : input3627 = (Flapjack.WordLangProgHOL.move 0 [(2, 45)]) := by
+  unfold input3627
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3627 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 0 [(2, 45)])).val
+theorem output3627_def : output3627 = (Flapjack.WordLangProgHOL.move 0 [(2, 45)]) := by
+  unfold output3627
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3627_skip : Flapjack.WordAlloc.isSkip output3627 = false := by
+  rw [output3627_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3627_eq : Flapjack.WordAlloc.removeDeadStructural input3627 value1811 value1 value2 = (output3627, value1812, value1) := by
+  rw [input3627_def, output3627_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3628 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3627 input3626)).val
+theorem input3628_def : input3628 = (.seq input3627 input3626) := by
+  unfold input3628
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3628 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3627 output3626)).val
+theorem output3628_def : output3628 = (.seq output3627 output3626) := by
+  unfold output3628
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3628_skip : Flapjack.WordAlloc.isSkip output3628 = false := by
+  rw [output3628_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3628_eq : Flapjack.WordAlloc.removeDeadStructural input3628 value1810 value1 value2 = (output3628, value1812, value1) := by
+  rw [input3628_def, output3628_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3626_eq]
+  try dsimp only
+  rw [node3627_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3629 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 45 0#64))).val
+theorem input3629_def : input3629 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 45 0#64)) := by
+  unfold input3629
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3629 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 45 0#64))).val
+theorem output3629_def : output3629 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 45 0#64)) := by
+  unfold output3629
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3629_skip : Flapjack.WordAlloc.isSkip output3629 = false := by
+  rw [output3629_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3629_eq : Flapjack.WordAlloc.removeDeadStructural input3629 value1812 value1 value2 = (output3629, value1810, value1) := by
+  rw [input3629_def, output3629_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3630 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 41 1#64))).val
+theorem input3630_def : input3630 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 41 1#64)) := by
+  unfold input3630
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3630 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3630_def : output3630 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3630
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3630_skip : Flapjack.WordAlloc.isSkip output3630 = true := by
+  rw [output3630_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3630_eq : Flapjack.WordAlloc.removeDeadStructural input3630 value1810 value1 value2 = (output3630, value1810, value1) := by
+  rw [input3630_def, output3630_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3631 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem input3631_def : input3631 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold input3631
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3631 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.tick)).val
+theorem output3631_def : output3631 = (Flapjack.WordLangProgHOL.tick) := by
+  unfold output3631
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3631_skip : Flapjack.WordAlloc.isSkip output3631 = false := by
+  rw [output3631_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3631_eq : Flapjack.WordAlloc.removeDeadStructural input3631 value1810 value1 value2 = (output3631, value1810, value1) := by
+  rw [input3631_def, output3631_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3632 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 37 1#64))).val
+theorem input3632_def : input3632 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 37 1#64)) := by
+  unfold input3632
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3632 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3632_def : output3632 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3632
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3632_skip : Flapjack.WordAlloc.isSkip output3632 = true := by
+  rw [output3632_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3632_eq : Flapjack.WordAlloc.removeDeadStructural input3632 value1810 value1 value2 = (output3632, value1810, value1) := by
+  rw [input3632_def, output3632_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3633 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3632 input3631)).val
+theorem input3633_def : input3633 = (.seq input3632 input3631) := by
+  unfold input3633
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3633 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3631)).val
+theorem output3633_def : output3633 = (output3631) := by
+  unfold output3633
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3633_skip : Flapjack.WordAlloc.isSkip output3633 = false := by
+  rw [output3633_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3633_eq : Flapjack.WordAlloc.removeDeadStructural input3633 value1810 value1 value2 = (output3633, value1810, value1) := by
+  rw [input3633_def, output3633_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3631_eq]
+  try dsimp only
+  rw [node3632_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3634 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3633 input3630)).val
+theorem input3634_def : input3634 = (.seq input3633 input3630) := by
+  unfold input3634
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3634 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3633)).val
+theorem output3634_def : output3634 = (output3633) := by
+  unfold output3634
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3634_skip : Flapjack.WordAlloc.isSkip output3634 = false := by
+  rw [output3634_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3634_eq : Flapjack.WordAlloc.removeDeadStructural input3634 value1810 value1 value2 = (output3634, value1810, value1) := by
+  rw [input3634_def, output3634_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3630_eq]
+  try dsimp only
+  rw [node3633_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3635 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3634 input3629)).val
+theorem input3635_def : input3635 = (.seq input3634 input3629) := by
+  unfold input3635
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3635 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3634 output3629)).val
+theorem output3635_def : output3635 = (.seq output3634 output3629) := by
+  unfold output3635
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3635_skip : Flapjack.WordAlloc.isSkip output3635 = false := by
+  rw [output3635_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3635_eq : Flapjack.WordAlloc.removeDeadStructural input3635 value1812 value1 value2 = (output3635, value1810, value1) := by
+  rw [input3635_def, output3635_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3629_eq]
+  try dsimp only
+  rw [node3634_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3636 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3635 input3628)).val
+theorem input3636_def : input3636 = (.seq input3635 input3628) := by
+  unfold input3636
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3636 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3635 output3628)).val
+theorem output3636_def : output3636 = (.seq output3635 output3628) := by
+  unfold output3636
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3636_skip : Flapjack.WordAlloc.isSkip output3636 = false := by
+  rw [output3636_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3636_eq : Flapjack.WordAlloc.removeDeadStructural input3636 value1810 value1 value2 = (output3636, value1810, value1) := by
+  rw [input3636_def, output3636_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3628_eq]
+  try dsimp only
+  rw [node3635_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3637 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3636 input3625)).val
+theorem input3637_def : input3637 = (.seq input3636 input3625) := by
+  unfold input3637
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3637 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3636)).val
+theorem output3637_def : output3637 = (output3636) := by
+  unfold output3637
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3637_skip : Flapjack.WordAlloc.isSkip output3637 = false := by
+  rw [output3637_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3637_eq : Flapjack.WordAlloc.removeDeadStructural input3637 value1810 value1 value2 = (output3637, value1810, value1) := by
+  rw [input3637_def, output3637_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3625_eq]
+  try dsimp only
+  rw [node3636_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3638 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 57 0#64))).val
+theorem input3638_def : input3638 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 57 0#64)) := by
+  unfold input3638
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3638 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3638_def : output3638 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3638
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3638_skip : Flapjack.WordAlloc.isSkip output3638 = true := by
+  rw [output3638_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3638_eq : Flapjack.WordAlloc.removeDeadStructural input3638 value1810 value1 value2 = (output3638, value1810, value1) := by
+  rw [input3638_def, output3638_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3639 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 53 0#64))).val
+theorem input3639_def : input3639 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 53 0#64)) := by
+  unfold input3639
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3639 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3639_def : output3639 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3639
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3639_skip : Flapjack.WordAlloc.isSkip output3639 = true := by
+  rw [output3639_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3639_eq : Flapjack.WordAlloc.removeDeadStructural input3639 value1810 value1 value2 = (output3639, value1810, value1) := by
+  rw [input3639_def, output3639_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3640 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem input3640_def : input3640 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold input3640
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3640 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3640_def : output3640 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3640
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3640_skip : Flapjack.WordAlloc.isSkip output3640 = true := by
+  rw [output3640_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3640_eq : Flapjack.WordAlloc.removeDeadStructural input3640 value1810 value1 value2 = (output3640, value1810, value1) := by
+  rw [input3640_def, output3640_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3641 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3640 input3639)).val
+theorem input3641_def : input3641 = (.seq input3640 input3639) := by
+  unfold input3641
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3641 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3639)).val
+theorem output3641_def : output3641 = (output3639) := by
+  unfold output3641
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3641_skip : Flapjack.WordAlloc.isSkip output3641 = true := by
+  rw [output3641_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3641_eq : Flapjack.WordAlloc.removeDeadStructural input3641 value1810 value1 value2 = (output3641, value1810, value1) := by
+  rw [input3641_def, output3641_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3639_eq]
+  try dsimp only
+  rw [node3640_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3642 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3641 input3638)).val
+theorem input3642_def : input3642 = (.seq input3641 input3638) := by
+  unfold input3642
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3642 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3638)).val
+theorem output3642_def : output3642 = (output3638) := by
+  unfold output3642
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3642_skip : Flapjack.WordAlloc.isSkip output3642 = true := by
+  rw [output3642_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3642_eq : Flapjack.WordAlloc.removeDeadStructural input3642 value1810 value1 value2 = (output3642, value1810, value1) := by
+  rw [input3642_def, output3642_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3638_eq]
+  try dsimp only
+  rw [node3641_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3643 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.move 2 [(49, 29)])).val
+theorem input3643_def : input3643 = (Flapjack.WordLangProgHOL.move 2 [(49, 29)]) := by
+  unfold input3643
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3643 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3643_def : output3643 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3643
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3643_skip : Flapjack.WordAlloc.isSkip output3643 = true := by
+  rw [output3643_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3643_eq : Flapjack.WordAlloc.removeDeadStructural input3643 value1810 value1 value2 = (output3643, value1810, value1) := by
+  rw [input3643_def, output3643_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3644 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3643 input3642)).val
+theorem input3644_def : input3644 = (.seq input3643 input3642) := by
+  unfold input3644
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3644 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3642)).val
+theorem output3644_def : output3644 = (output3642) := by
+  unfold output3644
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3644_skip : Flapjack.WordAlloc.isSkip output3644 = true := by
+  rw [output3644_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3644_eq : Flapjack.WordAlloc.removeDeadStructural input3644 value1810 value1 value2 = (output3644, value1810, value1) := by
+  rw [input3644_def, output3644_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3642_eq]
+  try dsimp only
+  rw [node3643_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3645 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem input3645_def : input3645 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold input3645
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3645 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.skip)).val
+theorem output3645_def : output3645 = (Flapjack.WordLangProgHOL.skip) := by
+  unfold output3645
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3645_skip : Flapjack.WordAlloc.isSkip output3645 = true := by
+  rw [output3645_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3645_eq : Flapjack.WordAlloc.removeDeadStructural input3645 value1810 value1 value2 = (output3645, value1810, value1) := by
+  rw [input3645_def, output3645_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3646 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3645 input3644)).val
+theorem input3646_def : input3646 = (.seq input3645 input3644) := by
+  unfold input3646
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3646 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3644)).val
+theorem output3646_def : output3646 = (output3644) := by
+  unfold output3646
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3646_skip : Flapjack.WordAlloc.isSkip output3646 = true := by
+  rw [output3646_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3646_eq : Flapjack.WordAlloc.removeDeadStructural input3646 value1810 value1 value2 = (output3646, value1810, value1) := by
+  rw [input3646_def, output3646_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3644_eq]
+  try dsimp only
+  rw [node3645_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1813 : Flapjack.Cmp :=
+Flapjack.Cmp.notEqual
+
+def value1814 : Flapjack.WordRegImm (BitVec 64) :=
+Flapjack.WordRegImm.reg 33
+
+def value1815 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn (Flapjack.Spt.bs (Flapjack.Spt.ls PUnit.unit) PUnit.unit Flapjack.Spt.ln)
+      (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit))))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3647 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.ite value1813 29 value1814 input3637 input3646)).val
+theorem input3647_def : input3647 = (.ite value1813 29 value1814 input3637 input3646) := by
+  unfold input3647
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3647 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.ite value1813 29 value1814 output3637 output3646)).val
+theorem output3647_def : output3647 = (.ite value1813 29 value1814 output3637 output3646) := by
+  unfold output3647
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3647_skip : Flapjack.WordAlloc.isSkip output3647 = false := by
+  rw [output3647_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3647_eq : Flapjack.WordAlloc.removeDeadStructural input3647 value1810 value1 value2 = (output3647, value1815, value1) := by
+  rw [input3647_def, output3647_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural_ite_eq]
+  rw [node3637_eq]
+  try dsimp only
+  rw [node3646_eq]
+  try dsimp only
+  unfold Flapjack.WordAlloc.joinDeadIteResult
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3648 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3647 input3618)).val
+theorem input3648_def : input3648 = (.seq input3647 input3618) := by
+  unfold input3648
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3648 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3647 output3618)).val
+theorem output3648_def : output3648 = (.seq output3647 output3618) := by
+  unfold output3648
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3648_skip : Flapjack.WordAlloc.isSkip output3648 = false := by
+  rw [output3648_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3648_eq : Flapjack.WordAlloc.removeDeadStructural input3648 value1810 value1 value2 = (output3648, value1815, value1) := by
+  rw [input3648_def, output3648_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3618_eq]
+  try dsimp only
+  rw [node3647_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1816 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn (Flapjack.Spt.bs (Flapjack.Spt.ls PUnit.unit) PUnit.unit Flapjack.Spt.ln) Flapjack.Spt.ln)
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3649 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 33 0#64))).val
+theorem input3649_def : input3649 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 33 0#64)) := by
+  unfold input3649
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3649 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 33 0#64))).val
+theorem output3649_def : output3649 = (Flapjack.WordLangProgHOL.inst (Flapjack.WordLangInst.const 33 0#64)) := by
+  unfold output3649
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3649_skip : Flapjack.WordAlloc.isSkip output3649 = false := by
+  rw [output3649_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3649_eq : Flapjack.WordAlloc.removeDeadStructural input3649 value1815 value1 value2 = (output3649, value1816, value1) := by
+  rw [input3649_def, output3649_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1817 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) Flapjack.Spt.ln))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3650 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.load 29 (Flapjack.WordLangAddr.addr 25 18446744073709551008#64)))).val
+theorem input3650_def : input3650 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.load 29 (Flapjack.WordLangAddr.addr 25 18446744073709551008#64))) := by
+  unfold input3650
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3650 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.load 29 (Flapjack.WordLangAddr.addr 25 18446744073709551008#64)))).val
+theorem output3650_def : output3650 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.mem Flapjack.WordMemOp.load 29 (Flapjack.WordLangAddr.addr 25 18446744073709551008#64))) := by
+  unfold output3650
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3650_skip : Flapjack.WordAlloc.isSkip output3650 = false := by
+  rw [output3650_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3650_eq : Flapjack.WordAlloc.removeDeadStructural input3650 value1816 value1 value2 = (output3650, value1817, value1) := by
+  rw [input3650_def, output3650_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1818 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn (Flapjack.Spt.bs Flapjack.Spt.ln PUnit.unit (Flapjack.Spt.ls PUnit.unit)) Flapjack.Spt.ln)
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3651 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 25 21)).val
+theorem input3651_def : input3651 = (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 25 21) := by
+  unfold input3651
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3651 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 25 21)).val
+theorem output3651_def : output3651 = (Flapjack.WordLangProgHOL.opCurrHeap Flapjack.BinOp.add 25 21) := by
+  unfold output3651
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3651_skip : Flapjack.WordAlloc.isSkip output3651 = false := by
+  rw [output3651_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3651_eq : Flapjack.WordAlloc.removeDeadStructural input3651 value1817 value1 value2 = (output3651, value1818, value1) := by
+  rw [input3651_def, output3651_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+def value1819 : Flapjack.NumSet :=
+Flapjack.Spt.bn Flapjack.Spt.ln
+  (Flapjack.Spt.bn
+    (Flapjack.Spt.bn (Flapjack.Spt.ls PUnit.unit) (Flapjack.Spt.bn Flapjack.Spt.ln (Flapjack.Spt.ls PUnit.unit)))
+    Flapjack.Spt.ln)
+
+@[irreducible, cbv_opaque] def input3652 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 21 17 (Flapjack.WordRegImm.imm 1#64))))).val
+theorem input3652_def : input3652 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 21 17 (Flapjack.WordRegImm.imm 1#64)))) := by
+  unfold input3652
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3652 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 21 17 (Flapjack.WordRegImm.imm 1#64))))).val
+theorem output3652_def : output3652 = (Flapjack.WordLangProgHOL.inst
+  (Flapjack.WordLangInst.arith (Flapjack.WordLangArith.shift Flapjack.Shift.lsl 21 17 (Flapjack.WordRegImm.imm 1#64)))) := by
+  unfold output3652
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3652_skip : Flapjack.WordAlloc.isSkip output3652 = false := by
+  rw [output3652_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3652_eq : Flapjack.WordAlloc.removeDeadStructural input3652 value1818 value1 value2 = (output3652, value1819, value1) := by
+  rw [input3652_def, output3652_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3653 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.get 17 Flapjack.WordStore.heapLength)).val
+theorem input3653_def : input3653 = (Flapjack.WordLangProgHOL.get 17 Flapjack.WordStore.heapLength) := by
+  unfold input3653
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3653 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (Flapjack.WordLangProgHOL.get 17 Flapjack.WordStore.heapLength)).val
+theorem output3653_def : output3653 = (Flapjack.WordLangProgHOL.get 17 Flapjack.WordStore.heapLength) := by
+  unfold output3653
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3653_skip : Flapjack.WordAlloc.isSkip output3653 = false := by
+  rw [output3653_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3653_eq : Flapjack.WordAlloc.removeDeadStructural input3653 value1819 value1 value2 = (output3653, value1810, value1) := by
+  rw [input3653_def, output3653_def]
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3654 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3653 input3652)).val
+theorem input3654_def : input3654 = (.seq input3653 input3652) := by
+  unfold input3654
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3654 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3653 output3652)).val
+theorem output3654_def : output3654 = (.seq output3653 output3652) := by
+  unfold output3654
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3654_skip : Flapjack.WordAlloc.isSkip output3654 = false := by
+  rw [output3654_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3654_eq : Flapjack.WordAlloc.removeDeadStructural input3654 value1818 value1 value2 = (output3654, value1810, value1) := by
+  rw [input3654_def, output3654_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3652_eq]
+  try dsimp only
+  rw [node3653_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3655 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3654 input3651)).val
+theorem input3655_def : input3655 = (.seq input3654 input3651) := by
+  unfold input3655
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3655 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3654 output3651)).val
+theorem output3655_def : output3655 = (.seq output3654 output3651) := by
+  unfold output3655
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3655_skip : Flapjack.WordAlloc.isSkip output3655 = false := by
+  rw [output3655_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3655_eq : Flapjack.WordAlloc.removeDeadStructural input3655 value1817 value1 value2 = (output3655, value1810, value1) := by
+  rw [input3655_def, output3655_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3651_eq]
+  try dsimp only
+  rw [node3654_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3656 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3655 input3650)).val
+theorem input3656_def : input3656 = (.seq input3655 input3650) := by
+  unfold input3656
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3656 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3655 output3650)).val
+theorem output3656_def : output3656 = (.seq output3655 output3650) := by
+  unfold output3656
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3656_skip : Flapjack.WordAlloc.isSkip output3656 = false := by
+  rw [output3656_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3656_eq : Flapjack.WordAlloc.removeDeadStructural input3656 value1816 value1 value2 = (output3656, value1810, value1) := by
+  rw [input3656_def, output3656_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3650_eq]
+  try dsimp only
+  rw [node3655_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3657 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3656 input3649)).val
+theorem input3657_def : input3657 = (.seq input3656 input3649) := by
+  unfold input3657
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3657 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3656 output3649)).val
+theorem output3657_def : output3657 = (.seq output3656 output3649) := by
+  unfold output3657
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3657_skip : Flapjack.WordAlloc.isSkip output3657 = false := by
+  rw [output3657_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3657_eq : Flapjack.WordAlloc.removeDeadStructural input3657 value1815 value1 value2 = (output3657, value1810, value1) := by
+  rw [input3657_def, output3657_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3649_eq]
+  try dsimp only
+  rw [node3656_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3658 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3657 input3648)).val
+theorem input3658_def : input3658 = (.seq input3657 input3648) := by
+  unfold input3658
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3658 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3657 output3648)).val
+theorem output3658_def : output3658 = (.seq output3657 output3648) := by
+  unfold output3658
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3658_skip : Flapjack.WordAlloc.isSkip output3658 = false := by
+  rw [output3658_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3658_eq : Flapjack.WordAlloc.removeDeadStructural input3658 value1810 value1 value2 = (output3658, value1810, value1) := by
+  rw [input3658_def, output3658_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3648_eq]
+  try dsimp only
+  rw [node3657_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3659 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3658 input3613)).val
+theorem input3659_def : input3659 = (.seq input3658 input3613) := by
+  unfold input3659
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3659 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3658 output3613)).val
+theorem output3659_def : output3659 = (.seq output3658 output3613) := by
+  unfold output3659
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3659_skip : Flapjack.WordAlloc.isSkip output3659 = false := by
+  rw [output3659_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3659_eq : Flapjack.WordAlloc.removeDeadStructural input3659 value1810 value1 value2 = (output3659, value1810, value1) := by
+  rw [input3659_def, output3659_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3613_eq]
+  try dsimp only
+  rw [node3658_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3660 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3659 input3612)).val
+theorem input3660_def : input3660 = (.seq input3659 input3612) := by
+  unfold input3660
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3660 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3659 output3612)).val
+theorem output3660_def : output3660 = (.seq output3659 output3612) := by
+  unfold output3660
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3660_skip : Flapjack.WordAlloc.isSkip output3660 = false := by
+  rw [output3660_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3660_eq : Flapjack.WordAlloc.removeDeadStructural input3660 value1808 value1 value2 = (output3660, value1810, value1) := by
+  rw [input3660_def, output3660_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3612_eq]
+  try dsimp only
+  rw [node3659_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3661 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3660 input3607)).val
+theorem input3661_def : input3661 = (.seq input3660 input3607) := by
+  unfold input3661
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3661 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3660 output3607)).val
+theorem output3661_def : output3661 = (.seq output3660 output3607) := by
+  unfold output3661
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3661_skip : Flapjack.WordAlloc.isSkip output3661 = false := by
+  rw [output3661_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3661_eq : Flapjack.WordAlloc.removeDeadStructural input3661 value1808 value1 value2 = (output3661, value1810, value1) := by
+  rw [input3661_def, output3661_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3607_eq]
+  try dsimp only
+  rw [node3660_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3662 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3661 input3606)).val
+theorem input3662_def : input3662 = (.seq input3661 input3606) := by
+  unfold input3662
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3662 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3661)).val
+theorem output3662_def : output3662 = (output3661) := by
+  unfold output3662
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3662_skip : Flapjack.WordAlloc.isSkip output3662 = false := by
+  rw [output3662_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3662_eq : Flapjack.WordAlloc.removeDeadStructural input3662 value1808 value1 value2 = (output3662, value1810, value1) := by
+  rw [input3662_def, output3662_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3606_eq]
+  try dsimp only
+  rw [node3661_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3663 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3662 input3605)).val
+theorem input3663_def : input3663 = (.seq input3662 input3605) := by
+  unfold input3663
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3663 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3662 output3605)).val
+theorem output3663_def : output3663 = (.seq output3662 output3605) := by
+  unfold output3663
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3663_skip : Flapjack.WordAlloc.isSkip output3663 = false := by
+  rw [output3663_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3663_eq : Flapjack.WordAlloc.removeDeadStructural input3663 value1804 value1 value2 = (output3663, value1810, value1) := by
+  rw [input3663_def, output3663_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3605_eq]
+  try dsimp only
+  rw [node3662_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3664 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3663 input3598)).val
+theorem input3664_def : input3664 = (.seq input3663 input3598) := by
+  unfold input3664
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3664 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3663 output3598)).val
+theorem output3664_def : output3664 = (.seq output3663 output3598) := by
+  unfold output3664
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3664_skip : Flapjack.WordAlloc.isSkip output3664 = false := by
+  rw [output3664_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3664_eq : Flapjack.WordAlloc.removeDeadStructural input3664 value1804 value1 value2 = (output3664, value1810, value1) := by
+  rw [input3664_def, output3664_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3598_eq]
+  try dsimp only
+  rw [node3663_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3665 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3664 input3597)).val
+theorem input3665_def : input3665 = (.seq input3664 input3597) := by
+  unfold input3665
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3665 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3664 output3597)).val
+theorem output3665_def : output3665 = (.seq output3664 output3597) := by
+  unfold output3665
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3665_skip : Flapjack.WordAlloc.isSkip output3665 = false := by
+  rw [output3665_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3665_eq : Flapjack.WordAlloc.removeDeadStructural input3665 value1800 value1 value2 = (output3665, value1810, value1) := by
+  rw [input3665_def, output3665_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3597_eq]
+  try dsimp only
+  rw [node3664_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3666 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3665 input3590)).val
+theorem input3666_def : input3666 = (.seq input3665 input3590) := by
+  unfold input3666
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3666 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3665 output3590)).val
+theorem output3666_def : output3666 = (.seq output3665 output3590) := by
+  unfold output3666
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3666_skip : Flapjack.WordAlloc.isSkip output3666 = false := by
+  rw [output3666_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3666_eq : Flapjack.WordAlloc.removeDeadStructural input3666 value1799 value1 value2 = (output3666, value1810, value1) := by
+  rw [input3666_def, output3666_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3590_eq]
+  try dsimp only
+  rw [node3665_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3667 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3666 input3589)).val
+theorem input3667_def : input3667 = (.seq input3666 input3589) := by
+  unfold input3667
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3667 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3666 output3589)).val
+theorem output3667_def : output3667 = (.seq output3666 output3589) := by
+  unfold output3667
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3667_skip : Flapjack.WordAlloc.isSkip output3667 = false := by
+  rw [output3667_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3667_eq : Flapjack.WordAlloc.removeDeadStructural input3667 value1798 value1 value2 = (output3667, value1810, value1) := by
+  rw [input3667_def, output3667_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3589_eq]
+  try dsimp only
+  rw [node3666_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3668 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3667 input3588)).val
+theorem input3668_def : input3668 = (.seq input3667 input3588) := by
+  unfold input3668
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3668 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3667 output3588)).val
+theorem output3668_def : output3668 = (.seq output3667 output3588) := by
+  unfold output3668
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3668_skip : Flapjack.WordAlloc.isSkip output3668 = false := by
+  rw [output3668_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3668_eq : Flapjack.WordAlloc.removeDeadStructural input3668 value5 value1 value2 = (output3668, value1810, value1) := by
+  rw [input3668_def, output3668_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3588_eq]
+  try dsimp only
+  rw [node3667_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3669 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3668 input3585)).val
+theorem input3669_def : input3669 = (.seq input3668 input3585) := by
+  unfold input3669
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3669 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3668 output3585)).val
+theorem output3669_def : output3669 = (.seq output3668 output3585) := by
+  unfold output3669
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3669_skip : Flapjack.WordAlloc.isSkip output3669 = false := by
+  rw [output3669_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3669_eq : Flapjack.WordAlloc.removeDeadStructural input3669 value1793 value1 value2 = (output3669, value1810, value1) := by
+  rw [input3669_def, output3669_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3585_eq]
+  try dsimp only
+  rw [node3668_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3670 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3669 input3578)).val
+theorem input3670_def : input3670 = (.seq input3669 input3578) := by
+  unfold input3670
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3670 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3669)).val
+theorem output3670_def : output3670 = (output3669) := by
+  unfold output3670
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3670_skip : Flapjack.WordAlloc.isSkip output3670 = false := by
+  rw [output3670_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3670_eq : Flapjack.WordAlloc.removeDeadStructural input3670 value1793 value1 value2 = (output3670, value1810, value1) := by
+  rw [input3670_def, output3670_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3578_eq]
+  try dsimp only
+  rw [node3669_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3671 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3670 input3577)).val
+theorem input3671_def : input3671 = (.seq input3670 input3577) := by
+  unfold input3671
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3671 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3670 output3577)).val
+theorem output3671_def : output3671 = (.seq output3670 output3577) := by
+  unfold output3671
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3671_skip : Flapjack.WordAlloc.isSkip output3671 = false := by
+  rw [output3671_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3671_eq : Flapjack.WordAlloc.removeDeadStructural input3671 value1792 value1 value2 = (output3671, value1810, value1) := by
+  rw [input3671_def, output3671_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3577_eq]
+  try dsimp only
+  rw [node3670_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3672 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3671 input3576)).val
+theorem input3672_def : input3672 = (.seq input3671 input3576) := by
+  unfold input3672
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3672 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3671 output3576)).val
+theorem output3672_def : output3672 = (.seq output3671 output3576) := by
+  unfold output3672
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3672_skip : Flapjack.WordAlloc.isSkip output3672 = false := by
+  rw [output3672_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3672_eq : Flapjack.WordAlloc.removeDeadStructural input3672 value5 value1 value2 = (output3672, value1810, value1) := by
+  rw [input3672_def, output3672_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3576_eq]
+  try dsimp only
+  rw [node3671_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3673 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3672 input3573)).val
+theorem input3673_def : input3673 = (.seq input3672 input3573) := by
+  unfold input3673
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3673 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3672 output3573)).val
+theorem output3673_def : output3673 = (.seq output3672 output3573) := by
+  unfold output3673
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3673_skip : Flapjack.WordAlloc.isSkip output3673 = false := by
+  rw [output3673_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3673_eq : Flapjack.WordAlloc.removeDeadStructural input3673 value1786 value1 value2 = (output3673, value1810, value1) := by
+  rw [input3673_def, output3673_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3573_eq]
+  try dsimp only
+  rw [node3672_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3674 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3673 input3564)).val
+theorem input3674_def : input3674 = (.seq input3673 input3564) := by
+  unfold input3674
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3674 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3673)).val
+theorem output3674_def : output3674 = (output3673) := by
+  unfold output3674
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3674_skip : Flapjack.WordAlloc.isSkip output3674 = false := by
+  rw [output3674_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3674_eq : Flapjack.WordAlloc.removeDeadStructural input3674 value1786 value1 value2 = (output3674, value1810, value1) := by
+  rw [input3674_def, output3674_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3564_eq]
+  try dsimp only
+  rw [node3673_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3675 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3674 input3563)).val
+theorem input3675_def : input3675 = (.seq input3674 input3563) := by
+  unfold input3675
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3675 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3674 output3563)).val
+theorem output3675_def : output3675 = (.seq output3674 output3563) := by
+  unfold output3675
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3675_skip : Flapjack.WordAlloc.isSkip output3675 = false := by
+  rw [output3675_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3675_eq : Flapjack.WordAlloc.removeDeadStructural input3675 value1785 value1 value2 = (output3675, value1810, value1) := by
+  rw [input3675_def, output3675_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3563_eq]
+  try dsimp only
+  rw [node3674_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3676 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3675 input3562)).val
+theorem input3676_def : input3676 = (.seq input3675 input3562) := by
+  unfold input3676
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3676 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3675 output3562)).val
+theorem output3676_def : output3676 = (.seq output3675 output3562) := by
+  unfold output3676
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3676_skip : Flapjack.WordAlloc.isSkip output3676 = false := by
+  rw [output3676_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3676_eq : Flapjack.WordAlloc.removeDeadStructural input3676 value5 value1 value2 = (output3676, value1810, value1) := by
+  rw [input3676_def, output3676_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3562_eq]
+  try dsimp only
+  rw [node3675_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3677 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3676 input3559)).val
+theorem input3677_def : input3677 = (.seq input3676 input3559) := by
+  unfold input3677
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3677 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3676 output3559)).val
+theorem output3677_def : output3677 = (.seq output3676 output3559) := by
+  unfold output3677
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3677_skip : Flapjack.WordAlloc.isSkip output3677 = false := by
+  rw [output3677_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3677_eq : Flapjack.WordAlloc.removeDeadStructural input3677 value1779 value1 value2 = (output3677, value1810, value1) := by
+  rw [input3677_def, output3677_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3559_eq]
+  try dsimp only
+  rw [node3676_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3678 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3677 input3550)).val
+theorem input3678_def : input3678 = (.seq input3677 input3550) := by
+  unfold input3678
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3678 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3677)).val
+theorem output3678_def : output3678 = (output3677) := by
+  unfold output3678
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3678_skip : Flapjack.WordAlloc.isSkip output3678 = false := by
+  rw [output3678_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3678_eq : Flapjack.WordAlloc.removeDeadStructural input3678 value1779 value1 value2 = (output3678, value1810, value1) := by
+  rw [input3678_def, output3678_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3550_eq]
+  try dsimp only
+  rw [node3677_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3679 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3678 input3549)).val
+theorem input3679_def : input3679 = (.seq input3678 input3549) := by
+  unfold input3679
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3679 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3678 output3549)).val
+theorem output3679_def : output3679 = (.seq output3678 output3549) := by
+  unfold output3679
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3679_skip : Flapjack.WordAlloc.isSkip output3679 = false := by
+  rw [output3679_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3679_eq : Flapjack.WordAlloc.removeDeadStructural input3679 value1778 value1 value2 = (output3679, value1810, value1) := by
+  rw [input3679_def, output3679_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3549_eq]
+  try dsimp only
+  rw [node3678_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3680 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3679 input3548)).val
+theorem input3680_def : input3680 = (.seq input3679 input3548) := by
+  unfold input3680
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3680 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3679 output3548)).val
+theorem output3680_def : output3680 = (.seq output3679 output3548) := by
+  unfold output3680
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3680_skip : Flapjack.WordAlloc.isSkip output3680 = false := by
+  rw [output3680_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3680_eq : Flapjack.WordAlloc.removeDeadStructural input3680 value5 value1 value2 = (output3680, value1810, value1) := by
+  rw [input3680_def, output3680_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3548_eq]
+  try dsimp only
+  rw [node3679_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3681 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3680 input3545)).val
+theorem input3681_def : input3681 = (.seq input3680 input3545) := by
+  unfold input3681
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3681 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3680 output3545)).val
+theorem output3681_def : output3681 = (.seq output3680 output3545) := by
+  unfold output3681
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3681_skip : Flapjack.WordAlloc.isSkip output3681 = false := by
+  rw [output3681_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3681_eq : Flapjack.WordAlloc.removeDeadStructural input3681 value1772 value1 value2 = (output3681, value1810, value1) := by
+  rw [input3681_def, output3681_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3545_eq]
+  try dsimp only
+  rw [node3680_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3682 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3681 input3536)).val
+theorem input3682_def : input3682 = (.seq input3681 input3536) := by
+  unfold input3682
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3682 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3681)).val
+theorem output3682_def : output3682 = (output3681) := by
+  unfold output3682
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3682_skip : Flapjack.WordAlloc.isSkip output3682 = false := by
+  rw [output3682_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3682_eq : Flapjack.WordAlloc.removeDeadStructural input3682 value1772 value1 value2 = (output3682, value1810, value1) := by
+  rw [input3682_def, output3682_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3536_eq]
+  try dsimp only
+  rw [node3681_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3683 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3682 input3535)).val
+theorem input3683_def : input3683 = (.seq input3682 input3535) := by
+  unfold input3683
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3683 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3682 output3535)).val
+theorem output3683_def : output3683 = (.seq output3682 output3535) := by
+  unfold output3683
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3683_skip : Flapjack.WordAlloc.isSkip output3683 = false := by
+  rw [output3683_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3683_eq : Flapjack.WordAlloc.removeDeadStructural input3683 value1771 value1 value2 = (output3683, value1810, value1) := by
+  rw [input3683_def, output3683_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3535_eq]
+  try dsimp only
+  rw [node3682_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3684 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3683 input3534)).val
+theorem input3684_def : input3684 = (.seq input3683 input3534) := by
+  unfold input3684
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3684 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3683 output3534)).val
+theorem output3684_def : output3684 = (.seq output3683 output3534) := by
+  unfold output3684
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3684_skip : Flapjack.WordAlloc.isSkip output3684 = false := by
+  rw [output3684_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3684_eq : Flapjack.WordAlloc.removeDeadStructural input3684 value5 value1 value2 = (output3684, value1810, value1) := by
+  rw [input3684_def, output3684_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3534_eq]
+  try dsimp only
+  rw [node3683_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3685 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3684 input3531)).val
+theorem input3685_def : input3685 = (.seq input3684 input3531) := by
+  unfold input3685
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3685 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3684 output3531)).val
+theorem output3685_def : output3685 = (.seq output3684 output3531) := by
+  unfold output3685
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3685_skip : Flapjack.WordAlloc.isSkip output3685 = false := by
+  rw [output3685_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3685_eq : Flapjack.WordAlloc.removeDeadStructural input3685 value1765 value1 value2 = (output3685, value1810, value1) := by
+  rw [input3685_def, output3685_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3531_eq]
+  try dsimp only
+  rw [node3684_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3686 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3685 input3522)).val
+theorem input3686_def : input3686 = (.seq input3685 input3522) := by
+  unfold input3686
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3686 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3685)).val
+theorem output3686_def : output3686 = (output3685) := by
+  unfold output3686
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3686_skip : Flapjack.WordAlloc.isSkip output3686 = false := by
+  rw [output3686_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3686_eq : Flapjack.WordAlloc.removeDeadStructural input3686 value1765 value1 value2 = (output3686, value1810, value1) := by
+  rw [input3686_def, output3686_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3522_eq]
+  try dsimp only
+  rw [node3685_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3687 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3686 input3521)).val
+theorem input3687_def : input3687 = (.seq input3686 input3521) := by
+  unfold input3687
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3687 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3686 output3521)).val
+theorem output3687_def : output3687 = (.seq output3686 output3521) := by
+  unfold output3687
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3687_skip : Flapjack.WordAlloc.isSkip output3687 = false := by
+  rw [output3687_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3687_eq : Flapjack.WordAlloc.removeDeadStructural input3687 value1764 value1 value2 = (output3687, value1810, value1) := by
+  rw [input3687_def, output3687_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3521_eq]
+  try dsimp only
+  rw [node3686_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3688 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3687 input3520)).val
+theorem input3688_def : input3688 = (.seq input3687 input3520) := by
+  unfold input3688
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3688 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3687 output3520)).val
+theorem output3688_def : output3688 = (.seq output3687 output3520) := by
+  unfold output3688
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3688_skip : Flapjack.WordAlloc.isSkip output3688 = false := by
+  rw [output3688_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3688_eq : Flapjack.WordAlloc.removeDeadStructural input3688 value5 value1 value2 = (output3688, value1810, value1) := by
+  rw [input3688_def, output3688_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3520_eq]
+  try dsimp only
+  rw [node3687_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3689 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3688 input3517)).val
+theorem input3689_def : input3689 = (.seq input3688 input3517) := by
+  unfold input3689
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3689 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3688 output3517)).val
+theorem output3689_def : output3689 = (.seq output3688 output3517) := by
+  unfold output3689
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3689_skip : Flapjack.WordAlloc.isSkip output3689 = false := by
+  rw [output3689_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3689_eq : Flapjack.WordAlloc.removeDeadStructural input3689 value1758 value1 value2 = (output3689, value1810, value1) := by
+  rw [input3689_def, output3689_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3517_eq]
+  try dsimp only
+  rw [node3688_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3690 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3689 input3508)).val
+theorem input3690_def : input3690 = (.seq input3689 input3508) := by
+  unfold input3690
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3690 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3689)).val
+theorem output3690_def : output3690 = (output3689) := by
+  unfold output3690
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3690_skip : Flapjack.WordAlloc.isSkip output3690 = false := by
+  rw [output3690_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3690_eq : Flapjack.WordAlloc.removeDeadStructural input3690 value1758 value1 value2 = (output3690, value1810, value1) := by
+  rw [input3690_def, output3690_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3508_eq]
+  try dsimp only
+  rw [node3689_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3691 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3690 input3507)).val
+theorem input3691_def : input3691 = (.seq input3690 input3507) := by
+  unfold input3691
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3691 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3690 output3507)).val
+theorem output3691_def : output3691 = (.seq output3690 output3507) := by
+  unfold output3691
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3691_skip : Flapjack.WordAlloc.isSkip output3691 = false := by
+  rw [output3691_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3691_eq : Flapjack.WordAlloc.removeDeadStructural input3691 value1757 value1 value2 = (output3691, value1810, value1) := by
+  rw [input3691_def, output3691_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3507_eq]
+  try dsimp only
+  rw [node3690_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3692 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3691 input3506)).val
+theorem input3692_def : input3692 = (.seq input3691 input3506) := by
+  unfold input3692
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3692 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3691 output3506)).val
+theorem output3692_def : output3692 = (.seq output3691 output3506) := by
+  unfold output3692
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3692_skip : Flapjack.WordAlloc.isSkip output3692 = false := by
+  rw [output3692_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3692_eq : Flapjack.WordAlloc.removeDeadStructural input3692 value5 value1 value2 = (output3692, value1810, value1) := by
+  rw [input3692_def, output3692_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3506_eq]
+  try dsimp only
+  rw [node3691_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3693 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3692 input3503)).val
+theorem input3693_def : input3693 = (.seq input3692 input3503) := by
+  unfold input3693
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3693 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3692 output3503)).val
+theorem output3693_def : output3693 = (.seq output3692 output3503) := by
+  unfold output3693
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3693_skip : Flapjack.WordAlloc.isSkip output3693 = false := by
+  rw [output3693_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3693_eq : Flapjack.WordAlloc.removeDeadStructural input3693 value1751 value1 value2 = (output3693, value1810, value1) := by
+  rw [input3693_def, output3693_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3503_eq]
+  try dsimp only
+  rw [node3692_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3694 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3693 input3494)).val
+theorem input3694_def : input3694 = (.seq input3693 input3494) := by
+  unfold input3694
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3694 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3693)).val
+theorem output3694_def : output3694 = (output3693) := by
+  unfold output3694
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3694_skip : Flapjack.WordAlloc.isSkip output3694 = false := by
+  rw [output3694_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3694_eq : Flapjack.WordAlloc.removeDeadStructural input3694 value1751 value1 value2 = (output3694, value1810, value1) := by
+  rw [input3694_def, output3694_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3494_eq]
+  try dsimp only
+  rw [node3693_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3695 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3694 input3493)).val
+theorem input3695_def : input3695 = (.seq input3694 input3493) := by
+  unfold input3695
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3695 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3694 output3493)).val
+theorem output3695_def : output3695 = (.seq output3694 output3493) := by
+  unfold output3695
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3695_skip : Flapjack.WordAlloc.isSkip output3695 = false := by
+  rw [output3695_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3695_eq : Flapjack.WordAlloc.removeDeadStructural input3695 value1750 value1 value2 = (output3695, value1810, value1) := by
+  rw [input3695_def, output3695_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3493_eq]
+  try dsimp only
+  rw [node3694_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3696 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3695 input3492)).val
+theorem input3696_def : input3696 = (.seq input3695 input3492) := by
+  unfold input3696
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3696 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3695 output3492)).val
+theorem output3696_def : output3696 = (.seq output3695 output3492) := by
+  unfold output3696
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3696_skip : Flapjack.WordAlloc.isSkip output3696 = false := by
+  rw [output3696_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3696_eq : Flapjack.WordAlloc.removeDeadStructural input3696 value5 value1 value2 = (output3696, value1810, value1) := by
+  rw [input3696_def, output3696_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3492_eq]
+  try dsimp only
+  rw [node3695_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3697 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3696 input3489)).val
+theorem input3697_def : input3697 = (.seq input3696 input3489) := by
+  unfold input3697
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3697 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3696 output3489)).val
+theorem output3697_def : output3697 = (.seq output3696 output3489) := by
+  unfold output3697
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3697_skip : Flapjack.WordAlloc.isSkip output3697 = false := by
+  rw [output3697_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3697_eq : Flapjack.WordAlloc.removeDeadStructural input3697 value1744 value1 value2 = (output3697, value1810, value1) := by
+  rw [input3697_def, output3697_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3489_eq]
+  try dsimp only
+  rw [node3696_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3698 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3697 input3480)).val
+theorem input3698_def : input3698 = (.seq input3697 input3480) := by
+  unfold input3698
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3698 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3697)).val
+theorem output3698_def : output3698 = (output3697) := by
+  unfold output3698
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3698_skip : Flapjack.WordAlloc.isSkip output3698 = false := by
+  rw [output3698_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3698_eq : Flapjack.WordAlloc.removeDeadStructural input3698 value1744 value1 value2 = (output3698, value1810, value1) := by
+  rw [input3698_def, output3698_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3480_eq]
+  try dsimp only
+  rw [node3697_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3699 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3698 input3479)).val
+theorem input3699_def : input3699 = (.seq input3698 input3479) := by
+  unfold input3699
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3699 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3698 output3479)).val
+theorem output3699_def : output3699 = (.seq output3698 output3479) := by
+  unfold output3699
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3699_skip : Flapjack.WordAlloc.isSkip output3699 = false := by
+  rw [output3699_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3699_eq : Flapjack.WordAlloc.removeDeadStructural input3699 value1743 value1 value2 = (output3699, value1810, value1) := by
+  rw [input3699_def, output3699_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3479_eq]
+  try dsimp only
+  rw [node3698_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3700 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3699 input3478)).val
+theorem input3700_def : input3700 = (.seq input3699 input3478) := by
+  unfold input3700
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3700 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3699 output3478)).val
+theorem output3700_def : output3700 = (.seq output3699 output3478) := by
+  unfold output3700
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3700_skip : Flapjack.WordAlloc.isSkip output3700 = false := by
+  rw [output3700_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3700_eq : Flapjack.WordAlloc.removeDeadStructural input3700 value5 value1 value2 = (output3700, value1810, value1) := by
+  rw [input3700_def, output3700_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3478_eq]
+  try dsimp only
+  rw [node3699_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3701 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3700 input3475)).val
+theorem input3701_def : input3701 = (.seq input3700 input3475) := by
+  unfold input3701
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3701 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3700 output3475)).val
+theorem output3701_def : output3701 = (.seq output3700 output3475) := by
+  unfold output3701
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3701_skip : Flapjack.WordAlloc.isSkip output3701 = false := by
+  rw [output3701_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3701_eq : Flapjack.WordAlloc.removeDeadStructural input3701 value1737 value1 value2 = (output3701, value1810, value1) := by
+  rw [input3701_def, output3701_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3475_eq]
+  try dsimp only
+  rw [node3700_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3702 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3701 input3466)).val
+theorem input3702_def : input3702 = (.seq input3701 input3466) := by
+  unfold input3702
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3702 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3701)).val
+theorem output3702_def : output3702 = (output3701) := by
+  unfold output3702
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3702_skip : Flapjack.WordAlloc.isSkip output3702 = false := by
+  rw [output3702_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3702_eq : Flapjack.WordAlloc.removeDeadStructural input3702 value1737 value1 value2 = (output3702, value1810, value1) := by
+  rw [input3702_def, output3702_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3466_eq]
+  try dsimp only
+  rw [node3701_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3703 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3702 input3465)).val
+theorem input3703_def : input3703 = (.seq input3702 input3465) := by
+  unfold input3703
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3703 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3702 output3465)).val
+theorem output3703_def : output3703 = (.seq output3702 output3465) := by
+  unfold output3703
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3703_skip : Flapjack.WordAlloc.isSkip output3703 = false := by
+  rw [output3703_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3703_eq : Flapjack.WordAlloc.removeDeadStructural input3703 value1736 value1 value2 = (output3703, value1810, value1) := by
+  rw [input3703_def, output3703_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3465_eq]
+  try dsimp only
+  rw [node3702_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3704 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3703 input3464)).val
+theorem input3704_def : input3704 = (.seq input3703 input3464) := by
+  unfold input3704
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3704 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3703 output3464)).val
+theorem output3704_def : output3704 = (.seq output3703 output3464) := by
+  unfold output3704
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3704_skip : Flapjack.WordAlloc.isSkip output3704 = false := by
+  rw [output3704_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3704_eq : Flapjack.WordAlloc.removeDeadStructural input3704 value5 value1 value2 = (output3704, value1810, value1) := by
+  rw [input3704_def, output3704_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3464_eq]
+  try dsimp only
+  rw [node3703_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3705 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3704 input3461)).val
+theorem input3705_def : input3705 = (.seq input3704 input3461) := by
+  unfold input3705
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3705 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3704 output3461)).val
+theorem output3705_def : output3705 = (.seq output3704 output3461) := by
+  unfold output3705
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3705_skip : Flapjack.WordAlloc.isSkip output3705 = false := by
+  rw [output3705_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3705_eq : Flapjack.WordAlloc.removeDeadStructural input3705 value1730 value1 value2 = (output3705, value1810, value1) := by
+  rw [input3705_def, output3705_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3461_eq]
+  try dsimp only
+  rw [node3704_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3706 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3705 input3452)).val
+theorem input3706_def : input3706 = (.seq input3705 input3452) := by
+  unfold input3706
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3706 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3705)).val
+theorem output3706_def : output3706 = (output3705) := by
+  unfold output3706
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3706_skip : Flapjack.WordAlloc.isSkip output3706 = false := by
+  rw [output3706_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3706_eq : Flapjack.WordAlloc.removeDeadStructural input3706 value1730 value1 value2 = (output3706, value1810, value1) := by
+  rw [input3706_def, output3706_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3452_eq]
+  try dsimp only
+  rw [node3705_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3707 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3706 input3451)).val
+theorem input3707_def : input3707 = (.seq input3706 input3451) := by
+  unfold input3707
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3707 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3706 output3451)).val
+theorem output3707_def : output3707 = (.seq output3706 output3451) := by
+  unfold output3707
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3707_skip : Flapjack.WordAlloc.isSkip output3707 = false := by
+  rw [output3707_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3707_eq : Flapjack.WordAlloc.removeDeadStructural input3707 value1729 value1 value2 = (output3707, value1810, value1) := by
+  rw [input3707_def, output3707_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3451_eq]
+  try dsimp only
+  rw [node3706_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3708 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3707 input3450)).val
+theorem input3708_def : input3708 = (.seq input3707 input3450) := by
+  unfold input3708
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3708 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3707 output3450)).val
+theorem output3708_def : output3708 = (.seq output3707 output3450) := by
+  unfold output3708
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3708_skip : Flapjack.WordAlloc.isSkip output3708 = false := by
+  rw [output3708_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3708_eq : Flapjack.WordAlloc.removeDeadStructural input3708 value5 value1 value2 = (output3708, value1810, value1) := by
+  rw [input3708_def, output3708_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3450_eq]
+  try dsimp only
+  rw [node3707_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3709 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3708 input3447)).val
+theorem input3709_def : input3709 = (.seq input3708 input3447) := by
+  unfold input3709
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3709 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3708 output3447)).val
+theorem output3709_def : output3709 = (.seq output3708 output3447) := by
+  unfold output3709
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3709_skip : Flapjack.WordAlloc.isSkip output3709 = false := by
+  rw [output3709_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3709_eq : Flapjack.WordAlloc.removeDeadStructural input3709 value1723 value1 value2 = (output3709, value1810, value1) := by
+  rw [input3709_def, output3709_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3447_eq]
+  try dsimp only
+  rw [node3708_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3710 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3709 input3438)).val
+theorem input3710_def : input3710 = (.seq input3709 input3438) := by
+  unfold input3710
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3710 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3709)).val
+theorem output3710_def : output3710 = (output3709) := by
+  unfold output3710
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3710_skip : Flapjack.WordAlloc.isSkip output3710 = false := by
+  rw [output3710_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3710_eq : Flapjack.WordAlloc.removeDeadStructural input3710 value1723 value1 value2 = (output3710, value1810, value1) := by
+  rw [input3710_def, output3710_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3438_eq]
+  try dsimp only
+  rw [node3709_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3711 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3710 input3437)).val
+theorem input3711_def : input3711 = (.seq input3710 input3437) := by
+  unfold input3711
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3711 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3710 output3437)).val
+theorem output3711_def : output3711 = (.seq output3710 output3437) := by
+  unfold output3711
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3711_skip : Flapjack.WordAlloc.isSkip output3711 = false := by
+  rw [output3711_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3711_eq : Flapjack.WordAlloc.removeDeadStructural input3711 value1722 value1 value2 = (output3711, value1810, value1) := by
+  rw [input3711_def, output3711_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3437_eq]
+  try dsimp only
+  rw [node3710_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3712 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3711 input3436)).val
+theorem input3712_def : input3712 = (.seq input3711 input3436) := by
+  unfold input3712
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3712 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3711 output3436)).val
+theorem output3712_def : output3712 = (.seq output3711 output3436) := by
+  unfold output3712
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3712_skip : Flapjack.WordAlloc.isSkip output3712 = false := by
+  rw [output3712_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3712_eq : Flapjack.WordAlloc.removeDeadStructural input3712 value5 value1 value2 = (output3712, value1810, value1) := by
+  rw [input3712_def, output3712_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3436_eq]
+  try dsimp only
+  rw [node3711_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3713 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3712 input3433)).val
+theorem input3713_def : input3713 = (.seq input3712 input3433) := by
+  unfold input3713
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3713 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3712 output3433)).val
+theorem output3713_def : output3713 = (.seq output3712 output3433) := by
+  unfold output3713
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3713_skip : Flapjack.WordAlloc.isSkip output3713 = false := by
+  rw [output3713_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3713_eq : Flapjack.WordAlloc.removeDeadStructural input3713 value1716 value1 value2 = (output3713, value1810, value1) := by
+  rw [input3713_def, output3713_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3433_eq]
+  try dsimp only
+  rw [node3712_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3714 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3713 input3424)).val
+theorem input3714_def : input3714 = (.seq input3713 input3424) := by
+  unfold input3714
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3714 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3713)).val
+theorem output3714_def : output3714 = (output3713) := by
+  unfold output3714
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3714_skip : Flapjack.WordAlloc.isSkip output3714 = false := by
+  rw [output3714_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3714_eq : Flapjack.WordAlloc.removeDeadStructural input3714 value1716 value1 value2 = (output3714, value1810, value1) := by
+  rw [input3714_def, output3714_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3424_eq]
+  try dsimp only
+  rw [node3713_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3715 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3714 input3423)).val
+theorem input3715_def : input3715 = (.seq input3714 input3423) := by
+  unfold input3715
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3715 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3714 output3423)).val
+theorem output3715_def : output3715 = (.seq output3714 output3423) := by
+  unfold output3715
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3715_skip : Flapjack.WordAlloc.isSkip output3715 = false := by
+  rw [output3715_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3715_eq : Flapjack.WordAlloc.removeDeadStructural input3715 value1715 value1 value2 = (output3715, value1810, value1) := by
+  rw [input3715_def, output3715_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3423_eq]
+  try dsimp only
+  rw [node3714_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3716 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3715 input3422)).val
+theorem input3716_def : input3716 = (.seq input3715 input3422) := by
+  unfold input3716
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3716 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3715 output3422)).val
+theorem output3716_def : output3716 = (.seq output3715 output3422) := by
+  unfold output3716
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3716_skip : Flapjack.WordAlloc.isSkip output3716 = false := by
+  rw [output3716_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3716_eq : Flapjack.WordAlloc.removeDeadStructural input3716 value5 value1 value2 = (output3716, value1810, value1) := by
+  rw [input3716_def, output3716_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3422_eq]
+  try dsimp only
+  rw [node3715_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3717 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3716 input3419)).val
+theorem input3717_def : input3717 = (.seq input3716 input3419) := by
+  unfold input3717
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3717 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3716 output3419)).val
+theorem output3717_def : output3717 = (.seq output3716 output3419) := by
+  unfold output3717
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3717_skip : Flapjack.WordAlloc.isSkip output3717 = false := by
+  rw [output3717_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3717_eq : Flapjack.WordAlloc.removeDeadStructural input3717 value1709 value1 value2 = (output3717, value1810, value1) := by
+  rw [input3717_def, output3717_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3419_eq]
+  try dsimp only
+  rw [node3716_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3718 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3717 input3410)).val
+theorem input3718_def : input3718 = (.seq input3717 input3410) := by
+  unfold input3718
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3718 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3717)).val
+theorem output3718_def : output3718 = (output3717) := by
+  unfold output3718
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3718_skip : Flapjack.WordAlloc.isSkip output3718 = false := by
+  rw [output3718_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3718_eq : Flapjack.WordAlloc.removeDeadStructural input3718 value1709 value1 value2 = (output3718, value1810, value1) := by
+  rw [input3718_def, output3718_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3410_eq]
+  try dsimp only
+  rw [node3717_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3719 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3718 input3409)).val
+theorem input3719_def : input3719 = (.seq input3718 input3409) := by
+  unfold input3719
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3719 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3718 output3409)).val
+theorem output3719_def : output3719 = (.seq output3718 output3409) := by
+  unfold output3719
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3719_skip : Flapjack.WordAlloc.isSkip output3719 = false := by
+  rw [output3719_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3719_eq : Flapjack.WordAlloc.removeDeadStructural input3719 value1708 value1 value2 = (output3719, value1810, value1) := by
+  rw [input3719_def, output3719_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3409_eq]
+  try dsimp only
+  rw [node3718_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3720 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3719 input3408)).val
+theorem input3720_def : input3720 = (.seq input3719 input3408) := by
+  unfold input3720
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3720 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3719 output3408)).val
+theorem output3720_def : output3720 = (.seq output3719 output3408) := by
+  unfold output3720
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3720_skip : Flapjack.WordAlloc.isSkip output3720 = false := by
+  rw [output3720_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3720_eq : Flapjack.WordAlloc.removeDeadStructural input3720 value5 value1 value2 = (output3720, value1810, value1) := by
+  rw [input3720_def, output3720_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3408_eq]
+  try dsimp only
+  rw [node3719_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3721 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3720 input3405)).val
+theorem input3721_def : input3721 = (.seq input3720 input3405) := by
+  unfold input3721
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3721 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3720 output3405)).val
+theorem output3721_def : output3721 = (.seq output3720 output3405) := by
+  unfold output3721
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3721_skip : Flapjack.WordAlloc.isSkip output3721 = false := by
+  rw [output3721_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3721_eq : Flapjack.WordAlloc.removeDeadStructural input3721 value1702 value1 value2 = (output3721, value1810, value1) := by
+  rw [input3721_def, output3721_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3405_eq]
+  try dsimp only
+  rw [node3720_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3722 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3721 input3396)).val
+theorem input3722_def : input3722 = (.seq input3721 input3396) := by
+  unfold input3722
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3722 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3721)).val
+theorem output3722_def : output3722 = (output3721) := by
+  unfold output3722
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3722_skip : Flapjack.WordAlloc.isSkip output3722 = false := by
+  rw [output3722_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3722_eq : Flapjack.WordAlloc.removeDeadStructural input3722 value1702 value1 value2 = (output3722, value1810, value1) := by
+  rw [input3722_def, output3722_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3396_eq]
+  try dsimp only
+  rw [node3721_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3723 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3722 input3395)).val
+theorem input3723_def : input3723 = (.seq input3722 input3395) := by
+  unfold input3723
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3723 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3722 output3395)).val
+theorem output3723_def : output3723 = (.seq output3722 output3395) := by
+  unfold output3723
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3723_skip : Flapjack.WordAlloc.isSkip output3723 = false := by
+  rw [output3723_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3723_eq : Flapjack.WordAlloc.removeDeadStructural input3723 value1701 value1 value2 = (output3723, value1810, value1) := by
+  rw [input3723_def, output3723_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3395_eq]
+  try dsimp only
+  rw [node3722_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3724 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3723 input3394)).val
+theorem input3724_def : input3724 = (.seq input3723 input3394) := by
+  unfold input3724
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3724 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3723 output3394)).val
+theorem output3724_def : output3724 = (.seq output3723 output3394) := by
+  unfold output3724
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3724_skip : Flapjack.WordAlloc.isSkip output3724 = false := by
+  rw [output3724_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3724_eq : Flapjack.WordAlloc.removeDeadStructural input3724 value5 value1 value2 = (output3724, value1810, value1) := by
+  rw [input3724_def, output3724_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3394_eq]
+  try dsimp only
+  rw [node3723_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3725 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3724 input3391)).val
+theorem input3725_def : input3725 = (.seq input3724 input3391) := by
+  unfold input3725
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3725 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3724 output3391)).val
+theorem output3725_def : output3725 = (.seq output3724 output3391) := by
+  unfold output3725
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3725_skip : Flapjack.WordAlloc.isSkip output3725 = false := by
+  rw [output3725_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3725_eq : Flapjack.WordAlloc.removeDeadStructural input3725 value1695 value1 value2 = (output3725, value1810, value1) := by
+  rw [input3725_def, output3725_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3391_eq]
+  try dsimp only
+  rw [node3724_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3726 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3725 input3382)).val
+theorem input3726_def : input3726 = (.seq input3725 input3382) := by
+  unfold input3726
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3726 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3725)).val
+theorem output3726_def : output3726 = (output3725) := by
+  unfold output3726
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3726_skip : Flapjack.WordAlloc.isSkip output3726 = false := by
+  rw [output3726_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3726_eq : Flapjack.WordAlloc.removeDeadStructural input3726 value1695 value1 value2 = (output3726, value1810, value1) := by
+  rw [input3726_def, output3726_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3382_eq]
+  try dsimp only
+  rw [node3725_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3727 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3726 input3381)).val
+theorem input3727_def : input3727 = (.seq input3726 input3381) := by
+  unfold input3727
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3727 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3726 output3381)).val
+theorem output3727_def : output3727 = (.seq output3726 output3381) := by
+  unfold output3727
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3727_skip : Flapjack.WordAlloc.isSkip output3727 = false := by
+  rw [output3727_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3727_eq : Flapjack.WordAlloc.removeDeadStructural input3727 value1694 value1 value2 = (output3727, value1810, value1) := by
+  rw [input3727_def, output3727_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3381_eq]
+  try dsimp only
+  rw [node3726_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3728 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3727 input3380)).val
+theorem input3728_def : input3728 = (.seq input3727 input3380) := by
+  unfold input3728
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3728 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3727 output3380)).val
+theorem output3728_def : output3728 = (.seq output3727 output3380) := by
+  unfold output3728
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3728_skip : Flapjack.WordAlloc.isSkip output3728 = false := by
+  rw [output3728_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3728_eq : Flapjack.WordAlloc.removeDeadStructural input3728 value5 value1 value2 = (output3728, value1810, value1) := by
+  rw [input3728_def, output3728_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3380_eq]
+  try dsimp only
+  rw [node3727_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3729 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3728 input3377)).val
+theorem input3729_def : input3729 = (.seq input3728 input3377) := by
+  unfold input3729
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3729 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3728 output3377)).val
+theorem output3729_def : output3729 = (.seq output3728 output3377) := by
+  unfold output3729
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3729_skip : Flapjack.WordAlloc.isSkip output3729 = false := by
+  rw [output3729_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3729_eq : Flapjack.WordAlloc.removeDeadStructural input3729 value1688 value1 value2 = (output3729, value1810, value1) := by
+  rw [input3729_def, output3729_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3377_eq]
+  try dsimp only
+  rw [node3728_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3730 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3729 input3368)).val
+theorem input3730_def : input3730 = (.seq input3729 input3368) := by
+  unfold input3730
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3730 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3729)).val
+theorem output3730_def : output3730 = (output3729) := by
+  unfold output3730
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3730_skip : Flapjack.WordAlloc.isSkip output3730 = false := by
+  rw [output3730_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3730_eq : Flapjack.WordAlloc.removeDeadStructural input3730 value1688 value1 value2 = (output3730, value1810, value1) := by
+  rw [input3730_def, output3730_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3368_eq]
+  try dsimp only
+  rw [node3729_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3731 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3730 input3367)).val
+theorem input3731_def : input3731 = (.seq input3730 input3367) := by
+  unfold input3731
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3731 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3730 output3367)).val
+theorem output3731_def : output3731 = (.seq output3730 output3367) := by
+  unfold output3731
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3731_skip : Flapjack.WordAlloc.isSkip output3731 = false := by
+  rw [output3731_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3731_eq : Flapjack.WordAlloc.removeDeadStructural input3731 value1687 value1 value2 = (output3731, value1810, value1) := by
+  rw [input3731_def, output3731_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3367_eq]
+  try dsimp only
+  rw [node3730_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3732 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3731 input3366)).val
+theorem input3732_def : input3732 = (.seq input3731 input3366) := by
+  unfold input3732
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3732 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3731 output3366)).val
+theorem output3732_def : output3732 = (.seq output3731 output3366) := by
+  unfold output3732
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3732_skip : Flapjack.WordAlloc.isSkip output3732 = false := by
+  rw [output3732_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3732_eq : Flapjack.WordAlloc.removeDeadStructural input3732 value5 value1 value2 = (output3732, value1810, value1) := by
+  rw [input3732_def, output3732_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3366_eq]
+  try dsimp only
+  rw [node3731_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3733 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3732 input3363)).val
+theorem input3733_def : input3733 = (.seq input3732 input3363) := by
+  unfold input3733
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3733 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3732 output3363)).val
+theorem output3733_def : output3733 = (.seq output3732 output3363) := by
+  unfold output3733
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3733_skip : Flapjack.WordAlloc.isSkip output3733 = false := by
+  rw [output3733_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3733_eq : Flapjack.WordAlloc.removeDeadStructural input3733 value1681 value1 value2 = (output3733, value1810, value1) := by
+  rw [input3733_def, output3733_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3363_eq]
+  try dsimp only
+  rw [node3732_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3734 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3733 input3354)).val
+theorem input3734_def : input3734 = (.seq input3733 input3354) := by
+  unfold input3734
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3734 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3733)).val
+theorem output3734_def : output3734 = (output3733) := by
+  unfold output3734
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3734_skip : Flapjack.WordAlloc.isSkip output3734 = false := by
+  rw [output3734_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3734_eq : Flapjack.WordAlloc.removeDeadStructural input3734 value1681 value1 value2 = (output3734, value1810, value1) := by
+  rw [input3734_def, output3734_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3354_eq]
+  try dsimp only
+  rw [node3733_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3735 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3734 input3353)).val
+theorem input3735_def : input3735 = (.seq input3734 input3353) := by
+  unfold input3735
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3735 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3734 output3353)).val
+theorem output3735_def : output3735 = (.seq output3734 output3353) := by
+  unfold output3735
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3735_skip : Flapjack.WordAlloc.isSkip output3735 = false := by
+  rw [output3735_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3735_eq : Flapjack.WordAlloc.removeDeadStructural input3735 value1680 value1 value2 = (output3735, value1810, value1) := by
+  rw [input3735_def, output3735_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3353_eq]
+  try dsimp only
+  rw [node3734_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3736 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3735 input3352)).val
+theorem input3736_def : input3736 = (.seq input3735 input3352) := by
+  unfold input3736
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3736 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3735 output3352)).val
+theorem output3736_def : output3736 = (.seq output3735 output3352) := by
+  unfold output3736
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3736_skip : Flapjack.WordAlloc.isSkip output3736 = false := by
+  rw [output3736_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3736_eq : Flapjack.WordAlloc.removeDeadStructural input3736 value5 value1 value2 = (output3736, value1810, value1) := by
+  rw [input3736_def, output3736_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3352_eq]
+  try dsimp only
+  rw [node3735_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3737 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3736 input3349)).val
+theorem input3737_def : input3737 = (.seq input3736 input3349) := by
+  unfold input3737
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3737 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3736 output3349)).val
+theorem output3737_def : output3737 = (.seq output3736 output3349) := by
+  unfold output3737
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3737_skip : Flapjack.WordAlloc.isSkip output3737 = false := by
+  rw [output3737_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3737_eq : Flapjack.WordAlloc.removeDeadStructural input3737 value1674 value1 value2 = (output3737, value1810, value1) := by
+  rw [input3737_def, output3737_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3349_eq]
+  try dsimp only
+  rw [node3736_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3738 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3737 input3340)).val
+theorem input3738_def : input3738 = (.seq input3737 input3340) := by
+  unfold input3738
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3738 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3737)).val
+theorem output3738_def : output3738 = (output3737) := by
+  unfold output3738
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3738_skip : Flapjack.WordAlloc.isSkip output3738 = false := by
+  rw [output3738_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3738_eq : Flapjack.WordAlloc.removeDeadStructural input3738 value1674 value1 value2 = (output3738, value1810, value1) := by
+  rw [input3738_def, output3738_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3340_eq]
+  try dsimp only
+  rw [node3737_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3739 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3738 input3339)).val
+theorem input3739_def : input3739 = (.seq input3738 input3339) := by
+  unfold input3739
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3739 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3738 output3339)).val
+theorem output3739_def : output3739 = (.seq output3738 output3339) := by
+  unfold output3739
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3739_skip : Flapjack.WordAlloc.isSkip output3739 = false := by
+  rw [output3739_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3739_eq : Flapjack.WordAlloc.removeDeadStructural input3739 value1673 value1 value2 = (output3739, value1810, value1) := by
+  rw [input3739_def, output3739_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3339_eq]
+  try dsimp only
+  rw [node3738_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3740 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3739 input3338)).val
+theorem input3740_def : input3740 = (.seq input3739 input3338) := by
+  unfold input3740
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3740 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3739 output3338)).val
+theorem output3740_def : output3740 = (.seq output3739 output3338) := by
+  unfold output3740
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3740_skip : Flapjack.WordAlloc.isSkip output3740 = false := by
+  rw [output3740_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3740_eq : Flapjack.WordAlloc.removeDeadStructural input3740 value5 value1 value2 = (output3740, value1810, value1) := by
+  rw [input3740_def, output3740_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3338_eq]
+  try dsimp only
+  rw [node3739_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3741 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3740 input3335)).val
+theorem input3741_def : input3741 = (.seq input3740 input3335) := by
+  unfold input3741
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3741 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3740 output3335)).val
+theorem output3741_def : output3741 = (.seq output3740 output3335) := by
+  unfold output3741
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3741_skip : Flapjack.WordAlloc.isSkip output3741 = false := by
+  rw [output3741_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3741_eq : Flapjack.WordAlloc.removeDeadStructural input3741 value1667 value1 value2 = (output3741, value1810, value1) := by
+  rw [input3741_def, output3741_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3335_eq]
+  try dsimp only
+  rw [node3740_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3742 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3741 input3326)).val
+theorem input3742_def : input3742 = (.seq input3741 input3326) := by
+  unfold input3742
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3742 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3741)).val
+theorem output3742_def : output3742 = (output3741) := by
+  unfold output3742
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3742_skip : Flapjack.WordAlloc.isSkip output3742 = false := by
+  rw [output3742_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3742_eq : Flapjack.WordAlloc.removeDeadStructural input3742 value1667 value1 value2 = (output3742, value1810, value1) := by
+  rw [input3742_def, output3742_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3326_eq]
+  try dsimp only
+  rw [node3741_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3743 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3742 input3325)).val
+theorem input3743_def : input3743 = (.seq input3742 input3325) := by
+  unfold input3743
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3743 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3742 output3325)).val
+theorem output3743_def : output3743 = (.seq output3742 output3325) := by
+  unfold output3743
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3743_skip : Flapjack.WordAlloc.isSkip output3743 = false := by
+  rw [output3743_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3743_eq : Flapjack.WordAlloc.removeDeadStructural input3743 value1666 value1 value2 = (output3743, value1810, value1) := by
+  rw [input3743_def, output3743_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3325_eq]
+  try dsimp only
+  rw [node3742_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3744 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3743 input3324)).val
+theorem input3744_def : input3744 = (.seq input3743 input3324) := by
+  unfold input3744
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3744 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3743 output3324)).val
+theorem output3744_def : output3744 = (.seq output3743 output3324) := by
+  unfold output3744
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3744_skip : Flapjack.WordAlloc.isSkip output3744 = false := by
+  rw [output3744_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3744_eq : Flapjack.WordAlloc.removeDeadStructural input3744 value5 value1 value2 = (output3744, value1810, value1) := by
+  rw [input3744_def, output3744_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3324_eq]
+  try dsimp only
+  rw [node3743_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3745 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3744 input3321)).val
+theorem input3745_def : input3745 = (.seq input3744 input3321) := by
+  unfold input3745
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3745 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3744 output3321)).val
+theorem output3745_def : output3745 = (.seq output3744 output3321) := by
+  unfold output3745
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3745_skip : Flapjack.WordAlloc.isSkip output3745 = false := by
+  rw [output3745_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3745_eq : Flapjack.WordAlloc.removeDeadStructural input3745 value1660 value1 value2 = (output3745, value1810, value1) := by
+  rw [input3745_def, output3745_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3321_eq]
+  try dsimp only
+  rw [node3744_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3746 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3745 input3312)).val
+theorem input3746_def : input3746 = (.seq input3745 input3312) := by
+  unfold input3746
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3746 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3745)).val
+theorem output3746_def : output3746 = (output3745) := by
+  unfold output3746
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3746_skip : Flapjack.WordAlloc.isSkip output3746 = false := by
+  rw [output3746_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3746_eq : Flapjack.WordAlloc.removeDeadStructural input3746 value1660 value1 value2 = (output3746, value1810, value1) := by
+  rw [input3746_def, output3746_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3312_eq]
+  try dsimp only
+  rw [node3745_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3747 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3746 input3311)).val
+theorem input3747_def : input3747 = (.seq input3746 input3311) := by
+  unfold input3747
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3747 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3746 output3311)).val
+theorem output3747_def : output3747 = (.seq output3746 output3311) := by
+  unfold output3747
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3747_skip : Flapjack.WordAlloc.isSkip output3747 = false := by
+  rw [output3747_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3747_eq : Flapjack.WordAlloc.removeDeadStructural input3747 value1659 value1 value2 = (output3747, value1810, value1) := by
+  rw [input3747_def, output3747_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3311_eq]
+  try dsimp only
+  rw [node3746_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3748 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3747 input3310)).val
+theorem input3748_def : input3748 = (.seq input3747 input3310) := by
+  unfold input3748
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3748 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3747 output3310)).val
+theorem output3748_def : output3748 = (.seq output3747 output3310) := by
+  unfold output3748
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3748_skip : Flapjack.WordAlloc.isSkip output3748 = false := by
+  rw [output3748_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3748_eq : Flapjack.WordAlloc.removeDeadStructural input3748 value5 value1 value2 = (output3748, value1810, value1) := by
+  rw [input3748_def, output3748_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3310_eq]
+  try dsimp only
+  rw [node3747_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3749 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3748 input3307)).val
+theorem input3749_def : input3749 = (.seq input3748 input3307) := by
+  unfold input3749
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3749 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3748 output3307)).val
+theorem output3749_def : output3749 = (.seq output3748 output3307) := by
+  unfold output3749
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3749_skip : Flapjack.WordAlloc.isSkip output3749 = false := by
+  rw [output3749_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3749_eq : Flapjack.WordAlloc.removeDeadStructural input3749 value1653 value1 value2 = (output3749, value1810, value1) := by
+  rw [input3749_def, output3749_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3307_eq]
+  try dsimp only
+  rw [node3748_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3750 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3749 input3298)).val
+theorem input3750_def : input3750 = (.seq input3749 input3298) := by
+  unfold input3750
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3750 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3749)).val
+theorem output3750_def : output3750 = (output3749) := by
+  unfold output3750
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3750_skip : Flapjack.WordAlloc.isSkip output3750 = false := by
+  rw [output3750_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3750_eq : Flapjack.WordAlloc.removeDeadStructural input3750 value1653 value1 value2 = (output3750, value1810, value1) := by
+  rw [input3750_def, output3750_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3298_eq]
+  try dsimp only
+  rw [node3749_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3751 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3750 input3297)).val
+theorem input3751_def : input3751 = (.seq input3750 input3297) := by
+  unfold input3751
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3751 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3750 output3297)).val
+theorem output3751_def : output3751 = (.seq output3750 output3297) := by
+  unfold output3751
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3751_skip : Flapjack.WordAlloc.isSkip output3751 = false := by
+  rw [output3751_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3751_eq : Flapjack.WordAlloc.removeDeadStructural input3751 value1652 value1 value2 = (output3751, value1810, value1) := by
+  rw [input3751_def, output3751_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3297_eq]
+  try dsimp only
+  rw [node3750_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3752 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3751 input3296)).val
+theorem input3752_def : input3752 = (.seq input3751 input3296) := by
+  unfold input3752
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3752 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3751 output3296)).val
+theorem output3752_def : output3752 = (.seq output3751 output3296) := by
+  unfold output3752
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3752_skip : Flapjack.WordAlloc.isSkip output3752 = false := by
+  rw [output3752_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3752_eq : Flapjack.WordAlloc.removeDeadStructural input3752 value5 value1 value2 = (output3752, value1810, value1) := by
+  rw [input3752_def, output3752_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3296_eq]
+  try dsimp only
+  rw [node3751_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3753 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3752 input3293)).val
+theorem input3753_def : input3753 = (.seq input3752 input3293) := by
+  unfold input3753
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3753 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3752 output3293)).val
+theorem output3753_def : output3753 = (.seq output3752 output3293) := by
+  unfold output3753
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3753_skip : Flapjack.WordAlloc.isSkip output3753 = false := by
+  rw [output3753_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3753_eq : Flapjack.WordAlloc.removeDeadStructural input3753 value1646 value1 value2 = (output3753, value1810, value1) := by
+  rw [input3753_def, output3753_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3293_eq]
+  try dsimp only
+  rw [node3752_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3754 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3753 input3284)).val
+theorem input3754_def : input3754 = (.seq input3753 input3284) := by
+  unfold input3754
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3754 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3753)).val
+theorem output3754_def : output3754 = (output3753) := by
+  unfold output3754
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3754_skip : Flapjack.WordAlloc.isSkip output3754 = false := by
+  rw [output3754_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3754_eq : Flapjack.WordAlloc.removeDeadStructural input3754 value1646 value1 value2 = (output3754, value1810, value1) := by
+  rw [input3754_def, output3754_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3284_eq]
+  try dsimp only
+  rw [node3753_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3755 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3754 input3283)).val
+theorem input3755_def : input3755 = (.seq input3754 input3283) := by
+  unfold input3755
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3755 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3754 output3283)).val
+theorem output3755_def : output3755 = (.seq output3754 output3283) := by
+  unfold output3755
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3755_skip : Flapjack.WordAlloc.isSkip output3755 = false := by
+  rw [output3755_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3755_eq : Flapjack.WordAlloc.removeDeadStructural input3755 value1645 value1 value2 = (output3755, value1810, value1) := by
+  rw [input3755_def, output3755_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3283_eq]
+  try dsimp only
+  rw [node3754_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3756 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3755 input3282)).val
+theorem input3756_def : input3756 = (.seq input3755 input3282) := by
+  unfold input3756
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3756 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3755 output3282)).val
+theorem output3756_def : output3756 = (.seq output3755 output3282) := by
+  unfold output3756
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3756_skip : Flapjack.WordAlloc.isSkip output3756 = false := by
+  rw [output3756_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3756_eq : Flapjack.WordAlloc.removeDeadStructural input3756 value5 value1 value2 = (output3756, value1810, value1) := by
+  rw [input3756_def, output3756_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3282_eq]
+  try dsimp only
+  rw [node3755_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3757 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3756 input3279)).val
+theorem input3757_def : input3757 = (.seq input3756 input3279) := by
+  unfold input3757
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3757 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3756 output3279)).val
+theorem output3757_def : output3757 = (.seq output3756 output3279) := by
+  unfold output3757
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3757_skip : Flapjack.WordAlloc.isSkip output3757 = false := by
+  rw [output3757_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3757_eq : Flapjack.WordAlloc.removeDeadStructural input3757 value1639 value1 value2 = (output3757, value1810, value1) := by
+  rw [input3757_def, output3757_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3279_eq]
+  try dsimp only
+  rw [node3756_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3758 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3757 input3270)).val
+theorem input3758_def : input3758 = (.seq input3757 input3270) := by
+  unfold input3758
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3758 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3757)).val
+theorem output3758_def : output3758 = (output3757) := by
+  unfold output3758
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3758_skip : Flapjack.WordAlloc.isSkip output3758 = false := by
+  rw [output3758_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3758_eq : Flapjack.WordAlloc.removeDeadStructural input3758 value1639 value1 value2 = (output3758, value1810, value1) := by
+  rw [input3758_def, output3758_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3270_eq]
+  try dsimp only
+  rw [node3757_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3759 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3758 input3269)).val
+theorem input3759_def : input3759 = (.seq input3758 input3269) := by
+  unfold input3759
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3759 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3758 output3269)).val
+theorem output3759_def : output3759 = (.seq output3758 output3269) := by
+  unfold output3759
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3759_skip : Flapjack.WordAlloc.isSkip output3759 = false := by
+  rw [output3759_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3759_eq : Flapjack.WordAlloc.removeDeadStructural input3759 value1638 value1 value2 = (output3759, value1810, value1) := by
+  rw [input3759_def, output3759_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3269_eq]
+  try dsimp only
+  rw [node3758_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3760 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3759 input3268)).val
+theorem input3760_def : input3760 = (.seq input3759 input3268) := by
+  unfold input3760
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3760 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3759 output3268)).val
+theorem output3760_def : output3760 = (.seq output3759 output3268) := by
+  unfold output3760
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3760_skip : Flapjack.WordAlloc.isSkip output3760 = false := by
+  rw [output3760_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3760_eq : Flapjack.WordAlloc.removeDeadStructural input3760 value5 value1 value2 = (output3760, value1810, value1) := by
+  rw [input3760_def, output3760_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3268_eq]
+  try dsimp only
+  rw [node3759_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3761 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3760 input3265)).val
+theorem input3761_def : input3761 = (.seq input3760 input3265) := by
+  unfold input3761
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3761 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3760 output3265)).val
+theorem output3761_def : output3761 = (.seq output3760 output3265) := by
+  unfold output3761
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3761_skip : Flapjack.WordAlloc.isSkip output3761 = false := by
+  rw [output3761_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3761_eq : Flapjack.WordAlloc.removeDeadStructural input3761 value1632 value1 value2 = (output3761, value1810, value1) := by
+  rw [input3761_def, output3761_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3265_eq]
+  try dsimp only
+  rw [node3760_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3762 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3761 input3256)).val
+theorem input3762_def : input3762 = (.seq input3761 input3256) := by
+  unfold input3762
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3762 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3761)).val
+theorem output3762_def : output3762 = (output3761) := by
+  unfold output3762
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3762_skip : Flapjack.WordAlloc.isSkip output3762 = false := by
+  rw [output3762_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3762_eq : Flapjack.WordAlloc.removeDeadStructural input3762 value1632 value1 value2 = (output3762, value1810, value1) := by
+  rw [input3762_def, output3762_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3256_eq]
+  try dsimp only
+  rw [node3761_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3763 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3762 input3255)).val
+theorem input3763_def : input3763 = (.seq input3762 input3255) := by
+  unfold input3763
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3763 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3762 output3255)).val
+theorem output3763_def : output3763 = (.seq output3762 output3255) := by
+  unfold output3763
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3763_skip : Flapjack.WordAlloc.isSkip output3763 = false := by
+  rw [output3763_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3763_eq : Flapjack.WordAlloc.removeDeadStructural input3763 value1631 value1 value2 = (output3763, value1810, value1) := by
+  rw [input3763_def, output3763_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3255_eq]
+  try dsimp only
+  rw [node3762_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3764 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3763 input3254)).val
+theorem input3764_def : input3764 = (.seq input3763 input3254) := by
+  unfold input3764
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3764 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3763 output3254)).val
+theorem output3764_def : output3764 = (.seq output3763 output3254) := by
+  unfold output3764
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3764_skip : Flapjack.WordAlloc.isSkip output3764 = false := by
+  rw [output3764_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3764_eq : Flapjack.WordAlloc.removeDeadStructural input3764 value5 value1 value2 = (output3764, value1810, value1) := by
+  rw [input3764_def, output3764_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3254_eq]
+  try dsimp only
+  rw [node3763_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3765 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3764 input3251)).val
+theorem input3765_def : input3765 = (.seq input3764 input3251) := by
+  unfold input3765
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3765 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3764 output3251)).val
+theorem output3765_def : output3765 = (.seq output3764 output3251) := by
+  unfold output3765
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3765_skip : Flapjack.WordAlloc.isSkip output3765 = false := by
+  rw [output3765_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3765_eq : Flapjack.WordAlloc.removeDeadStructural input3765 value1625 value1 value2 = (output3765, value1810, value1) := by
+  rw [input3765_def, output3765_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3251_eq]
+  try dsimp only
+  rw [node3764_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3766 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3765 input3242)).val
+theorem input3766_def : input3766 = (.seq input3765 input3242) := by
+  unfold input3766
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3766 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3765)).val
+theorem output3766_def : output3766 = (output3765) := by
+  unfold output3766
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3766_skip : Flapjack.WordAlloc.isSkip output3766 = false := by
+  rw [output3766_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3766_eq : Flapjack.WordAlloc.removeDeadStructural input3766 value1625 value1 value2 = (output3766, value1810, value1) := by
+  rw [input3766_def, output3766_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3242_eq]
+  try dsimp only
+  rw [node3765_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3767 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3766 input3241)).val
+theorem input3767_def : input3767 = (.seq input3766 input3241) := by
+  unfold input3767
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3767 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3766 output3241)).val
+theorem output3767_def : output3767 = (.seq output3766 output3241) := by
+  unfold output3767
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3767_skip : Flapjack.WordAlloc.isSkip output3767 = false := by
+  rw [output3767_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3767_eq : Flapjack.WordAlloc.removeDeadStructural input3767 value1624 value1 value2 = (output3767, value1810, value1) := by
+  rw [input3767_def, output3767_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3241_eq]
+  try dsimp only
+  rw [node3766_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3768 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3767 input3240)).val
+theorem input3768_def : input3768 = (.seq input3767 input3240) := by
+  unfold input3768
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3768 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3767 output3240)).val
+theorem output3768_def : output3768 = (.seq output3767 output3240) := by
+  unfold output3768
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3768_skip : Flapjack.WordAlloc.isSkip output3768 = false := by
+  rw [output3768_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3768_eq : Flapjack.WordAlloc.removeDeadStructural input3768 value5 value1 value2 = (output3768, value1810, value1) := by
+  rw [input3768_def, output3768_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3240_eq]
+  try dsimp only
+  rw [node3767_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3769 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3768 input3237)).val
+theorem input3769_def : input3769 = (.seq input3768 input3237) := by
+  unfold input3769
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3769 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3768 output3237)).val
+theorem output3769_def : output3769 = (.seq output3768 output3237) := by
+  unfold output3769
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3769_skip : Flapjack.WordAlloc.isSkip output3769 = false := by
+  rw [output3769_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3769_eq : Flapjack.WordAlloc.removeDeadStructural input3769 value1618 value1 value2 = (output3769, value1810, value1) := by
+  rw [input3769_def, output3769_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3237_eq]
+  try dsimp only
+  rw [node3768_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3770 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3769 input3228)).val
+theorem input3770_def : input3770 = (.seq input3769 input3228) := by
+  unfold input3770
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3770 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3769)).val
+theorem output3770_def : output3770 = (output3769) := by
+  unfold output3770
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3770_skip : Flapjack.WordAlloc.isSkip output3770 = false := by
+  rw [output3770_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3770_eq : Flapjack.WordAlloc.removeDeadStructural input3770 value1618 value1 value2 = (output3770, value1810, value1) := by
+  rw [input3770_def, output3770_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3228_eq]
+  try dsimp only
+  rw [node3769_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3771 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3770 input3227)).val
+theorem input3771_def : input3771 = (.seq input3770 input3227) := by
+  unfold input3771
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3771 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3770 output3227)).val
+theorem output3771_def : output3771 = (.seq output3770 output3227) := by
+  unfold output3771
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3771_skip : Flapjack.WordAlloc.isSkip output3771 = false := by
+  rw [output3771_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3771_eq : Flapjack.WordAlloc.removeDeadStructural input3771 value1617 value1 value2 = (output3771, value1810, value1) := by
+  rw [input3771_def, output3771_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3227_eq]
+  try dsimp only
+  rw [node3770_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3772 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3771 input3226)).val
+theorem input3772_def : input3772 = (.seq input3771 input3226) := by
+  unfold input3772
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3772 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3771 output3226)).val
+theorem output3772_def : output3772 = (.seq output3771 output3226) := by
+  unfold output3772
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3772_skip : Flapjack.WordAlloc.isSkip output3772 = false := by
+  rw [output3772_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3772_eq : Flapjack.WordAlloc.removeDeadStructural input3772 value5 value1 value2 = (output3772, value1810, value1) := by
+  rw [input3772_def, output3772_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3226_eq]
+  try dsimp only
+  rw [node3771_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3773 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3772 input3223)).val
+theorem input3773_def : input3773 = (.seq input3772 input3223) := by
+  unfold input3773
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3773 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3772 output3223)).val
+theorem output3773_def : output3773 = (.seq output3772 output3223) := by
+  unfold output3773
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3773_skip : Flapjack.WordAlloc.isSkip output3773 = false := by
+  rw [output3773_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3773_eq : Flapjack.WordAlloc.removeDeadStructural input3773 value1611 value1 value2 = (output3773, value1810, value1) := by
+  rw [input3773_def, output3773_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3223_eq]
+  try dsimp only
+  rw [node3772_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3774 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3773 input3214)).val
+theorem input3774_def : input3774 = (.seq input3773 input3214) := by
+  unfold input3774
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3774 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3773)).val
+theorem output3774_def : output3774 = (output3773) := by
+  unfold output3774
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3774_skip : Flapjack.WordAlloc.isSkip output3774 = false := by
+  rw [output3774_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3774_eq : Flapjack.WordAlloc.removeDeadStructural input3774 value1611 value1 value2 = (output3774, value1810, value1) := by
+  rw [input3774_def, output3774_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3214_eq]
+  try dsimp only
+  rw [node3773_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3775 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3774 input3213)).val
+theorem input3775_def : input3775 = (.seq input3774 input3213) := by
+  unfold input3775
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3775 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3774 output3213)).val
+theorem output3775_def : output3775 = (.seq output3774 output3213) := by
+  unfold output3775
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3775_skip : Flapjack.WordAlloc.isSkip output3775 = false := by
+  rw [output3775_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3775_eq : Flapjack.WordAlloc.removeDeadStructural input3775 value1610 value1 value2 = (output3775, value1810, value1) := by
+  rw [input3775_def, output3775_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3213_eq]
+  try dsimp only
+  rw [node3774_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3776 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3775 input3212)).val
+theorem input3776_def : input3776 = (.seq input3775 input3212) := by
+  unfold input3776
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3776 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3775 output3212)).val
+theorem output3776_def : output3776 = (.seq output3775 output3212) := by
+  unfold output3776
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3776_skip : Flapjack.WordAlloc.isSkip output3776 = false := by
+  rw [output3776_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3776_eq : Flapjack.WordAlloc.removeDeadStructural input3776 value5 value1 value2 = (output3776, value1810, value1) := by
+  rw [input3776_def, output3776_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3212_eq]
+  try dsimp only
+  rw [node3775_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3777 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3776 input3209)).val
+theorem input3777_def : input3777 = (.seq input3776 input3209) := by
+  unfold input3777
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3777 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3776 output3209)).val
+theorem output3777_def : output3777 = (.seq output3776 output3209) := by
+  unfold output3777
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3777_skip : Flapjack.WordAlloc.isSkip output3777 = false := by
+  rw [output3777_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3777_eq : Flapjack.WordAlloc.removeDeadStructural input3777 value1604 value1 value2 = (output3777, value1810, value1) := by
+  rw [input3777_def, output3777_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3209_eq]
+  try dsimp only
+  rw [node3776_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3778 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3777 input3200)).val
+theorem input3778_def : input3778 = (.seq input3777 input3200) := by
+  unfold input3778
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3778 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3777)).val
+theorem output3778_def : output3778 = (output3777) := by
+  unfold output3778
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3778_skip : Flapjack.WordAlloc.isSkip output3778 = false := by
+  rw [output3778_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3778_eq : Flapjack.WordAlloc.removeDeadStructural input3778 value1604 value1 value2 = (output3778, value1810, value1) := by
+  rw [input3778_def, output3778_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3200_eq]
+  try dsimp only
+  rw [node3777_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3779 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3778 input3199)).val
+theorem input3779_def : input3779 = (.seq input3778 input3199) := by
+  unfold input3779
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3779 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3778 output3199)).val
+theorem output3779_def : output3779 = (.seq output3778 output3199) := by
+  unfold output3779
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3779_skip : Flapjack.WordAlloc.isSkip output3779 = false := by
+  rw [output3779_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3779_eq : Flapjack.WordAlloc.removeDeadStructural input3779 value1603 value1 value2 = (output3779, value1810, value1) := by
+  rw [input3779_def, output3779_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3199_eq]
+  try dsimp only
+  rw [node3778_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3780 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3779 input3198)).val
+theorem input3780_def : input3780 = (.seq input3779 input3198) := by
+  unfold input3780
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3780 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3779 output3198)).val
+theorem output3780_def : output3780 = (.seq output3779 output3198) := by
+  unfold output3780
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3780_skip : Flapjack.WordAlloc.isSkip output3780 = false := by
+  rw [output3780_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3780_eq : Flapjack.WordAlloc.removeDeadStructural input3780 value5 value1 value2 = (output3780, value1810, value1) := by
+  rw [input3780_def, output3780_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3198_eq]
+  try dsimp only
+  rw [node3779_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3781 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3780 input3195)).val
+theorem input3781_def : input3781 = (.seq input3780 input3195) := by
+  unfold input3781
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3781 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3780 output3195)).val
+theorem output3781_def : output3781 = (.seq output3780 output3195) := by
+  unfold output3781
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3781_skip : Flapjack.WordAlloc.isSkip output3781 = false := by
+  rw [output3781_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3781_eq : Flapjack.WordAlloc.removeDeadStructural input3781 value1597 value1 value2 = (output3781, value1810, value1) := by
+  rw [input3781_def, output3781_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3195_eq]
+  try dsimp only
+  rw [node3780_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3782 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3781 input3186)).val
+theorem input3782_def : input3782 = (.seq input3781 input3186) := by
+  unfold input3782
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3782 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3781)).val
+theorem output3782_def : output3782 = (output3781) := by
+  unfold output3782
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3782_skip : Flapjack.WordAlloc.isSkip output3782 = false := by
+  rw [output3782_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3782_eq : Flapjack.WordAlloc.removeDeadStructural input3782 value1597 value1 value2 = (output3782, value1810, value1) := by
+  rw [input3782_def, output3782_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3186_eq]
+  try dsimp only
+  rw [node3781_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3783 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3782 input3185)).val
+theorem input3783_def : input3783 = (.seq input3782 input3185) := by
+  unfold input3783
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3783 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3782 output3185)).val
+theorem output3783_def : output3783 = (.seq output3782 output3185) := by
+  unfold output3783
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3783_skip : Flapjack.WordAlloc.isSkip output3783 = false := by
+  rw [output3783_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3783_eq : Flapjack.WordAlloc.removeDeadStructural input3783 value1596 value1 value2 = (output3783, value1810, value1) := by
+  rw [input3783_def, output3783_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3185_eq]
+  try dsimp only
+  rw [node3782_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3784 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3783 input3184)).val
+theorem input3784_def : input3784 = (.seq input3783 input3184) := by
+  unfold input3784
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3784 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3783 output3184)).val
+theorem output3784_def : output3784 = (.seq output3783 output3184) := by
+  unfold output3784
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3784_skip : Flapjack.WordAlloc.isSkip output3784 = false := by
+  rw [output3784_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3784_eq : Flapjack.WordAlloc.removeDeadStructural input3784 value5 value1 value2 = (output3784, value1810, value1) := by
+  rw [input3784_def, output3784_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3184_eq]
+  try dsimp only
+  rw [node3783_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3785 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3784 input3181)).val
+theorem input3785_def : input3785 = (.seq input3784 input3181) := by
+  unfold input3785
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3785 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3784 output3181)).val
+theorem output3785_def : output3785 = (.seq output3784 output3181) := by
+  unfold output3785
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3785_skip : Flapjack.WordAlloc.isSkip output3785 = false := by
+  rw [output3785_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3785_eq : Flapjack.WordAlloc.removeDeadStructural input3785 value1590 value1 value2 = (output3785, value1810, value1) := by
+  rw [input3785_def, output3785_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3181_eq]
+  try dsimp only
+  rw [node3784_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3786 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3785 input3172)).val
+theorem input3786_def : input3786 = (.seq input3785 input3172) := by
+  unfold input3786
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3786 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3785)).val
+theorem output3786_def : output3786 = (output3785) := by
+  unfold output3786
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3786_skip : Flapjack.WordAlloc.isSkip output3786 = false := by
+  rw [output3786_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3786_eq : Flapjack.WordAlloc.removeDeadStructural input3786 value1590 value1 value2 = (output3786, value1810, value1) := by
+  rw [input3786_def, output3786_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3172_eq]
+  try dsimp only
+  rw [node3785_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3787 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3786 input3171)).val
+theorem input3787_def : input3787 = (.seq input3786 input3171) := by
+  unfold input3787
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3787 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3786 output3171)).val
+theorem output3787_def : output3787 = (.seq output3786 output3171) := by
+  unfold output3787
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3787_skip : Flapjack.WordAlloc.isSkip output3787 = false := by
+  rw [output3787_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3787_eq : Flapjack.WordAlloc.removeDeadStructural input3787 value1589 value1 value2 = (output3787, value1810, value1) := by
+  rw [input3787_def, output3787_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3171_eq]
+  try dsimp only
+  rw [node3786_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3788 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3787 input3170)).val
+theorem input3788_def : input3788 = (.seq input3787 input3170) := by
+  unfold input3788
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3788 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3787 output3170)).val
+theorem output3788_def : output3788 = (.seq output3787 output3170) := by
+  unfold output3788
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3788_skip : Flapjack.WordAlloc.isSkip output3788 = false := by
+  rw [output3788_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3788_eq : Flapjack.WordAlloc.removeDeadStructural input3788 value5 value1 value2 = (output3788, value1810, value1) := by
+  rw [input3788_def, output3788_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3170_eq]
+  try dsimp only
+  rw [node3787_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3789 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3788 input3167)).val
+theorem input3789_def : input3789 = (.seq input3788 input3167) := by
+  unfold input3789
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3789 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3788 output3167)).val
+theorem output3789_def : output3789 = (.seq output3788 output3167) := by
+  unfold output3789
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3789_skip : Flapjack.WordAlloc.isSkip output3789 = false := by
+  rw [output3789_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3789_eq : Flapjack.WordAlloc.removeDeadStructural input3789 value1583 value1 value2 = (output3789, value1810, value1) := by
+  rw [input3789_def, output3789_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3167_eq]
+  try dsimp only
+  rw [node3788_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3790 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3789 input3158)).val
+theorem input3790_def : input3790 = (.seq input3789 input3158) := by
+  unfold input3790
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3790 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3789)).val
+theorem output3790_def : output3790 = (output3789) := by
+  unfold output3790
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3790_skip : Flapjack.WordAlloc.isSkip output3790 = false := by
+  rw [output3790_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3790_eq : Flapjack.WordAlloc.removeDeadStructural input3790 value1583 value1 value2 = (output3790, value1810, value1) := by
+  rw [input3790_def, output3790_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3158_eq]
+  try dsimp only
+  rw [node3789_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3791 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3790 input3157)).val
+theorem input3791_def : input3791 = (.seq input3790 input3157) := by
+  unfold input3791
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3791 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3790 output3157)).val
+theorem output3791_def : output3791 = (.seq output3790 output3157) := by
+  unfold output3791
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3791_skip : Flapjack.WordAlloc.isSkip output3791 = false := by
+  rw [output3791_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3791_eq : Flapjack.WordAlloc.removeDeadStructural input3791 value1582 value1 value2 = (output3791, value1810, value1) := by
+  rw [input3791_def, output3791_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3157_eq]
+  try dsimp only
+  rw [node3790_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3792 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3791 input3156)).val
+theorem input3792_def : input3792 = (.seq input3791 input3156) := by
+  unfold input3792
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3792 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3791 output3156)).val
+theorem output3792_def : output3792 = (.seq output3791 output3156) := by
+  unfold output3792
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3792_skip : Flapjack.WordAlloc.isSkip output3792 = false := by
+  rw [output3792_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3792_eq : Flapjack.WordAlloc.removeDeadStructural input3792 value5 value1 value2 = (output3792, value1810, value1) := by
+  rw [input3792_def, output3792_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3156_eq]
+  try dsimp only
+  rw [node3791_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3793 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3792 input3153)).val
+theorem input3793_def : input3793 = (.seq input3792 input3153) := by
+  unfold input3793
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3793 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3792 output3153)).val
+theorem output3793_def : output3793 = (.seq output3792 output3153) := by
+  unfold output3793
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3793_skip : Flapjack.WordAlloc.isSkip output3793 = false := by
+  rw [output3793_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3793_eq : Flapjack.WordAlloc.removeDeadStructural input3793 value1576 value1 value2 = (output3793, value1810, value1) := by
+  rw [input3793_def, output3793_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3153_eq]
+  try dsimp only
+  rw [node3792_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3794 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3793 input3144)).val
+theorem input3794_def : input3794 = (.seq input3793 input3144) := by
+  unfold input3794
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3794 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3793)).val
+theorem output3794_def : output3794 = (output3793) := by
+  unfold output3794
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3794_skip : Flapjack.WordAlloc.isSkip output3794 = false := by
+  rw [output3794_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3794_eq : Flapjack.WordAlloc.removeDeadStructural input3794 value1576 value1 value2 = (output3794, value1810, value1) := by
+  rw [input3794_def, output3794_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3144_eq]
+  try dsimp only
+  rw [node3793_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3795 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3794 input3143)).val
+theorem input3795_def : input3795 = (.seq input3794 input3143) := by
+  unfold input3795
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3795 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3794 output3143)).val
+theorem output3795_def : output3795 = (.seq output3794 output3143) := by
+  unfold output3795
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3795_skip : Flapjack.WordAlloc.isSkip output3795 = false := by
+  rw [output3795_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3795_eq : Flapjack.WordAlloc.removeDeadStructural input3795 value1575 value1 value2 = (output3795, value1810, value1) := by
+  rw [input3795_def, output3795_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3143_eq]
+  try dsimp only
+  rw [node3794_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3796 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3795 input3142)).val
+theorem input3796_def : input3796 = (.seq input3795 input3142) := by
+  unfold input3796
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3796 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3795 output3142)).val
+theorem output3796_def : output3796 = (.seq output3795 output3142) := by
+  unfold output3796
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3796_skip : Flapjack.WordAlloc.isSkip output3796 = false := by
+  rw [output3796_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3796_eq : Flapjack.WordAlloc.removeDeadStructural input3796 value5 value1 value2 = (output3796, value1810, value1) := by
+  rw [input3796_def, output3796_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3142_eq]
+  try dsimp only
+  rw [node3795_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3797 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3796 input3139)).val
+theorem input3797_def : input3797 = (.seq input3796 input3139) := by
+  unfold input3797
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3797 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3796 output3139)).val
+theorem output3797_def : output3797 = (.seq output3796 output3139) := by
+  unfold output3797
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3797_skip : Flapjack.WordAlloc.isSkip output3797 = false := by
+  rw [output3797_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3797_eq : Flapjack.WordAlloc.removeDeadStructural input3797 value1569 value1 value2 = (output3797, value1810, value1) := by
+  rw [input3797_def, output3797_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3139_eq]
+  try dsimp only
+  rw [node3796_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3798 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3797 input3130)).val
+theorem input3798_def : input3798 = (.seq input3797 input3130) := by
+  unfold input3798
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3798 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3797)).val
+theorem output3798_def : output3798 = (output3797) := by
+  unfold output3798
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3798_skip : Flapjack.WordAlloc.isSkip output3798 = false := by
+  rw [output3798_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3798_eq : Flapjack.WordAlloc.removeDeadStructural input3798 value1569 value1 value2 = (output3798, value1810, value1) := by
+  rw [input3798_def, output3798_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3130_eq]
+  try dsimp only
+  rw [node3797_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3799 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3798 input3129)).val
+theorem input3799_def : input3799 = (.seq input3798 input3129) := by
+  unfold input3799
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3799 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3798 output3129)).val
+theorem output3799_def : output3799 = (.seq output3798 output3129) := by
+  unfold output3799
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3799_skip : Flapjack.WordAlloc.isSkip output3799 = false := by
+  rw [output3799_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3799_eq : Flapjack.WordAlloc.removeDeadStructural input3799 value1568 value1 value2 = (output3799, value1810, value1) := by
+  rw [input3799_def, output3799_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3129_eq]
+  try dsimp only
+  rw [node3798_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3800 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3799 input3128)).val
+theorem input3800_def : input3800 = (.seq input3799 input3128) := by
+  unfold input3800
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3800 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3799 output3128)).val
+theorem output3800_def : output3800 = (.seq output3799 output3128) := by
+  unfold output3800
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3800_skip : Flapjack.WordAlloc.isSkip output3800 = false := by
+  rw [output3800_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3800_eq : Flapjack.WordAlloc.removeDeadStructural input3800 value5 value1 value2 = (output3800, value1810, value1) := by
+  rw [input3800_def, output3800_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3128_eq]
+  try dsimp only
+  rw [node3799_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3801 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3800 input3125)).val
+theorem input3801_def : input3801 = (.seq input3800 input3125) := by
+  unfold input3801
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3801 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3800 output3125)).val
+theorem output3801_def : output3801 = (.seq output3800 output3125) := by
+  unfold output3801
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3801_skip : Flapjack.WordAlloc.isSkip output3801 = false := by
+  rw [output3801_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3801_eq : Flapjack.WordAlloc.removeDeadStructural input3801 value1562 value1 value2 = (output3801, value1810, value1) := by
+  rw [input3801_def, output3801_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3125_eq]
+  try dsimp only
+  rw [node3800_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3802 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3801 input3116)).val
+theorem input3802_def : input3802 = (.seq input3801 input3116) := by
+  unfold input3802
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3802 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3801)).val
+theorem output3802_def : output3802 = (output3801) := by
+  unfold output3802
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3802_skip : Flapjack.WordAlloc.isSkip output3802 = false := by
+  rw [output3802_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3802_eq : Flapjack.WordAlloc.removeDeadStructural input3802 value1562 value1 value2 = (output3802, value1810, value1) := by
+  rw [input3802_def, output3802_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3116_eq]
+  try dsimp only
+  rw [node3801_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3803 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3802 input3115)).val
+theorem input3803_def : input3803 = (.seq input3802 input3115) := by
+  unfold input3803
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3803 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3802 output3115)).val
+theorem output3803_def : output3803 = (.seq output3802 output3115) := by
+  unfold output3803
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3803_skip : Flapjack.WordAlloc.isSkip output3803 = false := by
+  rw [output3803_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3803_eq : Flapjack.WordAlloc.removeDeadStructural input3803 value1561 value1 value2 = (output3803, value1810, value1) := by
+  rw [input3803_def, output3803_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3115_eq]
+  try dsimp only
+  rw [node3802_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3804 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3803 input3114)).val
+theorem input3804_def : input3804 = (.seq input3803 input3114) := by
+  unfold input3804
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3804 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3803 output3114)).val
+theorem output3804_def : output3804 = (.seq output3803 output3114) := by
+  unfold output3804
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3804_skip : Flapjack.WordAlloc.isSkip output3804 = false := by
+  rw [output3804_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3804_eq : Flapjack.WordAlloc.removeDeadStructural input3804 value5 value1 value2 = (output3804, value1810, value1) := by
+  rw [input3804_def, output3804_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3114_eq]
+  try dsimp only
+  rw [node3803_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3805 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3804 input3111)).val
+theorem input3805_def : input3805 = (.seq input3804 input3111) := by
+  unfold input3805
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3805 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3804 output3111)).val
+theorem output3805_def : output3805 = (.seq output3804 output3111) := by
+  unfold output3805
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3805_skip : Flapjack.WordAlloc.isSkip output3805 = false := by
+  rw [output3805_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3805_eq : Flapjack.WordAlloc.removeDeadStructural input3805 value1555 value1 value2 = (output3805, value1810, value1) := by
+  rw [input3805_def, output3805_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3111_eq]
+  try dsimp only
+  rw [node3804_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3806 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3805 input3102)).val
+theorem input3806_def : input3806 = (.seq input3805 input3102) := by
+  unfold input3806
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3806 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3805)).val
+theorem output3806_def : output3806 = (output3805) := by
+  unfold output3806
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3806_skip : Flapjack.WordAlloc.isSkip output3806 = false := by
+  rw [output3806_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3806_eq : Flapjack.WordAlloc.removeDeadStructural input3806 value1555 value1 value2 = (output3806, value1810, value1) := by
+  rw [input3806_def, output3806_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3102_eq]
+  try dsimp only
+  rw [node3805_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3807 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3806 input3101)).val
+theorem input3807_def : input3807 = (.seq input3806 input3101) := by
+  unfold input3807
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3807 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3806 output3101)).val
+theorem output3807_def : output3807 = (.seq output3806 output3101) := by
+  unfold output3807
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3807_skip : Flapjack.WordAlloc.isSkip output3807 = false := by
+  rw [output3807_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3807_eq : Flapjack.WordAlloc.removeDeadStructural input3807 value1554 value1 value2 = (output3807, value1810, value1) := by
+  rw [input3807_def, output3807_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3101_eq]
+  try dsimp only
+  rw [node3806_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3808 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3807 input3100)).val
+theorem input3808_def : input3808 = (.seq input3807 input3100) := by
+  unfold input3808
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3808 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3807 output3100)).val
+theorem output3808_def : output3808 = (.seq output3807 output3100) := by
+  unfold output3808
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3808_skip : Flapjack.WordAlloc.isSkip output3808 = false := by
+  rw [output3808_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3808_eq : Flapjack.WordAlloc.removeDeadStructural input3808 value5 value1 value2 = (output3808, value1810, value1) := by
+  rw [input3808_def, output3808_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3100_eq]
+  try dsimp only
+  rw [node3807_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3809 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3808 input3097)).val
+theorem input3809_def : input3809 = (.seq input3808 input3097) := by
+  unfold input3809
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3809 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3808 output3097)).val
+theorem output3809_def : output3809 = (.seq output3808 output3097) := by
+  unfold output3809
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3809_skip : Flapjack.WordAlloc.isSkip output3809 = false := by
+  rw [output3809_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3809_eq : Flapjack.WordAlloc.removeDeadStructural input3809 value1548 value1 value2 = (output3809, value1810, value1) := by
+  rw [input3809_def, output3809_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3097_eq]
+  try dsimp only
+  rw [node3808_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3810 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3809 input3088)).val
+theorem input3810_def : input3810 = (.seq input3809 input3088) := by
+  unfold input3810
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3810 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3809)).val
+theorem output3810_def : output3810 = (output3809) := by
+  unfold output3810
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3810_skip : Flapjack.WordAlloc.isSkip output3810 = false := by
+  rw [output3810_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3810_eq : Flapjack.WordAlloc.removeDeadStructural input3810 value1548 value1 value2 = (output3810, value1810, value1) := by
+  rw [input3810_def, output3810_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3088_eq]
+  try dsimp only
+  rw [node3809_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3811 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3810 input3087)).val
+theorem input3811_def : input3811 = (.seq input3810 input3087) := by
+  unfold input3811
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3811 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3810 output3087)).val
+theorem output3811_def : output3811 = (.seq output3810 output3087) := by
+  unfold output3811
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3811_skip : Flapjack.WordAlloc.isSkip output3811 = false := by
+  rw [output3811_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3811_eq : Flapjack.WordAlloc.removeDeadStructural input3811 value1547 value1 value2 = (output3811, value1810, value1) := by
+  rw [input3811_def, output3811_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3087_eq]
+  try dsimp only
+  rw [node3810_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3812 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3811 input3086)).val
+theorem input3812_def : input3812 = (.seq input3811 input3086) := by
+  unfold input3812
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3812 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3811 output3086)).val
+theorem output3812_def : output3812 = (.seq output3811 output3086) := by
+  unfold output3812
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3812_skip : Flapjack.WordAlloc.isSkip output3812 = false := by
+  rw [output3812_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3812_eq : Flapjack.WordAlloc.removeDeadStructural input3812 value5 value1 value2 = (output3812, value1810, value1) := by
+  rw [input3812_def, output3812_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3086_eq]
+  try dsimp only
+  rw [node3811_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3813 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3812 input3083)).val
+theorem input3813_def : input3813 = (.seq input3812 input3083) := by
+  unfold input3813
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3813 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3812 output3083)).val
+theorem output3813_def : output3813 = (.seq output3812 output3083) := by
+  unfold output3813
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3813_skip : Flapjack.WordAlloc.isSkip output3813 = false := by
+  rw [output3813_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3813_eq : Flapjack.WordAlloc.removeDeadStructural input3813 value1541 value1 value2 = (output3813, value1810, value1) := by
+  rw [input3813_def, output3813_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3083_eq]
+  try dsimp only
+  rw [node3812_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3814 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3813 input3074)).val
+theorem input3814_def : input3814 = (.seq input3813 input3074) := by
+  unfold input3814
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3814 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3813)).val
+theorem output3814_def : output3814 = (output3813) := by
+  unfold output3814
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3814_skip : Flapjack.WordAlloc.isSkip output3814 = false := by
+  rw [output3814_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3814_eq : Flapjack.WordAlloc.removeDeadStructural input3814 value1541 value1 value2 = (output3814, value1810, value1) := by
+  rw [input3814_def, output3814_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3074_eq]
+  try dsimp only
+  rw [node3813_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3815 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3814 input3073)).val
+theorem input3815_def : input3815 = (.seq input3814 input3073) := by
+  unfold input3815
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3815 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3814 output3073)).val
+theorem output3815_def : output3815 = (.seq output3814 output3073) := by
+  unfold output3815
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3815_skip : Flapjack.WordAlloc.isSkip output3815 = false := by
+  rw [output3815_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3815_eq : Flapjack.WordAlloc.removeDeadStructural input3815 value1540 value1 value2 = (output3815, value1810, value1) := by
+  rw [input3815_def, output3815_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3073_eq]
+  try dsimp only
+  rw [node3814_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3816 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3815 input3072)).val
+theorem input3816_def : input3816 = (.seq input3815 input3072) := by
+  unfold input3816
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3816 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3815 output3072)).val
+theorem output3816_def : output3816 = (.seq output3815 output3072) := by
+  unfold output3816
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3816_skip : Flapjack.WordAlloc.isSkip output3816 = false := by
+  rw [output3816_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3816_eq : Flapjack.WordAlloc.removeDeadStructural input3816 value5 value1 value2 = (output3816, value1810, value1) := by
+  rw [input3816_def, output3816_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3072_eq]
+  try dsimp only
+  rw [node3815_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3817 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3816 input3069)).val
+theorem input3817_def : input3817 = (.seq input3816 input3069) := by
+  unfold input3817
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3817 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3816 output3069)).val
+theorem output3817_def : output3817 = (.seq output3816 output3069) := by
+  unfold output3817
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3817_skip : Flapjack.WordAlloc.isSkip output3817 = false := by
+  rw [output3817_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3817_eq : Flapjack.WordAlloc.removeDeadStructural input3817 value1534 value1 value2 = (output3817, value1810, value1) := by
+  rw [input3817_def, output3817_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3069_eq]
+  try dsimp only
+  rw [node3816_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3818 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3817 input3060)).val
+theorem input3818_def : input3818 = (.seq input3817 input3060) := by
+  unfold input3818
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3818 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3817)).val
+theorem output3818_def : output3818 = (output3817) := by
+  unfold output3818
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3818_skip : Flapjack.WordAlloc.isSkip output3818 = false := by
+  rw [output3818_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3818_eq : Flapjack.WordAlloc.removeDeadStructural input3818 value1534 value1 value2 = (output3818, value1810, value1) := by
+  rw [input3818_def, output3818_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3060_eq]
+  try dsimp only
+  rw [node3817_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3819 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3818 input3059)).val
+theorem input3819_def : input3819 = (.seq input3818 input3059) := by
+  unfold input3819
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3819 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3818 output3059)).val
+theorem output3819_def : output3819 = (.seq output3818 output3059) := by
+  unfold output3819
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3819_skip : Flapjack.WordAlloc.isSkip output3819 = false := by
+  rw [output3819_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3819_eq : Flapjack.WordAlloc.removeDeadStructural input3819 value1533 value1 value2 = (output3819, value1810, value1) := by
+  rw [input3819_def, output3819_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3059_eq]
+  try dsimp only
+  rw [node3818_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3820 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3819 input3058)).val
+theorem input3820_def : input3820 = (.seq input3819 input3058) := by
+  unfold input3820
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3820 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3819 output3058)).val
+theorem output3820_def : output3820 = (.seq output3819 output3058) := by
+  unfold output3820
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3820_skip : Flapjack.WordAlloc.isSkip output3820 = false := by
+  rw [output3820_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3820_eq : Flapjack.WordAlloc.removeDeadStructural input3820 value5 value1 value2 = (output3820, value1810, value1) := by
+  rw [input3820_def, output3820_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3058_eq]
+  try dsimp only
+  rw [node3819_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3821 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3820 input3055)).val
+theorem input3821_def : input3821 = (.seq input3820 input3055) := by
+  unfold input3821
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3821 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3820 output3055)).val
+theorem output3821_def : output3821 = (.seq output3820 output3055) := by
+  unfold output3821
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3821_skip : Flapjack.WordAlloc.isSkip output3821 = false := by
+  rw [output3821_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3821_eq : Flapjack.WordAlloc.removeDeadStructural input3821 value1527 value1 value2 = (output3821, value1810, value1) := by
+  rw [input3821_def, output3821_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3055_eq]
+  try dsimp only
+  rw [node3820_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3822 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3821 input3046)).val
+theorem input3822_def : input3822 = (.seq input3821 input3046) := by
+  unfold input3822
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3822 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3821)).val
+theorem output3822_def : output3822 = (output3821) := by
+  unfold output3822
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3822_skip : Flapjack.WordAlloc.isSkip output3822 = false := by
+  rw [output3822_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3822_eq : Flapjack.WordAlloc.removeDeadStructural input3822 value1527 value1 value2 = (output3822, value1810, value1) := by
+  rw [input3822_def, output3822_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3046_eq]
+  try dsimp only
+  rw [node3821_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3823 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3822 input3045)).val
+theorem input3823_def : input3823 = (.seq input3822 input3045) := by
+  unfold input3823
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3823 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3822 output3045)).val
+theorem output3823_def : output3823 = (.seq output3822 output3045) := by
+  unfold output3823
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3823_skip : Flapjack.WordAlloc.isSkip output3823 = false := by
+  rw [output3823_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3823_eq : Flapjack.WordAlloc.removeDeadStructural input3823 value1526 value1 value2 = (output3823, value1810, value1) := by
+  rw [input3823_def, output3823_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3045_eq]
+  try dsimp only
+  rw [node3822_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3824 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3823 input3044)).val
+theorem input3824_def : input3824 = (.seq input3823 input3044) := by
+  unfold input3824
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3824 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3823 output3044)).val
+theorem output3824_def : output3824 = (.seq output3823 output3044) := by
+  unfold output3824
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3824_skip : Flapjack.WordAlloc.isSkip output3824 = false := by
+  rw [output3824_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3824_eq : Flapjack.WordAlloc.removeDeadStructural input3824 value5 value1 value2 = (output3824, value1810, value1) := by
+  rw [input3824_def, output3824_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3044_eq]
+  try dsimp only
+  rw [node3823_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3825 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3824 input3041)).val
+theorem input3825_def : input3825 = (.seq input3824 input3041) := by
+  unfold input3825
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3825 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3824 output3041)).val
+theorem output3825_def : output3825 = (.seq output3824 output3041) := by
+  unfold output3825
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3825_skip : Flapjack.WordAlloc.isSkip output3825 = false := by
+  rw [output3825_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3825_eq : Flapjack.WordAlloc.removeDeadStructural input3825 value1520 value1 value2 = (output3825, value1810, value1) := by
+  rw [input3825_def, output3825_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3041_eq]
+  try dsimp only
+  rw [node3824_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3826 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3825 input3032)).val
+theorem input3826_def : input3826 = (.seq input3825 input3032) := by
+  unfold input3826
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3826 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3825)).val
+theorem output3826_def : output3826 = (output3825) := by
+  unfold output3826
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3826_skip : Flapjack.WordAlloc.isSkip output3826 = false := by
+  rw [output3826_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3826_eq : Flapjack.WordAlloc.removeDeadStructural input3826 value1520 value1 value2 = (output3826, value1810, value1) := by
+  rw [input3826_def, output3826_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3032_eq]
+  try dsimp only
+  rw [node3825_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3827 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3826 input3031)).val
+theorem input3827_def : input3827 = (.seq input3826 input3031) := by
+  unfold input3827
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3827 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3826 output3031)).val
+theorem output3827_def : output3827 = (.seq output3826 output3031) := by
+  unfold output3827
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3827_skip : Flapjack.WordAlloc.isSkip output3827 = false := by
+  rw [output3827_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3827_eq : Flapjack.WordAlloc.removeDeadStructural input3827 value1519 value1 value2 = (output3827, value1810, value1) := by
+  rw [input3827_def, output3827_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3031_eq]
+  try dsimp only
+  rw [node3826_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3828 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3827 input3030)).val
+theorem input3828_def : input3828 = (.seq input3827 input3030) := by
+  unfold input3828
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3828 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3827 output3030)).val
+theorem output3828_def : output3828 = (.seq output3827 output3030) := by
+  unfold output3828
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3828_skip : Flapjack.WordAlloc.isSkip output3828 = false := by
+  rw [output3828_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3828_eq : Flapjack.WordAlloc.removeDeadStructural input3828 value5 value1 value2 = (output3828, value1810, value1) := by
+  rw [input3828_def, output3828_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3030_eq]
+  try dsimp only
+  rw [node3827_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3829 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3828 input3027)).val
+theorem input3829_def : input3829 = (.seq input3828 input3027) := by
+  unfold input3829
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3829 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3828 output3027)).val
+theorem output3829_def : output3829 = (.seq output3828 output3027) := by
+  unfold output3829
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3829_skip : Flapjack.WordAlloc.isSkip output3829 = false := by
+  rw [output3829_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3829_eq : Flapjack.WordAlloc.removeDeadStructural input3829 value1513 value1 value2 = (output3829, value1810, value1) := by
+  rw [input3829_def, output3829_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3027_eq]
+  try dsimp only
+  rw [node3828_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3830 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3829 input3018)).val
+theorem input3830_def : input3830 = (.seq input3829 input3018) := by
+  unfold input3830
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3830 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3829)).val
+theorem output3830_def : output3830 = (output3829) := by
+  unfold output3830
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3830_skip : Flapjack.WordAlloc.isSkip output3830 = false := by
+  rw [output3830_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3830_eq : Flapjack.WordAlloc.removeDeadStructural input3830 value1513 value1 value2 = (output3830, value1810, value1) := by
+  rw [input3830_def, output3830_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3018_eq]
+  try dsimp only
+  rw [node3829_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3831 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3830 input3017)).val
+theorem input3831_def : input3831 = (.seq input3830 input3017) := by
+  unfold input3831
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3831 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3830 output3017)).val
+theorem output3831_def : output3831 = (.seq output3830 output3017) := by
+  unfold output3831
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3831_skip : Flapjack.WordAlloc.isSkip output3831 = false := by
+  rw [output3831_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3831_eq : Flapjack.WordAlloc.removeDeadStructural input3831 value1512 value1 value2 = (output3831, value1810, value1) := by
+  rw [input3831_def, output3831_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3017_eq]
+  try dsimp only
+  rw [node3830_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3832 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3831 input3016)).val
+theorem input3832_def : input3832 = (.seq input3831 input3016) := by
+  unfold input3832
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3832 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3831 output3016)).val
+theorem output3832_def : output3832 = (.seq output3831 output3016) := by
+  unfold output3832
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3832_skip : Flapjack.WordAlloc.isSkip output3832 = false := by
+  rw [output3832_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3832_eq : Flapjack.WordAlloc.removeDeadStructural input3832 value5 value1 value2 = (output3832, value1810, value1) := by
+  rw [input3832_def, output3832_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3016_eq]
+  try dsimp only
+  rw [node3831_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3833 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3832 input3013)).val
+theorem input3833_def : input3833 = (.seq input3832 input3013) := by
+  unfold input3833
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3833 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3832 output3013)).val
+theorem output3833_def : output3833 = (.seq output3832 output3013) := by
+  unfold output3833
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3833_skip : Flapjack.WordAlloc.isSkip output3833 = false := by
+  rw [output3833_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3833_eq : Flapjack.WordAlloc.removeDeadStructural input3833 value1506 value1 value2 = (output3833, value1810, value1) := by
+  rw [input3833_def, output3833_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3013_eq]
+  try dsimp only
+  rw [node3832_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3834 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3833 input3004)).val
+theorem input3834_def : input3834 = (.seq input3833 input3004) := by
+  unfold input3834
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3834 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3833)).val
+theorem output3834_def : output3834 = (output3833) := by
+  unfold output3834
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3834_skip : Flapjack.WordAlloc.isSkip output3834 = false := by
+  rw [output3834_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3834_eq : Flapjack.WordAlloc.removeDeadStructural input3834 value1506 value1 value2 = (output3834, value1810, value1) := by
+  rw [input3834_def, output3834_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3004_eq]
+  try dsimp only
+  rw [node3833_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3835 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3834 input3003)).val
+theorem input3835_def : input3835 = (.seq input3834 input3003) := by
+  unfold input3835
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3835 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3834 output3003)).val
+theorem output3835_def : output3835 = (.seq output3834 output3003) := by
+  unfold output3835
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3835_skip : Flapjack.WordAlloc.isSkip output3835 = false := by
+  rw [output3835_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3835_eq : Flapjack.WordAlloc.removeDeadStructural input3835 value1505 value1 value2 = (output3835, value1810, value1) := by
+  rw [input3835_def, output3835_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3003_eq]
+  try dsimp only
+  rw [node3834_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3836 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3835 input3002)).val
+theorem input3836_def : input3836 = (.seq input3835 input3002) := by
+  unfold input3836
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3836 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3835 output3002)).val
+theorem output3836_def : output3836 = (.seq output3835 output3002) := by
+  unfold output3836
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3836_skip : Flapjack.WordAlloc.isSkip output3836 = false := by
+  rw [output3836_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3836_eq : Flapjack.WordAlloc.removeDeadStructural input3836 value5 value1 value2 = (output3836, value1810, value1) := by
+  rw [input3836_def, output3836_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node3002_eq]
+  try dsimp only
+  rw [node3835_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3837 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3836 input2999)).val
+theorem input3837_def : input3837 = (.seq input3836 input2999) := by
+  unfold input3837
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3837 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3836 output2999)).val
+theorem output3837_def : output3837 = (.seq output3836 output2999) := by
+  unfold output3837
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3837_skip : Flapjack.WordAlloc.isSkip output3837 = false := by
+  rw [output3837_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3837_eq : Flapjack.WordAlloc.removeDeadStructural input3837 value1499 value1 value2 = (output3837, value1810, value1) := by
+  rw [input3837_def, output3837_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node2999_eq]
+  try dsimp only
+  rw [node3836_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3838 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3837 input2990)).val
+theorem input3838_def : input3838 = (.seq input3837 input2990) := by
+  unfold input3838
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3838 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (output3837)).val
+theorem output3838_def : output3838 = (output3837) := by
+  unfold output3838
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3838_skip : Flapjack.WordAlloc.isSkip output3838 = false := by
+  rw [output3838_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3838_eq : Flapjack.WordAlloc.removeDeadStructural input3838 value1499 value1 value2 = (output3838, value1810, value1) := by
+  rw [input3838_def, output3838_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node2990_eq]
+  try dsimp only
+  rw [node3837_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+@[irreducible, cbv_opaque] def input3839 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq input3838 input2989)).val
+theorem input3839_def : input3839 = (.seq input3838 input2989) := by
+  unfold input3839
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[irreducible, cbv_opaque] def output3839 : Flapjack.WordLangProgHOL (BitVec 64) :=
+  (InitECandidate.Proofs.ComputationCache.boxedValue (α := Flapjack.WordLangProgHOL (BitVec 64)) (.seq output3838 output2989)).val
+theorem output3839_def : output3839 = (.seq output3838 output2989) := by
+  unfold output3839
+  exact InitECandidate.Proofs.ComputationCache.boxedValue_eq _
+@[cbv_eval] theorem output3839_skip : Flapjack.WordAlloc.isSkip output3839 = false := by
+  rw [output3839_def]
+  conv => lhs; cbv
+  try rfl
+theorem node3839_eq : Flapjack.WordAlloc.removeDeadStructural input3839 value1498 value1 value2 = (output3839, value1810, value1) := by
+  rw [input3839_def, output3839_def]
+  rw [Flapjack.WordAlloc.removeDeadStructural]
+  rw [node2989_eq]
+  try dsimp only
+  rw [node3838_eq]
+  try dsimp only
+  try (conv => lhs; cbv)
+  try rfl
+
+#print axioms node3839_eq
+end InitECandidate.Proofs.DeadStages830

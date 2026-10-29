@@ -1,0 +1,59 @@
+/* main.pnk -- the stateless guest entry (Guest.lean run_stateless_guest). */
+#include "../src/config.h"
+#include "../src/types.h"
+#include "../src/lib/mem.pnk"
+#include "../src/lib/arith.pnk"
+#include "../src/lib/u256.pnk"
+#include "../src/lib/sha256.pnk"
+#include "../src/lib/keccak.pnk"
+#include "../src/lib/rlp.pnk"
+#include "../src/lib/htab.pnk"
+#include "../src/lib/secp256k1.pnk"
+#include "../src/ssz.pnk"
+#include "../src/header.pnk"
+#include "../src/mpt.pnk"
+#include "../src/tx.pnk"
+#include "../src/state.pnk"
+#include "../src/bal.pnk"
+#include "../src/evm.pnk"
+#include "../src/evm_calls.pnk"
+#include "../src/precompiles.pnk"
+#include "../src/block.pnk"
+#include "../src/fork.pnk"
+
+fun 1 main() {
+  mem_init();
+  sha256_init();
+  keccak_init();
+  ssz_init();
+  mpt_init();
+  u256_ws_init();
+  ripemd160_init();
+  blake2_init();
+  header_init();
+  evm_init();
+  fork_init();
+  var {1,1} inp = input_blob();
+  var 1 out = alloc(256);
+  var 1 z32 = alloc(32);
+  memzero(z32, 32);
+  var si = 0;
+  var err_code = 0;
+  try si = decode_stateless_input(inp.0, inp.1)
+  catch SszErr => err_code {
+    var 1 n = serialize_result(out, z32, 0, 0, 0);
+    st8 out + n, err_code;
+    output_write(out, n + 1);
+    @halt(@base, 0, @base, 0);
+    return 1;
+  }
+  var 1 root = alloc(32);
+  htr_new_payload_request(si, root);
+  var succ = 0;
+  var 1 n = serialize_result(out, root, succ, lds 1 (si + SI_CHAIN_ID), 5377);
+  /* debug: failure code after the result bytes (harness compares only n bytes) */
+  st8 out + n, fail_code;
+  output_write(out, n + 1);
+  @halt(@base, 0, @base, 0);
+  return 0;
+}

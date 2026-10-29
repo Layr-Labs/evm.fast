@@ -1,0 +1,795 @@
+{
+  "scope": "Exploratory isolated-module warm experiments, 2026-10-06; Lean 4.33.1; -j1; 180-second per-command timeout; separate full verifier concurrently active.",
+  "flapjack_revision": "034bb5a1ed0b757082768d5406206bd2f8e31b7c",
+  "series": {
+    "results": [
+      {
+        "case": "Stats",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.7735019940009806,
+        "user": 0.46,
+        "system": 0.3,
+        "peak_kib": 1598680.0,
+        "olean_bytes": 221552,
+        "log": ""
+      },
+      {
+        "case": "Data128",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.8852056199975777,
+        "user": 0.54,
+        "system": 0.34,
+        "peak_kib": 1654028.0,
+        "olean_bytes": 216096,
+        "log": ""
+      },
+      {
+        "case": "Direct128",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 0.8203867500124034,
+        "user": 0.5,
+        "system": 0.3,
+        "peak_kib": 1670032.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked128",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 0.7868196220078971,
+        "user": 0.44,
+        "system": 0.33,
+        "peak_kib": 1657560.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked128",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 0.787920478003798,
+        "user": 0.45,
+        "system": 0.33,
+        "peak_kib": 1657748.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct128",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 0.8806552090100013,
+        "user": 0.53,
+        "system": 0.34,
+        "peak_kib": 1670172.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct128",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 0.8244293890020344,
+        "user": 0.5,
+        "system": 0.31,
+        "peak_kib": 1670292.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked128",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 0.8017806349962484,
+        "user": 0.46,
+        "system": 0.33,
+        "peak_kib": 1657944.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Data512",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 1.3232321809919085,
+        "user": 1.0,
+        "system": 0.34,
+        "peak_kib": 1719780.0,
+        "olean_bytes": 852216,
+        "log": ""
+      },
+      {
+        "case": "Direct512",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.1207258499925956,
+        "user": 0.76,
+        "system": 0.35,
+        "peak_kib": 1767964.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 0.8983061110193375,
+        "user": 0.54,
+        "system": 0.35,
+        "peak_kib": 1717476.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 0.9048172020120546,
+        "user": 0.55,
+        "system": 0.34,
+        "peak_kib": 1717964.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct512",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.1327783839951735,
+        "user": 0.78,
+        "system": 0.34,
+        "peak_kib": 1767512.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct512",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.1304810710134916,
+        "user": 0.77,
+        "system": 0.35,
+        "peak_kib": 1767564.0,
+        "olean_bytes": 6104,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 0.9063440280151553,
+        "user": 0.56,
+        "system": 0.33,
+        "peak_kib": 1717048.0,
+        "olean_bytes": 6560,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Data2048",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 3.243492187000811,
+        "user": 2.92,
+        "system": 0.42,
+        "peak_kib": 2206444.0,
+        "olean_bytes": 3420448,
+        "log": ""
+      },
+      {
+        "case": "Direct2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 3.2647226870176382,
+        "user": 2.91,
+        "system": 0.35,
+        "peak_kib": 2156808.0,
+        "olean_bytes": 6112,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.4101203850004822,
+        "user": 1.06,
+        "system": 0.34,
+        "peak_kib": 1960288.0,
+        "olean_bytes": 6568,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.413339096994605,
+        "user": 1.05,
+        "system": 0.35,
+        "peak_kib": 1960376.0,
+        "olean_bytes": 6568,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 3.2401078429829795,
+        "user": 2.87,
+        "system": 0.36,
+        "peak_kib": 2158076.0,
+        "olean_bytes": 6112,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Direct2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 3.190216843999224,
+        "user": 2.79,
+        "system": 0.39,
+        "peak_kib": 2158068.0,
+        "olean_bytes": 6112,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.4030536900099833,
+        "user": 1.08,
+        "system": 0.32,
+        "peak_kib": 1959088.0,
+        "olean_bytes": 6568,
+        "log": "PROOF certificate: nodes=10\n'certificate' depends on axioms: [propext, Quot.sound]\nPROOF CheckerExperiment.check_sound: nodes=21\nPROOF CheckerExperiment.certificate: nodes=59\n"
+      }
+    ],
+    "checkpoint-results": [
+      {
+        "case": "Compose",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.7682876930048224,
+        "user": 0.42,
+        "system": 0.34,
+        "peak_kib": 1637756.0,
+        "olean_bytes": 13616,
+        "log": "'CheckerExperiment.seq_sound' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint512",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.3630087279889267,
+        "user": 1.03,
+        "system": 0.32,
+        "peak_kib": 1757372.0,
+        "olean_bytes": 23240,
+        "log": "PROOF eq1008: nodes=32\nPROOF eq1009: nodes=32\nPROOF eq1010: nodes=32\nPROOF eq1011: nodes=32\nPROOF eq1012: nodes=32\nPROOF eq1013: nodes=32\nPROOF eq1014: nodes=32\nPROOF eq1015: nodes=32\nPROOF eq1016: nodes=9\nPROOF eq1017: nodes=9\nPROOF eq1018: nodes=9\nPROOF eq1019: nodes=9\nPROOF eq1020: nodes=9\nPROOF eq1021: nodes=9\nPROOF eq1022: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint512",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.3511804750014562,
+        "user": 1.01,
+        "system": 0.33,
+        "peak_kib": 1758288.0,
+        "olean_bytes": 23240,
+        "log": "PROOF eq1008: nodes=32\nPROOF eq1009: nodes=32\nPROOF eq1010: nodes=32\nPROOF eq1011: nodes=32\nPROOF eq1012: nodes=32\nPROOF eq1013: nodes=32\nPROOF eq1014: nodes=32\nPROOF eq1015: nodes=32\nPROOF eq1016: nodes=9\nPROOF eq1017: nodes=9\nPROOF eq1018: nodes=9\nPROOF eq1019: nodes=9\nPROOF eq1020: nodes=9\nPROOF eq1021: nodes=9\nPROOF eq1022: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint512",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.3755096129898448,
+        "user": 1.04,
+        "system": 0.33,
+        "peak_kib": 1758364.0,
+        "olean_bytes": 23240,
+        "log": "PROOF eq1008: nodes=32\nPROOF eq1009: nodes=32\nPROOF eq1010: nodes=32\nPROOF eq1011: nodes=32\nPROOF eq1012: nodes=32\nPROOF eq1013: nodes=32\nPROOF eq1014: nodes=32\nPROOF eq1015: nodes=32\nPROOF eq1016: nodes=9\nPROOF eq1017: nodes=9\nPROOF eq1018: nodes=9\nPROOF eq1019: nodes=9\nPROOF eq1020: nodes=9\nPROOF eq1021: nodes=9\nPROOF eq1022: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 3.20099727800698,
+        "user": 2.83,
+        "system": 0.36,
+        "peak_kib": 2104196.0,
+        "olean_bytes": 72016,
+        "log": "PROOF eq4032: nodes=32\nPROOF eq4033: nodes=32\nPROOF eq4034: nodes=32\nPROOF eq4035: nodes=32\nPROOF eq4036: nodes=32\nPROOF eq4037: nodes=32\nPROOF eq4038: nodes=32\nPROOF eq4039: nodes=32\nPROOF eq4040: nodes=32\nPROOF eq4041: nodes=32\nPROOF eq4042: nodes=32\nPROOF eq4043: nodes=32\nPROOF eq4044: nodes=32\nPROOF eq4045: nodes=32\nPROOF eq4046: nodes=32\nPROOF eq4047: nodes=32\nPROOF eq4048: nodes=32\nPROOF eq4049: nodes=32\nPROOF eq4050: nodes=32\nPROOF eq4051: nodes=32\nPROOF eq4052: nodes=32\nPROOF eq4053: nodes=32\nPROOF eq4054: nodes=32\nPROOF eq4055: nodes=32\nPROOF eq4056: nodes=32\nPROOF eq4057: nodes=32\nPROOF eq4058: nodes=32\nPROOF eq4059: nodes=32\nPROOF eq4060: nodes=32\nPROOF eq4061: nodes=32\nPROOF eq4062: nodes=32\nPROOF eq4063: nodes=32\nPROOF eq4064: nodes=9\nPROOF eq4065: nodes=9\nPROOF eq4066: nodes=9\nPROOF eq4067: nodes=9\nPROOF eq4068: nodes=9\nPROOF eq4069: nodes=9\nPROOF eq4070: nodes=9\nPROOF eq4071: nodes=9\nPROOF eq4072: nodes=9\nPROOF eq4073: nodes=9\nPROOF eq4074: nodes=9\nPROOF eq4075: nodes=9\nPROOF eq4076: nodes=9\nPROOF eq4077: nodes=9\nPROOF eq4078: nodes=9\nPROOF eq4079: nodes=9\nPROOF eq4080: nodes=9\nPROOF eq4081: nodes=9\nPROOF eq4082: nodes=9\nPROOF eq4083: nodes=9\nPROOF eq4084: nodes=9\nPROOF eq4085: nodes=9\nPROOF eq4086: nodes=9\nPROOF eq4087: nodes=9\nPROOF eq4088: nodes=9\nPROOF eq4089: nodes=9\nPROOF eq4090: nodes=9\nPROOF eq4091: nodes=9\nPROOF eq4092: nodes=9\nPROOF eq4093: nodes=9\nPROOF eq4094: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 3.218742024997482,
+        "user": 2.86,
+        "system": 0.35,
+        "peak_kib": 2104608.0,
+        "olean_bytes": 72016,
+        "log": "PROOF eq4032: nodes=32\nPROOF eq4033: nodes=32\nPROOF eq4034: nodes=32\nPROOF eq4035: nodes=32\nPROOF eq4036: nodes=32\nPROOF eq4037: nodes=32\nPROOF eq4038: nodes=32\nPROOF eq4039: nodes=32\nPROOF eq4040: nodes=32\nPROOF eq4041: nodes=32\nPROOF eq4042: nodes=32\nPROOF eq4043: nodes=32\nPROOF eq4044: nodes=32\nPROOF eq4045: nodes=32\nPROOF eq4046: nodes=32\nPROOF eq4047: nodes=32\nPROOF eq4048: nodes=32\nPROOF eq4049: nodes=32\nPROOF eq4050: nodes=32\nPROOF eq4051: nodes=32\nPROOF eq4052: nodes=32\nPROOF eq4053: nodes=32\nPROOF eq4054: nodes=32\nPROOF eq4055: nodes=32\nPROOF eq4056: nodes=32\nPROOF eq4057: nodes=32\nPROOF eq4058: nodes=32\nPROOF eq4059: nodes=32\nPROOF eq4060: nodes=32\nPROOF eq4061: nodes=32\nPROOF eq4062: nodes=32\nPROOF eq4063: nodes=32\nPROOF eq4064: nodes=9\nPROOF eq4065: nodes=9\nPROOF eq4066: nodes=9\nPROOF eq4067: nodes=9\nPROOF eq4068: nodes=9\nPROOF eq4069: nodes=9\nPROOF eq4070: nodes=9\nPROOF eq4071: nodes=9\nPROOF eq4072: nodes=9\nPROOF eq4073: nodes=9\nPROOF eq4074: nodes=9\nPROOF eq4075: nodes=9\nPROOF eq4076: nodes=9\nPROOF eq4077: nodes=9\nPROOF eq4078: nodes=9\nPROOF eq4079: nodes=9\nPROOF eq4080: nodes=9\nPROOF eq4081: nodes=9\nPROOF eq4082: nodes=9\nPROOF eq4083: nodes=9\nPROOF eq4084: nodes=9\nPROOF eq4085: nodes=9\nPROOF eq4086: nodes=9\nPROOF eq4087: nodes=9\nPROOF eq4088: nodes=9\nPROOF eq4089: nodes=9\nPROOF eq4090: nodes=9\nPROOF eq4091: nodes=9\nPROOF eq4092: nodes=9\nPROOF eq4093: nodes=9\nPROOF eq4094: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 3.02256463500089,
+        "user": 2.66,
+        "system": 0.35,
+        "peak_kib": 2104496.0,
+        "olean_bytes": 72016,
+        "log": "PROOF eq4032: nodes=32\nPROOF eq4033: nodes=32\nPROOF eq4034: nodes=32\nPROOF eq4035: nodes=32\nPROOF eq4036: nodes=32\nPROOF eq4037: nodes=32\nPROOF eq4038: nodes=32\nPROOF eq4039: nodes=32\nPROOF eq4040: nodes=32\nPROOF eq4041: nodes=32\nPROOF eq4042: nodes=32\nPROOF eq4043: nodes=32\nPROOF eq4044: nodes=32\nPROOF eq4045: nodes=32\nPROOF eq4046: nodes=32\nPROOF eq4047: nodes=32\nPROOF eq4048: nodes=32\nPROOF eq4049: nodes=32\nPROOF eq4050: nodes=32\nPROOF eq4051: nodes=32\nPROOF eq4052: nodes=32\nPROOF eq4053: nodes=32\nPROOF eq4054: nodes=32\nPROOF eq4055: nodes=32\nPROOF eq4056: nodes=32\nPROOF eq4057: nodes=32\nPROOF eq4058: nodes=32\nPROOF eq4059: nodes=32\nPROOF eq4060: nodes=32\nPROOF eq4061: nodes=32\nPROOF eq4062: nodes=32\nPROOF eq4063: nodes=32\nPROOF eq4064: nodes=9\nPROOF eq4065: nodes=9\nPROOF eq4066: nodes=9\nPROOF eq4067: nodes=9\nPROOF eq4068: nodes=9\nPROOF eq4069: nodes=9\nPROOF eq4070: nodes=9\nPROOF eq4071: nodes=9\nPROOF eq4072: nodes=9\nPROOF eq4073: nodes=9\nPROOF eq4074: nodes=9\nPROOF eq4075: nodes=9\nPROOF eq4076: nodes=9\nPROOF eq4077: nodes=9\nPROOF eq4078: nodes=9\nPROOF eq4079: nodes=9\nPROOF eq4080: nodes=9\nPROOF eq4081: nodes=9\nPROOF eq4082: nodes=9\nPROOF eq4083: nodes=9\nPROOF eq4084: nodes=9\nPROOF eq4085: nodes=9\nPROOF eq4086: nodes=9\nPROOF eq4087: nodes=9\nPROOF eq4088: nodes=9\nPROOF eq4089: nodes=9\nPROOF eq4090: nodes=9\nPROOF eq4091: nodes=9\nPROOF eq4092: nodes=9\nPROOF eq4093: nodes=9\nPROOF eq4094: nodes=9\nPROOF certificate: nodes=46\n'CheckerExperiment.certificate' depends on axioms: [propext, Quot.sound]\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      }
+    ],
+    "decide-results": [
+      {
+        "case": "Decide2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.8301271210075356,
+        "user": 1.48,
+        "system": 0.34,
+        "peak_kib": 1965916.0,
+        "olean_bytes": 8344,
+        "log": "PROOF checked: nodes=27\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "DecideKernel2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.4220022710214835,
+        "user": 1.07,
+        "system": 0.34,
+        "peak_kib": 1956900.0,
+        "olean_bytes": 8608,
+        "log": "PROOF checked: nodes=1\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "CheckRfl2048",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.430701470002532,
+        "user": 1.1,
+        "system": 0.31,
+        "peak_kib": 1958836.0,
+        "olean_bytes": 7552,
+        "log": "PROOF checked: nodes=7\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Decide2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.775284045987064,
+        "user": 1.43,
+        "system": 0.33,
+        "peak_kib": 1966884.0,
+        "olean_bytes": 8344,
+        "log": "PROOF checked: nodes=27\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "DecideKernel2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.4274875270202756,
+        "user": 1.08,
+        "system": 0.34,
+        "peak_kib": 1958628.0,
+        "olean_bytes": 8608,
+        "log": "PROOF checked: nodes=1\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "CheckRfl2048",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.4426060259866063,
+        "user": 1.1,
+        "system": 0.33,
+        "peak_kib": 1959012.0,
+        "olean_bytes": 7552,
+        "log": "PROOF checked: nodes=7\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Decide2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.8175561940006446,
+        "user": 1.46,
+        "system": 0.34,
+        "peak_kib": 1966336.0,
+        "olean_bytes": 8344,
+        "log": "PROOF checked: nodes=27\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "DecideKernel2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.411986290011555,
+        "user": 1.08,
+        "system": 0.32,
+        "peak_kib": 1958404.0,
+        "olean_bytes": 8608,
+        "log": "PROOF checked: nodes=1\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "CheckRfl2048",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.4321268849889748,
+        "user": 1.1,
+        "system": 0.33,
+        "peak_kib": 1958592.0,
+        "olean_bytes": 7552,
+        "log": "PROOF checked: nodes=7\nPROOF certificate: nodes=5\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "Accepted",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.7622380660031922,
+        "user": 0.45,
+        "system": 0.31,
+        "peak_kib": 1634212.0,
+        "olean_bytes": 2360,
+        "log": ""
+      }
+    ],
+    "repeated-results": [
+      {
+        "case": "RepeatData",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.7395740320207551,
+        "user": 0.4,
+        "system": 0.33,
+        "peak_kib": 1633920.0,
+        "olean_bytes": 19608,
+        "log": ""
+      },
+      {
+        "case": "RepeatCompose",
+        "trial": "setup",
+        "exit": 0,
+        "wall": 0.7418290140049066,
+        "user": 0.41,
+        "system": 0.32,
+        "peak_kib": 1635600.0,
+        "olean_bytes": 13784,
+        "log": ""
+      },
+      {
+        "case": "RepeatDirect8",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.2729665859951638,
+        "user": 0.92,
+        "system": 0.34,
+        "peak_kib": 1824252.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint8",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.0510213589877822,
+        "user": 0.72,
+        "system": 0.32,
+        "peak_kib": 1759268.0,
+        "olean_bytes": 19488,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatDirect8",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.257443027017871,
+        "user": 0.9,
+        "system": 0.35,
+        "peak_kib": 1824432.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint8",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.0398345909779891,
+        "user": 0.7,
+        "system": 0.33,
+        "peak_kib": 1760280.0,
+        "olean_bytes": 19488,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatDirect8",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.2598344159778208,
+        "user": 0.91,
+        "system": 0.34,
+        "peak_kib": 1824352.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint8",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.0540724369930103,
+        "user": 0.69,
+        "system": 0.35,
+        "peak_kib": 1758544.0,
+        "olean_bytes": 19488,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatDirect10",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 3.0547372619912494,
+        "user": 2.69,
+        "system": 0.36,
+        "peak_kib": 2379680.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": "-0",
+        "exit": 0,
+        "wall": 1.9749243489932269,
+        "user": 1.64,
+        "system": 0.33,
+        "peak_kib": 2122880.0,
+        "olean_bytes": 22128,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF eq9: nodes=10\nPROOF eq10: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatDirect10",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 3.055108819011366,
+        "user": 2.69,
+        "system": 0.35,
+        "peak_kib": 2379596.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": "-1",
+        "exit": 0,
+        "wall": 1.9643489879963454,
+        "user": 1.61,
+        "system": 0.34,
+        "peak_kib": 2121964.0,
+        "olean_bytes": 22128,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF eq9: nodes=10\nPROOF eq10: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatDirect10",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 3.0710852170013823,
+        "user": 2.69,
+        "system": 0.37,
+        "peak_kib": 2380004.0,
+        "olean_bytes": 6392,
+        "log": "PROOF certificate: nodes=26\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": "-2",
+        "exit": 0,
+        "wall": 1.9697416000126395,
+        "user": 1.62,
+        "system": 0.34,
+        "peak_kib": 2121968.0,
+        "olean_bytes": 22128,
+        "log": "PROOF eq0: nodes=32\nPROOF eq1: nodes=10\nPROOF eq2: nodes=10\nPROOF eq3: nodes=10\nPROOF eq4: nodes=10\nPROOF eq5: nodes=10\nPROOF eq6: nodes=10\nPROOF eq7: nodes=10\nPROOF eq8: nodes=10\nPROOF eq9: nodes=10\nPROOF eq10: nodes=10\nPROOF certificate: nodes=47\n'certificate' depends on axioms: [propext, Quot.sound]\n"
+      }
+    ],
+    "export-replay-results": [
+      {
+        "case": "Direct512",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 6338812,
+        "wall": 2.1384165109775495,
+        "output": "parse_ms=777, replay_ms=601, constants=2942, kernel=accepted\n"
+      },
+      {
+        "case": "Direct512",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 6338812,
+        "wall": 2.1163197639980353,
+        "output": "parse_ms=779, replay_ms=587, constants=2942, kernel=accepted\n"
+      },
+      {
+        "case": "Direct512",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 6338812,
+        "wall": 2.1220631239993963,
+        "output": "parse_ms=785, replay_ms=587, constants=2942, kernel=accepted\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 7374764,
+        "wall": 2.0885604369977955,
+        "output": "parse_ms=886, replay_ms=449, constants=3161, kernel=accepted\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 7374764,
+        "wall": 2.0774332500004675,
+        "output": "parse_ms=874, replay_ms=456, constants=3161, kernel=accepted\n"
+      },
+      {
+        "case": "Checked512",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 7374764,
+        "wall": 2.0991623169975355,
+        "output": "parse_ms=895, replay_ms=451, constants=3161, kernel=accepted\n"
+      },
+      {
+        "case": "Direct2048",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 8267705,
+        "wall": 4.09631419199286,
+        "output": "parse_ms=963, replay_ms=2382, constants=6014, kernel=accepted\n"
+      },
+      {
+        "case": "Direct2048",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 8267705,
+        "wall": 4.121504004986491,
+        "output": "parse_ms=982, replay_ms=2366, constants=6014, kernel=accepted\n"
+      },
+      {
+        "case": "Direct2048",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 8267705,
+        "wall": 4.085686762002297,
+        "output": "parse_ms=963, replay_ms=2363, constants=6014, kernel=accepted\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 9303657,
+        "wall": 2.741744130005827,
+        "output": "parse_ms=1058, replay_ms=932, constants=6233, kernel=accepted\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 9303657,
+        "wall": 2.7692208160005976,
+        "output": "parse_ms=1072, replay_ms=933, constants=6233, kernel=accepted\n"
+      },
+      {
+        "case": "Checked2048",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 9303657,
+        "wall": 2.8083550129958894,
+        "output": "parse_ms=1069, replay_ms=973, constants=6233, kernel=accepted\n"
+      }
+    ],
+    "checkpoint-export-replay-results": [
+      {
+        "case": "Checkpoint512",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 6358554,
+        "wall": 2.41000754799461,
+        "output": "parse_ms=797, replay_ms=849, constants=2959, kernel=accepted\n"
+      },
+      {
+        "case": "Checkpoint512",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 6358554,
+        "wall": 2.353710936004063,
+        "output": "parse_ms=793, replay_ms=793, constants=2959, kernel=accepted\n"
+      },
+      {
+        "case": "Checkpoint512",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 6358554,
+        "wall": 2.41517040898907,
+        "output": "parse_ms=793, replay_ms=841, constants=2959, kernel=accepted\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 8314783,
+        "wall": 4.456744290015195,
+        "output": "parse_ms=998, replay_ms=2662, constants=6079, kernel=accepted\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 8314783,
+        "wall": 3.9157039980054833,
+        "output": "parse_ms=973, replay_ms=2189, constants=6079, kernel=accepted\n"
+      },
+      {
+        "case": "Checkpoint2048",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 8314783,
+        "wall": 3.8720181960088667,
+        "output": "parse_ms=995, replay_ms=2123, constants=6079, kernel=accepted\n"
+      }
+    ],
+    "repeated-export-replay-results": [
+      {
+        "case": "RepeatDirect10",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 5718908,
+        "wall": 3.6200766259862576,
+        "output": "parse_ms=645, replay_ms=2213, constants=1940, kernel=accepted\n"
+      },
+      {
+        "case": "RepeatDirect10",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 5718908,
+        "wall": 3.624939804984024,
+        "output": "parse_ms=646, replay_ms=2228, constants=1940, kernel=accepted\n"
+      },
+      {
+        "case": "RepeatDirect10",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 5718908,
+        "wall": 3.63822913900367,
+        "output": "parse_ms=655, replay_ms=2211, constants=1940, kernel=accepted\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": 0,
+        "exit": 0,
+        "export_bytes": 5737557,
+        "wall": 2.6575549409899395,
+        "output": "parse_ms=654, replay_ms=1236, constants=1953, kernel=accepted\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": 1,
+        "exit": 0,
+        "export_bytes": 5737557,
+        "wall": 2.6374935540079605,
+        "output": "parse_ms=646, replay_ms=1236, constants=1953, kernel=accepted\n"
+      },
+      {
+        "case": "RepeatCheckpoint10",
+        "trial": 2,
+        "exit": 0,
+        "export_bytes": 5737557,
+        "wall": 2.630452907993458,
+        "output": "parse_ms=644, replay_ms=1234, constants=1953, kernel=accepted\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+name = "Guest"
+version = "0.1.0"
+defaultTargets = ["InitE", "Submission"]
+
+# Current riscv-im branch, pinned for reproducible challenge semantics.
+[[require]]
+name = "flapjack"
+git = "https://github.com/flamingoponderado/flapjack"
+rev = "034bb5a1ed0b757082768d5406206bd2f8e31b7c"
+
+# Optional accelerator reference checks use RiscvZkvm.Rv64.ZiskAccel. The
+# challenge and software guest import the separate Guest.ByteCodec helpers;
+# their semantics do not call accelerator precompiles.
+[[require]]
+name = "riscv-zkvm"
+git = "https://github.com/Verified-zkEVM/riscv-zkvm"
+rev = "v0.3.0"
+
+[[lean_lib]]
+name = "Guest"
+
+# Shared helper modules imported by the artifact generators.
+[[lean_lib]]
+name = "Tools"
+roots = []
+globs = ["Tools.+"]
+
+# `lake exe gen-guest-ast Guest/guest.pp.pnk > Guest/Ast.lean` regenerates the
+# committed AST of the guest (see tools/gen-guest-ast.sh).
+[[lean_exe]]
+name = "gen-guest-ast"
+root = "Tools.GenGuestAst"
+
+# `lake exe run-guest [input.bin] [fuel]` executes the guest under the stepped
+# source semantics, as Guest.runGuestStepped defines it.
+[[lean_exe]]
+name = "run-guest"
+root = "Tools.RunGuest"
+
+# `lake exe input-decode-check input.bin ...` checks Guest.GasLimit.declaredGasLimit
+# against the guest's own decode outcome (see Tools/InputDecodeCheck.lean).
+[[lean_exe]]
+name = "input-decode-check"
+root = "Tools.InputDecodeCheck"
+
+# `lake exe accel-ffi-check` checks the byte-level accelerator specifications
+# (Guest/AccelFfi.lean) against reference values.
+[[lean_exe]]
+name = "accel-ffi-check"
+root = "Tools.AccelFfiCheck"
+
+
+[[lean_exe]]
+name = "compile-baseline"
+root = "Tools.CompileBaseline"
+
+[[lean_lib]]
+name = "InitE"
+
+[[lean_lib]]
+name = "InitECandidate"
+srcDir = "submission"
+
+[[lean_lib]]
+name = "Submission"
+srcDir = "submission"
+roots = ["Solution"]
+
+# Generate proposed literal compiler metadata; ArtifactFacts certifies it.
+[[lean_exe]]
+name = "gen-compiler-config"
+root = "Tools.GenCompilerConfig"
+
+# Generate proposed per-function Word stage data; generated proofs certify it.
+[[lean_exe]]
+name = "gen-word-stages"
+root = "Tools.GenWordStagesMain"
+supportInterpreter = true
+
+# Audit only the fixed challenge; initial-submission certificates live in InitECandidate.
+[[lean_lib]]
+name = "TrustedAxioms"
+srcDir = "verifier"
+
+[[lean_exe]]
+name = "regenerate-backend"
+root = "Tools.RegenerateBackend"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "regenerate-backend-finishing"
+root = "Tools.RegenerateBackendFinishing"
+supportInterpreter = true

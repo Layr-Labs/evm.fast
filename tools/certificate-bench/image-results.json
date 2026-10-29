@@ -1,0 +1,233 @@
+{
+  "metadata": {
+    "family": "both",
+    "trials": 2,
+    "timeout": 180,
+    "toolchain": "leanprover/lean4:v4.33.1",
+    "source_sha256": {
+      "submission/InitECandidate/Proofs/BootstrapLastWord.lean": "206fa2f4e36084a7a31a900095905dbdc823080893dfd749645d859ac5930e82",
+      "submission/InitECandidate/Proofs/BitmapImageFacts.lean": "e339586616e15ec3124ef1e023fdf980ed68e4c8fadc4537cd1aff1b89225148",
+      "submission/InitECandidate/Proofs/ImageComputation.lean": "ed4cbe6da8423825490a399ba711aebd5c00878971e82fbffc74ea57975e3d10"
+    },
+    "scope": "Only selected image lemmas; complete exported dependencies; existing common build artifacts.",
+    "benchmark_sha256": {
+      "tools/certificate-bench/image.py": "94236b8c60a57b8b668af3e9b51324610669296995766bcf4882903967e2b2fc",
+      "tools/certificate-bench/CompareReplay.lean": "18a5e5a26e59c376cf11e2da2119f296c50034eb0218a7302864dc2d7285fae0"
+    },
+    "validation": {
+      "modified_modules_build": {
+        "exit": 0,
+        "jobs": 4115,
+        "log": "work/lean-perf/image-compact-explore/production-build-retry.log"
+      },
+      "consumers_build": {
+        "exit": 0,
+        "jobs": 4108,
+        "log": "work/lean-perf/image-compact-explore/consumer-build.log"
+      },
+      "existing_theorem_statements_unchanged": 7,
+      "challenge_source_and_program_literals_changed": false,
+      "full_comparator_run": false
+    }
+  },
+  "summary": {
+    "Control": {
+      "wall": 107.02500512400002,
+      "parse_ms": 34864.5,
+      "compare_ms": 10443.0,
+      "replay_ms": 60660.5,
+      "peak_kib": 3082546.0,
+      "build_seconds": 114.25608204698074,
+      "build_bytes": 167479912,
+      "export_seconds": 15.293886819010368,
+      "export_bytes": 279752096
+    },
+    "Compact": {
+      "wall": 38.088064734009095,
+      "parse_ms": 5775.5,
+      "compare_ms": 210.5,
+      "replay_ms": 31217.0,
+      "peak_kib": 2323808.0,
+      "build_seconds": 5.648633325996343,
+      "build_bytes": 74056,
+      "export_seconds": 3.089413148991298,
+      "export_bytes": 29550973
+    }
+  },
+  "runs": [
+    {
+      "case": "Control",
+      "phase": "build",
+      "trial": 0,
+      "exit": 0,
+      "wall": 114.25608204698074,
+      "user": 110.69,
+      "system": 3.48,
+      "peak_kib": 6735936.0,
+      "artifact_bytes": 167479912,
+      "log": "'wordCertificate' depends on axioms: [propext, Quot.sound]\n'bitmapCertificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Control",
+      "phase": "export",
+      "trial": 0,
+      "exit": 0,
+      "wall": 15.293886819010368,
+      "user": 14.07,
+      "system": 1.22,
+      "peak_kib": 5065468.0,
+      "artifact_bytes": 279752096,
+      "log": ""
+    },
+    {
+      "case": "Compact",
+      "phase": "build",
+      "trial": 0,
+      "exit": 0,
+      "wall": 5.648633325996343,
+      "user": 4.77,
+      "system": 0.87,
+      "peak_kib": 5155296.0,
+      "artifact_bytes": 74056,
+      "log": "'wordCertificate' depends on axioms: [propext, Quot.sound]\n'bitmapCertificate' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "case": "Compact",
+      "phase": "export",
+      "trial": 0,
+      "exit": 0,
+      "wall": 3.089413148991298,
+      "user": 2.15,
+      "system": 0.93,
+      "peak_kib": 4461944.0,
+      "artifact_bytes": 29550973,
+      "log": ""
+    },
+    {
+      "case": "Challenge",
+      "phase": "build",
+      "trial": 0,
+      "exit": 0,
+      "wall": 2.4927965980023146,
+      "user": 1.39,
+      "system": 1.09,
+      "peak_kib": 4639048.0,
+      "artifact_bytes": 17152,
+      "log": "/home/zksecurity/trim-space/init-e/work/lean-perf/image-comparator-final/Challenge.lean:9:8: warning: declaration uses `sorry`\n/home/zksecurity/trim-space/init-e/work/lean-perf/image-comparator-final/Challenge.lean:13:8: warning: declaration uses `sorry`\n"
+    },
+    {
+      "case": "Challenge",
+      "phase": "export",
+      "trial": 0,
+      "exit": 0,
+      "wall": 3.194013325992273,
+      "user": 2.0,
+      "system": 1.15,
+      "peak_kib": 4460104.0,
+      "artifact_bytes": 24811437,
+      "log": ""
+    },
+    {
+      "case": "Control",
+      "phase": "compare",
+      "trial": 0,
+      "exit": 0,
+      "wall": 106.9256341069995,
+      "user": 106.07,
+      "system": 0.83,
+      "peak_kib": 3082524.0,
+      "artifact_bytes": 279752096,
+      "log": "parse_ms=34933, compare_ms=10392, replay_ms=60543, constants=2638, comparator=accepted\n",
+      "parse_ms": 34933,
+      "compare_ms": 10392,
+      "replay_ms": 60543,
+      "constants": 2638
+    },
+    {
+      "case": "Compact",
+      "phase": "compare",
+      "trial": 0,
+      "exit": 0,
+      "wall": 37.964703775011,
+      "user": 37.34,
+      "system": 0.6,
+      "peak_kib": 2323960.0,
+      "artifact_bytes": 29550973,
+      "log": "parse_ms=5722, compare_ms=212, replay_ms=31152, constants=2570, comparator=accepted\n",
+      "parse_ms": 5722,
+      "compare_ms": 212,
+      "replay_ms": 31152,
+      "constants": 2570
+    },
+    {
+      "case": "Compact",
+      "phase": "compare",
+      "trial": 1,
+      "exit": 0,
+      "wall": 38.211425693007186,
+      "user": 37.56,
+      "system": 0.63,
+      "peak_kib": 2323656.0,
+      "artifact_bytes": 29550973,
+      "log": "parse_ms=5829, compare_ms=209, replay_ms=31282, constants=2570, comparator=accepted\n",
+      "parse_ms": 5829,
+      "compare_ms": 209,
+      "replay_ms": 31282,
+      "constants": 2570
+    },
+    {
+      "case": "Control",
+      "phase": "compare",
+      "trial": 1,
+      "exit": 0,
+      "wall": 107.12437614100054,
+      "user": 106.31,
+      "system": 0.79,
+      "peak_kib": 3082568.0,
+      "artifact_bytes": 279752096,
+      "log": "parse_ms=34796, compare_ms=10494, replay_ms=60778, constants=2638, comparator=accepted\n",
+      "parse_ms": 34796,
+      "compare_ms": 10494,
+      "replay_ms": 60778,
+      "constants": 2638
+    }
+  ],
+  "other_experiments": {
+    "dead-combinators-explore": {
+      "Control": {
+        "trials": 3,
+        "median_process_seconds": 2.7436062569904607,
+        "median_replay_ms": 842
+      },
+      "Changed": {
+        "trials": 3,
+        "median_process_seconds": 2.639766909996979,
+        "median_replay_ms": 813
+      }
+    },
+    "encoding-table-explore": {
+      "Control": {
+        "trials": 3,
+        "median_process_seconds": 2.695959929988021,
+        "median_replay_ms": 1462
+      },
+      "Changed": {
+        "trials": 3,
+        "median_process_seconds": 3.5299507770105265,
+        "median_replay_ms": 2147
+      }
+    },
+    "pipeline-composition-explore": {
+      "Control": {
+        "trials": 3,
+        "median_process_seconds": 38.940088681993075,
+        "median_replay_ms": 28491
+      },
+      "Changed": {
+        "trials": 3,
+        "median_process_seconds": 39.19843092400697,
+        "median_replay_ms": 28521
+      }
+    }
+  }
+}

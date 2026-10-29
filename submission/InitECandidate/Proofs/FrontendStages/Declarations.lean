@@ -1,0 +1,19 @@
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify912
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify913
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify914
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify915
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify916
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify917
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify918
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify919
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify920
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify921
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify922
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify923
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify924
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify925
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify926
+import InitECandidate.Proofs.FrontendStages.Declarations.Simplify927
+
+/-! Kernel-checked simplification of every source declaration. Sixteen dependency
+lanes bound concurrent proof elaboration to the verifier CPU budget. -/

@@ -1,0 +1,9 @@
+import Lean
+import InitECandidate.Proofs.DeadComputation
+import InitECandidate.Proofs.ClashComputation
+import Flapjack.Compiler.Backend.WordToWord.FastCompile
+import Flapjack.Compiler.Encoders.RiscV.Target.Configuration
+set_option autoImplicit false
+namespace InitECandidate.Proofs.SmallStages.ParametricComputation
+attribute [scoped cbv_eval] Flapjack.WordAlloc.removeDeadStructural_eq
+end InitECandidate.Proofs.SmallStages.ParametricComputation

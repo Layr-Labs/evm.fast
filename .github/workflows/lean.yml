@@ -1,0 +1,33 @@
+name: Lean – lake build
+
+# Full proof builds exceed the usual hosted-runner budget. Run explicitly.
+on:
+  workflow_dispatch:
+
+jobs:
+  lake-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    # flapjack and riscv-zkvm are pulled as lake git dependencies (see
+    # lake-manifest.json) and are not submodules, so no `git submodule
+    # update` is needed here. A fresh proof build is heavy; the hosted-runner
+    # time limit can still expire even when dependency caches are available.
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # lean-action installs the toolchain pinned by `lean-toolchain` (via
+      # elan) and runs `lake build`. `use-github-cache` caches the `.lake`
+      # directory, so the fetched lake packages (flapjack, riscv-zkvm,
+      # lean-sail) and the built artifacts persist across runs. Mathlib is not
+      # a dependency here, so we skip its cache and only build.
+      - name: Set up Lean and build
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: false
+          use-github-cache: true

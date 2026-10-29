@@ -1,0 +1,10 @@
+import InitECandidate.Proofs.ComputationCache
+import Std
+set_option autoImplicit false
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+namespace InitECandidate.Proofs.BackendStages.BytePieces
+def raw609_0 : List (BitVec 8) := [131#8, 181#8, 140#8, 254#8, 147#8, 149#8, 21#8, 0#8, 179#8, 133#8, 165#8, 1#8, 3#8, 182#8, 5#8, 240#8, 147#8, 6#8, 6#8, 4#8, 131#8, 50#8, 5#8, 4#8, 3#8, 54#8, 6#8, 4#8, 51#8, 134#8, 194#8, 0#8, 35#8, 176#8, 198#8, 0#8, 3#8, 182#8, 5#8, 240#8, 147#8, 6#8, 134#8, 4#8, 131#8, 50#8, 133#8, 4#8, 3#8, 54#8, 134#8, 4#8, 51#8, 134#8, 194#8, 0#8, 35#8, 176#8, 198#8, 0#8, 3#8, 182#8, 5#8, 240#8, 147#8, 5#8, 134#8, 11#8, 3#8, 53#8, 133#8, 11#8, 3#8, 54#8, 134#8, 11#8, 51#8, 5#8, 197#8, 0#8, 35#8, 176#8, 165#8, 0#8, 19#8, 101#8, 0#8, 0#8, 103#8, 128#8, 0#8, 0#8]
+def piece609_0 : List (BitVec 8) := (InitECandidate.Proofs.ComputationCache.boxedValue raw609_0).val
+theorem piece609_0_eq : piece609_0 = raw609_0 := InitECandidate.Proofs.ComputationCache.boxedValue_eq raw609_0
+end InitECandidate.Proofs.BackendStages.BytePieces
