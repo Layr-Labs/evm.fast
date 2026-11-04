@@ -65,7 +65,7 @@ source evaluator in this contract.
 
 ## Inputs and declared gas
 
-`Guest.InputBlob` is a finite list of bytes. The host exposes a **128 MiB**
+`Guest.InputBlob` is a finite list of bytes. The host exposes a **1 GiB**
 input arena at `[0x40000000, 0x80000000)`, containing eight zero metadata bytes,
 the blob length as an eight-byte little-endian word, then the blob. Remaining
 arena bytes are zero. Host accesses outside the input and output arenas fail.
