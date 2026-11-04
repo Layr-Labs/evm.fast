@@ -64,7 +64,7 @@ def inputAddr : Word := 1073741824
 def inputLenAddr : Word := 1073741832
 /-- `INPUT_DATA_ADDR`: the blob, zero padded to a multiple of 8 bytes. -/
 def inputDataAddr : Word := 1073741840
-/-- Challenge input arena: 128 MiB at INPUT_ADDR, separate from RAM. -/
+/-- Challenge input arena: 1 GiB at INPUT_ADDR, separate from RAM. -/
 def inputArenaSize : Word := 1073741824
 /-- Largest input blob the architecture can present: the input region minus the
 16-byte framing (`[8B zero meta][8B LE len]`). -/
