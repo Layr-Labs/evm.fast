@@ -1,0 +1,212 @@
+import InitECandidate.Solver.MemSafe.Trie.CsrLoopA3
+import InitECandidate.Solver.MemSafe.Trie.EaRet
+
+set_option autoImplicit false
+set_option maxRecDepth 100000
+set_option linter.unusedVariables false
+
+/-!
+# `compute_state_root`: encoding an account and writing it (`csr_n_2`)
+-/
+
+namespace InitECandidate.Solver.MemSafe.Trie
+open Flapjack Flapjack.PanSemStateFiniteExact
+open Flapjack.Pancake.PanLang (ProgHOL ExpHOL MlS ShapeHOL)
+open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
+open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Rec InitECandidate.Solver.MemSafe.WaveHelpers
+open InitECandidate.Solver.MemSafe.Dn InitECandidate.Solver.MemSafe.Ins
+open InitECandidate.Solver.MemSafe.Hooks InitECandidate.Solver.MemSafe.Types
+
+variable {σ : Type}
+
+/-- A `tVAL` object covering `[H, H + n)`. -/
+def VOn (n : Nat) (H : BitVec 64) (Γ : Gam) : Prop :=
+  ∃ x ∈ Γ, x.ty = Types.tVAL ∧ x.lo = H.toNat ∧ H.toNat + n ≤ x.hi
+
+theorem vo_extn {n : Nat} {H : BitVec 64} {Γ Γ' : Gam} (he : Ext Γ Γ') (h : VOn n H Γ) : VOn n H Γ' := by
+  obtain ⟨x, hx, hty, hlo, hhi⟩ := h
+  obtain ⟨x', hx', hb, ht, hs⟩ := he x hx
+  have hlo' : x'.lo = x.lo := by unfold Obj.lo; rw [hb]
+  refine ⟨x', hx', by rw [ht]; exact hty, by rw [hlo', hlo], ?_⟩
+  have h1 : x.hi = x.lo + x.size := rfl
+  have h2 : x'.hi = x'.lo + x'.size := rfl
+  omega
+
+theorem argsOK_ea {C : Cfg} {Γ : Gam} {p : Ptrs} {v0 v1 v2 v3 : ValueHOL 64} {H : BitVec 64}
+    (h : BufOK C Γ p H.toNat 128) :
+    ArgsOK C Γ p MptE.sigEa.params [v0, v1, v2, v3, .val (.word H)] := by
+  refine ⟨rfl, fun i pt v hpt hv => ?_⟩
+  rcases i with _ | _ | _ | _ | _ | i <;> simp [MptE.sigEa] at hpt hv <;> subst hpt <;> subst hv
+  all_goals first | trivial | exact ⟨H, rfl, h⟩
+
+theorem argCells_ea {v0 v1 v2 v3 : ValueHOL 64} {H x : BitVec 64}
+    (h : ArgCells MptE.sigEa.params [v0, v1, v2, v3, .val (.word H)] x) : Overlap H.toNat 128 x := by
+  obtain ⟨i, w', hw, h⟩ := h
+  rcases h with ⟨m, hm, ho⟩ | ⟨j, c, d, y, hj, -⟩
+  · rcases i with _ | _ | _ | _ | _ | i <;> simp [MptE.sigEa] at hm
+    simp [argW, wordOf] at hw
+    subst hw
+    subst hm
+    exact ho
+  · rcases i with _ | _ | _ | _ | _ | i <;> simp [MptE.sigEa] at hj
+
+theorem evs5_last {s : State σ} {e0 e1 e2 e3 e4 : ExpHOL 64} {vs : List (ValueHOL 64)} {H : BitVec 64}
+    (h : evs s [e0, e1, e2, e3, e4] = some vs) (he4 : ev s e4 = some (.val (.word H))) :
+    ∃ v0 v1 v2 v3 : ValueHOL 64, vs = [v0, v1, v2, v3, .val (.word H)] := by
+  obtain ⟨v0, vs1, rfl, -, h1⟩ := evs_cons_inv h
+  obtain ⟨v1, vs2, rfl, -, h2⟩ := evs_cons_inv h1
+  obtain ⟨v2, vs3, rfl, -, h3⟩ := evs_cons_inv h2
+  obtain ⟨v3, vs4, rfl, -, h4⟩ := evs_cons_inv h3
+  obtain ⟨v4, vs5, rfl, hv4, h5⟩ := evs_cons_inv h4
+  rw [he4] at hv4
+  cases hv4
+  have := evs_nil_eq h5
+  subst this
+  exact ⟨v0, v1, v2, v3, rfl⟩
+
+theorem sa_ea {a : Act σ} (hCb : a.Cb = Types.guestC) (haH : a.H = Hooks.guestHooksR (σ := σ)) :
+    SumSpecA σ guestCtx a.Cb a.H (nm "encode_account") MptE.sigEa (fun _ _ _ => True)
+      (fun _ s Γ x => CapPW [] s Γ x) (fun _ _ _ _ _ _ => True) := by
+  rw [hCb, haH]
+  exact sumSpecA_mono (MptE.sumSpec_encode_account (Rec.foldOK_guestR (σ := σ))) (fun _ _ _ h => h)
+    (fun _ _ _ _ h => h.elim) (fun _ _ _ _ _ _ h => h)
+
+/-- Adopting a fresh block of `n` bytes as a `tVAL` object. -/
+theorem adopt_blk {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC)
+    (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true) {Γ : Gam} {q : Ptrs} {u : State σ}
+    (hh : Heap a Γ q u) {H : BitVec 64} {n : Nat} (hn0 : 0 < n) (hnw : 8 * nw n = n)
+    (hFB : FBlk a.p0 H n Γ q) :
+    ∃ Γ'' : Gam, Ext Γ Γ'' ∧ Heap a Γ'' q u ∧ ScrOld Γ Γ'' ∧
+      (∀ o ∈ Γ'', o ∈ Γ ∨ (o.lo = H.toNat ∧ o.hi = H.toNat + n)) ∧ VOn n H Γ'' := by
+  obtain ⟨h8, hs8, hbase, hq', hc'⟩ := hFB
+  have hord := heap_ord hh
+  have hL0 : 0 < n := hn0
+  obtain ⟨Γ'', hx, hh2, hnew, hVO⟩ := adopt_val2 ha haC haH hgr hh (Ar := H) (L := n) hn0 hbase
+    (by rw [hnw]; have := hord.2.1; omega) h8
+    (fun x ⟨hx8, hx1, hx2⟩ => by
+      rw [hnw] at hx2
+      exact ⟨(hc' x.toNat (by omega) (by omega)).1, by unfold Ptrs.Allocated; left; exact ⟨by omega, by omega⟩⟩)
+    (fun x ⟨hx8, hx1, hx2⟩ => by
+      rw [hnw] at hx2
+      exact (hc' x.toNat (by omega) (by omega)).2)
+  rw [hnw] at hnew hVO
+  obtain ⟨x, hxm, hty, hlo, hhi⟩ := hVO
+  exact ⟨Γ'', hx, hh2, scrOld_adopt_val hnew, fun o ho => (hnew o ho).elim Or.inl
+    (fun h => Or.inr ⟨h.2.1, h.2.2⟩), x, hxm, hty, hlo, by omega⟩
+
+/-- `IM` across the adoption of a block above the handle. -/
+theorem im_adopt {a : Act σ} {K : Gam → Prop} (hK : ∀ Γ Γ' : Gam, Ext Γ Γ' → GamOK Γ' → K Γ → K Γ')
+    {C NR SW AW ND M H : BitVec 64} {Γ Γ'' : Gam} {q : Ptrs} {mm : Mem} {n : Nat} (hext : Ext Γ Γ'')
+    (hnew : ∀ o ∈ Γ'', o ∈ Γ ∨ (o.lo = H.toNat ∧ o.hi = H.toNat + n)) (hMH : M.toNat + 16 ≤ H.toNat)
+    (hgo : GamOK Γ'') (h : IM a K C NR SW AW ND M Γ q mm) : IM a K C NR SW AW ND M Γ'' q mm := by
+  obtain ⟨hTB, hND, hHR, hKΓ⟩ := h
+  refine ⟨tb_ext hext hTB, ?_, ?_, hK _ _ hext hgo hKΓ⟩
+  · obtain ⟨ow, how, hty, hnd⟩ := hND
+    obtain ⟨ow', how', hb, ht, -⟩ := hext ow how
+    exact ⟨ow', how', by rw [ht]; exact hty, by rw [hb]; exact hnd⟩
+  · obtain ⟨⟨h8, hb, hq, hn0, hn8, hroot⟩, hU⟩ := hHR
+    exact ⟨⟨h8, hb, hq, not_inObj_adopt hnew (by omega) hn0, not_inObj_adopt hnew (by omega) hn8,
+      fits_ext hext hroot⟩, hU⟩
+
+set_option maxHeartbeats 0 in
+theorem stage_ea {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC)
+    (hCb : a.Cb = Types.guestC) (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true)
+    (hcI : capSub insCaps a.caps = true) {K : Gam → Prop}
+    (hK : ∀ Γ Γ' : Gam, Ext Γ Γ' → GamOK Γ' → K Γ → K Γ')
+    {B : List (MlS × ValueHOL 64)} {C NR SW AW ND M H x y z : BitVec 64}
+    (hstate : (nm "state_mpt", ValueHOL.val (.word M)) ∈ B) (henc : (nm "enc", ValueHOL.val (.word H)) ∈ B)
+    (hs2 : (nm "s2", wv [x, y, z]) ∈ B) (hfr : ∀ p ∈ B, p.1 ≠ nm "n")
+    {Rv : Gam → Ptrs → Mem → ValueHOL 64 → Prop} :
+    HoareG σ guestCtx (GI a (LV B) (fun Γ q mm => IM a K C NR SW AW ND M Γ q mm ∧ FBlk a.p0 H 128 Γ q ∧
+        M.toNat + 16 ≤ H.toNat)) csr_n_2
+      (GP a (LV B) (IM a K C NR SW AW ND M) Rv) := by
+  have hX := (Rec.foldOK_guestR (σ := σ)).hX
+  unfold csr_n_2
+  have hEA : ∀ s : State σ, LV B s.locals → ∀ vs, evs s [.load .one (.op .add [lv (nm "a"), cw 0]),
+      .load (.comb [.one, .one, .one, .one]) (.op .add [lv (nm "a"), cw 8]), lv (nm "sr"),
+      .load .one (.op .add [lv (nm "a"), cw 48]), lv (nm "enc")] = some vs →
+      ∃ v0 v1 v2 v3 : ValueHOL 64, vs = [v0, v1, v2, v3, .val (.word H)] :=
+    fun s hL vs hvs => evs5_last hvs (lv_ev hL henc)
+  refine gp_decCallXA ha (cs := []) (capSub_nil _) (sa_ea hCb haH)
+    (MptE.funSpec_ea_ret hX Helpers.alignedDom_guestCtx) (by simp [MptE.sigEa]) (fun h => by simp [MptE.sigEa] at h)
+    (L1 := fun v m => ∃ N : BitVec 64, v = .val (.word N) ∧ LV ((nm "n", v) :: B) m)
+    (E1 := fun v Γ q mm => ∀ N : BitVec 64, v = .val (.word N) →
+      N.toNat ≤ 110 ∧ IM a K C NR SW AW ND M Γ q mm ∧ VOn 128 H Γ)
+    (L2 := fun m => ∃ N : BitVec 64, LV ((nm "n", ValueHOL.val (.word N)) :: B) m)
+    (E2 := IM a K C NR SW AW ND M) ?_ ?_ ?_ ?_
+    (fun m0 m _ ⟨N, h⟩ => lv_res (lv_mono h (fun p hp => List.mem_cons_of_mem _ hp)) hfr _)
+  · intro s Γ q hs hL hh hE vs hvs
+    obtain ⟨v0, v1, v2, v3, rfl⟩ := hEA s hL vs hvs
+    obtain ⟨hIM, hFB, hMH⟩ := hE
+    obtain ⟨e0, hb, hbo⟩ := blk_buf hCb hFB (heap_ord hh) (off := 0) (n := 128) (by omega) (by omega)
+    have e0' : H + BitVec.ofNat 64 0 = H := by simp
+    rw [e0'] at hb hbo
+    exact ⟨argsOK_ea hb, fun x hx => Or.inr (Or.inr (Or.inl (hbo x (argCells_ea hx)).2.1)), fun _ => trivial⟩
+  · intro s st vs callee r Γ Γ' q q' hs hL hvs he hE hLc hQ hh hext hh' hmo hnf hnfp hmd hret
+    obtain ⟨v0, v1, v2, v3, rfl⟩ := hEA s hL vs hvs
+    obtain ⟨hIM, hFB, hMH⟩ := hE
+    refine ⟨scrOld_of_nf0 (layout_of_heap haC hh') (hnfp rfl), fun v hv hsh => ?_⟩
+    have hord := heap_ord hh
+    have hord' := heap_ord hh'
+    obtain ⟨e0, hb, hbo⟩ := blk_buf hCb hFB hord (off := 0) (n := 128) (by omega) (by omega)
+    have e0' : H + BitVec.ofNat 64 0 = H := by simp
+    rw [e0'] at hb hbo
+    have hGc : G Types.guestC (Hooks.guestHooksR (σ := σ)) Γ (callEntryStateHOLFinite s callee) := by
+      have := Struct.G_congr (s := s) ha.hH rfl rfl rfl rfl hh.1
+      rw [haC, haH] at this
+      exact this
+    obtain ⟨W, hW, hWb, -⟩ := Helpers.scell_of_glob hGc MptH.scalarGlob_mpt_hash_scratch
+    have hqe := hord.2.1
+    have hse : heapEnd ≤ scratchEnd := by decide
+    have hEP : MptE.EaPre [v0, v1, v2, v3, .val (.word H)] (callEntryStateHOLFinite s callee) :=
+      ⟨H, W, by simp [argW, wordOf], by have := hFB.2.2.2.1; omega, hW, hWb⟩
+    have hgood : Good (some r) := by subst hv; simp [Good]
+    obtain ⟨N0, hv0, hN0⟩ := hLc hgood hEP v hv
+    obtain ⟨Γ'', hx, hh2, hsc, hnew, hVO⟩ := adopt_blk ha haC haH hgr hh' (H := H) (n := 128) (by norm_num)
+      (by decide) (fblk_persist_g hFB hord hord' hnf hmo)
+    refine ⟨Γ'', hx, hh2, hsc, fun N hN => ?_⟩
+    rw [hv0] at hN
+    simp only [ValueHOL.val.injEq, HolWordLab.word.injEq] at hN
+    subst hN
+    refine ⟨hN0, im_adopt hK hx hnew hMH (gamOK_of_layout (layout_of_heap haC hh2)) ?_, hVO⟩
+    exact im_call haC hCb hK (cs := []) (by intro c hc; simp at hc) hmd hext hnf hmo hh hh'
+      (fun y hy => by
+        have := hbo y (argCells_ea hy)
+        have hM := hIM.2.2.1.1.2.2.1
+        exact ⟨this.1, by omega, by omega⟩) hIM
+  · intro s st v hL hsh
+    obtain ⟨N, rfl⟩ := val_of_shapeEq_one' hsh
+    exact ⟨N, rfl, lv_cons (lv_set hL hfr _) (by simp [setVarHOLFinite, FUPDATE])⟩
+  · intro v
+    by_cases hw : ∃ N : BitVec 64, v = .val (.word N)
+    swap
+    · exact hoareG_false fun s _ h => hw (by obtain ⟨N, hN, -⟩ := h.1; exact ⟨N, hN⟩)
+    obtain ⟨N, rfl⟩ := hw
+    let B' : List (MlS × ValueHOL 64) := (nm "n", ValueHOL.val (.word N)) :: B
+    refine hoareG_pre (P := GI a (LV B') (fun Γ q mm => IM a K C NR SW AW ND M Γ q mm ∧ VOn 128 H Γ ∧
+        N.toNat ≤ 110)) ?_
+      (fun s _ ⟨⟨N', hN', hL⟩, Γ, q, he, hh, hsc, hE⟩ => by
+        simp only [ValueHOL.val.injEq, HolWordLab.word.injEq] at hN'
+        subst hN'
+        obtain ⟨h1, h2, h3⟩ := hE N rfl
+        exact ⟨hL, Γ, q, he, hh, hsc, h2, h3, h1⟩)
+    refine gp_weakL' (L := LV B') (fun m hm => ⟨N, hm⟩) (gp_weakE' (E := fun Γ q mm => IM a K C NR SW AW ND M Γ q mm ∧ VOn 128 H Γ ∧ N.toNat ≤ 110)
+      (fun Γ q mm h => h.1) ?_)
+    refine mps_stmt ha haC hCb haH hgr hcI (args := [lv (nm "state_mpt"), .rfield 1 (lv (nm "s2")), cw 20,
+      lv (nm "enc"), lv (nm "n")]) (L := LV B') (K := y) (KL := BitVec.ofNat 64 20) (VP := H) (VL := N)
+      (M := M) ?_ (by decide) (fun Γ q mm h => h.1.2.2.1) ?_ ?_
+    · intro s hL
+      exact evs_cons (lv_ev hL (List.mem_cons_of_mem _ hstate))
+        (evs_cons (ev_rfield_wv (x := lv (nm "s2")) (ws := [x, y, z]) (lv_ev hL (List.mem_cons_of_mem _ hs2))
+          (i := 1) (by simp))
+          (evs_cons (ev_cw s 20) (evs_cons (lv_ev hL (List.mem_cons_of_mem _ henc))
+            (evs_cons (lv_ev hL (List.mem_cons_self ..)) evs_nil))))
+    · intro Γ q mm h
+      obtain ⟨-, ⟨o, ho, hty, hlo, hhi⟩, hN⟩ := h
+      exact Or.inr ⟨o, ho, hty, by omega, by omega⟩
+    · intro s st Γ Γ' q q' hext hh hh' hmo hnf hmd hE hHR'
+      exact ⟨im_mps haC hCb hK hext hh hh' hmo hmd hHR' hE.1, vo_extn hext hE.2.1, hE.2.2⟩
+
+end InitECandidate.Solver.MemSafe.Trie
+
+#print axioms InitECandidate.Solver.MemSafe.Trie.stage_ea
