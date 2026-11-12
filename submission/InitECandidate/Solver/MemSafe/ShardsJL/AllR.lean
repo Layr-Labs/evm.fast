@@ -1,0 +1,65 @@
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard00
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard01
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard02
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard03
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard04
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard05
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard06
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard07
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard08
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard09
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard10
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard11
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard12
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard13
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard14
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard15
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard16
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard17
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard18
+import InitECandidate.Solver.MemSafe.ShardsJL.Shard19
+import InitECandidate.Solver.MemSafe.Rec.BaseR
+
+/-! `tab_soundR`: `tab_sound` at the record family `guestHooksR` (same proof, the steps are generic in the hooks). Generated from `All.lean` by `research/tools/memsafe/gen/port_allr.py`. -/
+
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+
+namespace InitECandidate.Solver.MemSafe.ShardsJL
+open InitECandidate.Solver.MemSafe.Shards
+open InitECandidate.Solver.MemSafe InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
+open InitECandidate.Solver.MemSafe.HtabEntries InitECandidate.Solver.MemSafe.WaveHelpers
+
+theorem tab_soundR {σ : Type} {X : Ctx 64} (hF : FoldOK σ X cfg Hooks.guestHooksR) (hDL : DomLow X) :
+    CTabSound σ X cfg Hooks.guestHooksR tab26 :=
+  shard_step hF chunk19_ok chunk19_valid chunk19_tab <|
+  shard_step hF chunk18_ok chunk18_valid chunk18_tab <|
+  shard_step hF chunk17_ok chunk17_valid chunk17_tab <|
+  shard_step hF chunk16_ok chunk16_valid chunk16_tab <|
+  shard_step hF chunk15_ok chunk15_valid chunk15_tab <|
+  shard_step hF chunk14_ok chunk14_valid chunk14_tab <|
+  mid_step (fun ht => midRmd_sound hF (ctab_get ht 0 (by decide) rfl)) rfl <|
+  shard_step hF chunk13_ok chunk13_valid chunk13_tab <|
+  shard_step hF chunk12_ok chunk12_valid chunk12_tab <|
+  shard_step hF chunk11_ok chunk11_valid chunk11_tab <|
+  shard_step hF chunk10_ok chunk10_valid chunk10_tab <|
+  shard_step hF chunk9_ok chunk9_valid chunk9_tab <|
+  shard_step hF chunk8_ok chunk8_valid chunk8_tab <|
+  mid_step (fun ht => midFe_sound hF (ctab_get ht 0 (by decide) rfl) (ctab_get ht 18 (by decide) rfl) (ctab_get ht 14 (by decide) rfl) (ctab_get ht 15 (by decide) rfl)) rfl <|
+  shard_step hF chunk7_ok chunk7_valid chunk7_tab <|
+  shard_step hF chunk6_ok chunk6_valid chunk6_tab <|
+  shard_step hF chunk5_ok chunk5_valid chunk5_tab <|
+  shard_step hF chunk4_ok chunk4_valid chunk4_tab <|
+  mid_step (fun ht => midSha_sound hF (ctab_get ht 0 (by decide) rfl) (ctab_get ht 2 (by decide) rfl) (ctab_get ht 1 (by decide) rfl)) rfl <|
+  shard_step hF chunk3_ok chunk3_valid chunk3_tab <|
+  mid_step (fun ht => midUm_sound hF (ctab_get ht 1 (by decide) rfl) (ctab_get ht 0 (by decide) rfl)) rfl <|
+  shard_step hF chunk2_ok chunk2_valid chunk2_tab <|
+  shard_step hF chunk1_ok chunk1_valid chunk1_tab <|
+  mid_step (fun ht => midDA_sound hF (ctab_get ht 2 (by decide) rfl) (ctab_get ht 12 (by decide) rfl) (ctab_get ht 0 (by decide) rfl) (ctab_get ht 3 (by decide) rfl) (ctab_get ht 150 (by decide) rfl)) rfl <|
+  mid_step (fun ht => midRls_sound hF hDL (ctab_get ht 3 (by decide) rfl) (ctab_get ht 0 (by decide) rfl)) rfl <|
+  shard_step hF chunk0_ok chunk0_valid chunk0_tab <|
+  Rec.baseJLTab_soundR hF hDL
+
+end InitECandidate.Solver.MemSafe.ShardsJL
+
+#print axioms InitECandidate.Solver.MemSafe.ShardsJL.tab_soundR
