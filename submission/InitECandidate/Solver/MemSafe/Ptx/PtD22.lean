@@ -1,0 +1,151 @@
+import InitECandidate.Solver.MemSafe.Ptx.PtL7
+
+/-!
+# F3e: `hdecAllocR` (alloc adopted at once as a plain object of the rounded-up size)
+-/
+
+set_option autoImplicit false
+set_option maxRecDepth 100000
+set_option maxHeartbeats 0
+
+namespace InitECandidate.Solver.MemSafe.Ptx
+open Flapjack Flapjack.PanSemStateFiniteExact
+open Flapjack.Pancake.PanLang (ProgHOL ExpHOL MlS ShapeHOL)
+open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
+open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
+open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
+
+variable {σ : Type}
+
+/-- **`var rn = alloc(e); k`, the block adopted at once as an object of the plain type `ty`.** -/
+theorem hdecAllocR {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact 64) → State σ → Prop}
+    {rn : MlS} (hQT : ResIns rn QT) {e : ExpHOL 64} {n : BitVec 64} {k : ProgHOL 64} {ty : Nat}
+    (he : ∀ s : State σ, PA E En S s → EvI s e (.val (.word n)))
+    (hGl : ∀ g ty', S (Fct.gobj g ty') → cW.contains g = false ∧ g ≠ gHeap)
+    (hplain : Plain ty) (htag : guestC.tags.lookup ty = none) (hreg : (guestC.ty ty).region = .heap)
+    (hslot : ∀ j, (guestC.ty ty).slot j = .scalar) (N : Nat) (hN : N = n.toNat + (8 - n.toNat % 8) % 8)
+    (hmin : (guestC.ty ty).minSz ≤ N) (hnpos : 0 < n.toNat)
+    (hk : ∀ w : BitVec 64,
+      Hoare σ guestCtx (PA E (En.set rn (.val (.word w)))
+        (addF S [Fct.obj w ty N, Fct.bufok0 w N,
+          Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + N ≤ heapEnd)])) k QT) :
+    Hoare σ guestCtx (PA E En S) (.decCall rn .one (nm "alloc") [e] k) QT := by
+  have hcok : ∀ s : State σ, PA E En S s → ∀ vs, evs s [e] = some vs → (⟨[.any], [.freshArg 0 1 0], [], false⟩ : Sig).params.length = vs.length := by
+    intro s hs vs hvs
+    obtain ⟨v, rfl, -⟩ := evs_single hvs
+    rfl
+  have hok := callOK_any (E := E) (En := En) (S := S) (f := nm "alloc") (args := [e]) (cs := []) csOK_nil
+    (by simp) rfl tab_alloc_ok hcok (fun g ty' h => (hGl g ty' h).1)
+  refine hdecCallK hQT (((sumSpecA_relX tab_alloc).and (funSpec_pt_gw_all guestCtx_code tab_alloc_ok)).and
+    (allocSpec_alloc guestCtx_code)) ?_
+  intro s hs hpa vs hvs callee v st ⟨⟨hR, hgl⟩, hR2⟩ hst hsh
+  obtain ⟨⟨D, Γ, p, hr, hD, hL⟩, hlk⟩ := hpa
+  have hpa : PA E En S s := ⟨⟨D, Γ, p, hr, hD, hL⟩, hlk⟩
+  obtain ⟨Γ', p', hc, hrun, hstep, hL', -⟩ :=
+    call_core hR hgl hok.gw hok.jo hok.jn (fun _ _ Γ a hw => capPW_st hok.csok.st hw) hr hL
+      (hok.argsok s hpa vs hvs D Γ p hr hL) (preC callee hok.csok hr) (hok.memok s hpa vs hvs) hok.globok
+  obtain ⟨v0, rfl, hv0⟩ := evs_single hvs
+  have hn := he s hpa v0 hv0
+  subst hn
+  obtain ⟨w, rfl⟩ := val_of_shapeEq_one' hsh
+  have hret := hc.2.2.2.2.2.2.2.2.2 _ rfl 0 (RT.freshArg 0 1 0) w rfl (by simp [flattenHOL])
+  obtain ⟨x0, hx, hfb⟩ := hret
+  simp only [argW, wordOf, List.getElem?_cons_zero, Option.some.injEq] at hx
+  subst hx
+  rw [Nat.one_mul, Nat.add_zero] at hfb
+  have hpe : ptrsOf (callEntryStateHOLFinite s callee) = some p := (ptrsOf_congr rfl).trans (ptRun_ptrs hr)
+  obtain ⟨hmem, hgl2, p'', hp'', hord'', -, hq⟩ := hR2 (by simp [Good]) n p rfl hpe (ptRun_ord hr)
+  obtain ⟨q, hqo, -, hlive, -⟩ := hq _ rfl
+  have hpp : p' = p'' := (Option.some.inj (hp''.symm.trans (hc.2.1))).symm
+  subst hpp
+  simp only [ValueHOL.val.injEq, HolWordLab.word.injEq] at hqo
+  subst hqo
+  simp only [Region.Live] at hlive
+  obtain ⟨hl1, hl2⟩ := hlive
+  have hord' := ordered_of_G hstep.hG' hstep.hp'
+  have hhp := hord''.2.1
+  have hhp8 := hord''.2.2.2.2.2.1
+  have hw8' := hfb.1
+  have hn8 : N % 8 = 0 := by omega
+  have hfbN : FreshBuf Γ' p p' w N := ⟨hfb.1, fun a ha => hfb.2 a ⟨ha.1, ha.2.1, by have h1 := ha.1; have h3 := ha.2.2; omega⟩⟩
+  have hl2N : w.toNat + N ≤ p'.hp := by omega
+  have hnposN : 0 < N := by omega
+  replace hfb := hfbN
+  replace hl2 := hl2N
+  have hheapE : w.toNat + N ≤ heapEnd := by omega
+  obtain ⟨q0, hq0, -, hLay0, -⟩ := hstep.hG'
+  have hqq : q0 = p' := Option.some.inj (hq0.symm.trans hstep.hp')
+  rw [hqq] at hLay0
+  have hLay := hLay0
+  have hbytes := fresh_bytes hLay hfb hnposN hl1 hheapE hl2 hord'' (ptRun_ord hr)
+  have hw8 := hfb.1
+  let x : Obj := ⟨w, ty, N⟩
+  have hxlo : x.lo = w.toNat := rfl
+  have hxhi : x.hi = w.toNat + N := rfl
+  have hGx : G guestC (HR σ) (Γ' ++ [x]) { st with locals := s.locals } :=
+    g_adopt_plain hstep.hG' hstep.hp' (x := x) hplain htag hw8 hn8 hmin hnposN
+      (by show (guestC.ty ty).region.Live p' w.toNat N
+          rw [hreg]; exact ⟨hl1, hl2⟩)
+      (fun a ha => by
+        obtain ⟨h1, h2⟩ := ha
+        rw [hxlo] at h1; rw [hxhi] at h2
+        exact (hbytes a.toNat h1 h2).2.2)
+      (fun j hj => by rw [hslot]; trivial)
+  have hfr : ∀ a : BitVec 64, x.lo ≤ a.toNat → a.toNat < x.hi → Fresh p p' a := fun a h1 h2 => by
+    rw [hxlo] at h1; rw [hxhi] at h2
+    exact Or.inl ⟨(hbytes a.toNat h1 h2).1, (hbytes a.toNat h1 h2).2.1⟩
+  have hfr0 : ∀ a : BitVec 64, x.lo ≤ a.toNat → a.toNat < x.hi → Fresh E.p0 p' a :=
+    fun a h1 h2 => fresh_anchor (ptRun_mono hr) (hfr a h1 h2)
+  have hstepx : StepD Γ p s (Γ' ++ [x]) p' { st with locals := s.locals } := by
+    refine ⟨hstep.hp, hstep.hp', hstep.mono, ext_trans hstep.ext (ext_append Γ' x), ?_, hstep.hG, hGx⟩
+    intro o ho a h1 h2
+    rcases List.mem_append.mp ho with ho | ho
+    · exact hstep.nf o ho a h1 h2
+    · simp only [List.mem_singleton] at ho
+      subst ho
+      exact Or.inr (hfr a h1 h2)
+  have hmemk : ∀ f, S f → ∀ a, f.reads a → ({ st with locals := s.locals } : State σ).memory a = s.memory a := by
+    intro f hf a ha
+    show st.memory a = s.memory a
+    rw [hmem]; rfl
+  have hglk : ∀ g ty', S (Fct.gobj g ty') → gword { st with locals := s.locals } g = gword s g := by
+    intro g ty' hg
+    have := hgl2 g (hGl g ty' hg).2
+    unfold gword
+    show (match st.globals.lookup g with | some (ValueHOL.val (HolWordLab.word w)) => some w | x => none) = (match s.globals.lookup g with | some (ValueHOL.val (HolWordLab.word w)) => some w | x => none)
+    rw [this]; rfl
+  have hL2 : HoldsAll E.p0 (Γ' ++ [x]) p' { st with locals := s.locals } S :=
+    holds_step hstepx (ptRun_ord0 hr) hmemk hglk hL
+  have hrunx := ptRun_adopt hrun hGx hfr0
+  have hxmem : x ∈ Γ' ++ [x] := List.mem_append_right _ (List.mem_singleton.mpr rfl)
+  have hb64 : heapEnd < 2 ^ 64 := by unfold heapEnd; norm_num
+  refine hoare_pre (hk w) ?_
+  intro t _ ht
+  subst ht
+  refine ⟨⟨D, Γ' ++ [x], p', ptRun_set hrunx rn _, hD, ?_⟩, lke_set (lke_restore hlk) rn _⟩
+  intro f hf
+  rcases hf with hf | hf
+  · have := hL2 f hf
+    cases f <;> first | exact this | simpa [Fct.holds, gword, rd] using this
+  simp only [List.mem_cons, List.not_mem_nil, or_false] at hf
+  rcases hf with rfl | rfl | rfl
+  · exact ⟨x, hxmem, rfl, rfl, le_refl _⟩
+  · refine ⟨?_, fun y hy => Or.inl ⟨x, hxmem, ?_, ?_⟩⟩
+    · intro a ha
+      refine Or.inl ⟨x, hxmem, (a.toNat - w.toNat) / 8, ?_, hslot _, ?_⟩
+      · unfold Obj.HasSlot
+        obtain ⟨h1, h2, h3⟩ := ha
+        show 8 * ((a.toNat - w.toNat) / 8) + 8 ≤ N
+        omega
+      · obtain ⟨h1, h2, h3⟩ := ha
+        apply BitVec.eq_of_toNat_eq
+        show a.toNat = (w + BitVec.ofNat 64 (8 * ((a.toNat - w.toNat) / 8))).toNat
+        simp only [BitVec.toNat_add, BitVec.toNat_ofNat]
+        unfold heapEnd at hheapE
+        omega
+    · obtain ⟨h1, h2, h3⟩ := hy; rw [hxlo]; omega
+    · obtain ⟨h1, h2, h3⟩ := hy; rw [hxhi]; omega
+  · exact ⟨hw8, hl1, hheapE⟩
+
+
+end InitECandidate.Solver.MemSafe.Ptx
