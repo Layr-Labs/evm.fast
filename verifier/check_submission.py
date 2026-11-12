@@ -15,6 +15,8 @@ INTEGER = re.compile(r"0|[1-9][0-9]*")
 CLAIM_KEYS = {"K"}
 # {"K":N} for every N below 10^295 (the largest K scoring accepts), plus a newline.
 MAX_CLAIM_BYTES = 302
+# Must match scripts/time_score.py LARGEST_K.
+MAX_K = 10**295 - 1
 ALLOWED_LIBRARIES = ("Mathlib", "Flapjack", "RiscvZkvm", "Sail", "Batteries", "Lean", "Init", "Std")
 TRUSTED_ROOT = Path(__file__).resolve().parent.parent
 
@@ -93,6 +95,8 @@ def claim(path: Path) -> dict[str, int | str]:
     score = value["K"]
     if score != "infinity" and (type(score) is not int or score < 0):
         raise ValueError('K must be a nonnegative JSON integer or "infinity"')
+    if score != "infinity" and score > MAX_K:
+        raise ValueError("K must be below 10^295")
     return value
 
 
