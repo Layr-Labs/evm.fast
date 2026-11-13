@@ -3,7 +3,7 @@ import InitECandidate.Solver.MemSafe.PtC.K3
 
 /-!
 # Puc cost kit: copies of PtC's cost combinators (`PtC/K3.lean`, `T0.lean`, `W1.lean`) for the Puc bound
-(`pmcB (2^25) bOp` for `process_message_call`, `Wg.bInc` for `incorporate_tx_into_block`).
+(`pmcB (30000002) bOp` for `process_message_call`, `Wg.bInc` for `incorporate_tx_into_block`).
 -/
 
 set_option autoImplicit false
@@ -23,8 +23,8 @@ open InitECandidate.Solver.MemSafe.PtC (CW' cw_decCall_gen cw_dec_gen shEq_wv sz
 
 variable {σ : Type}
 
-/-- The bound of `process_message_call` at `M = 2^25`. -/
-def bPmcP : Nat := Entry2.pmcB (2 ^ 25) Entry2.bOp
+/-- The bound of `process_message_call` at `M = 30000002`. -/
+def bPmcP : Nat := Entry2.pmcB (30000002) Entry2.bOp
 
 /-- The bound of a callee: the table, else the two conditional callees of `process_unchecked_system_transaction`. -/
 def tblP (f : MlS) : Nat :=

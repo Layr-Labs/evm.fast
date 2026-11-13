@@ -71,7 +71,7 @@ theorem cw_pu_tail {A : TlA σ} {out : BitVec 64} (P : TPre A out) (hgs : Bal.HG
 
 /-- **The call and the tail with cost.** -/
 theorem cw_pu_call {E : PtE σ} {En : Env} {S : FS} {wm wt vmw T N n aaw akw : BitVec 64}
-    (hpm : HypPmM σ (2 ^ 25)) (hpcm : HypPcm σ (2 ^ 25)) (hgs : Bal.HGS σ)
+    (hpm : HypPmM σ (30000002)) (hpcm : HypPcm σ (30000002)) (hgs : Bal.HGS σ)
     (hOH : OwnerHeap E.Γ0) (hHO : ∀ o ∈ E.Γ0, (guestC.ty o.ty).region = .heap)
     (hnw : ∀ o ∈ E.Γ0, ∀ k, o.HasSlot k → ¬ E.WSet (o.cell k))
     (K : CallReady En S wm wt vmw T N n aaw akw) :
@@ -81,14 +81,14 @@ theorem cw_pu_call {E : PtE σ} {En : Env} {S : FS} {wm wt vmw T N n aaw akw : B
   unfold pucS26
   have hcost : Inv.CalleeCostP σ guestCtx (nm "process_message_call")
       (fun vs s => ∃ Γ p, G guestC (HR σ) Γ s ∧ ptrsOf s = some p ∧ ArgsOK guestC Γ p (sg1 []).params vs ∧
-        Entry.PmPre (2 ^ 25) vs s Γ) (tblP (nm "process_message_call")) := by
+        Entry.PmPre (30000002) vs s Γ) (tblP (nm "process_message_call")) := by
     rw [tblP_pmc]
     exact Entry2.pmc_condCost_final (σ := σ) (by norm_num)
   refine Eb.cw_decCallK (locIns_resIns hQT _)
     ((pmc_funSpec (hypPm_of_M hpm) hpcm).and (funSpec_pt_gw_all guestCtx_code pmc_fin)) hcost ?_ ?_
   · intro s hs hpa vs hvs callee
     obtain ⟨D, Γ, p, hrun, hD, hHold, hlk, hfo, htc⟩ := pu_adopt_m K.fb K.pp K.m8 K.m16 K.m24 K.m32 K.m40 K.m96
-      K.m120 K.m152 K.m160 K.ote K.oaa K.oak K.base.ovm K.base.bT K.base.hN K.hn K.base.hT0 (M := 2 ^ 25) (by norm_num) hpa
+      K.m120 K.m152 K.m160 K.ote K.oaa K.oak K.base.ovm K.base.bT K.base.hN K.hn K.base.hT0 (M := 30000002) (by norm_num) hpa
     obtain ⟨x, rfl, hx⟩ := evs_single hvs
     have hxw : x = .val (.word wm) := by
       have h2 : ev s (lv (nm "m")) = some (.val (.word wm)) := hlk _ _ K.hm
@@ -97,12 +97,12 @@ theorem cw_pu_call {E : PtE σ} {En : Env} {S : FS} {wm wt vmw T N n aaw akw : B
     subst hxw
     have hrun' : PtRun D E.Γ0 E.s0 E.p0 (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) p :=
       ptRun_loc hrun callee (s.clock - 1)
-    have hfo' : FoPre (2 ^ 25) wm (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) :=
+    have hfo' : FoPre (30000002) wm (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) :=
       fopre_loc callee (s.clock - 1) hfo
     exact ⟨_, p, ptRun_G hrun', ptRun_ptrs hrun', argsOK_anys (by simp [sg1]) rfl, wm, rfl, hfo'⟩
   intro s hs hpa vs hvs callee v st ⟨hRs, hgl⟩ hst hsh
   obtain ⟨D, Γ, p, hrun, hD, hHold, hlk, hfo, htc⟩ := pu_adopt_m K.fb K.pp K.m8 K.m16 K.m24 K.m32 K.m40 K.m96
-    K.m120 K.m152 K.m160 K.ote K.oaa K.oak K.base.ovm K.base.bT K.base.hN K.hn K.base.hT0 (M := 2 ^ 25) (by norm_num) hpa
+    K.m120 K.m152 K.m160 K.ote K.oaa K.oak K.base.ovm K.base.bT K.base.hN K.hn K.base.hT0 (M := 30000002) (by norm_num) hpa
   obtain ⟨x, rfl, hx⟩ := evs_single hvs
   have hxw : x = .val (.word wm) := by
     have h2 : ev s (lv (nm "m")) = some (.val (.word wm)) := hlk _ _ K.hm
@@ -111,7 +111,7 @@ theorem cw_pu_call {E : PtE σ} {En : Env} {S : FS} {wm wt vmw T N n aaw akw : B
   subst hxw
   have hrun' : PtRun D E.Γ0 E.s0 E.p0 (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) p :=
     ptRun_loc hrun callee (s.clock - 1)
-  have hfo' : FoPre (2 ^ 25) wm (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) :=
+  have hfo' : FoPre (30000002) wm (Γ ++ [⟨wm, tMSGh, 176⟩]) (callEntryStateHOLFinite s callee) :=
     fopre_loc callee (s.clock - 1) hfo
   have hHold' : HoldsAll E.p0 (Γ ++ [⟨wm, tMSGh, 176⟩]) p (callEntryStateHOLFinite s callee) (SAm S wm) :=
     holdsAll_loc hHold callee (s.clock - 1)

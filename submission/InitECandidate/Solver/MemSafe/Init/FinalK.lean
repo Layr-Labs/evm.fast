@@ -1,10 +1,8 @@
 import InitECandidate.Solver.MemSafe.Init.Fold
 
-/-!
-# The certificate with a literal K
-
-`kLit = Final.totalBoundSrc bMain` by kernel evaluation; `certificate_lit` is `certificate_closed` restated with the literal.
--/
+/-! Exact arithmetic bound and a conservative short-decimal public claim.
+The rounded claim avoids a score-conversion failure observed on an earlier
+accepted public submission. The kernel proves the claimed bound is sufficient. -/
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -13,15 +11,22 @@ set_option maxHeartbeats 0
 namespace InitECandidate.Solver.MemSafe.Init
 open InitE
 
-/-- The claimed step bound. -/
-abbrev kLit : Nat := 604497386198401696480443941423039233672056843956262611240144118453974882764353409596694785910843529629961798654508
+abbrev preciseK : Nat := 604497385902742922049330498665478446256276214151764984342092925483443395850461299224769573277880941533075079822635
+abbrev kLit : Nat := 604497385902743000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
-theorem kLit_eq : Final.totalBoundSrc bMain = kLit := by decide +kernel
+theorem preciseK_eq : Final.totalBoundSrc bMain = preciseK := by decide +kernel
 
-/-- **The certificate with the literal K.** -/
+theorem kLit_ge : Final.totalBoundSrc bMain ≤ kLit := by
+  rw [preciseK_eq]
+  decide +kernel
+
 theorem certificate_lit :
     Certificate (Final.withScore baselineSubmission (.finite kLit)) (.finite kLit) := by
-  rw [← kLit_eq]; exact certificate_closed
+  refine ⟨rfl, Final.withScore_admitted _ _ baselineSubmission_admitted, ?_⟩
+  intro input hgas outcome events hsrc hcovered
+  obtain ⟨steps, hsteps, hrun⟩ := certificate_closed.correct input hgas outcome events hsrc hcovered
+  refine ⟨steps, le_trans hsteps kLit_ge, ?_⟩
+  simpa only [matchingExecutionAt, Final.withScore_machineConfig, Final.withScore_initialState] using hrun
 
 end InitECandidate.Solver.MemSafe.Init
 

@@ -14,7 +14,7 @@ import InitECandidate.Solver.SourceCost.InitGlobals
 remaining input is the kernel-checked cost table's entry for `main`: once the analyzer
 bounds `main` by `Bm`, `certificate_of_main_bound` gives `InitE.Certificate` for the
 unchanged baseline ROM at
-`K = 138390 + nativeStepBound (1 + Bm) crepS wordS stackS`.
+`K = 23077 + nativeStepBound (1 + Bm) crepS wordS stackS`.
 -/
 
 namespace InitECandidate.Solver.Final
@@ -36,7 +36,7 @@ theorem baselineProgramBounds :
 
 /-- Total step bound: bootstrap plus native part. -/
 def totalBound (Bm : Nat) : Nat :=
-  138390 + nativeStepBound (1 + Bm) Concrete.crepS Concrete.wordS Concrete.stackS
+  23077 + nativeStepBound (1 + Bm) Concrete.crepS Concrete.wordS Concrete.stackS
 
 def withScore (s : Submission) (k : NatE) : Submission := { s with K := k }
 
@@ -80,7 +80,7 @@ theorem certificate_of_main_bound {st : SourceCost.TblState}
 
 /-- Total step bound from a clock bound `Bsrc` of the source call of `main`. -/
 def totalBoundSrc (Bsrc : Nat) : Nat :=
-  138390 + nativeStepBound Bsrc Concrete.crepS Concrete.wordS Concrete.stackS
+  23077 + nativeStepBound Bsrc Concrete.crepS Concrete.wordS Concrete.stackS
 
 /-- The certificate from a clock bound of `main` at the post-declaration states of the source
 run (`SrcBoundAt`). This is the form a conditional cost of `main` provides. -/
