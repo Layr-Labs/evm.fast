@@ -25,7 +25,7 @@ variable {σ : Type}
 def bPuc : Nat := cbdP pucBody
 
 theorem hypPucCost : Eb.HypPucCost σ bPuc := by
-  have hpm : HypPmM σ (2 ^ 25) := hypPmM_closed (by norm_num)
+  have hpm : HypPmM σ (30000002) := hypPmM_closed (by norm_num)
   have hpcm := pcm_funSpec hpm (hypCfL_closed (σ := σ))
   intro vs body callee rs hl s hs hpre0 hgood
   obtain ⟨hloc, Γ, p, hG, hp, -, hJ, hE, p', hp', hC, hB, T, Dv, N, hvs, hT, hN⟩ := hpre0

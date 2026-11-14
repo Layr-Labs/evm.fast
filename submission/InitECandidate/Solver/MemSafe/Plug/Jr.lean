@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.CsrCost.Main
 import InitECandidate.Solver.MemSafe.Plug.PtC
 import InitECandidate.Solver.MemSafe.Ra.JrD
 
@@ -24,7 +25,7 @@ variable {σ : Type}
 theorem condCost_run_attempt_jr {Bpuc : Nat} (hPucC : HypPucCost σ Bpuc) (hPuc : HypPuc σ) :
     CondCost σ guestCtx guestC (HR σ) (nm "run_attempt") Band.sgSi (CcPreNJ RaPre0)
       (bRunAttempt Sp.bSi (Sp.bPh bBmiL) (bExecBlock Bpuc PtC.bPtLit Wg.bWd (Wg.bGpr (Wg.bCsr Bpuc)) bCsrL bBmiL)) :=
-  condCost_run_attempt_nj hPucC PtC.hypPtCost_lit Band7.hypCsrCost_lit Band7.hypBmiCost_lit
+  condCost_run_attempt_nj hPucC PtC.hypPtCost_lit InitECandidate.Solver.MemSafe.CsrCost.hypCsrCost Band7.hypBmiCost_lit
     (Sp.hypPhCost Band7.hypBmiCost_lit) hPuc hypSft_closed (hypPt_closed (le_refl _)) (le_refl _) hypKeepG_closed
     Band6.hgs_R
 

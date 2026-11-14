@@ -1,4 +1,5 @@
 import InitECandidate.Solver.MemSafe.Ra.AttPart2a
+import InitECandidate.Solver.MemSafe.IvvhCost.Caller
 
 /-!
 # `run_attempt`, after `payload_header` (continued): `raS23 .. raS34`
@@ -59,8 +60,8 @@ theorem p2_front (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy o.ty) (hQ : �
   refine cw_seq (cw_hn hn_skip (costP_zero cost_skip)) ?_
   unfold raS29
   have hsi2 : _ := hOk2.en (nm "si") _ (by simp (config := { decide := true }) [En2, Env.set] : En2 si0 pl0 H (nm "si") = some (.val (.word si0)))
-  refine cw_decCallRk (PreC := fun _ _ => True) hK hE0 hOk2.safe (hQ _) cr_ivvh (gwk_a (by decide)) (fun _ _ => False)
-    (Inv.calleeCostP_of_calleeCost cc_ivvh) (fun _ _ _ _ _ _ => trivial) ⟨?_, fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => h,
+  refine cw_decCallRk (PreC := InitECandidate.Solver.MemSafe.IvvhCost.Pre) hK hE0 hOk2.safe (hQ _) cr_ivvh (gwk_a (by decide)) (fun _ _ => False)
+    cc_ivvh_cond (InitECandidate.Solver.MemSafe.IvvhCost.Caller.pre_at_call hOk2) ⟨?_, fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => h,
       (tidy_gmiss hOk2.tidy z2_a).1, (tidy_gmiss hOk2.tidy z2_a).2⟩ ?_ ?_
   · intro s hpak vs hvs callee Γ p hr hL hC
     obtain ⟨v1, vs1, rfl, h1, hr1⟩ := evs_cons_inv hvs

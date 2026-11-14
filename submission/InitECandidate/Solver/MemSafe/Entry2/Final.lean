@@ -23,8 +23,8 @@ open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 variable {σ : Type}
 
 /-- The bound of one `op_dispatch` call (`Dn.op_dispatch_condCost_Cfg`). -/
-abbrev bOp : Nat := InitECandidate.Solver.Band.odN *
-  (1 + max (2 ^ 269) (max InitECandidate.Solver.Band3.oslB InitECandidate.Solver.Band3.ossB))
+abbrev bOp : Nat := InitECandidate.Solver.Band.odCostFactor *
+  (1 + max InitECandidate.Solver.Band.odTabBound (max InitECandidate.Solver.Band3.oslB InitECandidate.Solver.Band3.ossB))
 
 theorem pm_condCost_final {M : Nat} (hM : M < 2 ^ 64) :
     CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "process_message") (sg1 [])

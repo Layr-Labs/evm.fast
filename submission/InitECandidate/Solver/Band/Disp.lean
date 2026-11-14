@@ -17,7 +17,7 @@ here so that this file does not depend on the gas checker).
   argument of `Frames.run_frames_condCost_F(B)`), from the `CondCost`s of `op_sload` and
   `op_sstore` under the same `PreOpX … M` (the two handlers that reach the decode root through
   `get_storage`). The other 85 handlers are read off the cost table (`odTab_le`, every entry
-  `≤ 2^392`).
+  `≤ odTabBound`).
 -/
 
 set_option autoImplicit false
@@ -291,11 +291,9 @@ theorem tabLe_get {Bt : Nat} {fs : List MlS} (h : tabLe Bt fs = true) {f : MlS} 
     exact ⟨b, hb, Nat.le_of_ble_eq_true hd⟩
   · intro hd; cases hd
 
-/-- The 85 table handlers cost at most `2^392` (the CALL / CREATE family is about `2^391`). -/
-theorem odTab_le : tabLe (2 ^ 269) odTab = true := by
-  rw [show (2 : Nat) ^ 269 = 948568795032094272909893509191171341133987714380927500611236528192824358010355712 from rfl]
-  simp only [tabLe, odTab, List.all_cons, List.all_nil, Bool.and_true, Bool.and_eq_true]
-  repeat' constructor
+/-- Exact maximum of the table-backed opcode-handler allowances. -/
+def odTabBound : Nat := 722542636840853059654558503919389819995198866782797404651516297577893288422075519
+theorem odTab_le : tabLe odTabBound odTab = true := by decide +kernel
 
 /-- `op_dispatch`'s translated body. -/
 abbrev odBody : ProgHOL 64 := (declPair Guest.Software.guestFn_op_dispatch).2.2
@@ -304,6 +302,9 @@ theorem od_dchk : dchkB odNames odBody = true := by decide +kernel
 
 /-- The number of handler leaves of `op_dispatch`. -/
 def odN : Nat := dN odBody
+
+/-- A checked dispatch tree charges at most one handler. -/
+def odCostFactor : Nat := 1
 
 theorem od_code : ∃ rs, guestCode (nm "op_dispatch") =
     some ((declPair Guest.Software.guestFn_op_dispatch).2.1, odBody, rs) :=
@@ -329,6 +330,84 @@ theorem preOpX_entry {M : Nat} {vs vs' : List (ValueHOL 64)} {s : State σ} {Γ 
   unfold Ready DoneZ RunNZ at hrdy ⊢
   rw [hm', gword_congr hg', gword_congr hg']; exact hrdy
 
+theorem dispatch_normal_state {hs : List MlS} (p : ProgHOL 64) (hd : dchkB hs p = true)
+    (s : State σ) (hctx : InCtx s X) (hn : (evaluateHOLFiniteState s p).1 = none) :
+    (evaluateHOLFiniteState s p).2 = s := by
+  have h := dchk_none (P := fun t => t = s) p hd s hctx rfl (by rw [hn]; trivial)
+  exact h hn
+
+theorem dispatch_cost_seq_max {P : State σ → Prop} {a b : ProgHOL 64} {Ba Bb : Nat}
+    (ha : Inv.CostP σ X P a Ba) (hb : Inv.CostP σ X P b Bb)
+    (hzero : ∀ s, InCtx s X → P s → (evaluateHOLFiniteState s a).1 = none →
+      (evaluateHOLFiniteState s a).2 = s) : Inv.CostP σ X P (.seq a b) (max Ba Bb) := by
+  intro s hs hp hg
+  rw [evaluateHOLFiniteState_eq_evaluate_def s (.seq a b)] at hg ⊢
+  dsimp only at hg ⊢
+  cases h1 : (evaluateHOLFiniteState s a).1 with
+  | none =>
+      simp only [h1] at hg ⊢
+      have heq := hzero s hs hp h1
+      rw [heq] at hg ⊢
+      have h := hb s hs hp hg
+      omega
+  | some r =>
+      simp only [h1] at hg ⊢
+      have h := ha s hs hp (by rw [h1]; exact hg)
+      omega
+theorem dcost_one {hs : List MlS} {Pf : List (ValueHOL 64) → State σ → Prop} {B : Nat}
+    (hf : ∀ f ∈ hs, Inv.CalleeCostP σ X f Pf B) {P : State σ → Prop}
+    (hP : ∀ s, P s → ∀ vs callee, Pf vs (callEntryStateHOLFinite s callee)) :
+    ∀ p : ProgHOL 64, dchkB hs p = true → Inv.CostP σ X P p (1 + B)
+  | .skip, _ => (Inv.costP_of_cost cost_skip).mono (Nat.zero_le _)
+  | .raise x e, _ => (Inv.costP_of_cost (cost_raise x e)).mono (Nat.zero_le _)
+  | .seq p q, h => by
+      simp only [dchkB, Bool.or_eq_true, Bool.and_eq_true] at h
+      by_cases hc : isCR hs p q = true
+      · obtain ⟨f, args, e, rfl, rfl, hfm⟩ := isCR_eq hc
+        have h1 := Inv.costP_callD (P := P) (args := args) (hf f hfm)
+          (fun s _ hs vs _ callee => hP s hs vs callee)
+        have h2 := Inv.costP_seq (R := fun _ => True) h1 (fun _ _ _ _ _ => trivial)
+          (Inv.costP_of_cost (cost_return e))
+        refine h2.mono ?_
+        omega
+      · by_cases hr : isRaiseB p = true
+        · obtain ⟨x, e, rfl⟩ := isRaiseB_eq hr
+          exact (Inv.costP_seq (R := fun _ => False) (Bb := 0) (Inv.costP_of_cost (cost_raise x e))
+            hoare_raise (fun _ _ h => h.elim)).mono (by omega)
+        · have hpq : dchkB hs p = true ∧ dchkB hs q = true := by
+            rcases h with (h | h) | h
+            · exact absurd h hc
+            · exact absurd h hr
+            · exact h
+          have ip := dcost_one hf hP p hpq.1
+          have iq := dcost_one hf hP q hpq.2
+          simpa only [Nat.max_self] using dispatch_cost_seq_max ip iq (fun s hs hp hn => dispatch_normal_state p hpq.1 s hs hn)
+  | .ite c p q, h => by
+      simp only [dchkB, Bool.and_eq_true] at h
+      have ip := dcost_one hf hP p h.1
+      have iq := dcost_one hf hP q h.2
+      refine (Inv.costP_ite (c := c) (ip.pre fun _ _ h => h.1) (iq.pre fun _ _ h => h.1)).mono ?_
+      omega
+  | .dec _ _ _ _, h => by simp [dchkB] at h
+  | .assign _ _ _, h => by simp [dchkB] at h
+  | .primitive _ _ _, h => by simp [dchkB] at h
+  | .store _ _, h => by simp [dchkB] at h
+  | .store32 _ _, h => by simp [dchkB] at h
+  | .storeByte _ _, h => by simp [dchkB] at h
+  | .while _ _, h => by simp [dchkB] at h
+  | .break, h => by simp [dchkB] at h
+  | .continue, h => by simp [dchkB] at h
+  | .call _ _ _, h => by simp [dchkB] at h
+  | .decCall _ _ _ _ _, h => by simp [dchkB] at h
+  | .extCall _ _ _ _ _, h => by simp [dchkB] at h
+  | .return _, h => by simp [dchkB] at h
+  | .shMemLoad _ _ _ _, h => by simp [dchkB] at h
+  | .shMemStore _ _ _, h => by simp [dchkB] at h
+  | .tick, h => by simp [dchkB] at h
+  | .annot _ _, h => by simp [dchkB] at h
+
+
+
 section disp
 variable {H : Hooks σ} (hH : HooksLawful guestC H)
 include hH
@@ -339,11 +418,11 @@ theorem op_dispatch_condCost {M Bsl Bss : Nat}
     (hsl : CondCost σ guestCtx guestC H (nm "op_sload") (sg0 []) (PreOpX guestC tEV tCK GP GR M) Bsl)
     (hss : CondCost σ guestCtx guestC H (nm "op_sstore") (sg0 []) (PreOpX guestC tEV tCK GP GR M) Bss) :
     CondCost σ guestCtx guestC H (nm "op_dispatch") (sg1 []) (PreOpX guestC tEV tCK GP GR M)
-      (odN * (1 + max (2 ^ 269) (max Bsl Bss))) := by
+      (odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Bsl Bss))) := by
   -- the handlers' entry precondition: `G` and `PreOpX`
   let Pf : List (ValueHOL 64) → State σ → Prop := fun _ s =>
     ∃ Γ p, G guestC H Γ s ∧ ptrsOf s = some p ∧ PreOpX guestC tEV tCK GP GR M [] s Γ
-  have hf : ∀ f ∈ odNames, Inv.CalleeCostP σ guestCtx f Pf (max (2 ^ 269) (max Bsl Bss)) := by
+  have hf : ∀ f ∈ odNames, Inv.CalleeCostP σ guestCtx f Pf (max InitECandidate.Solver.Band.odTabBound (max Bsl Bss)) := by
     intro f hf
     simp only [odNames, List.mem_cons] at hf
     rcases hf with rfl | rfl | hf
@@ -357,7 +436,7 @@ theorem op_dispatch_condCost {M Bsl Bss : Nat}
   rw [guestCtx_code] at hl
   obtain ⟨rs', hc⟩ := od_code
   obtain rfl := lookupCode_body hc hl
-  refine dcost hf ?_ odBody od_dchk
+  refine (dcost_one hf ?_ odBody od_dchk).mono (by simp [odCostFactor])
   rintro s ⟨-, Γ, p, hG, hp, -, hpre⟩ vs' callee'
   exact ⟨Γ, p, (Frames.G_locFree hH s _ _).mpr hG, by rw [ptrsOf_congr rfl]; exact hp,
     preOpX_entry callee' hpre⟩

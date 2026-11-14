@@ -19,7 +19,7 @@ theorem op_dispatch_condCost_full {M : Nat}
     (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR)) (hGSO : GsoSumm σ) :
     CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch") (Frames.sg1 [])
       (Frames.PreOpX guestC tEV tCK Frames.GP Frames.GR M)
-      (Band.odN * (1 + max (2 ^ 269) (max oslB ossB))) :=
+      (Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max oslB ossB))) :=
   Wit.op_dispatch_condCost_R (osl_condCost hGT) (oss_condCost hGT hGSO)
 
 end InitECandidate.Solver.Band3

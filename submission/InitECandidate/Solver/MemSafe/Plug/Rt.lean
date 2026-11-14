@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.CsrCost.Main
 import InitECandidate.Solver.MemSafe.Plug.Sp
 import InitECandidate.Solver.Band7.CsrLit
 import InitECandidate.Solver.Band7.Bmi6
@@ -26,13 +27,13 @@ abbrev bBmiL : Nat := 6484356997289713489883399332781977854032012983525739547991
 
 /-- `compute_state_root`'s literal bound (package Rt2). -/
 abbrev bCsrL : Nat :=
-  717691644069425908740956491496255224662883633612362210178552783119512950620233820187476079056773459
+  160589666025205711490680953245729752537823497788352528105427238848339667217942745829459
 
 theorem condCost_run_attempt_rt {M Bpuc BT : Nat} (hPucC : HypPucCost σ Bpuc) (hPtC : HypPtCost σ M BT)
     (hPuc : HypPuc σ) (hM : 2 ^ 24 + 2 ≤ M) :
     CondCost σ guestCtx guestC (HR σ) (nm "run_attempt") Band.sgSi (CcPre RaPre0)
       (bRunAttempt Sp.bSi (Sp.bPh bBmiL) (bExecBlock Bpuc BT Wg.bWd (Wg.bGpr (Wg.bCsr Bpuc)) bCsrL bBmiL)) :=
-  condCost_run_attempt_sp hPucC hPtC Band7.hypCsrCost_lit Band7.hypBmiCost_lit hPuc hM
+  condCost_run_attempt_sp hPucC hPtC InitECandidate.Solver.MemSafe.CsrCost.hypCsrCost Band7.hypBmiCost_lit hPuc hM
 
 end InitECandidate.Solver.MemSafe.Plug
 

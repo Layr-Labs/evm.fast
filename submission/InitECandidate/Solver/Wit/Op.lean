@@ -31,7 +31,7 @@ theorem op_dispatch_condCost_R {M Bsl Bss : Nat}
     (hss : CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_sstore") (sg0 [])
       (PreOpX guestC tEV tCK GP GR M) Bss) :
     CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch") (sg1 [])
-      (PreOpX guestC tEV tCK GP GR M) (Band.odN * (1 + max (2 ^ 269) (max Bsl Bss))) :=
+      (PreOpX guestC tEV tCK GP GR M) (Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Bsl Bss))) :=
   Band.op_dispatch_condCost Hooks.guestHooksR_lawful hsl hss
 
 end InitECandidate.Solver.Wit

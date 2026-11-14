@@ -31,9 +31,17 @@ theorem cw_step_bbl {Bk : Nat} (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy
     CW (PA E En S) ebS39 (1 + cBbl + Bk) QT := by
   unfold ebS39
   refine cw_decCallRk (E := E) (En := En) (S := S) (f := nm "build_block_access_list_rlp") (args := [])
-    (W := fun g' => tabW.contains g' = true) (PreC := fun _ _ => True) hK hE0 hS hQT (cr_bbl hK) (gwk_tab (by decide))
-    (fun _ _ => False) (Inv.calleeCostP_of_calleeCost cc_cBbl) (fun _ _ _ _ _ _ => trivial) ?_ ?_
+    (W := fun g' => tabW.contains g' = true) (PreC := InitECandidate.Solver.MemSafe.BalCost.Main.mainPre) (Bf := cBbl) hK hE0 hS hQT (cr_bbl hK) (gwk_tab (by decide))
+    (fun _ _ => False) (cc_cBbl_cond) ?_ ?_ ?_
     (fun v _ => cw_pre (hk v) (fun t _ ht => pa_mono ht (fun _ _ h => h) (fun f hf => Or.inl hf)))
+  · intro s hs hpa vs hvs callee
+    obtain ⟨⟨Γ, p, hr, hL⟩, hlk⟩ := hpa
+    rw [evs_nil] at hvs
+    cases hvs
+    have hre := ebRun_loc hr callee (s.clock - 1)
+    have hLe := holdsAll_loc hL callee (s.clock - 1)
+    exact ⟨rfl, Γ, p, ebRun_G hre, ebRun_ptrs hre,
+      bblPre_of_balG (balG_of_balS hbal hLe) ⟨ebRun_ev hre, ebRun_cc hre⟩⟩
   · refine ⟨?_, fun _ _ _ _ _ _ _ _ _ _ _ _ _ h => h, (tidy_gmiss hT hz).1, (tidy_gmiss hT hz).2⟩
     intro s hpa vs hvs callee Γ p hr hL hC
     rw [evs_nil] at hvs
@@ -43,6 +51,7 @@ theorem cw_step_bbl {Bk : Nat} (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy
     exact ⟨rfl, hC, bblPre_of_balG (balG_of_balS hbal hLe) ⟨ebRun_ev hre, ebRun_cc hre⟩⟩
   · intro s vs callee v st Γ Γ' p p' hr hL hstp hq hsh f hf
     exact hf.elim
+
 
 
 section front

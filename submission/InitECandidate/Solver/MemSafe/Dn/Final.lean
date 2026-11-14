@@ -34,7 +34,7 @@ theorem op_dispatch_condCost_Fin {M : Nat} {tV : Nat}
     (hWS4 : (guestC.ty tWSR).slot 4 = .ptr Types.tHTh32) :
     CondCost σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch")
       (Frames.sg1 []) (Frames.PreOpX Types.guestC Types.tEV Types.tCK Frames.GP Frames.GR M)
-      (InitECandidate.Solver.Band.odN * (1 + max (2 ^ 269) (max Band3.oslB Band3.ossB))) :=
+      (InitECandidate.Solver.Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Band3.oslB Band3.ossB))) :=
   Loc.op_dispatch_condCost_Loc hS (csumm_wst_buf_G hS.hGT hWS4) hWSz
 
 /-- `ws_get_storage`'s memory-safety summary, both storage facts discharged. -/

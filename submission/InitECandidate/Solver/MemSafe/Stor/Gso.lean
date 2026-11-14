@@ -153,7 +153,7 @@ theorem op_dispatch_condCost_done {M : Nat}
     (hN : DecNodeSumm σ) (hW : WstAnySumm σ) :
     CondCost σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch")
       (Frames.sg1 []) (Frames.PreOpX Types.guestC Types.tEV Types.tCK Frames.GP Frames.GR M)
-      (InitECandidate.Solver.Band.odN * (1 + max (2 ^ 269) (max Band3.oslB Band3.ossB))) :=
+      (InitECandidate.Solver.Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Band3.oslB Band3.ossB))) :=
   Band3.op_dispatch_condCost_full hGT (gsoSumm_guestR hN hW)
 
 end InitECandidate.Solver.MemSafe.Stor
