@@ -78,7 +78,7 @@ def PreMr (vs : List (ValueHOL 64)) (s : State σ) : Prop :=
   ∃ Γ p, G guestC (guestHooksR (σ := σ)) Γ s ∧ ptrsOf s = some p ∧
     ArgsOK guestC Γ p (MemSafe.Trie.mrSig false).params vs ∧ MrPre8 vs s Γ
 
-theorem tb_mr : tb (nm "mpt_root") = Band2.mrB := by
+theorem tb_mr : tb (nm "mpt_root") = InitECandidate.Solver.MemSafe.MptTightCost.Mpt.mrB := by
   unfold tb; rw [if_neg (by decide), if_pos rfl]
 
 theorem cc_mr : Inv.CalleeCostP σ guestCtx (nm "mpt_root") PreMr (tb (nm "mpt_root")) := by

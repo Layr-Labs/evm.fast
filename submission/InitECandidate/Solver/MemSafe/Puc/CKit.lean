@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BlsSlotCost.Table
 import InitECandidate.Solver.MemSafe.Puc.Final
 import InitECandidate.Solver.MemSafe.PtC.K3
 
@@ -28,7 +29,7 @@ def bPmcP : Nat := Entry2.pmcB (30000002) Entry2.bOp
 
 /-- The bound of a callee: the table, else the two conditional callees of `process_unchecked_system_transaction`. -/
 def tblP (f : MlS) : Nat :=
-  match Shards.finalState.1.lookup f with
+  match BlsSlotCost.Callers.table12 f with
   | some B => B
   | none => if f = nm "process_message_call" then bPmcP else if f = nm "incorporate_tx_into_block" then Wg.bInc else 0
 
@@ -40,23 +41,23 @@ def cbdP : ProgHOL 64 → Nat
   | .decCall _ _ f _ k => 1 + tblP f + cbdP k
   | .call none f _ => 1 + tblP f + 0
   | .call (some (_, none)) f _ => 1 + tblP f + 0
-  | p => (Wg.costFin p).getD 0
+  | p => (BlsSlotCost.Table.costFin p).getD 0
 
 /-! ## Leaves -/
 
-theorem cost_cbd {c : ProgHOL 64} (h : Wg.costFin c = some (cbdP c)) : Cost σ guestCtx c (cbdP c) :=
-  Wg.cost_guest_costA h
+theorem cost_cbd {c : ProgHOL 64} (h : BlsSlotCost.Table.costFin c = some (cbdP c)) : Cost σ guestCtx c (cbdP c) :=
+  BlsSlotCost.Table.cost_guest_costA h
 
 theorem cw_hnN {P P1 : State σ → Prop} {c : ProgHOL 64} (hn : HN P c P1)
-    (hc : Wg.costFin c = some (cbdP c) := by decide_cbv) : CW' P c (cbdP c) (fun r t => r = none ∧ P1 t) :=
+    (hc : BlsSlotCost.Table.costFin c = some (cbdP c) := by decide_cbv) : CW' P c (cbdP c) (fun r t => r = none ∧ P1 t) :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hn⟩
 
 theorem cw_leafN {P : State σ → Prop} {c : ProgHOL 64} {Q : Option (PanSemResultExact 64) → State σ → Prop}
-    (hh : Hoare σ guestCtx P c Q) (hc : Wg.costFin c = some (cbdP c) := by decide_cbv) : CW' P c (cbdP c) Q :=
+    (hh : Hoare σ guestCtx P c Q) (hc : BlsSlotCost.Table.costFin c = some (cbdP c) := by decide_cbv) : CW' P c (cbdP c) Q :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hh⟩
 
 theorem cw_seqN {P P1 : State σ → Prop} {Q : Option (PanSemResultExact 64) → State σ → Prop} {a b : ProgHOL 64}
-    (ha : HN P a P1) (hb : CW' P1 b (cbdP b) Q) (hc : Wg.costFin a = some (cbdP a) := by decide_cbv) :
+    (ha : HN P a P1) (hb : CW' P1 b (cbdP b) Q) (hc : BlsSlotCost.Table.costFin a = some (cbdP a) := by decide_cbv) :
     CW' P (.seq a b) (cbdP (.seq a b)) Q :=
   Eb.cw_seq (cw_hnN ha hc) hb
 
@@ -67,12 +68,12 @@ theorem cw_seqC {P P1 : State σ → Prop} {Q : Option (PanSemResultExact 64) �
 
 /-- A table callee. -/
 theorem calleeCostP_tbl {f : MlS} {PreC : List (ValueHOL 64) → State σ → Prop}
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     Inv.CalleeCostP σ guestCtx f PreC (tblP f) := by
   obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hf
   have : tblP f = B := by simp [tblP, hB]
   rw [this]
-  exact Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hB))
+  exact Inv.calleeCostP_of_calleeCost (BlsSlotCost.Callers.table12_sound f B hB)
 
 
 /-! ## Binders of the walk `PA` -/
@@ -113,7 +114,7 @@ theorem cw_decCallW {rn f : MlS} {args : List (ExpHOL 64)} {k : ProgHOL 64} {SW 
     (hrule : ∀ (k' : ProgHOL 64) (Q' : Option (PanSemResultExact 64) → State σ → Prop), ResIns rn Q' →
       (∀ w : BitVec 64, Hoare σ guestCtx (PA E (En.set rn (.val (.word w))) (SW w)) k' Q') →
       Hoare σ guestCtx (PA E En S) (.decCall rn .one f args k') Q')
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : ∀ w : BitVec 64, CW' (PA E (En.set rn (.val (.word w))) (SW w)) k (cbdP k) QT) :
     CW' (PA E En S) (.decCall rn .one f args k) (cbdP (.decCall rn .one f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)
@@ -146,7 +147,7 @@ theorem cw_decCallV {rn f : MlS} {sh : ShapeHOL} {args : List (ExpHOL 64)} {k : 
       (∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true →
         Hoare σ guestCtx (PA E (En.set rn v) (SV v)) k' Q') →
       Hoare σ guestCtx (PA E En S) (.decCall rn sh f args k') Q')
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : ∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true → CW' (PA E (En.set rn v) (SV v)) k (cbdP k) QT) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbdP (.decCall rn sh f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)
@@ -175,7 +176,7 @@ theorem cw_decCallU {rn f : MlS} {sh : ShapeHOL} {args : List (ExpHOL 64)} {k : 
         | exact ⟨.val (.word 0), (shapeEqHOL_eq_true _ _).mpr (shapeOf_val _)⟩
         | exact ⟨wv [0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0], shEq_wv _ _ rfl⟩
         | exact ⟨wv [0, 0, 0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0, 0, 0], shEq_wv _ _ rfl⟩)
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : CW' (PA E En S') k (cbdP k) QT) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbdP (.decCall rn sh f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)
@@ -241,7 +242,7 @@ theorem cw_decNewP {E : PtE σ}
       (addF S (Fct.fbuf w N :: Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + N ≤ heapEnd) ::
         (ZC.map (fun o => Fct.memw (w + BitVec.ofNat 64 o) 0) ++
           PB.map (fun b => Fct.prop (b.1.toNat + b.2 ≤ w.toNat)))))) k (cbdP k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' (PA E En S) (.decCall rn .one f [] k) (cbdP (.decCall rn .one f [] k)) QT :=
   cw_decCallW (E := E) hQT (hrule := fun _ _ hq hk' => hdecNewP hq hf hfin hN8 hN0 hNb ZC hZ hGl PB hPB hk') (hf := hfc) (hk := hk)
 

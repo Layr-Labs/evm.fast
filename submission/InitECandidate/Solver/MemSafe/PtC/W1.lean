@@ -133,7 +133,7 @@ theorem cw_decNew {E : PtE σ}
     (hk : ∀ w : BitVec 64, CW' (PA E (En.set rn (.val (.word w)))
       (addF S (Fct.fbuf w N :: Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + N ≤ heapEnd) ::
         ZC.map (fun o => Fct.memw (w + BitVec.ofNat 64 o) 0)))) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' (PA E En S) (.decCall rn .one f [] k) (cbd (.decCall rn .one f [] k)) QT :=
   cw_decCallW (E := E) hQT (hrule := fun _ _ hq hk' => hdecNew hq hf hfin hN8 hN0 hNb ZC hZ hGl hk') (hf := hfc) (hk := hk)
 
@@ -159,7 +159,7 @@ theorem cw_decNewP {E : PtE σ}
       (addF S (Fct.fbuf w N :: Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + N ≤ heapEnd) ::
         (ZC.map (fun o => Fct.memw (w + BitVec.ofNat 64 o) 0) ++
           PB.map (fun b => Fct.prop (b.1.toNat + b.2 ≤ w.toNat)))))) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' (PA E En S) (.decCall rn .one f [] k) (cbd (.decCall rn .one f [] k)) QT :=
   cw_decCallW (E := E) hQT (hrule := fun _ _ hq hk' => hdecNewP hq hf hfin hN8 hN0 hNb ZC hZ hGl PB hPB hk') (hf := hfc) (hk := hk)
 
@@ -196,7 +196,7 @@ theorem cw_decAny {E : PtE σ}
     (hGl : ∀ g ty, S (Fct.gobj g ty) → cW.contains g = false)
     (hk : ∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true →
       CW' (PA E (En.set rn v) S) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hszc : ∀ c : Flapjack.Pancake.PanLang.StructContextExact, Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32 := by first | exact sz_one | exact sz_comb 2 (by norm_num) | exact sz_comb 3 (by norm_num) | exact sz_comb 4 (by norm_num) | exact sz_comb 5 (by norm_num)) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT :=
   cw_decCallV (E := E) hQT (hrule := fun _ _ hq hk' => hdecAny hq hf hps hgw hfin hlen hGl hk') (hf := hfc) (hsz := hszc) (hk := hk)
@@ -216,7 +216,7 @@ theorem cw_decNoNF {E : PtE σ}
     (hf : CSumm σ guestCtx guestC (HR σ) f sg cs)
     (h : CallOK E En S f sg cs args)
     (hk : ∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true → CW' (PA E (En.set rn v) S) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hszc : ∀ c : Flapjack.Pancake.PanLang.StructContextExact, Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32 := by first | exact sz_one | exact sz_comb 2 (by norm_num) | exact sz_comb 3 (by norm_num) | exact sz_comb 4 (by norm_num) | exact sz_comb 5 (by norm_num)) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT :=
   cw_decCallV (E := E) hQT (hrule := fun _ _ hq hk' => hdecNoNF hq hf h hk') (hf := hfc) (hsz := hszc) (hk := hk)
@@ -236,7 +236,7 @@ theorem cw_decAnyU {f : MlS}
     (hGl : ∀ g ty, S (Fct.gobj g ty) → cW.contains g = false)
     (hrn : En rn = none)
     (hk : CW' (PA E En S) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hszc : ∀ c : Flapjack.Pancake.PanLang.StructContextExact, Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32 := by first | exact sz_one | exact sz_comb 2 (by norm_num) | exact sz_comb 3 (by norm_num) | exact sz_comb 4 (by norm_num) | exact sz_comb 5 (by norm_num))
     (hexc : ∃ v0 : ValueHOL 64, shapeEqHOL (shapeOfHOLExact v0) sh = true := by
       first
@@ -258,7 +258,7 @@ theorem cw_decNoNFU {f : MlS}
     (h : CallOK E En S f sg cs args)
     (hrn : En rn = none)
     (hk : CW' (PA E En S) k (cbd k) QT)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hszc : ∀ c : Flapjack.Pancake.PanLang.StructContextExact, Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32 := by first | exact sz_one | exact sz_comb 2 (by norm_num) | exact sz_comb 3 (by norm_num) | exact sz_comb 4 (by norm_num) | exact sz_comb 5 (by norm_num))
     (hexc : ∃ v0 : ValueHOL 64, shapeEqHOL (shapeOfHOLExact v0) sh = true := by
       first

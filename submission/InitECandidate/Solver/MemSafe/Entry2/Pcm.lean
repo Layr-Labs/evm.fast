@@ -27,7 +27,7 @@ variable {σ : Type}
 
 
 /-- `process_create_message`'s bound. -/
-def pcmB (M Bop : Nat) : Nat := 2 ^ 201 + pmB M Bop
+def pcmB (M Bop : Nat) : Nat := bDS + bMA + bINC + bK6 + 5 + pmB M Bop
 
 def bk5 (M Bop : Nat) : Nat := 1 + pmB M Bop + bK6
 def bk4 (M Bop : Nat) : Nat := (1 + bINC + 0) + bk5 M Bop
@@ -134,11 +134,7 @@ theorem pcm_condCost (hF : FHypsB σ) (hD0 : D0Spec σ) {M Bop : Nat} (hM : M < 
   obtain rfl : A = .val (.word msg) := List.head_eq_of_cons_eq hvs
   refine (Inv.CostP.mono (pcm_body M msg hF hD0 hM hop) ?_) s hs
     ⟨⟨Γ, p, hG, hp, hfo⟩, by rw [hloc]; exact hlk⟩ hg
-  have h200 : bDS + bMA + bINC + 100 ≤ 2 ^ 200 := by unfold bDS bMA bINC; decide
-  unfold bk0 bk2 bk3 bk4 bk5 bK6 pcmB
-  generalize pmB M Bop = P
-  have h201 : (2 : Nat) ^ 201 = 2 * 2 ^ 200 := by rw [Nat.pow_succ]; omega
-  generalize (2 : Nat) ^ 200 = T at h200 h201 ⊢
+  unfold bk0 bk2 bk3 bk4 bk5 pcmB
   omega
 
 end InitECandidate.Solver.MemSafe.Entry2

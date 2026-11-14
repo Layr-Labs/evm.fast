@@ -14,14 +14,14 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Trie InitECandi
 variable {σ : Type}
 
 def bCsr : Nat :=
-  717691644069425908740956491496255224662883633612362210178552783119512950620233820187476079056773459
+  1336804859962780794578885207915955477687332854889609886063850127288336167536746362748884979
 
 theorem bCsr_eq : cb csr_cache_1 = bCsr := by decide +kernel
 
 /-- **`compute_state_root`'s conditional cost, literal bound** (about `2^328`), at `CsrPre` (`ArgsOK` only). -/
 theorem hypCsrCost_lit :
-    Eb.HypCsrCost σ 717691644069425908740956491496255224662883633612362210178552783119512950620233820187476079056773459 :=
-  Inv.CalleeCostP.mono csr_condCost8 (by rw [bCsr_eq]; exact le_refl _)
+    Eb.HypCsrCost σ 1336804980668391546591356208775245928998772810390345323280965897215751421514440737659283539 :=
+  Inv.CalleeCostP.mono csr_condCost8 (by rw [bCsr_eq]; all_goals decide +kernel)
 
 end InitECandidate.Solver.Band7
 

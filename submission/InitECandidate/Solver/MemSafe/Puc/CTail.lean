@@ -21,8 +21,8 @@ open InitECandidate.Solver.MemSafe.PtC (CW' cw_decCall_gen cw_dec_gen shEq_wv sz
 
 variable {σ : Type}
 
-theorem lookupP_inc : Shards.finalState.1.lookup (nm "incorporate_tx_into_block") = none := by decide_cbv
-theorem lookupP_pmc : Shards.finalState.1.lookup (nm "process_message_call") = none := by decide_cbv
+theorem lookupP_inc : BlsSlotCost.Callers.table12 (nm "incorporate_tx_into_block") = none := by decide_cbv
+theorem lookupP_pmc : BlsSlotCost.Callers.table12 (nm "process_message_call") = none := by decide_cbv
 
 theorem tblP_inc : tblP (nm "incorporate_tx_into_block") = Wg.bInc := by
   unfold tblP; rw [lookupP_inc]

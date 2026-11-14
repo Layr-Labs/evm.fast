@@ -64,7 +64,7 @@ theorem cw_decCallKT {P : State σ → Prop} {Q : Option (PanSemResultExact 64) 
       ∀ callee v (st : State σ), R vs (callEntryStateHOLFinite s callee) (.returned v) st →
         InCtx st guestCtx → shapeEqHOL (shapeOfHOLExact v) sh = true →
         CW' (fun t => t = setVarHOLFinite rn v { st with locals := s.locals }) k (cbd k) Q)
-    (hc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' P (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) Q :=
   Eb.cw_decCallK (PreC := fun _ _ => True) hQ hf (calleeCostP_tbl hc) (fun _ _ _ _ _ _ => trivial) h
 

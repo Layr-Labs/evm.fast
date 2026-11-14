@@ -1,3 +1,7 @@
+import InitECandidate.Solver.MemSafe.DelegationCost.Main
+import InitECandidate.Solver.MemSafe.FrameCost.Main
+import InitECandidate.Solver.MemSafe.InitCost.Callers.C38
+import InitECandidate.Solver.MemSafe.BlsSlotCost.Callers.C12
 import InitECandidate.Solver.MemSafe.Entry.Steps3
 import InitECandidate.Solver.Band3.Core
 
@@ -26,8 +30,10 @@ set_option maxHeartbeats 0
 namespace InitECandidate.Solver.MemSafe.Entry
 open Flapjack Flapjack.PanSemStateFiniteExact
 open Flapjack.Pancake.PanLang (ProgHOL ExpHOL MlS ShapeHOL)
+open InitECandidate.Solver
 open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
+open InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Frames
 
 variable {σ : Type}
@@ -56,14 +62,16 @@ theorem d0Handler_nn (s : State σ) : (evaluateHOLFiniteState s d0Handler).1 ≠
 /-! ## Table costs -/
 
 def bFO : Nat := 239807672958224171065
-def bD0 : Nat := 30337527380176843224916464091041032295438964326125188449899630732887336413619670
+def bD0 : Nat := 10^52
 def bFS : Nat :=
-  722542636840853059655186214092928488060579075102645600925209800046382126816869629
-def bH : Nat := 6277101735386680783572166704622097299025671267688351006725
+  75325220848024197701404064040884136072461827619153873289835
+def bH : Nat := FrameCost.Restore.bRestore+5
 
 set_option cbv.maxSteps 4000000000 in
 theorem handler_cost : Cost σ guestCtx d0Handler bH :=
-  Band3.cost_guest_of_costA (by decide_cbv)
+  PairCost.Core.analyze_sound
+    (tbl := PairCost.Core.extend BlsCost.Callers.table12 (nm "state_restore") FrameCost.Restore.bRestore)
+    (PairCost.Core.extend_sound BlsCost.Callers.table12_sound FrameCost.Restore.cc_restore) (by cbv)
 
 /-! ## The entry precondition and the bound -/
 
@@ -73,10 +81,11 @@ def PmPre (M : Nat) (vs : List (ValueHOL 64)) (s : State σ) (Γ : Gam) : Prop :
 
 /-- `run_frames`' bound at the root frame. -/
 def bRF (M Bop : Nat) : Nat :=
-  rfB M Bop 2 (max (1 + Wire.srBGuest + 0) 0 + 0) (finBnd Wire.finBsGuest)
+  rfB M Bop 2 (max (1 + FrameCost.Restore.bRestore + 0) 0 + 0) (finBnd FrameCost.finBs)
 
 /-- `process_message`'s bound. -/
-def pmB (M Bop : Nat) : Nat := 2 ^ 269 + bRF M Bop
+def bEntryOverhead : Nat := bFO+bD0+bFS+bH+100
+def pmB (M Bop : Nat) : Nat := bEntryOverhead + bRF M Bop
 
 /-! ## The body -/
 
@@ -95,7 +104,7 @@ theorem k3_cost (hF : FHypsB σ) (hM : M < 2 ^ 64) {Bop : Nat}
       (PreOpX guestC tEV tCK GP GR M) Bop) :
     Inv.CostP σ guestCtx (P2 M) pmK3 (0 + (1 + bFS + 0 + (1 + bRF M Bop + 0 + 0))) := by
   have hrf : CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "run_frames") (sg0 [])
-      (PreInvX guestC tEV tCK GP GR M) (bRF M Bop) := run_frames_condCost_FB hF hM hop
+      (PreInvX guestC tEV tCK GP GR M) (bRF M Bop) := FrameCost.run_frames_cost hF hM hop
   have rfCost : Inv.CostP σ guestCtx (PI M) (callD (nm "run_frames") []) (1 + bRF M Bop + 0) :=
     Inv.costP_callD (Pre := fun vs s => ∃ Γ p, G guestC (Hooks.guestHooksR (σ := σ)) Γ s ∧
       ptrsOf s = some p ∧ ArgsOK guestC Γ p (sg0 []).params vs ∧
@@ -110,7 +119,7 @@ theorem k3_cost (hF : FHypsB σ) (hM : M < 2 ^ 64) {Bop : Nat}
       (Inv.costP_of_cost (cost_return _))
   have fsC : Inv.CostP σ guestCtx (PI M) (callD (nm "frame_start") []) (1 + bFS + 0) :=
     Inv.costP_callD (Pre := fun _ _ => True)
-      (Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (f := nm "frame_start") (B := bFS) rfl))
+      (Inv.calleeCostP_of_calleeCost InitECandidate.Solver.MemSafe.BlsSlotCost.Callers.cc_frame_start)
       (fun _ _ _ _ _ _ => trivial)
   have fsH : Hoare σ guestCtx (PI M) (callD (nm "frame_start") []) (PIQ M) :=
     hoare_PI_callD (fs_spec (FHypsB.preHyps hF) M) (fun u callee v st hP h => pi_fs hP h)
@@ -148,7 +157,7 @@ theorem d0_block (hD0 : D0Spec σ) :
       (1 + bD0 + bH) :=
     Inv.costP_call (Pre := fun _ _ => True)
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "depth0_prepare") (B := bD0) rfl))
+        (InitECandidate.Solver.MemSafe.DelegationCost.cc_depth0_prepare))
       (fun _ _ _ _ _ _ => trivial)
       (fun r hid hv hp h => by
         simp only [Option.some.injEq, Prod.mk.injEq] at h
@@ -226,10 +235,9 @@ theorem body_cost (hF : FHypsB σ) (hD0 : D0Spec σ) (hM : M < 2 ^ 64) {Bop : Na
     hoare_ite hoare_raise (hoare_skip fun s _ h _ => h.1)
   have hall := Inv.costP_seq (R := P0 M msg) guardC guardH (costP_skip_seq hd1)
   refine hall.mono ?_
-  have h269 : bFO + bD0 + bFS + bH + 100 ≤ 2 ^ 269 := by
-    unfold bFO bD0 bFS bH; decide
+  have h269 : bFO + bD0 + bFS + bH + 100 ≤ bEntryOverhead := Nat.le_refl _
   unfold pmB
-  generalize (2 : Nat) ^ 269 = T at h269 ⊢
+  generalize bEntryOverhead = T at h269 ⊢
   unfold bFO bD0 bFS bH at h269 ⊢
   omega
 

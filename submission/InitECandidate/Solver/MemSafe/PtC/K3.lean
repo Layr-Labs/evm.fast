@@ -37,19 +37,19 @@ theorem sz_comb (k : Nat) (hk : k ≤ 32) : ∀ c : Flapjack.Pancake.PanLang.Str
 
 /-! ## Leaves -/
 
-theorem cost_cbd {c : ProgHOL 64} (h : Wg.costFin c = some (cbd c)) : Cost σ guestCtx c (cbd c) :=
-  Wg.cost_guest_costA h
+theorem cost_cbd {c : ProgHOL 64} (h : BlsSlotCost.Table.costFin c = some (cbd c)) : Cost σ guestCtx c (cbd c) :=
+  BlsSlotCost.Table.cost_guest_costA h
 
 theorem cw_hnN {P P1 : State σ → Prop} {c : ProgHOL 64} (hn : HN P c P1)
-    (hc : Wg.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) (fun r t => r = none ∧ P1 t) :=
+    (hc : BlsSlotCost.Table.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) (fun r t => r = none ∧ P1 t) :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hn⟩
 
 theorem cw_leafN {P : State σ → Prop} {c : ProgHOL 64} {Q : Option (PanSemResultExact 64) → State σ → Prop}
-    (hh : Hoare σ guestCtx P c Q) (hc : Wg.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) Q :=
+    (hh : Hoare σ guestCtx P c Q) (hc : BlsSlotCost.Table.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) Q :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hh⟩
 
 theorem cw_seqN {P P1 : State σ → Prop} {Q : Option (PanSemResultExact 64) → State σ → Prop} {a b : ProgHOL 64}
-    (ha : HN P a P1) (hb : CW' P1 b (cbd b) Q) (hc : Wg.costFin a = some (cbd a) := by decide_cbv) :
+    (ha : HN P a P1) (hb : CW' P1 b (cbd b) Q) (hc : BlsSlotCost.Table.costFin a = some (cbd a) := by decide_cbv) :
     CW' P (.seq a b) (cbd (.seq a b)) Q :=
   Eb.cw_seq (cw_hnN ha hc) hb
 
@@ -60,12 +60,12 @@ theorem cw_seqC {P P1 : State σ → Prop} {Q : Option (PanSemResultExact 64) �
 
 /-- A table callee. -/
 theorem calleeCostP_tbl {f : MlS} {PreC : List (ValueHOL 64) → State σ → Prop}
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     Inv.CalleeCostP σ guestCtx f PreC (tbl f) := by
   obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hf
   have : tbl f = B := by simp [tbl, hB]
   rw [this]
-  exact Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hB))
+  exact Inv.calleeCostP_of_calleeCost (BlsSlotCost.Callers.table12_sound f B hB)
 
 theorem hszW (sh : ShapeHOL) (h : ∀ c : Flapjack.Pancake.PanLang.StructContextExact,
       Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32) :
@@ -132,7 +132,7 @@ theorem cw_decCallW {rn f : MlS} {args : List (ExpHOL 64)} {k : ProgHOL 64} {SW 
     (hrule : ∀ (k' : ProgHOL 64) (Q' : Option (PanSemResultExact 64) → State σ → Prop), ResIns rn Q' →
       (∀ w : BitVec 64, Hoare σ guestCtx (PA E (En.set rn (.val (.word w))) (SW w)) k' Q') →
       Hoare σ guestCtx (PA E En S) (.decCall rn .one f args k') Q')
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : ∀ w : BitVec 64, CW' (PA E (En.set rn (.val (.word w))) (SW w)) k (cbd k) QT) :
     CW' (PA E En S) (.decCall rn .one f args k) (cbd (.decCall rn .one f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)
@@ -165,7 +165,7 @@ theorem cw_decCallV {rn f : MlS} {sh : ShapeHOL} {args : List (ExpHOL 64)} {k : 
       (∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true →
         Hoare σ guestCtx (PA E (En.set rn v) (SV v)) k' Q') →
       Hoare σ guestCtx (PA E En S) (.decCall rn sh f args k') Q')
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : ∀ v, shapeEqHOL (shapeOfHOLExact v) sh = true → CW' (PA E (En.set rn v) (SV v)) k (cbd k) QT) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)
@@ -194,7 +194,7 @@ theorem cw_decCallU {rn f : MlS} {sh : ShapeHOL} {args : List (ExpHOL 64)} {k : 
         | exact ⟨.val (.word 0), (shapeEqHOL_eq_true _ _).mpr (shapeOf_val _)⟩
         | exact ⟨wv [0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0], shEq_wv _ _ rfl⟩
         | exact ⟨wv [0, 0, 0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0, 0, 0], shEq_wv _ _ rfl⟩)
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv)
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv)
     (hk : CW' (PA E En S') k (cbd k) QT) :
     CW' (PA E En S) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT := by
   refine cw_decCall_gen (B := PB E S) (En := En)

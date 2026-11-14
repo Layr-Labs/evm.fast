@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.ArrayCost.InitExtras.C12
 import InitECandidate.Solver.MemSafe.Init.AwInst
 import InitECandidate.Solver.MemSafe.Init.Pinit
 import InitECandidate.Solver.MemSafe.Sp.Kit
@@ -23,17 +24,34 @@ open InitECandidate.Solver.MemSafe.Eb
 variable {σ : Type}
 
 /-- The table cost of a function. -/
-def tbN (f : String) : Nat := ((Shards.finalState.1.lookup (nm f)).getD 0)
+def initCostTable (f : MlS) : Option Nat :=
+  (ArrayCost.InitExtras.table12 f).orElse (fun _ => Shards.finalState.1.lookup f)
+
+theorem initCostTable_sound : TblSound σ guestCtx initCostTable := by
+  intro f B h
+  unfold initCostTable at h
+  cases hn : ArrayCost.InitExtras.table12 f with
+  | none =>
+      have hOld : Shards.finalState.1.lookup f = some B := by simpa [hn] using h
+      exact (Shards.finalState_sound_guest (σ := σ)).1 f B hOld
+  | some b =>
+      have hEq : b = B := by simpa [hn] using h
+      subst B
+      exact ArrayCost.InitExtras.table12_sound f b hn
+
+def tbN (f : String) : Nat := (initCostTable (nm f)).getD 0
 
 theorem tb_lookup (f : String) (h : (Shards.finalState.1.lookup (nm f)).isSome = true) :
-    Shards.finalState.1.lookup (nm f) = some (tbN f) := by
-  unfold tbN
-  cases hh : Shards.finalState.1.lookup (nm f) with
-  | none => rw [hh] at h; simp at h
-  | some b => rfl
+    initCostTable (nm f) = some (tbN f) := by
+  cases hn : ArrayCost.InitExtras.table12 (nm f) with
+  | some b => simp [initCostTable,tbN,hn]
+  | none =>
+      cases ho : Shards.finalState.1.lookup (nm f) with
+      | none => rw [ho] at h; simp at h
+      | some b => simp [initCostTable,tbN,hn,ho]
 
 theorem calleeCost_tb (f : String) (h : (Shards.finalState.1.lookup (nm f)).isSome = true) :
-    CalleeCost σ guestCtx (nm f) (tbN f) := Wire.calleeCost_guest (Wire.tbLe_of_eq (tb_lookup f h))
+    CalleeCost σ guestCtx (nm f) (tbN f) := initCostTable_sound _ _ (tb_lookup f h)
 
 theorem cost_tb (f : String) (h : (Shards.finalState.1.lookup (nm f)).isSome = true) {args : List (ExpHOL 64)} :
     Cost σ guestCtx (.call (some (none, none)) (nm f) args) (1 + tbN f + 0) :=

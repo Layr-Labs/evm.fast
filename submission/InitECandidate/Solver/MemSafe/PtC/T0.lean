@@ -55,7 +55,7 @@ theorem cw_decCallUg {rn f : MlS} {sh : ShapeHOL} {args : List (ExpHOL 64)} {k :
         | exact ⟨.val (.word 0), (shapeEqHOL_eq_true _ _).mpr (shapeOf_val _)⟩
         | exact ⟨wv [0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0], shEq_wv _ _ rfl⟩
         | exact ⟨wv [0, 0, 0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0, 0, 0], shEq_wv _ _ rfl⟩)
-    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hf : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' (PAg B En) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT := by
   refine cw_decCall_gen (B := B) (En := En) (Bk := fun _ t => B t) (Ek := fun _ => En)
     (PreC := fun _ _ => True) hQ ?_ ?_ ?_ ?_ (hszW _ hsz) (calleeCostP_tbl hf) (fun _ _ _ _ _ _ => trivial) (fun _ _ => hk)
@@ -80,7 +80,7 @@ theorem cw_decAnyT {f : MlS} {sg : Sig} {args : List (ExpHOL 64)} {rn : MlS} {sh
         | exact ⟨.val (.word 0), (shapeEqHOL_eq_true _ _).mpr (shapeOf_val _)⟩
         | exact ⟨wv [0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0], shEq_wv _ _ rfl⟩
         | exact ⟨wv [0, 0, 0, 0], shEq_wv _ _ rfl⟩ | exact ⟨wv [0, 0, 0, 0, 0], shEq_wv _ _ rfl⟩)
-    (hfc : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    (hfc : (BlsSlotCost.Callers.table12 f).isSome = true := by decide_cbv) :
     CW' (PAg (TL A ref Z O) En) (.decCall rn sh f args k) (cbd (.decCall rn sh f args k)) QT :=
   cw_decCallUg (bloc_tl A ref Z) hQT hrn (fun _ _ hq hk' => hdecAnyT hq hf hps hgw hfin hlen hrn hk') hk hszc hexc hfc
 

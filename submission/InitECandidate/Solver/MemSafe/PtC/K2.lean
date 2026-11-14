@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BlsSlotCost.Table
 import InitECandidate.Solver.MemSafe.PtC.K1
 import InitECandidate.Solver.MemSafe.Entry2.Final
 import InitECandidate.Solver.MemSafe.Wg.CostWd
@@ -27,7 +28,7 @@ def bPmc : Nat := Entry2.pmcB (2 ^ 24 + 2) Entry2.bOp
 
 /-- The bound of a callee: the table, else the two conditional callees of `process_transaction`. -/
 def tbl (f : MlS) : Nat :=
-  match Shards.finalState.1.lookup f with
+  match BlsSlotCost.Callers.table12 f with
   | some B => B
   | none => if f = nm "process_message_call" then bPmc else if f = nm "incorporate_tx_into_block" then Wg.bInc else 0
 
@@ -39,10 +40,10 @@ def cbd : ProgHOL 64 → Nat
   | .decCall _ _ f _ k => 1 + tbl f + cbd k
   | .call none f _ => 1 + tbl f + 0
   | .call (some (_, none)) f _ => 1 + tbl f + 0
-  | p => (Wg.costFin p).getD 0
+  | p => (BlsSlotCost.Table.costFin p).getD 0
 
-example : Wg.costFin ptS4 = some (cbd ptS4) := by decide_cbv
-example : Wg.costFin ptS212 = some (cbd ptS212) := by decide_cbv
-example : Wg.costFin ptS172 = some (cbd ptS172) := by decide_cbv
+example : BlsSlotCost.Table.costFin ptS4 = some (cbd ptS4) := by decide_cbv
+example : BlsSlotCost.Table.costFin ptS212 = some (cbd ptS212) := by decide_cbv
+example : BlsSlotCost.Table.costFin ptS172 = some (cbd ptS172) := by decide_cbv
 
 end InitECandidate.Solver.MemSafe.PtC

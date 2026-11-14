@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.ReaderCost.Insert
 import InitECandidate.Solver.Band7.Ms
 import InitECandidate.Solver.MemSafe.Trie.MpsPost
 
@@ -114,8 +115,7 @@ theorem ms8_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
       rw [hum, hub, hbe]; exact hKN
     exact Band.delPre_of_G (MemSafe.G_congr hF.hH hum hug hud hub hG') hroot' hKN'
   · -- insert
-    exact Inv.costP_of_cost (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "_mpt_insert_node")
-      (B := bIns) rfl) (by intro _ _ _ _ h; cases h))
+    exact Inv.costP_of_cost (cost_call (MemSafe.ReaderCost.Insert.callee_cost) (by intro _ _ _ _ h; cases h))
 
 theorem ms8_condCost_R :
     CondCost σ guestCtx guestC (MemSafe.Hooks.guestHooksR (σ := σ)) (nm "mpt_set") msSig MsPre8 msB :=

@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BlsCost.HotSeed
 import InitECandidate.Solver.Band3.OpSload
 import InitECandidate.Solver.MemSafe.Shards.CtabFind
 
@@ -98,11 +99,12 @@ theorem code_oss : guestCode (nm "op_sstore") = some ([], ossBody, .one) :=
 
 /-! ## The cost -/
 
-def ossSufB : Nat := 326409290240107399936220917735436454888450552777895168705506
+def ossSufB : Nat := 1135522258986882073918340743116000227008344
 
 set_option cbv.maxSteps 4000000000 in
 theorem ossSuf_cost : Cost σ guestCtx ossSuf ossSufB :=
-  cost_guest_of_costA (by decide_cbv)
+  InitECandidate.Solver.MemSafe.PairCost.Core.analyze_sound
+    InitECandidate.Solver.MemSafe.BlsCost.Callers.table0_sound (by cbv)
 
 theorem cs_rns : CSumm σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "require_not_static")
     ⟨[], [], [], false⟩ [] :=

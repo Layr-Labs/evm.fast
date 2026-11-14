@@ -18,12 +18,12 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_201 : cbd ptS201 = 340282366920938464441052043338374447207 := by
+theorem cbk_201 : cbd ptS201 = 36893490140283929151 := by
   unfold ptS201
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_200 : cbd ptS200 = 340282366920938464441052043338374447207 := by
+theorem cbk_200 : cbd ptS200 = 36893490140283929151 := by
   unfold ptS200
   try simp only [callD, cbd, cbk_201]
   try decide_cbv

@@ -22,7 +22,7 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 variable {σ : Type}
 
 /-- The literal bound. -/
-def bPtLit : Nat := 16204032641583379049778956913190459000083121086897349710179716242708212326592831950884461
+def bPtLit : Nat := 216943550431173243783528435814325577687386673762003517517815241967906
 
 theorem bPt_eq : bPt = bPtLit := by
   unfold bPt ptBody

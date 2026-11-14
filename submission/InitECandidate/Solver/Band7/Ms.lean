@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.ReaderCost.Insert
 import InitECandidate.Solver.Band4.Inst
 
 set_option autoImplicit false
@@ -71,8 +72,7 @@ theorem ms7_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
     rcases hdel with h | h
     · exact hvp0 h
     · exact hvl0 h
-  · exact Inv.costP_of_cost (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "_mpt_insert_node")
-      (B := bIns) rfl) (by intro _ _ _ _ h; cases h))
+  · exact Inv.costP_of_cost (cost_call (MemSafe.ReaderCost.Insert.callee_cost) (by intro _ _ _ _ h; cases h))
 
 theorem ms7_condCost_R :
     CondCost σ guestCtx guestC (MemSafe.Hooks.guestHooksR (σ := σ)) (nm "mpt_set") msSig MsPre7 msB :=

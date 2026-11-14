@@ -21,8 +21,8 @@ open InitECandidate.Solver.MemSafe.Ptx
 variable {σ : Type}
 
 
-theorem lookup_inc : Shards.finalState.1.lookup (nm "incorporate_tx_into_block") = none := by decide_cbv
-theorem lookup_pmc : Shards.finalState.1.lookup (nm "process_message_call") = none := by decide_cbv
+theorem lookup_inc : BlsSlotCost.Callers.table12 (nm "incorporate_tx_into_block") = none := by decide_cbv
+theorem lookup_pmc : BlsSlotCost.Callers.table12 (nm "process_message_call") = none := by decide_cbv
 
 theorem tbl_inc : tbl (nm "incorporate_tx_into_block") = Wg.bInc := by
   unfold tbl; rw [lookup_inc]
