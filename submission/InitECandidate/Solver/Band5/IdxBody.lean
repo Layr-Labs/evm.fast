@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band5.GptsSumm
 
 set_option autoImplicit false
@@ -69,11 +70,10 @@ theorem code_is : guestCode (nm "idx_start_storage") = some (params_wgs, isBody,
   code_of_entry (List.getElem_mem (l := Guest.Software.guestAst) (n := 423) (by decide)) ⟨_, rfl⟩
     entry_is
 
-def sufB : Nat := 340282366920938464588625995928050860151
+def sufB : Nat := 2336462209681
 
 /-- The all-states suffix after `get_pre_tx_storage`. -/
-theorem cost_suf : Cost σ guestCtx isSuf sufB :=
-  cost_guest_of_costA (by decide_cbv)
+theorem cost_suf : Cost σ guestCtx isSuf sufB := FqCost.CombCore.analyze_sound IncorpCost.Retable.table13_sound (by cbv)
 
 end InitECandidate.Solver.Band5
 

@@ -101,17 +101,15 @@ theorem ub_condCost :
     ⟨Γ, ⟨Struct.trk_refl hG hp, fun g _ => rfl⟩, fun x w h => absurd h (by simp [E0]), trivial⟩ hg
 
 /-- The literal bound. -/
-def bUB : Nat :=
-  4081774914776526801994342856258335214786233812941513267855060749915296337060237131737786
+def bUB : Nat := bAW
 
-theorem bAW_eq : bAW = bUB := by decide +kernel
+theorem bAW_eq : bAW = bUB := rfl
 
 /-- **`update_builder_from_tx`'s conditional cost, literal bound.**
 `CondCost … (nm "update_builder_from_tx") biSig UbPre bUB` (the shape of F3's `Ptx.HypUbCost σ bUB`). -/
 theorem ub_condCost_lit :
     CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "update_builder_from_tx") biSig UbPre
-      4081774914776526801994342856258335214786233812941513267855060749915296337060237131737786 :=
-  Inv.CalleeCostP.mono ub_condCost (by decide +kernel)
+      bUB := ub_condCost
 
 end InitECandidate.Solver.Band6
 

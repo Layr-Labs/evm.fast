@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band3.GetStorageOriginal
 import InitECandidate.Solver.MemSafe.Frames.BundleJ
 import InitECandidate.Solver.MemSafe.Shards.CtabFind
@@ -277,7 +278,7 @@ theorem gs_condCost
     -- `record_pre_state_read(addr)`
     refine costP_seq_callD_S hH (Aux' := AuxJ) (PreC := fun _ _ => True) cs_rpsr
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "record_pre_state_read") (B := bRpsr) rfl))
+        ReceiptCost.Retable.cc_record_pre_state_read)
       (fun _ _ _ _ _ _ => trivial)
       (fun s _ Γ p _ _ hA vs hvs callee => by
         obtain ⟨A, hAl, hb⟩ := hA.1

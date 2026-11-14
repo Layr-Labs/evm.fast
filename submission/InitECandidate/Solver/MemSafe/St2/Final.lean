@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BlsSlotCost.Dispatch.Main
 import InitECandidate.Solver.MemSafe.St2.Gao
 
 set_option autoImplicit false
@@ -49,7 +50,7 @@ theorem op_dispatch_condCost_St2' {M : Nat} {tV : Nat}
     (hLeaf : LeafLoc σ) (hDec : DecLoc σ) :
     CondCost σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch")
       (Frames.sg1 []) (Frames.PreOpX Types.guestC Types.tEV Types.tCK Frames.GP Frames.GR M)
-      (InitECandidate.Solver.Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Band3.oslB Band3.ossB))) :=
+      (InitECandidate.Solver.Band.odCostFactor * (1 + max InitECandidate.Solver.MemSafe.BlsSlotCost.Dispatch.handlerBound (max Band3.oslB Band3.ossB))) :=
   op_dispatch_condCost_St2 hS hWB (rootLoc_of_leaf_dec hLeaf hDec)
 
 end InitECandidate.Solver.MemSafe.St2

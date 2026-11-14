@@ -91,8 +91,8 @@ end InitECandidate.Solver.MemSafe.CsrCost
 
 namespace InitECandidate.Solver.MemSafe.CsrCost
 variable {σ : Type}
-def bound : Nat := 160589666025205711490680953245729752537823497788352528105427238848339667217942745829459
-theorem bound_eq : bCache = bound := by decide +kernel
+def bound : Nat := bCache
+theorem bound_eq : bCache = bound := rfl
 theorem hypCsrCost : InitECandidate.Solver.MemSafe.Eb.HypCsrCost σ bound :=
   InitECandidate.Solver.Spec.Inv.CalleeCostP.mono csr_condCostTight (by rw [bound_eq])
 #print axioms hypCsrCost

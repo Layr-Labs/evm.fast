@@ -88,7 +88,7 @@ theorem preP_of_fl {M : Nat} {msg : BitVec 64} {s : State σ} (hP : FL M msg s) 
   exact ⟨Γ, p, (G_locFree Hooks.guestHooksR_lawful s _ _).mpr hG,
     (ptrsOf_congr rfl).trans hp, argsOK_any (by simp [sg1]) rfl, msg, rfl, hfo⟩
 
-def pmcB (M Bop : Nat) : Nat := 2 ^ 202 + pcmB M Bop
+def pmcB (M Bop : Nat) : Nat := bDEP + bALLOC + bMZ + 5 + pcmB M Bop
 
 def pbCall (M Bop : Nat) : Nat :=
   max (1 + bDEP + (max 0 0 + (1 + pcmB M Bop + 0))) (1 + pmB M Bop + 0)
@@ -294,11 +294,7 @@ theorem pmc_condCost (hF : FHypsB σ) (hD0 : D0Spec σ) {M Bop : Nat} (hM : M < 
   obtain rfl : A = .val (.word msg) := List.head_eq_of_cons_eq hvs
   refine (Inv.CostP.mono (pmc_body M msg hF hD0 hM hop) ?_) s hs
     ⟨⟨Γ, p, hG, hp, hfo⟩, by rw [hloc]; exact hlk⟩ hg
-  have h202 : bDEP + bMZ + 100 ≤ 2 ^ 202 := by unfold bDEP bMZ; decide
-  unfold pb0 pbAl pbMz pbFr pbCall pmcB pcmB bALLOC
-  generalize pmB M Bop = P
-  generalize (2 : Nat) ^ 201 = U
-  generalize (2 : Nat) ^ 202 = V at h202 ⊢
+  unfold pb0 pbAl pbMz pbFr pbCall pmcB pcmB
   omega
 
 end InitECandidate.Solver.MemSafe.Entry2
