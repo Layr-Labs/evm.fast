@@ -18,12 +18,12 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_201 : cbd ptS201 = 340282366920938464441052043338374447207 := by
+theorem cbk_201 : cbd ptS201 = 2061584302657 := by
   unfold ptS201
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_200 : cbd ptS200 = 340282366920938464441052043338374447207 := by
+theorem cbk_200 : cbd ptS200 = 2061584302657 := by
   unfold ptS200
   try simp only [callD, cbd, cbk_201]
   try decide_cbv
@@ -48,7 +48,7 @@ theorem cbk_196 : cbd ptS196 = 0 := by
   try simp only [callD, cbd, cbk_197]
   try decide_cbv
 
-theorem cbk_195 : cbd ptS195 = 680564733841876927664618977811918487622 := by
+theorem cbk_195 : cbd ptS195 = 633825300925771440884925071686 := by
   unfold ptS195
   try simp only [callD, cbd]
   try decide_cbv
@@ -58,12 +58,12 @@ theorem cbk_194 : cbd ptS194 = 0 := by
   try simp only [callD, cbd, cbk_196]
   try decide_cbv
 
-theorem cbk_193 : cbd ptS193 = 680564733841876927664618977811918487622 := by
+theorem cbk_193 : cbd ptS193 = 633825300925771440884925071686 := by
   unfold ptS193
   try simp only [callD, cbd, cbk_194, cbk_195]
   try decide_cbv
 
-theorem cbk_192 : cbd ptS192 = 680564733841876927664618977811918487625 := by
+theorem cbk_192 : cbd ptS192 = 633825300925771440884925071689 := by
   unfold ptS192
   try simp only [callD, cbd, cbk_193]
   try decide_cbv

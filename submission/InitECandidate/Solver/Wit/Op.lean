@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BlsSlotCost.Dispatch.Main
 import InitECandidate.Solver.Band.Disp
 import InitECandidate.Solver.Wit.WsTrie
 
@@ -31,8 +32,8 @@ theorem op_dispatch_condCost_R {M Bsl Bss : Nat}
     (hss : CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_sstore") (sg0 [])
       (PreOpX guestC tEV tCK GP GR M) Bss) :
     CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch") (sg1 [])
-      (PreOpX guestC tEV tCK GP GR M) (Band.odCostFactor * (1 + max InitECandidate.Solver.Band.odTabBound (max Bsl Bss))) :=
-  Band.op_dispatch_condCost Hooks.guestHooksR_lawful hsl hss
+      (PreOpX guestC tEV tCK GP GR M) (Band.odCostFactor * (1 + max InitECandidate.Solver.MemSafe.BlsSlotCost.Dispatch.handlerBound (max Bsl Bss))) :=
+  InitECandidate.Solver.MemSafe.BlsSlotCost.Dispatch.op_dispatch_condCost Hooks.guestHooksR_lawful hsl hss
 
 end InitECandidate.Solver.Wit
 

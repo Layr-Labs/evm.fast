@@ -21,7 +21,7 @@ open InitECandidate.Solver.MemSafe.Trie
 
 variable {σ : Type}
 
-def bRoot : Nat := 1 + Band2.mrB + 0
+def bRoot : Nat := 1 + InitECandidate.Solver.MemSafe.MptTightCost.Mpt.mrB + 0
 def bTailC : Nat := (1 + 0 + 0) + 0
 def bRest : Nat := bRoot + bTailC
 def bK3 : Nat := bLoop + bRest
