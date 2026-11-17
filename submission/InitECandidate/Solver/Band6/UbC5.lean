@@ -32,9 +32,30 @@ theorem c_rest_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.
       (.seq (.assign .local (nm "cap") (ld1 (add2 (lvv "outer") 24)))
         (.seq (.assign .local (nm "i") (cw 0)) (.seq ubLoop2 (.return (cw 0))))) bRB := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
-  refine Inv.costP_seq (R := PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
-    (Inv.costP_of_cost (cost_assign _ _ _)) (inv_of_hoareG (hassignU hH ?_)) ?_
-  · simp (config := {decide := true}) [Eb, E0, Env.set]
+  have hcapPost : Hoare σ guestCtx
+      (PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
+      (.assign .local (nm "cap") (ld1 (add2 (lvv "outer") 24)))
+      (fun r t => r = none → BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) t) := by
+    refine BuilderTableLocalFacts.assign_local_cap ?_
+    intro s' hs' hP v hv
+    obtain ⟨Γ, hIV, hLL, S, hS, hSb, hSt⟩ := hP
+    apply BuilderTableLocalFacts.typed_count_load (Struct.trk_G hIV.1) hS
+      (by rw [hSt]; decide) ?_ hv
+    rw [hSb]
+    exact le_ev ⟨hLL, S, hS, hSb, hSt⟩ (env_set_self _ _ _)
+  refine Inv.costP_seq (R := fun s =>
+    PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O) s ∧
+      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s)
+    (Inv.costP_of_cost (cost_assign _ _ _)) ?_ ?_
+  · have hset : Hoare σ guestCtx
+        (PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
+        (.assign .local (nm "cap") (ld1 (add2 (lvv "outer") 24)))
+        (fun r t => r = none →
+          PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O) t) := by
+      exact inv_of_hoareG (hassignU hH
+        (by simp (config := {decide := true}) [Eb, E0, Env.set]))
+    intro s' hs' hP ht hr
+    exact ⟨hset s' hs' hP ht hr, hcapPost s' hs' hP ht hr⟩
   have hA2 : HoareG σ guestCtx (PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
       (.assign .local (nm "i") (cw 0))
       (RR ubc Γ0 s0 p0 (LE (EL2 (Eb IDX) O (BitVec.ofNat 64 0)) (FL2 O))) := by
@@ -45,8 +66,14 @@ theorem c_rest_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.
       exact (Option.some.inj hv).symm
     · subst hv'
       exact hl
-  refine Inv.costP_seq (R := PE ubc Γ0 s0 p0 (EL2 (Eb IDX) O (BitVec.ofNat 64 0)) (FL2 O))
-    (Inv.costP_of_cost (cost_assign _ _ _)) (inv_of_hoareG hA2) ?_
+  refine Inv.costP_seq (R := fun s =>
+    PE ubc Γ0 s0 p0 (EL2 (Eb IDX) O (BitVec.ofNat 64 0)) (FL2 O) s ∧
+      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s)
+    (Inv.costP_of_cost (cost_assign _ _ _)) ?_ ?_
+  · intro s' hs' hP ht hr
+    exact ⟨inv_of_hoareG hA2 s' hs' hP.1 ht hr,
+      BuilderTableLocalFacts.local_cap_kept
+        (keeps_assign .local _ (Or.inr (by decide))) hP.2 (Or.inl hr)⟩
   refine Inv.costP_seq (R := fun _ => True) (c_loop2 hGT Ent hgs (IDX := IDX) (E := Eb IDX) ?_ ?_ O)
     (fun s _ _ _ _ => trivial) (Inv.costP_of_cost (cost_return _))
   · intro x hx
