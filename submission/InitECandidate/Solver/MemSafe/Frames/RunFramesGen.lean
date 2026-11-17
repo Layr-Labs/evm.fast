@@ -1,9 +1,10 @@
+import InitECandidate.Solver.Improvements.AcceptedExactWhileCost
 import InitECandidate.Solver.MemSafe.Frames.RunFramesCode
 
 /-!
 # `run_frames`: the conditional cost from abstract callee specifications
 
-`run_frames_costP_gen`: the loop of `run_frames` costs at most `(M + 2) * (Bb + 1)` ticks from
+`run_frames_costP_gen`: the loop of `run_frames` costs at most `(M + 1) * (Bb + 1)` ticks from
 every state satisfying `J s ∧ Φ s ≤ M`, given four callee specifications stated against an
 arbitrary state predicate `J` and measure `Φ` (both blind to locals and the clock):
 
@@ -221,7 +222,7 @@ structure RFHyps (σ : Type) (X : Ctx 64) (J : State σ → Prop) (Φ : State σ
 def rfIterB (Bop Bexc Bepi Bfin : Nat) : Nat := (Bop + Bexc + 2) + (Bepi + Bfin + Bexc + 3)
 
 /-- The bound of `run_frames`. -/
-def rfB (M Bop Bexc Bepi Bfin : Nat) : Nat := (M + 2) * (rfIterB Bop Bexc Bepi Bfin + 1)
+def rfB (M Bop Bexc Bepi Bfin : Nat) : Nat := (M + 1) * (rfIterB Bop Bexc Bepi Bfin + 1)
 
 section proof
 variable {J : State σ → Prop} {Φ : State σ → Nat} {M Bop Bexc Bepi Bfin : Nat}
@@ -594,8 +595,8 @@ theorem loopBody_cost (H : RFHyps σ X J Φ M Bop Bexc Bepi Bfin) :
 
 theorem loop_cost (H : RFHyps σ X J Φ M Bop Bexc Bepi Bfin) :
     Spec.Inv.CostP σ X (rfI J Φ M) (.while rfCond rfLoopBody)
-      ((M + 1 + 1) * (rfIterB Bop Bexc Bepi Bfin + 1)) := by
-  refine Spec.Inv.costP_while (rfμ Φ) (M + 1) ?_ ?_ ?_ ?_ ?_ ?_
+      ((M + 1) * (rfIterB Bop Bexc Bepi Bfin + 1)) := by
+  refine AcceptedExactWhileCost.costP_while_exact (rfμ Φ) (M + 1) ?_ ?_ ?_ ?_ ?_ ?_ ?_
   · intro s ⟨g, hg, h⟩
     exact ⟨g, hg, fun h0 => ⟨(H.hJ.dec s).mpr (h h0).1, by rw [H.hΦ.dec]; exact (h h0).2⟩⟩
   · intro s
@@ -611,6 +612,9 @@ theorem loop_cost (H : RFHyps σ X J Φ M Bop Bexc Bepi Bfin) :
     have hg0 := condTrue_go hg hc
     rw [rfμ_of_ne hg hg0]
     have := (h hg0).2
+    omega
+  · intro s _ ⟨g, hg, h⟩ hc
+    rw [rfμ_of_ne hg (condTrue_go hg hc)]
     omega
   · intro k s hs hp ht hr
     exact (iter_hoare H k s hs hp ht).2.2
@@ -628,7 +632,7 @@ theorem run_frames_costP_gen (H : RFHyps σ X J Φ M Bop Bexc Bepi Bfin) :
   · subst ht
     exact ⟨1, lk_set_self _ _ _, fun _ => ⟨(H.hJ.setVar _ _ _).mpr hJs,
       by rw [H.hΦ.setVar]; exact hΦs⟩⟩
-  · unfold rfB; rw [show M + 1 + 1 = M + 2 by omega]; omega
+  · unfold rfB; omega
 
 end proof
 
