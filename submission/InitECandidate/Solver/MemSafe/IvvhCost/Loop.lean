@@ -1,6 +1,7 @@
 import InitECandidate.Solver.MemSafe.BalCost.Loop
 import InitECandidate.Solver.MemSafe.Exb.Ivvh
 import InitECandidate.Solver.Band.Rules
+import InitECandidate.Solver.Improvements.FourthDecoderAnalyzer
 set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option maxRecDepth 1000000
@@ -40,13 +41,13 @@ theorem pre_of_ivPre {Γ : Gam} {vs : List (ValueHOL 64)} {s : State σ}
   obtain ⟨SI, hvs, hE⟩ := h
   exact ⟨SI, hvs, sla_count_bound hG hE.1⟩
 
-def outerB : Nat := (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin ivOuter).getD 0
+def outerB : Nat := (FourthDecoderAnalyzer.costFin ivOuter).getD 0
 
 theorem cost_outer : Cost σ guestCtx ivOuter outerB := by
-  have hs : (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin ivOuter).isSome = true := by decide_cbv
+  have hs : (FourthDecoderAnalyzer.costFin ivOuter).isSome = true := by decide_cbv
   obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hs
   simpa [outerB, hB] using
-    (InitECandidate.Solver.MemSafe.BalCost.Analyzer.cost_guest_costA (σ := σ) hB)
+    (FourthDecoderAnalyzer.cost_guest_costA (σ := σ) hB)
 
 theorem outer_steps : Steps σ (nm "i") (· + 1) ivOuter :=
   stepsB_sound (nm "i") true ivOuter (by decide +kernel)
