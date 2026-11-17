@@ -1,8 +1,7 @@
 import InitECandidate.Solver.MemSafe.Init.Fold
 
-/-! Exact arithmetic bound and a conservative short-decimal public claim.
-The rounded claim avoids a score-conversion failure observed on an earlier
-accepted public submission. The kernel proves the claimed bound is sufficient. -/
+/-! The checked source bound, converted using the sharper compiler step bound
+and rounded up for the public score. -/
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -11,10 +10,19 @@ set_option maxHeartbeats 0
 namespace InitECandidate.Solver.MemSafe.Init
 open InitE
 
-abbrev preciseK : Nat := 42328476279404279156249570145349508277781339958205766117188338423770182257841618139301491843459766399488546951
-abbrev kLit : Nat := 42328476279404300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+abbrev preciseK : Nat := 803053928893475711732071576597284896856358823057213292957950350278323330724996341354
+abbrev kLit : Nat := 803053928893476000000000000000000000000000000000000000000000000000000000000000000000
 
-theorem preciseK_eq : Final.totalBoundSrc bMain = preciseK := by decide +kernel
+private theorem bMain_eq :
+    bMain = 5641225370585475491829723747810894596240895795392188999326330240508759 := by
+  decide +kernel
+
+theorem preciseK_eq : Final.totalBoundSrc bMain = preciseK := by
+  calc
+    Final.totalBoundSrc bMain = Final.totalBoundSrc
+        5641225370585475491829723747810894596240895795392188999326330240508759 :=
+      congrArg Final.totalBoundSrc bMain_eq
+    _ = preciseK := by decide +kernel
 
 theorem kLit_ge : Final.totalBoundSrc bMain ≤ kLit := by
   rw [preciseK_eq]

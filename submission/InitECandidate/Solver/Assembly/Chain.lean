@@ -25,7 +25,7 @@ passes:
 | Word → Stack | `entrySimulationB_makeInit` | `kw + ck`, `ck ≤ (Sw + 1) * kw + 1` |
 | stack sub-passes | `stackChain_entry_bounded` | `+ e + 1`, `e ≤ (kw + ck) + 1` |
 | Stack → Lab (`flatten`) | `stackCall_labHalt_bounded` | `K3 - 1 + ck2`, `ck2 ≤ (2Ss+2)(K3 - 1) + 4Ss` |
-| Lab → RISC-V | `machineLab_halt_bounded` | `≤ 7 * Klab + 7` steps |
+| Lab → RISC-V | `machineLab_halt_bounded` | `≤ 6 * Klab + 7` steps |
 
 The resource-limit branch of word → stack (`Halt 2`, stack overflow) is excluded by
 `wordLangSafeForSpace`, from Flapjack's `panToTargetResourceLimitOfSemantics` with the precise
@@ -44,7 +44,7 @@ open InitECandidate.Solver.Compiler.CrepToLoop (csize)
 open InitECandidate.Solver.Compiler.WordToStack (wsize)
 open InitECandidate.Solver.Compiler.StackPasses (noA okP)
 open InitECandidate.Solver.Compiler.Flatten (psize)
-open InitECandidate.Solver.Compiler.LabToTarget (LinesBounded)
+open InitECandidate.Solver.Improvements.CompilerSharp (LinesBounded)
 
 set_option autoImplicit false
 
@@ -52,9 +52,9 @@ set_option autoImplicit false
 clock ticks and code-size bounds `Sc` (crep, `csize`), `Sw` (word, `wsize`), `Ss` (stack,
 `psize` of the `stack_remove` output):
 
-`F = 7 * ((2 * Ss + 3) * (2 * ((Sw + 2) * ((Sc + 2) * (k + 1) + 3) + 1) + 1) + 4 * Ss) + 7`. -/
+`F = 6 * ((2 * Ss + 3) * (2 * ((Sw + 2) * ((Sc + 2) * (k + 1) + 3) + 1) + 1) + 4 * Ss) + 7`. -/
 def nativeStepBound (k Sc Sw Ss : Nat) : Nat :=
-  7 * ((2 * Ss + 3) * (2 * ((Sw + 2) * ((Sc + 2) * (k + 1) + 3) + 1) + 1) + 4 * Ss) + 7
+  6 * ((2 * Ss + 3) * (2 * ((Sw + 2) * ((Sc + 2) * (k + 1) + 3) + 1) + 1) + 4 * Ss) + 7
 
 theorem nativeStepBound_mono {k k' Sc Sw Ss : Nat} (h : k ≤ k') :
     nativeStepBound k Sc Sw Ss ≤ nativeStepBound k' Sc Sw Ss := by

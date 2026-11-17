@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BmiCost.Main
 import InitECandidate.Solver.Band7.Bmi2
 
 set_option autoImplicit false
@@ -21,10 +22,10 @@ open InitECandidate.Solver.MemSafe.Trie
 
 variable {σ : Type}
 
-def bRoot : Nat := 1 + Band2.mrB + 0
+def bRoot : Nat := 1 + InitECandidate.Solver.MemSafe.MptTightCost.Mpt.mrB + 0
 def bTailC : Nat := (1 + 0 + 0) + 0
 def bRest : Nat := bRoot + bTailC
-def bK3 : Nat := bLoop + bRest
+def bK3 : Nat := InitECandidate.Solver.MemSafe.BmiCost.Main.bLoop + bRest
 def bK2 : Nat := 1 + 3 + bK3
 def bTop : Nat := 1 + 0 + bK2
 
@@ -67,7 +68,7 @@ theorem c_k3 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hC
   · rw [ev_cw] at hv
     cases hv
     exact ⟨_, lv_new hL (kvB_fresh (Or.inl rfl)) _⟩
-  · refine Inv.costP_seq (R := GI a (Lloop M MK A N OUT) (EL a A N M)) (c_loop ha haC hCb haH hgr hcI) ?_
+  · refine Inv.costP_seq (R := GI a (Lloop M MK A N OUT) (EL a A N M)) (InitECandidate.Solver.MemSafe.BmiCost.Main.loop_cost ha haC hCb haH hgr hcI) ?_
       (c_rest ha haC hCb haH hOutB)
     intro s hs hp ht hr
     have := MemSafe.Frames.hoare_of_hoareG (bmi_loop ha haC hCb haH hgr hcI (M := M) (MK := MK) (A := A)

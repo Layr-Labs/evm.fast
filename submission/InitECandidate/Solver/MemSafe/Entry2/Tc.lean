@@ -1,3 +1,5 @@
+import InitECandidate.Solver.MemSafe.FrameCost.Main
+import InitECandidate.Solver.MemSafe.BlsCost.Callers.C12
 import InitECandidate.Solver.MemSafe.Entry2.Code
 
 /-!
@@ -20,17 +22,17 @@ variable {σ : Type}
 
 /-! ## Table costs -/
 
-def bDS : Nat := 6277101735386680784933296172305851154447142943680735740054
+def bDS : Nat := 680564775674346746799191251971613917902
 def bMA : Nat := 340282366920938464441052043338374447207
-def bINC : Nat := 332686391975494080721154213907742306042953035953797033100398
-def bCF : Nat := 332686391975494080722175061008505121435095600463094745138463
-def bSR : Nat := 6277101735386680783572166704622097299025671267688351006720
+def bINC : Nat := 175585701428813344356298136312999594500612
+def bCF : Nat := FrameCost.b_create_finish
+def bSR : Nat := FrameCost.Restore.bRestore
 
-theorem cc_ds : CalleeCost σ guestCtx (nm "destroy_storage") bDS := Wire.calleeCost_guest rfl
+theorem cc_ds : CalleeCost σ guestCtx (nm "destroy_storage") bDS := BlsCost.Callers.table12_sound _ _ (by cbv)
 theorem cc_ma : CalleeCost σ guestCtx (nm "mark_account_created") bMA := Wire.calleeCost_guest rfl
-theorem cc_inc : CalleeCost σ guestCtx (nm "increment_nonce") bINC := Wire.calleeCost_guest rfl
-theorem cc_cf : CalleeCost σ guestCtx (nm "create_finish") bCF := Wire.calleeCost_guest rfl
-theorem cc_sr : CalleeCost σ guestCtx (nm "state_restore") bSR := Wire.calleeCost_guest rfl
+theorem cc_inc : CalleeCost σ guestCtx (nm "increment_nonce") bINC := BlsCost.Callers.table12_sound _ _ (by cbv)
+theorem cc_cf : CalleeCost σ guestCtx (nm "create_finish") bCF := FrameCost.cc_create_finish
+theorem cc_sr : CalleeCost σ guestCtx (nm "state_restore") bSR := FrameCost.Restore.cc_restore
 theorem cc_refill : CalleeCost σ guestCtx (nm "refill_frame_state_gas") 0 :=
   Wire.calleeCost_guest rfl
 theorem cc_halt : CalleeCost σ guestCtx (nm "frame_halt") 0 := Wire.calleeCost_guest rfl
@@ -42,9 +44,9 @@ theorem cost_callD' {f : MlS} {B : Nat} (h : CalleeCost σ guestCtx f B) (args :
 
 /-- Bounds of the plain parts of `process_create_message`: the handler, the `then` branch, the
 continuation after `process_message`. -/
-def bHdl : Nat := 2 ^ 195
-def bThn : Nat := 2 ^ 199
-def bK6 : Nat := 2 ^ 200
+def bHdl : Nat := bSR + 3
+def bThn : Nat := 1 + bCF + bHdl
+def bK6 : Nat := bThn + 1 + bSR
 
 theorem cost_hdl : Cost σ guestCtx pcmHandler bHdl := by
   unfold pcmHandler
@@ -72,12 +74,12 @@ theorem cost_k6 : Cost σ guestCtx pcmK6 bK6 := by
 /-! ## `process_message_call` -/
 
 def bALLOC : Nat := 2
-def bMZ : Nat := 73786976294838206468
-def bDEP : Nat := 652818580480214799870400141269347278989553817020959127766233
+def bMZ : Nat := 137438953508
+def bDEP : Nat := 2269002823772238517049334197697169244371909
 
 theorem cc_alloc : CalleeCost σ guestCtx (nm "alloc") bALLOC := Wire.calleeCost_guest rfl
-theorem cc_mz : CalleeCost σ guestCtx (nm "memzero") bMZ := Wire.calleeCost_guest rfl
-theorem cc_dep : CalleeCost σ guestCtx (nm "account_deployable") bDEP := Wire.calleeCost_guest rfl
+theorem cc_mz : CalleeCost σ guestCtx (nm "memzero") bMZ := BlsCost.Callers.table12_sound _ _ (by cbv)
+theorem cc_dep : CalleeCost σ guestCtx (nm "account_deployable") bDEP := BlsCost.Callers.table12_sound _ _ (by cbv)
 theorem cc_fsgu : CalleeCost σ guestCtx (nm "frame_state_gas_used") 0 := Wire.calleeCost_guest rfl
 
 theorem cost_stores_dep : Cost σ guestCtx pmcStoresDep 0 := by
