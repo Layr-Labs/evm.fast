@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.ThirdCombinedSmallCryptoTable
 import InitECandidate.Solver.MemSafe.Frames.ChainXG
 import InitECandidate.Solver.MemSafe.Frames.Bundle
 import InitECandidate.Solver.MemSafe.Wire.Guest
@@ -276,12 +277,12 @@ def odNames : List MlS := nm "op_sload" :: nm "op_sstore" :: odTab
 
 /-- Every name of `fs` has a table entry `≤ Bt`. -/
 def tabLe (Bt : Nat) (fs : List MlS) : Bool :=
-  fs.all fun f => match Shards.finalState.1.lookup f with
+  fs.all fun f => match ThirdCombinedSmallCryptoTable.state.1.lookup f with
     | some b => Nat.ble b Bt
     | none => false
 
 theorem tabLe_get {Bt : Nat} {fs : List MlS} (h : tabLe Bt fs = true) {f : MlS} (hf : f ∈ fs) :
-    ∃ b, Shards.finalState.1.lookup f = some b ∧ b ≤ Bt := by
+    ∃ b, ThirdCombinedSmallCryptoTable.state.1.lookup f = some b ∧ b ≤ Bt := by
   unfold tabLe at h
   have := List.all_eq_true.mp h f hf
   revert this
@@ -292,7 +293,7 @@ theorem tabLe_get {Bt : Nat} {fs : List MlS} (h : tabLe Bt fs = true) {f : MlS} 
   · intro hd; cases hd
 
 /-- Exact maximum of the table-backed opcode-handler allowances. -/
-def odTabBound : Nat := 722542636840853059654558503919389819995198866782797404651516297577893288422075519
+def odTabBound : Nat := 1544167026905127216140758144950127657641528597016301293434388
 theorem odTab_le : tabLe odTabBound odTab = true := by decide +kernel
 
 /-- `op_dispatch`'s translated body. -/
@@ -431,7 +432,7 @@ theorem op_dispatch_condCost {M Bsl Bss : Nat}
     · obtain ⟨rs, hc⟩ := sstore_code
       exact (condCost_nil (by rw [guestCtx_code]; exact hc) rfl hss).mono (by omega)
     · obtain ⟨b, hb, hle⟩ := tabLe_get odTab_le hf
-      exact (Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hb))).mono (by omega)
+      exact (Inv.calleeCostP_of_calleeCost (ThirdCombinedSmallCryptoTable.callee_cost hb)).mono (by omega)
   intro vs body callee rs hl
   rw [guestCtx_code] at hl
   obtain ⟨rs', hc⟩ := od_code
