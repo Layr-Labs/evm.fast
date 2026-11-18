@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.MptTightCost.Seven
 import InitECandidate.Solver.Band7.Ms8
 import InitECandidate.Solver.Band7.Root
 import InitECandidate.Solver.Band7.Loop
@@ -36,9 +37,9 @@ def MrPre8 (vs : List (ValueHOL 64)) (s : State σ) (Γ : Gam) : Prop :=
   ∃ m out : BitVec 64, vs = [.val (.word m), .val (.word out)] ∧ Fits Γ nodeU (rd s.memory m)
 
 theorem mr8_condCost :
-    CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "mpt_root") (mrSig false) MrPre8 Band2.mrB := by
+    CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "mpt_root") (mrSig false) MrPre8 InitECandidate.Solver.MemSafe.MptTightCost.Mpt.mrB := by
   intro vs body callee rs hl
-  refine (mpt_root7_costP vs body callee rs hl).pre ?_
+  refine (InitECandidate.Solver.MemSafe.MptTightCost.Seven.mpt_root7_costP vs body callee rs hl).pre ?_
   rintro s hs ⟨hloc, Γ, p, hG, hp, hargs, m, out, rfl, hroot⟩
   refine ⟨hloc, m, .val (.word out), rfl, p, hp, ?_⟩
   obtain ⟨p0, hp0, hord, -⟩ := id hG

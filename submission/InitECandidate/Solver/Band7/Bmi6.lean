@@ -14,15 +14,14 @@ open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 
 variable {σ : Type}
 
-def bBmi : Nat :=
-  6484356997289713489883399332781977854032012983525739547991540440757885346705771
+def bBmi : Nat := bTop
 
-theorem bTop_eq : bTop = bBmi := by decide +kernel
+theorem bTop_eq : bTop = bBmi := rfl
 
 /-- **`build_mpt_indexed`'s conditional cost, literal bound** (about `2^261`). -/
 theorem hypBmiCost_lit :
-    MemSafe.Eb.HypBmiCost σ 6484356997289713489883399332781977854032012983525739547991540440757885346705771 :=
-  Inv.CalleeCostP.mono bmi_condCost7 (by rw [bTop_eq]; exact le_refl _)
+    MemSafe.Eb.HypBmiCost σ bBmi :=
+  Inv.CalleeCostP.mono bmi_condCost7 (Nat.le_refl _)
 
 end InitECandidate.Solver.Band7
 

@@ -119,9 +119,9 @@ theorem costFin_siK : costFin siK = some 113 := by decide_cbv
 def bSiE : Nat := (1 + 2 + 0) + (0 + (0 + (0 + (1 + Band.dwtmB + 113))))
 
 /-- **The cost of `state_init`.** -/
-def bSi : Nat := 11995256898787295895331913460614438285804549968127
+def bSi : Nat := bSiE
 
-theorem bSiE_eq : bSiE = bSi := by decide
+theorem bSiE_eq : bSiE = bSi := rfl
 
 theorem hypSiCost : HypSiCost σ bSi := by
   have hX := (Rec.foldOK_guestR (σ := σ)).hX

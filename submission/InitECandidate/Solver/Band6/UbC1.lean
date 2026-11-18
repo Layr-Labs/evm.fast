@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band6.Loop
 import InitECandidate.Solver.MemSafe.Frames.FinCost
 
@@ -86,10 +87,10 @@ end c1
 
 /-! ## Loop 1 -/
 
-def bL1 : Nat := 1138584800289170520087426632502556961578547
+def bL1 : Nat := 337828885944495763781766038495084
 
 set_option cbv.maxSteps 4000000000 in
-theorem cost_l1 : Cost σ guestCtx ubL1Body bL1 := cost_guest_of_costA (by decide_cbv)
+theorem cost_l1 : Cost σ guestCtx ubL1Body bL1 := FqCost.CombCore.analyze_sound IncorpCost.Retable.table13_sound (by cbv)
 
 section c2
 variable {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs}

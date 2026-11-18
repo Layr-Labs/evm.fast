@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Compiler.LabToTarget
+import InitECandidate.Solver.Improvements.CompilerSharp
 import Flapjack.Compiler.Backend.LabToTarget.SemanticsCompileFinal
 import Flapjack.Pancake.Proofs.PanToTarget.AssemblyTop
 
@@ -19,7 +19,7 @@ three semantics equalities there; each has a clock-level form:
 
 `semanticsCompile_halt_bounded`: under the premises of `semanticsCompile`, `noInstall code` and
 `LinesBounded 24` of the `removeLabels` output, a halting lab run of `labst` from clock `K` gives
-a halting target run within `7 * K + 7` steps, same outcome and final FFI state.
+a halting target run within `6 * K + 7` steps, same outcome and final FFI state.
 `machineLab_halt_bounded` is the same at the premises of the baseline chain's stage A4
 (`panToTargetMachineLab`).
 -/
@@ -32,8 +32,7 @@ open Flapjack.Compiler.Backend.LabProps.LabelSets Flapjack.Compiler.Backend.LabT
 open Flapjack.Compiler.Encoders.Asm Flapjack.Misc Flapjack.Compiler.Backend.LabFilter
 open Flapjack.Compiler.Backend.LabToTarget.FilterSkip
 open Flapjack.RiscV.L3 Flapjack.Compiler.Encoders.RiscV.Target
-open InitECandidate.Solver.Compiler.LabToTarget (LinesBounded riscv_bytes_per_step
-  makeInit_labHalt_target_bounded)
+open InitECandidate.Solver.Improvements.CompilerSharp (LinesBounded riscv_bytes_per_step)
 
 set_option autoImplicit false
 
@@ -160,7 +159,7 @@ end
 /-- **Lab → RISC-V, clock level, at `semanticsCompile`'s initial state.** Under the premises of
 Flapjack's `semanticsCompile`, `noInstall code` and `LinesBounded 24` for the target code of the
 `removeLabels` call of `LabToTarget.compile`, a lab run of the byte-aligned initial state that
-halts from clock `K` is matched by a halting RISC-V run within `7 * K + 7` steps, with the
+halts from clock `K` is matched by a halting RISC-V run within `6 * K + 7` steps, with the
 same outcome and final FFI state. -/
 theorem semanticsCompile_halt_bounded {F : Type}
     (mc : MachineConfig 64 riscv_state RiscVProjection) (htarget : mc.target = riscvTarget)
@@ -193,7 +192,7 @@ theorem semanticsCompile_halt_bounded {F : Type}
         (fun a => sdm a && holByteAligned a) ms code (compile asmConf)
         (mc.target.getPc ms + BitVec.ofNat 64 bytes.length) cbspace coracle with clock := K } =
       (.halt o, t3)) :
-    ∃ (N : Nat) (ms' : riscv_state), N ≤ 7 * K + 7 ∧
+    ∃ (N : Nat) (ms' : riscv_state), N ≤ 6 * K + 7 ∧
       evaluateTargetHOL mc ffi N ms = (.halt o, ms', t3.ffi) := by
   obtain ⟨hmc,horacle,hgood,hasm,hlabs,hpos,hcompile,hffi,hinit,hboundary,
     hentries,hmmio,hsafe,hbound,hprovided⟩ := h
@@ -328,18 +327,18 @@ theorem semanticsCompile_halt_bounded {F : Type}
           exitPc := (mc.target.getPc ms).toNat+rec.exitPc })
         have hgoodNat : goodCode mc.target.config (.ln : Spt (Spt Nat)) code := by
           simpa only [hlabs] using hgood
-        refine (fun key => ?_) (makeInit_labHalt_target_bounded (G := Nat)
-          InitECandidate.Solver.EncoderBound.riscvStepBound 4 24 mc ms ffi (filterSkip code) code2 labs c.initClock i cbspace t m
+        refine (fun key => ?_) (InitECandidate.Solver.Improvements.CompilerSharp.makeInit_labHalt_target_bounded (G := Nat)
+          InitECandidate.Solver.EncoderBound.riscvStepBound 4 24 InitECandidate.Solver.Improvements.CompilerSharp.sharp24 mc ms ffi (filterSkip code) code2 labs c.initClock i cbspace t m
           dm sdm (fun n => ((coracle n).1,filterSkip (coracle n).2)) newNames info shiftedInfo
-          (by rw [htarget]; exact InitECandidate.Solver.EncoderBound.riscv_encoder_correct_bounded)
+          (by rw [htarget]; exact InitECandidate.Solver.Improvements.CompilerSharp.riscv_encoder_generic)
           (by decide) (riscv_bytes_per_step mc htarget) (noInstall_filterSkip code hni) hLB
           ⟨goodCodeFiltered' _ _ _ hgoodNat, hmc, ?_, ?_, ?_, hinit, hinfo, rfl, hdrop,
             hboundary, ?_, ?_, ?_, ?_⟩ K o z hz)
         · obtain ⟨N, ms', hN, hrun⟩ := key
           refine ⟨N, ms', ?_, ?_⟩
-          · have : 24 / 4 + 1 = 7 := rfl
+          · have : 24 / 4 = 6 := rfl
             rw [this] at hN
-            have hle : 7 * (K - z.clock) ≤ 7 * K := Nat.mul_le_mul_left _ (Nat.sub_le _ _)
+            have hle : 6 * (K - z.clock) ≤ 6 * K := Nat.mul_le_mul_left _ (Nat.sub_le _ _)
             omega
           · rw [hrun N le_rfl, hzffi]
             rfl
@@ -367,7 +366,7 @@ theorem semanticsCompile_halt_bounded {F : Type}
 open Flapjack.Pancake.PanLang Flapjack.Pancake.Proofs.PanToTarget in
 /-- **Stage A4 at the clock level** (`panToTargetMachineLab`, `AssemblyMachineToLab.lean`):
 under the premises of the baseline chain's machine-to-lab stage, a lab run of the initial lab
-state `labst` that halts from clock `K` is matched by a halting RISC-V run within `7 * K + 7`
+state `labst` that halts from clock `K` is matched by a halting RISC-V run within `6 * K + 7`
 steps, same outcome and final FFI state. `noInstall` of the lab program is
 `from_pan_to_lab_no_install`; the only extra premise is `LinesBounded 24` of the target code. -/
 theorem machineLab_halt_bounded {σ : Type}
@@ -434,7 +433,7 @@ theorem machineLab_halt_bounded {σ : Type}
         mc.target.config.addrOffset sp []))
     ∀ (K : Nat) (o : HolOutcome) (t3 : LabSem.State 64 LabToTarget.Config σ),
       evaluate { labst with clock := K } = (.halt o, t3) →
-      ∃ (N : Nat) (ms' : riscv_state), N ≤ 7 * K + 7 ∧
+      ∃ (N : Nat) (ms' : riscv_state), N ≤ 6 * K + 7 ∧
         evaluateTargetHOL mc ffi N ms = (.halt o, ms', t3.ffi) := by
   intro regNames r1 r2 heapStackDm sp maxHeap labst K o t3 hev
   have hpos : c.labConf.pos = 0 := hcfg.2.2.2.2.1

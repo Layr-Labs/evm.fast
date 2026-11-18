@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.StorageCost.Root
 import InitECandidate.Solver.Band.Rules
 import InitECandidate.Solver.Spec.Mpt.Leaves.Slices
 import InitECandidate.Solver.MemSafe.Wire.Guest
@@ -45,19 +46,13 @@ variable {σ : Type}
 /-! ## The root's entry in the challenge context -/
 
 /-- `_decode_witness_node_body`'s bound with the table costs of its callees. -/
-def decBG : Nat :=
-  decB 610466566584485109304066731080843672970071
-    174224571957326637822053171064618402978918
-    174224571957326637821960937344249855220822 3 0
+def decBG : Nat := MemSafe.StorageCost.decBound
 
 /-- **The decode root** in `guestCtx` (`Leaves.decode_witness_node_body_costP_final` with the
 table costs). -/
 theorem decRoot :
     Inv.CalleeCostP σ guestCtx (nm "_decode_witness_node_body") (DecPre NdbW) decBG :=
-  Spec.Mpt.Leaves.decode_witness_node_body_costP_final guestCtx_code
-    MemSafe.Helpers.alignedDom_guestCtx (MemSafe.Wire.calleeCost_guest rfl)
-    (MemSafe.Wire.calleeCost_guest rfl) (MemSafe.Wire.calleeCost_guest rfl)
-    (MemSafe.Wire.calleeCost_guest rfl) (MemSafe.Wire.calleeCost_guest rfl)
+  MemSafe.StorageCost.decode_root
 
 theorem ptrsOf_glob {s t : PanSemStateFiniteExact 64 σ} (hg : t.globals = s.globals) :
     ptrsOf t = ptrsOf s := by

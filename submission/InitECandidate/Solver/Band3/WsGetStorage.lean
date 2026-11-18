@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.TrieStorage.Main
 import InitECandidate.Solver.Band3.Core
 import InitECandidate.Solver.MemSafe.Shards.CtabFind
 
@@ -72,9 +73,9 @@ theorem code_wgs : guestCode (nm "ws_get_storage") = some (params_wgs, wgsBody, 
 
 /-! ## The cost -/
 
-def bRoot : Nat := 1133820847152277381595526740344875939568889
+def bRoot : Nat := TrieStorage.bRoot
 def bMemeq : Nat := 73786976294838206468
-def wgsSufB : Nat := 349129708610465634469517518663856120929631
+def wgsSufB : Nat := TrieStorage.bSuffix
 def wgsB : Nat := 1 + bRoot + (1 + bMemeq + (max 0 0 + (1 + Wit.wstB + wgsSufB)))
 
 /-- `ws_get_storage`'s signature (`Sigs1`). -/
@@ -82,7 +83,7 @@ def wgsSig : Sig := ⟨[.any, .any], [], [], true⟩
 
 set_option cbv.maxSteps 4000000000 in
 theorem wgsSuf_cost : Cost σ guestCtx wgsSuf wgsSufB :=
-  cost_guest_of_costA (by decide_cbv)
+  TrieStorage.suffix_cost
 
 /-- The signature used for the `ws_storage_trie` call (`wst_condCost` holds for any). -/
 def wstSigA : Sig := ⟨[.any], [], [], true⟩
@@ -113,7 +114,7 @@ theorem wgs_condCost
     unfold wgsBody wgsB
     refine costP_decCall_S hH (Aux' := fun _ _ _ => True) (PreC := fun _ _ => True) cs_root
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "ws_storage_root_of") (B := bRoot) rfl))
+        TrieStorage.cc_ws_storage_root_of)
       (fun _ _ _ _ _ _ => trivial)
       (fun s _ Γ p _ _ _ vs hvs callee =>
         ⟨hargs_any (by simp) rfl hvs, reqOK_nil⟩)
