@@ -1,3 +1,5 @@
+import InitECandidate.Solver.Improvements.SeventhDelegation
+import InitECandidate.Solver.Improvements.EntryFreshCallees
 import InitECandidate.Solver.MemSafe.Entry.Steps3
 import InitECandidate.Solver.Band3.Core
 
@@ -56,9 +58,9 @@ theorem d0Handler_nn (s : State σ) : (evaluateHOLFiniteState s d0Handler).1 ≠
 /-! ## Table costs -/
 
 def bFO : Nat := 239807672958224171065
-def bD0 : Nat := 30337527380176843224916464091041032295438964326125188449899630732887336413619670
+def bD0 : Nat := 115792089237316248289321826800802872450442216321045040316754590360769677917020
 def bFS : Nat :=
-  722542636840853059655186214092928488060579075102645600925209800046382126816869629
+  1519058619963580483919569147301215169394811446181349804834174
 def bH : Nat := 6277101735386680783572166704622097299025671267688351006725
 
 set_option cbv.maxSteps 4000000000 in
@@ -75,8 +77,11 @@ def PmPre (M : Nat) (vs : List (ValueHOL 64)) (s : State σ) (Γ : Gam) : Prop :
 def bRF (M Bop : Nat) : Nat :=
   rfB M Bop 2 (max (1 + Wire.srBGuest + 0) 0 + 0) (finBnd Wire.finBsGuest)
 
+/-- Exact fixed prefix budget of the existing structural cost walk. -/
+def pmPrefixB : Nat := bFO + bD0 + bFS + bH + 6
+
 /-- `process_message`'s bound. -/
-def pmB (M Bop : Nat) : Nat := 2 ^ 269 + bRF M Bop
+def pmB (M Bop : Nat) : Nat := pmPrefixB + bRF M Bop
 
 /-! ## The body -/
 
@@ -110,7 +115,7 @@ theorem k3_cost (hF : FHypsB σ) (hM : M < 2 ^ 64) {Bop : Nat}
       (Inv.costP_of_cost (cost_return _))
   have fsC : Inv.CostP σ guestCtx (PI M) (callD (nm "frame_start") []) (1 + bFS + 0) :=
     Inv.costP_callD (Pre := fun _ _ => True)
-      (Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (f := nm "frame_start") (B := bFS) rfl))
+      (Inv.calleeCostP_of_calleeCost (EntryFreshCallees.frame_start_cost))
       (fun _ _ _ _ _ _ => trivial)
   have fsH : Hoare σ guestCtx (PI M) (callD (nm "frame_start") []) (PIQ M) :=
     hoare_PI_callD (fs_spec (FHypsB.preHyps hF) M) (fun u callee v st hP h => pi_fs hP h)
@@ -148,7 +153,7 @@ theorem d0_block (hD0 : D0Spec σ) :
       (1 + bD0 + bH) :=
     Inv.costP_call (Pre := fun _ _ => True)
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "depth0_prepare") (B := bD0) rfl))
+        (SeventhDelegation.depth_cost))
       (fun _ _ _ _ _ _ => trivial)
       (fun r hid hv hp h => by
         simp only [Option.some.injEq, Prod.mk.injEq] at h
@@ -187,16 +192,15 @@ theorem k1_cost (hF : FHypsB σ) (hD0 : D0Spec σ) (hM : M < 2 ^ 64) {Bop : Nat}
     hoare_ite (hoare_pre dH fun s _ h => h.1) (hoare_skip fun s _ h _ => h.1)
   exact costP_skip_seq (Inv.costP_seq (R := PI M) iteC iteH (k2_cost M hF hM hop))
 
-theorem body_cost (hF : FHypsB σ) (hD0 : D0Spec σ) (hM : M < 2 ^ 64) {Bop : Nat}
-    (hop : CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch") (sg1 [])
-      (PreOpX guestC tEV tCK GP GR M) Bop) :
-    Inv.CostP σ guestCtx (P0 M msg) pmBody (pmB M Bop) := by
-  have hk1 := k1_cost M hF hD0 hM hop
+/-- Compose the frame-open call with its continuation at arbitrary costs. -/
+theorem body_walk {openCost tailCost : Nat}
+    (openBound : CalleeCost σ guestCtx (nm "frame_open") openCost)
+    (hk1 : Inv.CostP σ guestCtx (PI M) pmK1 tailCost) :
+    Inv.CostP σ guestCtx (P0 M msg) pmBody (max 0 0 + (0 + (1 + openCost + tailCost))) := by
   have hfo := Band.costP_decCall (P := P0 M msg) (rn := nm "child") (f := nm "frame_open")
     (sh := .one) (args := [lv (nm "msg"), cw 0]) (k := pmK1)
     (Pre := fun _ _ => True)
-    (Inv.calleeCostP_of_calleeCost
-      (Wire.calleeCost_guest (f := nm "frame_open") (B := bFO) rfl))
+    (Inv.calleeCostP_of_calleeCost openBound)
     (fun _ _ _ _ _ _ => trivial) (fo_spec (σ := σ)) (by
       intro s hs hP vs hvs callee v st hR' _ hsh
       obtain ⟨Γ, p, hG, hp, hf, hl⟩ := hP
@@ -225,13 +229,21 @@ theorem body_cost (hF : FHypsB σ) (hD0 : D0Spec σ) (hM : M < 2 ^ 64) {Bop : Na
       (fun r t => r = none → P0 M msg t) :=
     hoare_ite hoare_raise (hoare_skip fun s _ h _ => h.1)
   have hall := Inv.costP_seq (R := P0 M msg) guardC guardH (costP_skip_seq hd1)
-  refine hall.mono ?_
-  have h269 : bFO + bD0 + bFS + bH + 100 ≤ 2 ^ 269 := by
-    unfold bFO bD0 bFS bH; decide
-  unfold pmB
-  generalize (2 : Nat) ^ 269 = T at h269 ⊢
-  unfold bFO bD0 bFS bH at h269 ⊢
+  exact hall
+
+theorem body_walk_budget (fo d0 h fs rf : Nat) :
+    max 0 0 + (0 + (1 + fo +
+      (0 + (max (1 + 0 + (1 + d0 + h)) 0 + (0 + (1 + 0 + (0 + (1 + fs + 0 + (1 + rf + 0 + 0))))))))) ≤
+        fo + d0 + fs + h + 6 + rf := by
+  simp only [Nat.max_zero, Nat.zero_add, Nat.add_zero]
   omega
+
+theorem body_cost (hF : FHypsB σ) (hD0 : D0Spec σ) (hM : M < 2 ^ 64) {Bop : Nat}
+    (hop : CondCost σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "op_dispatch") (sg1 [])
+      (PreOpX guestC tEV tCK GP GR M) Bop) :
+    Inv.CostP σ guestCtx (P0 M msg) pmBody (pmB M Bop) := by
+  have h := body_walk M msg EntryFreshCallees.frame_open_cost (k1_cost M hF hD0 hM hop)
+  exact h.mono (body_walk_budget bFO bD0 bH bFS (bRF M Bop))
 
 end main
 

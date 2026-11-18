@@ -31,12 +31,12 @@ theorem cbk_224 : cbd ptS224 = 0 := by
 theorem cbk_223 : cbd ptS223 = 18 := by
   unfold ptS223
   try simp only [callD, cbd, cbk_224]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_222 : cbd ptS222 = 31385508676933403830408265224429301376813834371602864668800 := by
   unfold ptS222
   try simp only [callD, cbd, cbk_223]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_221 : cbd ptS221 = 0 := by
   unfold ptS221
@@ -61,7 +61,7 @@ theorem cbk_218 : cbd ptS218 = 0 := by
 theorem cbk_217 : cbd ptS217 = 73786976294838206469 := by
   unfold ptS217
   try simp only [callD, cbd]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_216 : cbd ptS216 = 0 := by
   unfold ptS216
@@ -71,7 +71,7 @@ theorem cbk_216 : cbd ptS216 = 0 := by
 theorem cbk_215 : cbd ptS215 = 73786976294838206469 := by
   unfold ptS215
   try simp only [callD, cbd]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_214 : cbd ptS214 = 73786976294838206469 := by
   unfold ptS214
