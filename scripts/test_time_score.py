@@ -32,8 +32,8 @@ def exact(value: int) -> dict:
     return {"score": value, "scoreExact": str(value)}
 
 
-def listing(*benchmarks: dict) -> dict:
-    return {"benchmarks": [{"id": "b1", "sourceUrl": SOURCE, "trackName": "main", "status": "open"}, *benchmarks]}
+def listing(*benchmarks: dict, status: str = "open") -> dict:
+    return {"benchmarks": [{"id": "b1", "sourceUrl": SOURCE, "trackName": "main", "status": status}, *benchmarks]}
 
 
 class ExactScoreTest(unittest.TestCase):
@@ -141,9 +141,14 @@ class CurrentRecordTest(unittest.TestCase):
 
     def test_reads_the_one_open_benchmark_for_this_repository_and_track(self):
         others = [{"id": "x1", "sourceUrl": SOURCE, "trackName": "other", "status": "open"},
-                  {"id": "x2", "sourceUrl": SOURCE, "trackName": "main", "status": "paused"},
+                  {"id": "x2", "sourceUrl": SOURCE, "trackName": "main", "status": "archived"},
                   {"id": "x3", "sourceUrl": SOURCE + "-other", "trackName": "main", "status": "open"}]
         record, urls = self.lookup([listing(*others), {"benchmark": RECORD}])
+        self.assertEqual(record, RECORD)
+        self.assertEqual(urls, ["https://api/api/benchmarks", "https://api/api/benchmarks/b1"])
+
+    def test_reads_a_paused_benchmark(self):
+        record, urls = self.lookup([listing(status="paused"), {"benchmark": RECORD}])
         self.assertEqual(record, RECORD)
         self.assertEqual(urls, ["https://api/api/benchmarks", "https://api/api/benchmarks/b1"])
 

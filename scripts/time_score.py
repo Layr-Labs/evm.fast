@@ -91,14 +91,14 @@ def get_json(url: str) -> dict:
 
 
 def current_record(api: str, repository: str, track: str) -> dict | None:
-    """The open Yukon benchmark for this repository and track, or None if it cannot be read."""
+    """The open or paused Yukon benchmark for this repository and track, or None if it cannot be read."""
     source = f"https://github.com/{repository}".lower()
     try:
         matches = [benchmark["id"] for benchmark in get_json(f"{api}/api/benchmarks")["benchmarks"]
                    if benchmark["sourceUrl"].lower().removesuffix(".git") == source
-                   and benchmark.get("trackName") == track and benchmark.get("status") == "open"]
+                   and benchmark.get("trackName") == track and benchmark.get("status") in ("open", "paused")]
         if len(matches) != 1:
-            print(f"::warning::Expected one open benchmark for {source} track {track} at {api}, found "
+            print(f"::warning::Expected one open or paused benchmark for {source} track {track} at {api}, found "
                   f"{len(matches)}; scoring with 9999 minutes", file=sys.stderr)
             return None
         return get_json(f"{api}/api/benchmarks/{matches[0]}")["benchmark"]
