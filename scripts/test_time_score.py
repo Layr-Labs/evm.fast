@@ -32,8 +32,8 @@ def exact(value: int) -> dict:
     return {"score": value, "scoreExact": str(value)}
 
 
-def listing(*benchmarks: dict) -> dict:
-    return {"benchmarks": [{"id": "b1", "sourceUrl": SOURCE, "trackName": "main", "status": "open"}, *benchmarks]}
+def listing(*benchmarks: dict, status: str = "open") -> dict:
+    return {"benchmarks": [{"id": "b1", "sourceUrl": SOURCE, "trackName": "main", "status": status}, *benchmarks]}
 
 
 class ExactScoreTest(unittest.TestCase):
@@ -139,11 +139,18 @@ class CurrentRecordTest(unittest.TestCase):
             record = time_score.current_record("https://api", "example/Prover-Dev", "main")
         return record, [call.args[0] for call in get.call_args_list]
 
-    def test_reads_the_one_open_benchmark_for_this_repository_and_track(self):
+    def test_reads_the_one_open_benchmark_for_this_repository_and_track_over_a_paused_one(self):
         others = [{"id": "x1", "sourceUrl": SOURCE, "trackName": "other", "status": "open"},
                   {"id": "x2", "sourceUrl": SOURCE, "trackName": "main", "status": "paused"},
                   {"id": "x3", "sourceUrl": SOURCE + "-other", "trackName": "main", "status": "open"}]
         record, urls = self.lookup([listing(*others), {"benchmark": RECORD}])
+        self.assertEqual(record, RECORD)
+        self.assertEqual(urls, ["https://api/api/benchmarks", "https://api/api/benchmarks/b1"])
+
+    def test_reads_the_one_paused_benchmark_when_none_is_open(self):
+        ignored = [{"id": status, "sourceUrl": SOURCE, "trackName": "main", "status": status}
+                   for status in ["archived", "closed", "draft", "validating", "failed"]]
+        record, urls = self.lookup([listing(*ignored, status="paused"), {"benchmark": RECORD}])
         self.assertEqual(record, RECORD)
         self.assertEqual(urls, ["https://api/api/benchmarks", "https://api/api/benchmarks/b1"])
 
@@ -156,6 +163,10 @@ class CurrentRecordTest(unittest.TestCase):
         self.assertIsNone(self.lookup([{"benchmarks": []}])[0])
         self.assertIsNone(self.lookup([listing({"id": "b2", "sourceUrl": SOURCE, "trackName": "main",
                                                 "status": "open"})])[0])
+        self.assertIsNone(self.lookup([listing({"id": "b2", "sourceUrl": SOURCE, "trackName": "main",
+                                                "status": "paused"}, status="paused")])[0])
+        self.assertIsNone(self.lookup([listing({"id": "b2", "sourceUrl": SOURCE, "trackName": "main",
+                                                "status": "closed"}, status="archived")])[0])
         self.assertIsNone(self.lookup([OSError("unreachable")])[0])
         self.assertIsNone(self.lookup([{"error": "bad gateway"}])[0])
         self.assertIsNone(self.lookup([http.client.IncompleteRead(b"")])[0])
