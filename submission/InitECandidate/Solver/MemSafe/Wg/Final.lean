@@ -5,7 +5,7 @@ import InitECandidate.Solver.MemSafe.Wg.CostGpr4
 
 * `Wg.hypWd (hSft) (hK) (hgs) : Eb.HypWd σ`
 * `Wg.hypGpr4 (hSft) (hPuc) (hK) : Wg.HypGpr4 σ` (`Eb.HypGpr` with the four address globals in the precondition)
-* `Wg.hypWdCost (hSft) (hK) (hgs) : Eb.HypWdCost σ bWd`, `bWd = 1175…` (`bWd_eq`)
+* `Wg.hypWdCost (hSft) (hK) (hgs) : Eb.HypWdCost σ bWd`, with closed form `bWd_eq`
 * `Wg.hypGprCost (hPucC : Eb.HypPucCost σ Bpuc) (hSft) (hPuc) (hK) : Wg.HypGprCost4 σ (bGpr (bCsr Bpuc))`,
   `bGpr (bCsr Bpuc) = K + 4 * Bpuc` (`bGpr_bCsr_eq`)
 -/
@@ -18,7 +18,7 @@ set_option cbv.warning false
 
 namespace InitECandidate.Solver.MemSafe.Wg
 
-theorem bWd_eq : bWd = 4081774915008110980468975268830526301523107580443332530341250100585587228130182101863954 := by
+theorem bWd_eq : bWd = 144740111767918727233489803842141685047455575512058267953738034113903920717923 := by
   decide_cbv
 
 theorem bGpr_bCsr_eq (Bpuc : Nat) : bGpr (bCsr Bpuc) = 1575552535582056872648010900883155952699584251226936515235826 + 4 * Bpuc := by

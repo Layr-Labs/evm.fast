@@ -49,7 +49,7 @@ theorem ctl_p1 {K : TlCtx σ} {O : List Obj} {QT : Option (PanSemResultExact 64)
   refine cw_decAnyT (locIns_resIns hQT _) tab_fee_mul (by simp) rfl feemul_fin rfl
     (enT0_none K (by decide) (by decide) (by decide)) ?_
   unfold ptS123
-  refine cw_seqN (hn_callT tab_create_ether csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) cether_fin
+  refine cw_seqN (hc := regularCallCost (f := nm "create_ether")) (hn_callT tab_create_ether csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) cether_fin
     (fun s hpa vs hvs Γ p hr => ?_)
     (fun s hpa vs hvs => by
       obtain ⟨x, y, rfl, hx, hy⟩ := evs2 hvs
@@ -59,7 +59,7 @@ theorem ctl_p1 {K : TlCtx σ} {O : List Obj} {QT : Option (PanSemResultExact 64)
   · obtain ⟨x, y, rfl, hx, hy⟩ := evs2 hvs
     exact cether_args_sender hP hpa hr hx
   unfold ptS124
-  refine cw_seqN (hn_callT tab_create_ether csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) cether_fin
+  refine cw_seqN (hc := regularCallCost (f := nm "create_ether")) (hn_callT tab_create_ether csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) cether_fin
     (fun s hpa vs hvs Γ p hr => ?_)
     (fun s hpa vs hvs => by
       obtain ⟨x, y, rfl, hx, hy⟩ := evs2 hvs
@@ -130,7 +130,12 @@ theorem ctl_p3 {K : TlCtx σ} {O : List Obj} {QT : Option (PanSemResultExact 64)
       some (.val (.word (K.ref0 (K.out + BitVec.ofNat 64 16)))) := env_set_self _ _ _
   let Qm : State σ → Prop := fun t => ∃ (ref : BitVec 64 → BitVec 64) (Z : BitVec 64 → Prop) (lw : BitVec 64),
     LgOut K ref Z O lw ∧ PAg (TL K.A ref Z O) ((EnT0 K).set (nm "logs") (.val (.word lw))) t
-  refine cw_seqN (P1 := Qm) ?_ ?_
+  have logInitCost : Wg.costFin ptS144 = some (cbd ptS144) := by
+    have present : (Shards.finalState.1.lookup (nm "lst_new")).isSome = true := by decide +kernel
+    obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
+    have regular : nm "lst_new" ≠ nm "encode_receipt" := by decide
+    simp only [ptS144, Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some, Option.getD_some]
+  refine cw_seqN (P1 := Qm) (hc := logInitCost) ?_ ?_
   · refine hn_ite ?_ ?_
     · refine hn_post (hn_pre (hn_lstNew1 (K := K) (ref := K.ref0) (Z := Za K) hP.B
         (En := (EnT0 K).set (nm "logs") (.val (.word (K.ref0 (K.out + BitVec.ofNat 64 16))))) (nm "logs"))

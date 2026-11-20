@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Band.DispPrices
 import InitECandidate.Solver.MemSafe.Frames.ChainXG
 import InitECandidate.Solver.MemSafe.Frames.Bundle
 import InitECandidate.Solver.MemSafe.Wire.Guest
@@ -276,12 +277,12 @@ def odNames : List MlS := nm "op_sload" :: nm "op_sstore" :: odTab
 
 /-- Every name of `fs` has a table entry `≤ Bt`. -/
 def tabLe (Bt : Nat) (fs : List MlS) : Bool :=
-  fs.all fun f => match Shards.finalState.1.lookup f with
+  fs.all fun f => match ThirdCombinedSmallCryptoTable.state.1.lookup f with
     | some b => Nat.ble b Bt
     | none => false
 
 theorem tabLe_get {Bt : Nat} {fs : List MlS} (h : tabLe Bt fs = true) {f : MlS} (hf : f ∈ fs) :
-    ∃ b, Shards.finalState.1.lookup f = some b ∧ b ≤ Bt := by
+    ∃ b, ThirdCombinedSmallCryptoTable.state.1.lookup f = some b ∧ b ≤ Bt := by
   unfold tabLe at h
   have := List.all_eq_true.mp h f hf
   revert this
@@ -292,8 +293,10 @@ theorem tabLe_get {Bt : Nat} {fs : List MlS} (h : tabLe Bt fs = true) {f : MlS} 
   · intro hd; cases hd
 
 /-- Exact maximum of the table-backed opcode-handler allowances. -/
-def odTabBound : Nat := 722542636840853059654558503919389819995198866782797404651516297577893288422075519
-theorem odTab_le : tabLe odTabBound odTab = true := by decide +kernel
+def odTabBound : Nat := 1544167026905127216140758144950127657641528597016301293434388
+theorem odTab_le : tabLe odTabBound odTab = true := by
+  simp only [tabLe, DispPrices.state_prices]
+  decide +kernel
 
 /-- `op_dispatch`'s translated body. -/
 abbrev odBody : ProgHOL 64 := (declPair Guest.Software.guestFn_op_dispatch).2.2
@@ -307,16 +310,35 @@ def odN : Nat := dN odBody
 def odCostFactor : Nat := 1
 
 theorem od_code : ∃ rs, guestCode (nm "op_dispatch") =
-    some ((declPair Guest.Software.guestFn_op_dispatch).2.1, odBody, rs) :=
-  declPair_valid (List.getElem_mem (n := 577) (by decide)) ⟨_, rfl⟩
+    some ((declPair Guest.Software.guestFn_op_dispatch).2.1, odBody, rs) := by
+  have hm : Guest.Software.guestFn_op_dispatch ∈ Guest.Software.guestAst :=
+    List.getElem_mem (l := Guest.Software.guestAst) (n := 577) (by decide +kernel)
+  obtain ⟨rs, hc⟩ := declPair_valid (d := Guest.Software.guestFn_op_dispatch) hm ⟨_, rfl⟩
+  have hn : (declPair Guest.Software.guestFn_op_dispatch).1 = nm "op_dispatch" := rfl
+  rw [hn] at hc
+  exact ⟨rs, hc⟩
 
 theorem sload_code : ∃ rs, guestCode (nm "op_sload") =
-    some ([], (declPair Guest.Software.guestFn_op_sload).2.2, rs) :=
-  declPair_valid (List.getElem_mem (n := 527) (by decide)) ⟨_, rfl⟩
+    some ([], (declPair Guest.Software.guestFn_op_sload).2.2, rs) := by
+  have hm : Guest.Software.guestFn_op_sload ∈ Guest.Software.guestAst :=
+    List.getElem_mem (l := Guest.Software.guestAst) (n := 527) (by decide +kernel)
+  obtain ⟨rs, hc⟩ := declPair_valid (d := Guest.Software.guestFn_op_sload) hm ⟨_, rfl⟩
+  have hn : (declPair Guest.Software.guestFn_op_sload).1 = nm "op_sload" := rfl
+  rw [hn] at hc
+  have hps : (declPair Guest.Software.guestFn_op_sload).2.1 = [] := rfl
+  rw [hps] at hc
+  exact ⟨rs, hc⟩
 
 theorem sstore_code : ∃ rs, guestCode (nm "op_sstore") =
-    some ([], (declPair Guest.Software.guestFn_op_sstore).2.2, rs) :=
-  declPair_valid (List.getElem_mem (n := 528) (by decide)) ⟨_, rfl⟩
+    some ([], (declPair Guest.Software.guestFn_op_sstore).2.2, rs) := by
+  have hm : Guest.Software.guestFn_op_sstore ∈ Guest.Software.guestAst :=
+    List.getElem_mem (l := Guest.Software.guestAst) (n := 528) (by decide +kernel)
+  obtain ⟨rs, hc⟩ := declPair_valid (d := Guest.Software.guestFn_op_sstore) hm ⟨_, rfl⟩
+  have hn : (declPair Guest.Software.guestFn_op_sstore).1 = nm "op_sstore" := rfl
+  rw [hn] at hc
+  have hps : (declPair Guest.Software.guestFn_op_sstore).2.1 = [] := rfl
+  rw [hps] at hc
+  exact ⟨rs, hc⟩
 
 /-- `PreOpX` depends only on the memory and the globals. -/
 theorem preOpX_entry {M : Nat} {vs vs' : List (ValueHOL 64)} {s : State σ} {Γ : Gam}
@@ -431,7 +453,7 @@ theorem op_dispatch_condCost {M Bsl Bss : Nat}
     · obtain ⟨rs, hc⟩ := sstore_code
       exact (condCost_nil (by rw [guestCtx_code]; exact hc) rfl hss).mono (by omega)
     · obtain ⟨b, hb, hle⟩ := tabLe_get odTab_le hf
-      exact (Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hb))).mono (by omega)
+      exact (Inv.calleeCostP_of_calleeCost (ThirdCombinedSmallCryptoTable.callee_cost hb)).mono (by omega)
   intro vs body callee rs hl
   rw [guestCtx_code] at hl
   obtain ⟨rs', hc⟩ := od_code
