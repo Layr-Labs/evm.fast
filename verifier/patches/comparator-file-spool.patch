@@ -1,6 +1,812 @@
+diff --git a/Comparator.lean b/Comparator.lean
+index 3baf3bd..2440138 100644
+--- a/Comparator.lean
++++ b/Comparator.lean
+@@ -5,3 +5,4 @@ Authors: Henrik Böving
+ -/
+ import Comparator.Axioms
+ import Comparator.Compare
++import Comparator.ParallelReplay
+diff --git a/Comparator/ParallelReplay.lean b/Comparator/ParallelReplay.lean
+new file mode 100644
+index 0000000..691f23e
+--- /dev/null
++++ b/Comparator/ParallelReplay.lean
+@@ -0,0 +1,771 @@
++/-
++Copyright (c) 2025 Lean FRO, LLC. All rights reserved.
++Released under Apache 2.0 license as described in the file LICENSE.
++-/
++import Comparator.Compare
++import Lean.Replay
++import Lean.Util.PtrSet
++import Std.Sync.Mutex
++
++namespace Comparator.ParallelReplay
++
++open Lean
++
++structure Hooks where
++  onConfigure : BaseIO Unit := pure ()
++  onCollect : BaseIO Unit := pure ()
++
++private def mixHash64 (h : UInt64) : UInt64 :=
++  let h := (h ^^^ (h >>> 30)) * 0xbf58476d1ce4e5b9
++  let h := (h ^^^ (h >>> 27)) * 0x94d049bb133111eb
++  h ^^^ (h >>> 31)
++
++private def disperseNames (names : Array Name) : Array Name :=
++  if names.size ≤ 1 then
++    names
++  else
++    names.qsort fun a b =>
++      let ha := mixHash64 a.hash
++      let hb := mixHash64 b.hash
++      if ha != hb then ha < hb else Name.quickLt a b
++
++private def nameSetToDispersedArray (ns : NameSet) : Array Name :=
++  disperseNames ns.toArray
++
++private unsafe def collectExprRefsUnsafe (e : Expr) : NameSet :=
++  let rec visit (e : Expr) : StateM (PtrSet Expr × NameSet) Unit := do
++    if (← get).1.contains e then
++      return ()
++    modify fun (v, cs) => (v.insert e, cs)
++    match e with
++    | .forallE _ d b _ => visit d; visit b
++    | .lam _ d b _ => visit d; visit b
++    | .mdata _ b => visit b
++    | .letE _ t v b _ => visit t; visit v; visit b
++    | .app f a => visit f; visit a
++    | .proj typeName _ b =>
++      modify fun (v, cs) => (v, cs.insert typeName)
++      visit b
++    | .const c _ =>
++      modify fun (v, cs) => (v, cs.insert c)
++    | .lit (.natVal _) =>
++      modify fun (v, cs) =>
++        (v, ((cs.insert ``Nat).insert ``Nat.zero).insert ``Nat.succ)
++    | .lit (.strVal _) =>
++      modify fun (v, cs) =>
++        let cs := (((cs.insert ``String).insert ``Char).insert ``String.ofList).insert ``Char.ofNat
++        let cs := (((cs.insert ``List).insert ``List.nil).insert ``List.cons).insert ``Nat
++        (v, (cs.insert ``Nat.zero).insert ``Nat.succ)
++    | _ => return ()
++  (visit e |>.run (mkPtrSet, {})).2.2
++
++@[implemented_by collectExprRefsUnsafe]
++private opaque collectExprRefs (e : Expr) : NameSet := {}
++
++private unsafe def hasNonTrivialReflOrEagerUnsafe (e : Expr) : Bool :=
++  let rec visit (e : Expr) : StateM (PtrSet Expr) Bool := do
++    if (← get).contains e then
++      return false
++    modify fun v => v.insert e
++    match e with
++    | .const c _ =>
++      return c == ``eagerReduce
++    | .app (.app (.app (.app (.const ``Eq.mpr _) _) _) hEq) hBody =>
++      if ← visit hEq then return true
++      visit hBody
++    | .app (.app (.app (.app (.const ``Eq.mp _) _) _) hEq) hBody =>
++      if ← visit hEq then return true
++      visit hBody
++    | .app (.app (.app (.app (.app (.app (.const ``Eq.ndrec _) _) x) _) hBody) y) hEq =>
++      if x == y then
++        visit hBody
++      else
++        if ← visit hEq then return true
++        visit hBody
++    | .app (.app (.app (.app (.app (.app (.const ``Eq.rec _) _) x) _) hBody) y) hEq =>
++      if x == y then
++        visit hBody
++      else
++        if ← visit hEq then return true
++        visit hBody
++    | .app (.app (.app (.app (.app (.app (.const ``Eq.trans _) _) x) y) z) h1) h2 =>
++      let c1 ← if x == y then pure false else visit h1
++      if c1 then return true
++      if y == z then return false else visit h2
++    | .app (.app (.const ``Eq.refl _) _) _ =>
++      return true
++    | .forallE _ d b _ =>
++      if ← visit d then return true
++      visit b
++    | .lam _ d b _ =>
++      if ← visit d then return true
++      visit b
++    | .mdata _ b =>
++      visit b
++    | .letE _ t v b _ =>
++      if ← visit t then return true
++      if ← visit v then return true
++      visit b
++    | .app f a =>
++      if ← visit f then return true
++      visit a
++    | .proj _ _ b =>
++      visit b
++    | _ =>
++      return false
++  (visit e |>.run mkPtrSet).1
++
++@[implemented_by hasNonTrivialReflOrEagerUnsafe]
++private opaque hasNonTrivialReflOrEager (e : Expr) : Bool := false
++
++private def isRootTrivialSyntacticRefl (ty val : Expr) : Bool :=
++  match val with
++  | .app (.app (.const ``Eq.refl _) _) x =>
++    match ty with
++    | .app (.app (.app (.const ``Eq _) _) lhs) rhs =>
++      lhs == rhs && lhs == x
++    | _ => false
++  | _ => false
++
++private def classifyHeavyReduction (c : ConstantInfo) : Bool :=
++  match c with
++  | .thmInfo info =>
++    if isRootTrivialSyntacticRefl info.type info.value then
++      false
++    else
++      hasNonTrivialReflOrEager info.value || hasNonTrivialReflOrEager info.type
++  | .defnInfo info =>
++    hasNonTrivialReflOrEager info.value || hasNonTrivialReflOrEager info.type
++  | .opaqueInfo info =>
++    hasNonTrivialReflOrEager info.value || hasNonTrivialReflOrEager info.type
++  | _ => false
++
++private def getUsedRefs (c : ConstantInfo) : NameSet :=
++  let acc := collectExprRefs c.type
++  match c.value? (allowOpaque := true) with
++  | some v => acc.union (collectExprRefs v)
++  | none =>
++    match c with
++    | .inductInfo val => acc.union (NameSet.ofList val.ctors)
++    | .ctorInfo val => acc.insert val.name
++    | .recInfo val => acc.union (NameSet.ofList val.all)
++    | _ => acc
++
++private def readProcessAnonRssGiB : BaseIO Nat := do
++  let act : IO Nat := do
++    let text ← IO.FS.readFile "/proc/self/statm"
++    let parts := text.trimAscii.toString.splitOn " "
++    match parts with
++    | _ :: residentStr :: sharedStr :: _ =>
++      let resident := residentStr.toNat?.getD 0
++      let shared := sharedStr.toNat?.getD 0
++      let anonPages := resident - shared
++      return (anonPages * 4096) / (1024 * 1024 * 1024)
++    | _ :: residentStr :: _ =>
++      let resident := residentStr.toNat?.getD 0
++      return (resident * 4096) / (1024 * 1024 * 1024)
++    | _ =>
++      return 0
++  EIO.catchExceptions act (fun _ => pure 0)
++
++private def allowedWorkersForRssGiB (numWorkers rssGiB : Nat) : Nat :=
++  let cap :=
++    if rssGiB < 34 then numWorkers
++    else if rssGiB < 44 then 3
++    else if rssGiB < 52 then 2
++    else 1
++  Nat.max 1 (Nat.min numWorkers cap)
++
++private def maxHeavyWorkersForRssGiB (numWorkers rssGiB : Nat) : Nat :=
++  if numWorkers ≤ 1 then
++    1
++  else if rssGiB < 36 then
++    Nat.min 2 numWorkers
++  else
++    1
++
++private structure DeferredDecl where
++  name : Name
++  envBefore : Kernel.Environment
++  expected : ConstantInfo
++  decl : Declaration
++  isHeavy : Bool
++
++private structure WorkQueueState where
++  ring : Array (Option DeferredDecl)
++  head : Nat := 0
++  tail : Nat := 0
++  count : Nat := 0
++  closed : Bool := false
++  activeWorkers : Nat := 0
++  activeHeavy : Nat := 0
++  checkedCount : Nat := 0
++  firstError : Option String := none
++
++private structure WorkQueue where
++  capacity : Nat
++  numWorkers : Nat
++  hooks : Hooks
++  mutex : Std.Mutex WorkQueueState
++  notEmpty : Std.Condvar
++  notFull : Std.Condvar
++  cancelTk : IO.CancelToken
++
++private def WorkQueue.new (capacity numWorkers : Nat) (hooks : Hooks) : BaseIO WorkQueue := do
++  let cap := Nat.max 1 capacity
++  let nw := Nat.max 1 numWorkers
++  let mutex ← Std.Mutex.new { ring := Array.replicate cap none }
++  let notEmpty ← Std.Condvar.new
++  let notFull ← Std.Condvar.new
++  let cancelTk ← IO.CancelToken.new
++  return { capacity := cap, numWorkers := nw, hooks, mutex, notEmpty, notFull, cancelTk }
++
++private def WorkQueue.recordError (q : WorkQueue) (msg : String) : BaseIO Unit := do
++  q.cancelTk.set
++  q.mutex.atomically do
++    modify fun s => {
++      s with
++      closed := true
++      firstError := match s.firstError with
++        | some prev => some prev
++        | none => some msg
++    }
++  q.notEmpty.notifyAll
++  q.notFull.notifyAll
++
++private def WorkQueue.close (q : WorkQueue) : BaseIO Unit := do
++  q.mutex.atomically do
++    modify fun s => { s with closed := true }
++  q.notEmpty.notifyAll
++  q.notFull.notifyAll
++
++private def WorkQueue.push (q : WorkQueue) (item : DeferredDecl) : BaseIO Bool := do
++  let pushed ← q.mutex.atomicallyOnce q.notFull
++    (do
++      let s ← get
++      return s.closed || s.count < q.capacity)
++    (do
++      let s ← get
++      if s.closed then
++        return false
++      let ring := s.ring.set! s.tail (some item)
++      let tail := if s.tail + 1 == q.capacity then 0 else s.tail + 1
++      set { s with ring, tail, count := s.count + 1 }
++      return true)
++  if pushed then
++    q.notEmpty.notifyAll
++  return pushed
++
++private def findAdmissibleOffset? (s : WorkQueueState) (cap maxHeavy : Nat) : Option Nat := Id.run do
++  for off in [0:s.count] do
++    let idx := (s.head + off) % cap
++    if let some cand := s.ring[idx]! then
++      if !cand.isHeavy || s.activeHeavy < maxHeavy || s.activeWorkers == 0 then
++        return some off
++  return none
++
++private inductive PopOutcome where
++  | done
++  | waitEmpty
++  | waitAdmit
++  | popped (item : DeferredDecl)
++
++private def removeRingAtOffset (s : WorkQueueState) (cap off : Nat) : Option DeferredDecl × WorkQueueState := Id.run do
++  let targetIdx := (s.head + off) % cap
++  let item? := s.ring[targetIdx]!
++  let mut ring := s.ring
++  let mut cur := off
++  while cur > 0 do
++    let dst := (s.head + cur) % cap
++    let src := (s.head + cur - 1) % cap
++    ring := ring.set! dst ring[src]!
++    cur := cur - 1
++  ring := ring.set! s.head none
++  let head := if s.head + 1 == cap then 0 else s.head + 1
++  return (item?, { s with ring, head, count := s.count - 1 })
++
++private partial def WorkQueue.pop (q : WorkQueue) : BaseIO (Option DeferredDecl) := do
++  let rssGiB ← readProcessAnonRssGiB
++  let allowedWorkers := allowedWorkersForRssGiB q.numWorkers rssGiB
++  let maxHeavy := maxHeavyWorkersForRssGiB q.numWorkers rssGiB
++  let outcome : PopOutcome ← q.mutex.atomically do
++    let s ← get
++    if s.firstError.isSome then
++      return .done
++    if s.count == 0 then
++      if s.closed then
++        return .done
++      else
++        return .waitEmpty
++    if s.activeWorkers == 0 || s.activeWorkers < allowedWorkers then
++      if let some off := findAdmissibleOffset? s q.capacity maxHeavy then
++        let (item?, s') := removeRingAtOffset s q.capacity off
++        if let some item := item? then
++          let activeHeavy := if item.isHeavy then s'.activeHeavy + 1 else s'.activeHeavy
++          set { s' with activeWorkers := s'.activeWorkers + 1, activeHeavy }
++          return .popped item
++    if s.activeWorkers == 0 then
++      let (item?, s') := removeRingAtOffset s q.capacity 0
++      if let some item := item? then
++        let activeHeavy := if item.isHeavy then s'.activeHeavy + 1 else s'.activeHeavy
++        set { s' with activeWorkers := 1, activeHeavy }
++        return .popped item
++    return .waitAdmit
++  match outcome with
++  | .done =>
++    return none
++  | .popped item =>
++    q.notFull.notifyOne
++    return some item
++  | .waitEmpty =>
++    q.mutex.atomically do
++      let s ← get
++      if s.firstError.isNone && s.count == 0 && !s.closed then
++        q.notEmpty.wait q.mutex
++    WorkQueue.pop q
++  | .waitAdmit =>
++    if rssGiB ≥ 36 then
++      q.hooks.onCollect
++    IO.sleep 25
++    WorkQueue.pop q
++
++private def WorkQueue.finishItem (q : WorkQueue) (isHeavy ok : Bool) : BaseIO Unit := do
++  q.mutex.atomically do
++    modify fun s => {
++      s with
++      activeWorkers := s.activeWorkers - 1
++      activeHeavy := if isHeavy then s.activeHeavy - 1 else s.activeHeavy
++      checkedCount := if ok then s.checkedCount + 1 else s.checkedCount
++    }
++  q.notEmpty.notifyAll
++
++private partial def workerLoop (q : WorkQueue) (localDone : Nat := 0) : BaseIO Unit := do
++  if ← q.cancelTk.isSet then
++    q.hooks.onCollect
++    return ()
++  match ← q.pop with
++  | none =>
++    q.hooks.onCollect
++    return ()
++  | some item =>
++    let isHeavy := item.isHeavy
++    match item.envBefore.addDeclCore 0 0 item.decl (cancelTk? := some q.cancelTk) with
++    | .ok envChecked =>
++      match envChecked.find? item.name with
++      | some actual =>
++        if actual == item.expected then
++          q.finishItem isHeavy true
++          let nextDone := localDone + 1
++          if isHeavy || nextDone % 256 == 0 then
++            q.hooks.onCollect
++          else if nextDone % 64 == 0 then
++            let rssGiB ← readProcessAnonRssGiB
++            if rssGiB ≥ 32 then
++              q.hooks.onCollect
++          workerLoop q nextDone
++        else
++          q.finishItem isHeavy false
++          q.recordError s!"while replaying declaration '{item.name}':\nkernel constant mismatch"
++      | none =>
++        q.finishItem isHeavy false
++        q.recordError s!"while replaying declaration '{item.name}':\nmissing constant after kernel check"
++    | .error ex =>
++      q.finishItem isHeavy false
++      if ex matches .interrupted then
++        if ← q.cancelTk.isSet then
++          q.hooks.onCollect
++          return ()
++      let msg ← ex.toMessageData {} |>.toString
++      q.recordError s!"while replaying declaration '{item.name}':\n{msg}"
++
++private structure Context where
++  queue : WorkQueue
++
++private structure State where
++  env : Kernel.Environment
++  unclaimed : Std.HashMap Name ConstantInfo
++  inProgress : NameSet := {}
++  pending : NameSet := {}
++  postponedInductives : NameMap ConstantInfo := {}
++  postponedConstructors : NameMap ConstantInfo := {}
++  postponedRecursors : NameMap ConstantInfo := {}
++  postponedQuotients : NameMap ConstantInfo := {}
++  enqueued : Nat := 0
++
++private abbrev M := ReaderT Context <| StateRefT State IO
++
++private def throwWorkerErrorOrStopped : M α := do
++  let err? ← (← read).queue.mutex.atomically do
++    return (← get).firstError
++  match err? with
++  | some err => throw <| .userError err
++  | none => throw <| .userError "parallel kernel replay stopped unexpectedly"
++
++private def throwKernelException (ex : Kernel.Exception) : IO α := do
++  throw <| .userError <| (← ex.toMessageData {} |>.toString)
++
++private def claimConstant? (name : Name) : M (Option ConstantInfo) := do
++  modifyGet fun s =>
++    match s.unclaimed[name]? with
++    | none => (none, s)
++    | some ci => (some ci, { s with unclaimed := s.unclaimed.erase name })
++
++private def addDeclChecked (name : Name) (expected : ConstantInfo) (d : Declaration) : M Unit := do
++  match (← get).env.addDeclCore 0 0 d (cancelTk? := some (← read).queue.cancelTk) with
++  | .ok env =>
++    match env.find? name with
++    | some actual =>
++      if !(actual == expected) then
++        throw <| .userError s!"kernel constant mismatch after checking '{name}'"
++      modify fun s => { s with env := env }
++    | none =>
++      throw <| .userError s!"missing constant '{name}' after kernel check"
++  | .error ex =>
++    if ex matches .interrupted then
++      if ← (← read).queue.cancelTk.isSet then
++        throwWorkerErrorOrStopped
++    throwKernelException ex
++
++private def addInductChecked (d : Declaration) : M Unit := do
++  match (← get).env.addDeclCore 0 0 d (cancelTk? := some (← read).queue.cancelTk) with
++  | .ok env => modify fun s => { s with env := env }
++  | .error ex =>
++    if ex matches .interrupted then
++      if ← (← read).queue.cancelTk.isSet then
++        throwWorkerErrorOrStopped
++    throwKernelException ex
++
++private def deferDecl (name : Name) (expected : ConstantInfo) (d : Declaration) : M Unit := do
++  if ← (← read).queue.cancelTk.isSet then
++    throwWorkerErrorOrStopped
++  let envBefore := (← get).env
++  match envBefore.addDeclWithoutChecking d with
++  | .ok envAfter =>
++    match envAfter.find? name with
++    | some inserted =>
++      if !(inserted == expected) then
++        throw <| .userError s!"unchecked constant mismatch for '{name}'"
++      let isHeavy := classifyHeavyReduction expected
++      modify fun s => { s with env := envAfter, enqueued := s.enqueued + 1 }
++      let ok ← (← read).queue.push { name, envBefore, expected, decl := d, isHeavy }
++      if !ok then
++        throwWorkerErrorOrStopped
++    | none =>
++      throw <| .userError s!"missing constant '{name}' after unchecked insert"
++  | .error ex => throwKernelException ex
++
++mutual
++
++private partial def prepareConstant (name : Name) : M Unit := do
++  if ← (← read).queue.cancelTk.isSet then
++    throwWorkerErrorOrStopped
++  if (← get).inProgress.contains name then
++    throw <| .userError s!"cyclic declaration dependency involving '{name}'"
++  if let some ci ← claimConstant? name then
++    modify fun s => {
++      s with
++      inProgress := s.inProgress.insert name
++      pending := s.pending.insert name
++    }
++    try
++      if ci.name != name then
++        throw <| .userError s!"mismatched constant name '{ci.name}' at key '{name}'"
++      match ci with
++      | .defnInfo info =>
++        let deps := getUsedRefs ci
++        if deps.contains name then
++          throw <| .userError s!"cyclic declaration dependency involving '{name}'"
++        prepareConstants deps
++        if (← get).pending.contains name then
++          deferDecl name ci (.defnDecl info)
++      | .thmInfo info =>
++        let deps := getUsedRefs ci
++        if deps.contains name then
++          throw <| .userError s!"cyclic declaration dependency involving '{name}'"
++        prepareConstants deps
++        if (← get).pending.contains name then
++          let alreadySubsumed ← do
++            if let some (.thmInfo info') := (← get).env.find? ci.name then
++              pure (info.name == info'.name &&
++                    info.type == info'.type &&
++                    info.levelParams == info'.levelParams &&
++                    info.all == info'.all)
++            else
++              pure false
++          if !alreadySubsumed then
++            deferDecl name ci (.thmDecl info)
++      | .opaqueInfo info =>
++        let deps := getUsedRefs ci
++        if deps.contains name then
++          throw <| .userError s!"cyclic declaration dependency involving '{name}'"
++        prepareConstants deps
++        if (← get).pending.contains name then
++          deferDecl name ci (.opaqueDecl info)
++      | .axiomInfo info =>
++        let deps := getUsedRefs ci
++        if deps.contains name then
++          throw <| .userError s!"cyclic declaration dependency involving '{name}'"
++        prepareConstants deps
++        if (← get).pending.contains name then
++          addDeclChecked name ci (.axiomDecl info)
++      | .inductInfo info =>
++        let lparams := info.levelParams
++        let nparams := info.numParams
++        if !info.all.contains name then
++          throw <| .userError s!"malformed inductive '{name}': missing from `all`"
++        let mut seenAll : NameSet := {}
++        for n in info.all do
++          if seenAll.contains n then
++            throw <| .userError s!"malformed inductive '{name}': duplicate entries in `all`"
++          seenAll := seenAll.insert n
++        let all ← info.all.mapM fun n => do
++          let ci ←
++            if n == name then
++              pure ci
++            else do
++              if (← get).inProgress.contains n then
++                throw <| .userError s!"cyclic dependency through mutual inductive '{n}'"
++              match ← claimConstant? n with
++              | some other => pure other
++              | none =>
++                match (← get).postponedInductives.find? n with
++                | some prev => pure prev
++                | none => throw <| .userError s!"missing mutual inductive '{n}'"
++          let .inductInfo _ := ci
++            | throw <| .userError s!"mutual inductive entry '{n}' is not an inductive"
++          if ci.name != n then
++            throw <| .userError s!"mismatched inductive name '{ci.name}' at key '{n}'"
++          pure ci
++        let blockNames := seenAll
++        let mut blockCtors : NameSet := {}
++        let mut ctorInfo : List (ConstantInfo × List ConstantInfo) := []
++        for indCi in all do
++          let mut ctors : List ConstantInfo := []
++          for n in indCi.inductiveVal!.ctors do
++            if blockCtors.contains n then
++              throw <| .userError s!"malformed inductive '{name}': duplicate constructor '{n}'"
++            if blockNames.contains n then
++              throw <| .userError s!"malformed inductive '{name}': constructor '{n}' collides with inductive name"
++            blockCtors := blockCtors.insert n
++            if (← get).inProgress.contains n then
++              throw <| .userError s!"cyclic dependency through constructor '{n}'"
++            let c ← match ← claimConstant? n with
++              | some claimed => pure claimed
++              | none =>
++                match (← get).postponedConstructors.find? n with
++                | some prev => pure prev
++                | none => throw <| .userError s!"missing constructor '{n}' for '{indCi.name}'"
++            let .ctorInfo cval := c
++              | throw <| .userError s!"constant '{n}' for inductive '{indCi.name}' is not a constructor"
++            if c.name != n then
++              throw <| .userError s!"mismatched constructor name '{c.name}' at key '{n}'"
++            if cval.induct != indCi.name then
++              throw <| .userError s!"constructor '{n}' claims inductive '{cval.induct}', expected '{indCi.name}'"
++            ctors := ctors ++ [c]
++          ctorInfo := ctorInfo ++ [(indCi, ctors)]
++        for o in all do
++          modify fun s => {
++            s with
++            pending := s.pending.erase o.name
++            inProgress := s.inProgress.insert o.name
++            postponedInductives := s.postponedInductives.insert o.name o
++          }
++        for (_, ctors) in ctorInfo do
++          for c in ctors do
++            modify fun s => {
++              s with
++              pending := s.pending.erase c.name
++              inProgress := s.inProgress.insert c.name
++              postponedConstructors := s.postponedConstructors.insert c.name c
++            }
++        try
++          for o in all do
++            let deps := ((collectExprRefs o.type).diff blockNames).diff blockCtors
++            prepareConstants deps
++          for (_, ctors) in ctorInfo do
++            for ctor in ctors do
++              let deps := ((collectExprRefs ctor.type).diff blockNames).diff blockCtors
++              prepareConstants deps
++          let types : List InductiveType := ctorInfo.map fun (indCi, ctors) =>
++            { name := indCi.name
++              type := indCi.type
++              ctors := ctors.map fun c => { name := c.name, type := c.type } }
++          addInductChecked (.inductDecl lparams nparams types false)
++        finally
++          for o in all do
++            if o.name != name then
++              modify fun s => { s with inProgress := s.inProgress.erase o.name }
++          for c in blockCtors do
++            modify fun s => { s with inProgress := s.inProgress.erase c }
++      | .ctorInfo info =>
++        let deps := ((collectExprRefs info.type).erase name).erase info.induct
++        modify fun s => {
++          s with
++          postponedConstructors := s.postponedConstructors.insert info.name ci
++          pending := s.pending.erase name
++          inProgress := s.inProgress.erase name
++        }
++        prepareConstant info.induct
++        prepareConstants deps
++      | .recInfo info =>
++        let deps := info.rules.foldl (init := collectExprRefs info.type) fun acc rule =>
++          (acc.insert rule.ctor).union (collectExprRefs rule.rhs)
++        let deps := (deps.erase name).diff (NameSet.ofList info.all)
++        modify fun s => {
++          s with
++          postponedRecursors := s.postponedRecursors.insert info.name ci
++          pending := s.pending.erase name
++          inProgress := s.inProgress.erase name
++        }
++        for indName in info.all do
++          prepareConstant indName
++        prepareConstants deps
++      | .quotInfo _ =>
++        let quotNames : List Name := [``Quot, ``Quot.mk, ``Quot.lift, ``Quot.ind]
++        if !quotNames.contains name then
++          throw <| .userError s!"unexpected quotient declaration '{name}'"
++        let blockQuot := NameSet.ofList quotNames
++        for q in quotNames do
++          if q != name && (← get).inProgress.contains q then
++            throw <| .userError s!"cyclic dependency through quotient '{q}'"
++        let mut deps : NameSet := {}
++        for q in quotNames do
++          let qci? ←
++            if q == name then
++              pure (some ci)
++            else do
++              match ← claimConstant? q with
++              | some claimed => pure (some claimed)
++              | none => pure ((← get).postponedQuotients.find? q)
++          if let some qci := qci? then
++            let .quotInfo _ := qci
++              | throw <| .userError s!"constant '{q}' must be a quotient declaration"
++            if qci.name != q then
++              throw <| .userError s!"mismatched quotient name '{qci.name}' at key '{q}'"
++            deps := deps.union ((getUsedRefs qci).diff blockQuot)
++            modify fun s => {
++              s with
++              pending := s.pending.erase q
++              inProgress := s.inProgress.insert q
++              postponedQuotients := s.postponedQuotients.insert q qci
++            }
++          else
++            modify fun s => { s with inProgress := s.inProgress.insert q }
++        try
++          prepareConstants deps
++          prepareConstant ``Eq
++          if ((← get).env.find? ``Quot).isNone then
++            addInductChecked .quotDecl
++        finally
++          for q in quotNames do
++            if q != name then
++              modify fun s => { s with inProgress := s.inProgress.erase q }
++      modify fun s => { s with pending := s.pending.erase name, inProgress := s.inProgress.erase name }
++    catch ex =>
++      modify fun s => { s with inProgress := s.inProgress.erase name }
++      if ← (← read).queue.cancelTk.isSet then
++        throw ex
++      throw <| .userError s!"while replaying declaration '{name}':\n{ex}"
++
++private partial def prepareConstants (names : NameSet) : M Unit := do
++  for n in nameSetToDispersedArray names do
++    prepareConstant n
++
++end
++
++private def checkPostponedInductives : M Unit := do
++  for (ind, expected) in (← get).postponedInductives do
++    match (← get).env.find? ind, expected with
++    | some (.inductInfo info), .inductInfo info' =>
++      if !(info == info') then
++        throw <| IO.userError s!"Invalid inductive {ind}"
++    | _, _ =>
++      throw <| IO.userError s!"No such inductive {ind}"
++  modify fun s => { s with postponedInductives := {} }
++
++private def checkPostponedConstructors : M Unit := do
++  for (ctor, expected) in (← get).postponedConstructors do
++    match (← get).env.find? ctor, expected with
++    | some (.ctorInfo info), .ctorInfo info' =>
++      if !(info == info') then
++        throw <| IO.userError s!"Invalid constructor {ctor}"
++    | _, _ =>
++      throw <| IO.userError s!"No such constructor {ctor}"
++  modify fun s => { s with postponedConstructors := {} }
++
++private def checkPostponedRecursors : M Unit := do
++  for (recName, expected) in (← get).postponedRecursors do
++    match (← get).env.find? recName, expected with
++    | some (.recInfo info), .recInfo info' =>
++      if !(info == info') then
++        throw <| IO.userError s!"Invalid recursor {recName}"
++    | _, _ =>
++      throw <| IO.userError s!"No such recursor {recName}"
++  modify fun s => { s with postponedRecursors := {} }
++
++private def checkPostponedQuotients : M Unit := do
++  for (qName, expected) in (← get).postponedQuotients do
++    match (← get).env.find? qName, expected with
++    | some (.quotInfo info), .quotInfo info' =>
++      if !(info == info') then
++        throw <| IO.userError s!"Invalid quotient {qName}"
++    | _, _ =>
++      throw <| IO.userError s!"No such quotient {qName}"
++  modify fun s => { s with postponedQuotients := {} }
++
++private def defaultQueueCapacity (numThreads : Nat) : Nat :=
++  Nat.max 32 (numThreads * 8)
++
++def checkParallel (numThreads : Nat) (newConstants : Std.HashMap Name ConstantInfo)
++    (env : Environment) (hooks : Hooks := {}) : IO Unit := do
++  if numThreads == 0 then
++    throw <| IO.userError "checkParallel requires numThreads >= 1"
++  hooks.onConfigure
++  let mut roots : Array Name := Array.mkEmpty newConstants.size
++  for (n, ci) in newConstants do
++    if !ci.isUnsafe && !ci.isPartial then
++      roots := roots.push n
++    else
++      throw <| IO.userError s!"unsafe or partial declaration '{n}' is not permitted in kernel replay"
++  let rootList := disperseNames roots
++  roots := #[]
++  if rootList.isEmpty then
++    return ()
++  let workers := Nat.min numThreads rootList.size
++  let queue ← WorkQueue.new (defaultQueueCapacity workers) workers hooks
++  let mut tasks : Array (Task Unit) := Array.mkEmpty workers
++  for _ in [0:workers] do
++    let task ← BaseIO.asTask (prio := .dedicated) (workerLoop queue)
++    tasks := tasks.push task
++  let mut prepError : Option IO.Error := none
++  let mut totalEnqueued : Nat := 0
++  try
++    let (_, s) ← StateRefT'.run (s := { env := env.toKernelEnv, unclaimed := newConstants }) do
++      ReaderT.run (r := { queue }) do
++        for n in rootList do
++          prepareConstant n
++        checkPostponedInductives
++        checkPostponedConstructors
++        checkPostponedRecursors
++        checkPostponedQuotients
++    totalEnqueued := s.enqueued
++    queue.close
++  catch ex =>
++    prepError := some ex
++    queue.recordError ex.toString
++  for task in tasks do
++    let () ← IO.wait task
++  hooks.onCollect
++  let finalState ← queue.mutex.atomically get
++  if let some err := prepError then
++    if let some workerErr := finalState.firstError then
++      if workerErr != err.toString then
++        throw <| IO.userError workerErr
++    throw err
++  if let some err := finalState.firstError then
++    throw <| IO.userError err
++  if finalState.checkedCount != totalEnqueued then
++    throw <| IO.userError
++      s!"internal error: kernel checked {finalState.checkedCount} of {totalEnqueued} deferred declarations"
++
++end Comparator.ParallelReplay
+diff --git a/Main.lean b/Main.lean
+index 04fabf3..f43e3a3 100644
 --- a/Main.lean
 +++ b/Main.lean
-@@ -132,6 +132,29 @@
+@@ -22,6 +22,7 @@ structure Context where
+   whichLandrun : String
+   whichLean4Export : String
+   whichNanoda : String
++  kernelThreads : Nat := 6
+ 
+ abbrev M := ReaderT Context IO
+ 
+@@ -61,6 +62,9 @@ def getGitLocation : M System.FilePath := do return (← read).gitLocation
+ @[inline]
+ def getNanodaEnabled : M Bool := do return (← read).enableNanoda
+ 
++@[inline]
++def getKernelThreads : M Nat := do return (← read).kernelThreads
++
+ def queryGitLocation : IO System.FilePath := do
+   let out ← IO.Process.run {
+     cmd := "which",
+@@ -132,6 +136,29 @@ def safeLakeBuild (target : Lean.Name) : M Unit := do
      executablePaths := #[leanPrefix, gitLocation]
    }
  
@@ -30,11 +836,10 @@
  def safeExport (module : Lean.Name) (decls : Array Lean.Name) : M String := do
    IO.println s!"Exporting {decls} from {module}"
    let baseArgs := #[module.toString, "--"]
-@@ -149,6 +172,24 @@
-     writablePaths := #[]
+@@ -150,6 +177,24 @@ def safeExport (module : Lean.Name) (decls : Array Lean.Name) : M String := do
      executablePaths := #[leanPrefix]
    }
-+
+ 
 +def safeExportFile (module : Lean.Name) (decls : Array Lean.Name) (dst : IO.FS.Handle) : M Unit := do
 +  IO.println s!"Exporting {decls} from {module}"
 +  let baseArgs := #[module.toString, "--"]
@@ -52,10 +857,53 @@
 +    writablePaths := #[]
 +    executablePaths := #[leanPrefix]
 +  } dst
- 
++
  def runNanoda (solutionExport : String) : M (Option String) := do
    IO.println "Running nanoda kernel on solution"
-@@ -270,7 +311,7 @@
+   IO.FS.withTempFile fun config configPath => do
+@@ -196,21 +241,33 @@ def runNanoda (solutionExport : String) : M (Option String) := do
+       IO.println "Error while interacting with nanoda"
+       return some s!"Error while interacting with nanoda: {e.toString}"
+ 
+-def runKernel (solution : Export.ExportedEnv) : M (Option String) := do
+-  IO.println "Running Lean default kernel on solution."
+-  let mut env ← Lean.mkEmptyEnvironment
+-  let mut constMap := solution.constMap
+-  -- Lean's kernel interprets just the addition of `Quot as adding all of these so adding them
+-  -- multiple times leads to errors.
+-  constMap := constMap.erase `Quot.mk |>.erase `Quot.lift |>.erase `Quot.ind
++@[extern c inline "(mi_collect(true), lean_io_result_mk_ok(lean_box(0)))"]
++private opaque mimallocCollectForce (u : Unit) : IO Unit := let _ := u; pure ()
++
++@[extern c inline "(mi_option_set(mi_option_purge_delay, 0), mi_option_set(mi_option_arena_purge_mult, 1), mi_option_set(mi_option_abandoned_page_purge, 1), lean_io_result_mk_ok(lean_box(0)))"]
++private opaque mimallocConfigurePurge (u : Unit) : IO Unit := let _ := u; pure ()
++
++private def replayHooks : Comparator.ParallelReplay.Hooks := {
++  onConfigure := EIO.catchExceptions (mimallocConfigurePurge ()) (fun _ => pure ())
++  onCollect := EIO.catchExceptions (mimallocCollectForce ()) (fun _ => pure ())
++}
++
++@[noinline]
++def runKernelOnMap (constMap : Std.HashMap Lean.Name Lean.ConstantInfo) : M (Option String) := do
++  let threads ← getKernelThreads
++  IO.println s!"Running Lean default kernel on solution (threads={threads})."
++  let env ← Lean.mkEmptyEnvironment
+   try
+-    discard <| env.replay constMap
++    Comparator.ParallelReplay.checkParallel threads constMap env replayHooks
+     IO.println "Lean default kernel accepts the solution"
+     return none
+   catch e =>
+     IO.println "Lean default kernel rejects the solution"
+     return some e.toString
+ 
++def runKernel (solution : Export.ExportedEnv) : M (Option String) := do
++  runKernelOnMap solution.constMap
++
+ def primitiveTargets : M (Array Lean.Name) := do
+   -- The challenge needs to have all the built-in constants of the kernel, as the
+   -- kernel makes no guarantees when fed other definitions here.
+@@ -270,7 +327,7 @@ def verifyMatch (challengeExport : String) (solutionExport : String) :
    if let some error := result then
      throw <| IO.userError error
  
@@ -64,20 +912,30 @@
    let exportTargets := (← builtinTargets) ++ (← getTheoremNames) ++ (← getLegalAxioms)
      ++ (← primitiveTargets) ++ (← getDefinitionNames)
  
-@@ -285,6 +326,33 @@
-   verifyMatch challengeExport solutionExport
+@@ -286,6 +343,44 @@ def compareIt : M Unit := do
  
    IO.println "Your solution is okay!"
-+
-+def verifyFiles (challengeFile solutionFile : IO.FS.Handle) : M Unit := do
+ 
++@[noinline]
++def checkSolutionAgainstChallenge (challengeFile : IO.FS.Handle) (solution : Export.ExportedEnv) : M Unit := do
 +  let challenge ← Export.parseStream (IO.FS.Stream.ofHandle challengeFile)
-+  let solution ← Export.parseStream (IO.FS.Stream.ofHandle solutionFile)
 +  let theoremNames ← getTheoremNames
 +  let definitionNames ← getDefinitionNames
 +  let targets := theoremNames ++ (← getLegalAxioms)
 +  IO.ofExcept <| Comparator.compareAt challenge solution targets definitionNames (← primitiveTargets)
 +  IO.ofExcept <| Comparator.checkAxioms solution theoremNames definitionNames (← getLegalAxioms)
-+  if let some error ← runKernel solution then throw <| IO.userError error
++
++@[noinline]
++def parseAndCheckFiles (challengeFile solutionFile : IO.FS.Handle) :
++    M (Std.HashMap Lean.Name Lean.ConstantInfo) := do
++  let solution ← Export.parseStream (IO.FS.Stream.ofHandle solutionFile)
++  checkSolutionAgainstChallenge challengeFile solution
++  return solution.constMap
++
++def verifyFiles (challengeFile solutionFile : IO.FS.Handle) : M Unit := do
++  let constMap ← parseAndCheckFiles challengeFile solutionFile
++  replayHooks.onCollect
++  if let some error ← runKernelOnMap constMap then throw <| IO.userError error
 +
 +def compareIt : M Unit := do
 +  if ← getNanodaEnabled then
@@ -95,6 +953,1060 @@
 +        safeExportFile solutionModule targets solutionFile
 +        verifyFiles challengeFile solutionFile
 +        IO.println "Your solution is okay!"
- 
++
  structure Config where
    challenge_module : String
+   solution_module : String
+@@ -293,8 +388,22 @@ structure Config where
+   definition_names : Option (Array String) := none
+   permitted_axioms : Array String
+   enable_nanoda : Bool
++  kernel_threads : Option Nat := none
+   deriving Lean.FromJson, Lean.ToJson, Repr
+ 
++def resolveKernelThreads (cfgThreads : Option Nat) : IO Nat := do
++  if let some raw ← IO.getEnv "COMPARATOR_KERNEL_THREADS" then
++    let some n := raw.trimAscii.toString.toNat?
++      | throw <| .userError s!"Invalid COMPARATOR_KERNEL_THREADS '{raw}'"
++    if n == 0 then
++      throw <| .userError "COMPARATOR_KERNEL_THREADS must be positive"
++    return n
++  if let some n := cfgThreads then
++    if n == 0 then
++      throw <| .userError "kernel_threads must be positive"
++    return n
++  return 6
++
+ def M.run (x : M α) (cfg : Config) : IO α := do
+   let cwd ← IO.Process.getCurrentDir
+   let leanPrefix ← queryLeanPrefix cwd
+@@ -302,6 +411,7 @@ def M.run (x : M α) (cfg : Config) : IO α := do
+   let whichLean4Export := (← IO.getEnv "COMPARATOR_LEAN4EXPORT").getD "lean4export"
+   let whichLandrun := (← IO.getEnv "COMPARATOR_LANDRUN").getD "landrun"
+   let whichNanoda := (← IO.getEnv "COMPARATOR_NANODA").getD "nanoda_bin"
++  let kernelThreads ← resolveKernelThreads cfg.kernel_threads
+   ReaderT.run x {
+     projectDir := cwd
+     challengeModule := cfg.challenge_module.toName,
+@@ -314,7 +424,8 @@ def M.run (x : M α) (cfg : Config) : IO α := do
+     enableNanoda := cfg.enable_nanoda,
+     whichLean4Export,
+     whichLandrun,
+-    whichNanoda
++    whichNanoda,
++    kernelThreads
+   }
+ 
+ end Comparator
+diff --git a/runtests.lean b/runtests.lean
+index 0d722fc..5658d3a 100644
+--- a/runtests.lean
++++ b/runtests.lean
+@@ -86,7 +86,7 @@ def readTestConfig (configPath : FilePath) : IO TestConfig := do
+ def getTempDir : IO FilePath := do
+   return "/tmp" / s!"lean_test_{← IO.rand 0 999999}"
+ 
+-def runTestProject (projectPath : FilePath) (projectName : String) (testsDir : FilePath)
++def runTestProject (projectPath : FilePath) (projectName : String) (_testsDir : FilePath)
+     (comparatorPath : FilePath) : IO TestResult := do
+   try
+     let configPath := projectPath / "test.json"
+@@ -182,6 +182,12 @@ def main (args : List String) : IO UInt32 := do
+ 
+   IO.println ""
+   if allPassed then
++    IO.println "\n## Running ParallelReplay soundness unit checks\n"
++    let unitCode ← runCommandInDir "." "lake" #["env", "lean", "--run", "tests/soundness_replay.lean"]
++    if unitCode != 0 then
++      IO.println s!"✗ soundness_replay: FAILED (exit code {unitCode})"
++      return 1
++    IO.println "✓ soundness_replay: PASSED\n"
+     IO.println "All tests passed!"
+     return 0
+   else
+diff --git a/tests/projects/adv_cyclic_def/Challenge.lean b/tests/projects/adv_cyclic_def/Challenge.lean
+new file mode 100644
+index 0000000..a5626c9
+--- /dev/null
++++ b/tests/projects/adv_cyclic_def/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom : False := sorry
+diff --git a/tests/projects/adv_cyclic_def/Solution.lean b/tests/projects/adv_cyclic_def/Solution.lean
+new file mode 100644
+index 0000000..e9c6426
+--- /dev/null
++++ b/tests/projects/adv_cyclic_def/Solution.lean
+@@ -0,0 +1,22 @@
++import Lean
++
++open Lean
++
++set_option debug.skipKernelTC true in
++run_elab do
++  addDecl <| .defnDecl {
++    name := .str .anonymous "loop"
++    levelParams := []
++    type := .const ``False []
++    value := .const (.str .anonymous "loop") []
++    hints := .opaque
++    safety := .safe
++    all := [.str .anonymous "loop"]
++  }
++  addDecl <| .thmDecl {
++    name := .str .anonymous "boom"
++    levelParams := []
++    type := .const ``False []
++    value := .const (.str .anonymous "loop") []
++    all := [.str .anonymous "boom"]
++  }
+diff --git a/tests/projects/adv_cyclic_def/config.json b/tests/projects/adv_cyclic_def/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_cyclic_def/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_cyclic_def/test.json b/tests/projects/adv_cyclic_def/test.json
+new file mode 100644
+index 0000000..a16a458
+--- /dev/null
++++ b/tests/projects/adv_cyclic_def/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 1
++}
+diff --git a/tests/projects/adv_forged_theorem/Challenge.lean b/tests/projects/adv_forged_theorem/Challenge.lean
+new file mode 100644
+index 0000000..a5626c9
+--- /dev/null
++++ b/tests/projects/adv_forged_theorem/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom : False := sorry
+diff --git a/tests/projects/adv_forged_theorem/Solution.lean b/tests/projects/adv_forged_theorem/Solution.lean
+new file mode 100644
+index 0000000..ec7e29c
+--- /dev/null
++++ b/tests/projects/adv_forged_theorem/Solution.lean
+@@ -0,0 +1,13 @@
++import Lean
++
++open Lean
++
++set_option debug.skipKernelTC true in
++run_elab
++  addDecl <| .thmDecl {
++    name := .str .anonymous "boom"
++    levelParams := []
++    type := .const ``False []
++    value := .const ``True.intro []
++    all := [.str .anonymous "boom"]
++  }
+diff --git a/tests/projects/adv_forged_theorem/config.json b/tests/projects/adv_forged_theorem/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_forged_theorem/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_forged_theorem/test.json b/tests/projects/adv_forged_theorem/test.json
+new file mode 100644
+index 0000000..a16a458
+--- /dev/null
++++ b/tests/projects/adv_forged_theorem/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 1
++}
+diff --git a/tests/projects/adv_illegal_axiom/Challenge.lean b/tests/projects/adv_illegal_axiom/Challenge.lean
+new file mode 100644
+index 0000000..a5626c9
+--- /dev/null
++++ b/tests/projects/adv_illegal_axiom/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom : False := sorry
+diff --git a/tests/projects/adv_illegal_axiom/Solution.lean b/tests/projects/adv_illegal_axiom/Solution.lean
+new file mode 100644
+index 0000000..5b0929c
+--- /dev/null
++++ b/tests/projects/adv_illegal_axiom/Solution.lean
+@@ -0,0 +1,3 @@
++axiom helper : False
++
++theorem boom : False := helper
+diff --git a/tests/projects/adv_illegal_axiom/config.json b/tests/projects/adv_illegal_axiom/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_illegal_axiom/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_illegal_axiom/test.json b/tests/projects/adv_illegal_axiom/test.json
+new file mode 100644
+index 0000000..a16a458
+--- /dev/null
++++ b/tests/projects/adv_illegal_axiom/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 1
++}
+diff --git a/tests/projects/adv_mutual_inductive/Challenge.lean b/tests/projects/adv_mutual_inductive/Challenge.lean
+new file mode 100644
+index 0000000..e0a393c
+--- /dev/null
++++ b/tests/projects/adv_mutual_inductive/Challenge.lean
+@@ -0,0 +1,10 @@
++mutual
++  inductive Even : Nat → Prop where
++    | zero : Even 0
++    | succ : Odd n → Even (n + 1)
++
++  inductive Odd : Nat → Prop where
++    | succ : Even n → Odd (n + 1)
++end
++
++theorem boom : Even 2 := sorry
+diff --git a/tests/projects/adv_mutual_inductive/Solution.lean b/tests/projects/adv_mutual_inductive/Solution.lean
+new file mode 100644
+index 0000000..9bb4aa2
+--- /dev/null
++++ b/tests/projects/adv_mutual_inductive/Solution.lean
+@@ -0,0 +1,10 @@
++mutual
++  inductive Even : Nat → Prop where
++    | zero : Even 0
++    | succ : Odd n → Even (n + 1)
++
++  inductive Odd : Nat → Prop where
++    | succ : Even n → Odd (n + 1)
++end
++
++theorem boom : Even 2 := Even.succ (Odd.succ Even.zero)
+diff --git a/tests/projects/adv_mutual_inductive/config.json b/tests/projects/adv_mutual_inductive/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_mutual_inductive/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_mutual_inductive/test.json b/tests/projects/adv_mutual_inductive/test.json
+new file mode 100644
+index 0000000..9a2b128
+--- /dev/null
++++ b/tests/projects/adv_mutual_inductive/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 0
++}
+diff --git a/tests/projects/adv_partial_def/Challenge.lean b/tests/projects/adv_partial_def/Challenge.lean
+new file mode 100644
+index 0000000..2f865f4
+--- /dev/null
++++ b/tests/projects/adv_partial_def/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom : True := sorry
+diff --git a/tests/projects/adv_partial_def/Solution.lean b/tests/projects/adv_partial_def/Solution.lean
+new file mode 100644
+index 0000000..28ac453
+--- /dev/null
++++ b/tests/projects/adv_partial_def/Solution.lean
+@@ -0,0 +1,22 @@
++import Lean
++
++open Lean
++
++set_option debug.skipKernelTC true in
++run_elab do
++  addDecl <| .defnDecl {
++    name := .str .anonymous "badPartial"
++    levelParams := []
++    type := .const ``Nat []
++    value := .const ``Nat.zero []
++    hints := .opaque
++    safety := .partial
++    all := [.str .anonymous "badPartial"]
++  }
++  addDecl <| .thmDecl {
++    name := .str .anonymous "boom"
++    levelParams := []
++    type := .const ``True []
++    value := .letE `x (.const ``Nat []) (.const (.str .anonymous "badPartial") []) (.const ``True.intro []) false
++    all := [.str .anonymous "boom"]
++  }
+diff --git a/tests/projects/adv_partial_def/config.json b/tests/projects/adv_partial_def/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_partial_def/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_partial_def/test.json b/tests/projects/adv_partial_def/test.json
+new file mode 100644
+index 0000000..a16a458
+--- /dev/null
++++ b/tests/projects/adv_partial_def/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 1
++}
+diff --git a/tests/projects/adv_quotient/Challenge.lean b/tests/projects/adv_quotient/Challenge.lean
+new file mode 100644
+index 0000000..459cdbf
+--- /dev/null
++++ b/tests/projects/adv_quotient/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom (α : Type) (r : α → α → Prop) (a : α) : Quot.mk r a = Quot.mk r a := rfl
+diff --git a/tests/projects/adv_quotient/Solution.lean b/tests/projects/adv_quotient/Solution.lean
+new file mode 100644
+index 0000000..459cdbf
+--- /dev/null
++++ b/tests/projects/adv_quotient/Solution.lean
+@@ -0,0 +1 @@
++theorem boom (α : Type) (r : α → α → Prop) (a : α) : Quot.mk r a = Quot.mk r a := rfl
+diff --git a/tests/projects/adv_quotient/config.json b/tests/projects/adv_quotient/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_quotient/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_quotient/test.json b/tests/projects/adv_quotient/test.json
+new file mode 100644
+index 0000000..9a2b128
+--- /dev/null
++++ b/tests/projects/adv_quotient/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 0
++}
+diff --git a/tests/projects/adv_string_lit_order/Challenge.lean b/tests/projects/adv_string_lit_order/Challenge.lean
+new file mode 100644
+index 0000000..18ea5c2
+--- /dev/null
++++ b/tests/projects/adv_string_lit_order/Challenge.lean
+@@ -0,0 +1,4 @@
++def z_expected : String := String.ofList [Char.ofNat 97]
++theorem a_0 : "a" = z_expected := sorry
++theorem t_0 : "a".toByteArray = ByteArray.mk (Array.mk [97]) := sorry
++theorem t_11 : ("hello").utf8ByteSize = 5 := sorry
+diff --git a/tests/projects/adv_string_lit_order/Solution.lean b/tests/projects/adv_string_lit_order/Solution.lean
+new file mode 100644
+index 0000000..0500fd6
+--- /dev/null
++++ b/tests/projects/adv_string_lit_order/Solution.lean
+@@ -0,0 +1,4 @@
++def z_expected : String := String.ofList [Char.ofNat 97]
++theorem a_0 : "a" = z_expected := rfl
++theorem t_0 : "a".toByteArray = ByteArray.mk (Array.mk [97]) := rfl
++theorem t_11 : ("hello").utf8ByteSize = 5 := rfl
+diff --git a/tests/projects/adv_string_lit_order/config.json b/tests/projects/adv_string_lit_order/config.json
+new file mode 100644
+index 0000000..eae21bb
+--- /dev/null
++++ b/tests/projects/adv_string_lit_order/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["a_0", "t_0", "t_11"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_string_lit_order/test.json b/tests/projects/adv_string_lit_order/test.json
+new file mode 100644
+index 0000000..9a2b128
+--- /dev/null
++++ b/tests/projects/adv_string_lit_order/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 0
++}
+diff --git a/tests/projects/adv_thread_parity/Challenge.lean b/tests/projects/adv_thread_parity/Challenge.lean
+new file mode 100644
+index 0000000..a0299f1
+--- /dev/null
++++ b/tests/projects/adv_thread_parity/Challenge.lean
+@@ -0,0 +1,3 @@
++def n : Nat := sorry
++
++theorem boom : n = 17 := sorry
+diff --git a/tests/projects/adv_thread_parity/Solution.lean b/tests/projects/adv_thread_parity/Solution.lean
+new file mode 100644
+index 0000000..4a10ebc
+--- /dev/null
++++ b/tests/projects/adv_thread_parity/Solution.lean
+@@ -0,0 +1,3 @@
++def n : Nat := 17
++
++theorem boom : n = 17 := rfl
+diff --git a/tests/projects/adv_thread_parity/config.json b/tests/projects/adv_thread_parity/config.json
+new file mode 100644
+index 0000000..4575250
+--- /dev/null
++++ b/tests/projects/adv_thread_parity/config.json
+@@ -0,0 +1,9 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "definition_names": ["n"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false,
++    "kernel_threads": 1
++}
+diff --git a/tests/projects/adv_thread_parity/test.json b/tests/projects/adv_thread_parity/test.json
+new file mode 100644
+index 0000000..9a2b128
+--- /dev/null
++++ b/tests/projects/adv_thread_parity/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 0
++}
+diff --git a/tests/projects/adv_unsafe_def/Challenge.lean b/tests/projects/adv_unsafe_def/Challenge.lean
+new file mode 100644
+index 0000000..a5626c9
+--- /dev/null
++++ b/tests/projects/adv_unsafe_def/Challenge.lean
+@@ -0,0 +1 @@
++theorem boom : False := sorry
+diff --git a/tests/projects/adv_unsafe_def/Solution.lean b/tests/projects/adv_unsafe_def/Solution.lean
+new file mode 100644
+index 0000000..dd29444
+--- /dev/null
++++ b/tests/projects/adv_unsafe_def/Solution.lean
+@@ -0,0 +1,15 @@
++import Lean
++
++open Lean
++
++unsafe def bad : False := bad
++
++set_option debug.skipKernelTC true in
++run_elab
++  addDecl <| .thmDecl {
++    name := .str .anonymous "boom"
++    levelParams := []
++    type := .const ``False []
++    value := .const ``bad []
++    all := [.str .anonymous "boom"]
++  }
+diff --git a/tests/projects/adv_unsafe_def/config.json b/tests/projects/adv_unsafe_def/config.json
+new file mode 100644
+index 0000000..f69c38c
+--- /dev/null
++++ b/tests/projects/adv_unsafe_def/config.json
+@@ -0,0 +1,7 @@
++{
++    "challenge_module": "Challenge",
++    "solution_module": "Solution",
++    "theorem_names": ["boom"],
++    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
++    "enable_nanoda": false
++}
+diff --git a/tests/projects/adv_unsafe_def/test.json b/tests/projects/adv_unsafe_def/test.json
+new file mode 100644
+index 0000000..a16a458
+--- /dev/null
++++ b/tests/projects/adv_unsafe_def/test.json
+@@ -0,0 +1,3 @@
++{
++    "exit_code": 1
++}
+diff --git a/tests/soundness_replay.lean b/tests/soundness_replay.lean
+new file mode 100644
+index 0000000..95d7685
+--- /dev/null
++++ b/tests/soundness_replay.lean
+@@ -0,0 +1,556 @@
++import Lean
++import Comparator.ParallelReplay
++
++open Lean
++
++private def expectReject (label : String) (substr : String) (action : IO Unit) : IO Unit := do
++  try
++    action
++    throw <| IO.userError s!"[{label}] expected rejection containing '{substr}', but checkParallel accepted"
++  catch e =>
++    let msg := e.toString
++    if ((msg.splitOn substr).length < 2) then
++      throw <| IO.userError s!"[{label}] rejected with unexpected error:\n{msg}\nexpected substring: '{substr}'"
++
++private def expectAccept (label : String) (action : IO Unit) : IO Unit := do
++  try
++    action
++  catch e =>
++    throw <| IO.userError s!"[{label}] expected acceptance, got error:\n{e}"
++
++private def mkMap (entries : List (Name × ConstantInfo)) : Std.HashMap Name ConstantInfo :=
++  entries.foldl (init := {}) fun m (k, v) => m.insert k v
++
++def main : IO Unit := do
++  let emptyEnv ← mkEmptyEnvironment
++
++  -- 1. Forged constructor type in ConstantInfo map
++  let indName := `ForgedInd
++  let ctorName := `ForgedInd.mk
++  let indInfo : ConstantInfo := .inductInfo {
++    name := indName
++    levelParams := []
++    type := .sort .zero
++    numParams := 0
++    numIndices := 0
++    all := [indName]
++    ctors := [ctorName]
++    numNested := 0
++    isRec := false
++    isUnsafe := false
++    isReflexive := false
++  }
++  let forgedCtorInfo : ConstantInfo := .ctorInfo {
++    name := ctorName
++    levelParams := []
++    type := .sort (.succ .zero) -- forged: Type instead of ForgedInd
++    induct := indName
++    cidx := 0
++    numParams := 0
++    numFields := 0
++    isUnsafe := false
++  }
++  expectReject "forged_ctor_type" "invalid return type" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(indName, indInfo), (ctorName, forgedCtorInfo)]) emptyEnv
++
++  -- 2. Forged constructor cidx metadata (kernel builds cidx := 0, map claims cidx := 1)
++  let validCtorWithBadIdx : ConstantInfo := .ctorInfo {
++    name := ctorName
++    levelParams := []
++    type := .const indName []
++    induct := indName
++    cidx := 1
++    numParams := 0
++    numFields := 0
++    isUnsafe := false
++  }
++  expectReject "forged_ctor_metadata" "Invalid constructor" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(indName, indInfo), (ctorName, validCtorWithBadIdx)]) emptyEnv
++
++  -- 3. Forged recursor rule (RHS claims True when motive is arbitrary)
++  let validCtorInfo : ConstantInfo := .ctorInfo {
++    name := ctorName
++    levelParams := []
++    type := .const indName []
++    induct := indName
++    cidx := 0
++    numParams := 0
++    numFields := 0
++    isUnsafe := false
++  }
++  let recName := `ForgedInd.rec
++  let forgedRecInfo : ConstantInfo := .recInfo {
++    name := recName
++    levelParams := [`u]
++    type := .sort .zero -- forged recursor type
++    all := [indName]
++    numParams := 0
++    numIndices := 0
++    numMotives := 1
++    numMinors := 1
++    rules := []
++    k := true
++    isUnsafe := false
++  }
++  expectReject "forged_recursor" "Invalid recursor" do
++    Comparator.ParallelReplay.checkParallel 2
++      (mkMap [(indName, indInfo), (ctorName, validCtorInfo), (recName, forgedRecInfo)]) emptyEnv
++
++  -- 4. Forged inductive metadata (isReflexive := true vs kernel false, or numNested mismatch)
++  let forgedIndMeta : ConstantInfo := .inductInfo {
++    name := indName
++    levelParams := []
++    type := .sort .zero
++    numParams := 0
++    numIndices := 0
++    all := [indName]
++    ctors := [ctorName]
++    numNested := 7 -- forged metadata
++    isRec := false
++    isUnsafe := false
++    isReflexive := false
++  }
++  expectReject "forged_inductive_metadata" "Invalid inductive" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(indName, forgedIndMeta), (ctorName, validCtorInfo)]) emptyEnv
++
++  -- 5. Forged quotient ConstantInfo (extract authentic Eq / Eq.refl from elaborated environment)
++  let initEnv ← importModules #[{ module := `Init.Core }] {}
++  let eqInd := (initEnv.find? ``Eq).get!
++  let eqRefl := (initEnv.find? ``Eq.refl).get!
++  let forgedQuot : ConstantInfo := .quotInfo {
++    name := ``Quot
++    levelParams := []
++    type := .sort .zero -- forged type
++    kind := .type
++  }
++  expectReject "forged_quotient" "Invalid quotient" do
++    Comparator.ParallelReplay.checkParallel 2
++      (mkMap [(``Eq, eqInd), (``Eq.refl, eqRefl), (``Quot, forgedQuot)]) emptyEnv
++
++  -- 6. Unexpected quotient declaration name
++  let fakeQuot : ConstantInfo := .quotInfo {
++    name := `FakeQuot
++    levelParams := []
++    type := .sort .zero
++    kind := .type
++  }
++  expectReject "unexpected_quotient_name" "unexpected quotient declaration" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(`FakeQuot, fakeQuot)]) emptyEnv
++
++  -- 7. Key/name mismatch in HashMap
++  let mismatchThm : ConstantInfo := .thmInfo {
++    name := `realName
++    levelParams := []
++    type := .sort .zero
++    value := .sort .zero
++    all := [`realName]
++  }
++  expectReject "key_name_mismatch" "mismatched constant name" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(`wrongKey, mismatchThm)]) emptyEnv
++
++  -- 8. Struct projection dependency ordering (.proj without explicit .const of ProjBox in value)
++  let boxName := `ProjBox
++  let boxMk := `ProjBox.mk
++  let boxInd : ConstantInfo := .inductInfo {
++    name := boxName
++    levelParams := []
++    type := .sort (.succ .zero)
++    numParams := 0
++    numIndices := 0
++    all := [boxName]
++    ctors := [boxMk]
++    numNested := 0
++    isRec := false
++    isUnsafe := false
++    isReflexive := false
++  }
++  let propUnit := `PropUnit
++  let propUnitMk := `PropUnit.mk
++  let propInd : ConstantInfo := .inductInfo {
++    name := propUnit
++    levelParams := []
++    type := .sort .zero
++    numParams := 0
++    numIndices := 0
++    all := [propUnit]
++    ctors := [propUnitMk]
++    numNested := 0
++    isRec := false
++    isUnsafe := false
++    isReflexive := false
++  }
++  let propCtor : ConstantInfo := .ctorInfo {
++    name := propUnitMk
++    levelParams := []
++    type := .const propUnit []
++    induct := propUnit
++    cidx := 0
++    numParams := 0
++    numFields := 0
++    isUnsafe := false
++  }
++  let boxCtor : ConstantInfo := .ctorInfo {
++    name := boxMk
++    levelParams := []
++    type := .forallE `x (.const propUnit []) (.const boxName []) .default
++    induct := boxName
++    cidx := 0
++    numParams := 0
++    numFields := 1
++    isUnsafe := false
++  }
++  let boxVal : ConstantInfo := .defnInfo {
++    name := `boxVal
++    levelParams := []
++    type := .const boxName []
++    value := .app (.const boxMk []) (.const propUnitMk [])
++    hints := .abbrev
++    safety := .safe
++    all := [`boxVal]
++  }
++  -- Theorem whose type mentions only PropUnit and whose value mentions only `boxVal` + `.proj ProjBox 0 ...`
++  let projThm : ConstantInfo := .thmInfo {
++    name := `projUser
++    levelParams := []
++    type := .const propUnit []
++    value := .proj boxName 0 (.const `boxVal [])
++    all := [`projUser]
++  }
++  for threads in [1, 4] do
++    expectAccept s!"proj_dependency_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads
++        (mkMap [(`projUser, projThm), (`boxVal, boxVal), (boxName, boxInd), (boxMk, boxCtor),
++                (propUnit, propInd), (propUnitMk, propCtor)]) emptyEnv
++
++  -- 9.Forged theorem body rejected identically across N=1 and N=4
++  let badPropThm : ConstantInfo := .thmInfo {
++    name := `badPropThm
++    levelParams := []
++    type := .const propUnit []
++    value := .sort .zero -- ill-typed proof term
++    all := [`badPropThm]
++  }
++  for threads in [1, 4] do
++    expectReject s!"forged_thm_threads_{threads}" "while replaying declaration 'badPropThm'" do
++      Comparator.ParallelReplay.checkParallel threads
++        (mkMap [(propUnit, propInd), (propUnitMk, propCtor), (`badPropThm, badPropThm)]) emptyEnv
++
++  -- 10. Unsafe and partial ConstantInfo rejected directly by checkParallel
++  let unsafeDef : ConstantInfo := .defnInfo {
++    name := `badUnsafe
++    levelParams := []
++    type := .const propUnit []
++    value := .const `badUnsafe []
++    hints := .opaque
++    safety := .unsafe
++    all := [`badUnsafe]
++  }
++  expectReject "unsafe_constant_info" "unsafe or partial declaration" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(propUnit, propInd), (propUnitMk, propCtor), (`badUnsafe, unsafeDef)]) emptyEnv
++
++  let partialDef : ConstantInfo := .defnInfo {
++    name := `badPartialDirect
++    levelParams := []
++    type := .const propUnit []
++    value := .const propUnitMk []
++    hints := .opaque
++    safety := .partial
++    all := [`badPartialDirect]
++  }
++  expectReject "partial_constant_info" "unsafe or partial declaration" do
++    Comparator.ParallelReplay.checkParallel 2 (mkMap [(propUnit, propInd), (propUnitMk, propCtor), (`badPartialDirect, partialDef)]) emptyEnv
++
++  -- 11. Invalid numThreads = 0 rejected
++  expectReject "zero_threads" "numThreads >= 1" do
++    Comparator.ParallelReplay.checkParallel 0 {} emptyEnv
++
++  -- 12. Duplicate theorem subsumption parity with Lean.Environment.replay:
++  --     when an identical theorem (name, type, levelParams, all) already exists in base `env`,
++  --     replay skips it without failing with `already_declared`; if type/levelParams/all differ,
++  --     kernel replay rejects with already-declared error.
++  let baseWithThm ← do
++    let validThmDecl : Declaration := .thmDecl {
++      name := `dupSubsumedThm
++      levelParams := []
++      type := .forallE `p (.sort .zero) (.forallE `h (.bvar 0) (.bvar 1) .default) .default
++      value := .lam `p (.sort .zero) (.lam `h (.bvar 0) (.bvar 0) .default) .default
++      all := [`dupSubsumedThm]
++    }
++    match emptyEnv.addDeclCore 0 0 validThmDecl none with
++    | .ok env' => pure env'
++    | .error _ => throw <| IO.userError "failed to construct baseWithThm"
++  let dupMatchingThm : ConstantInfo := .thmInfo {
++    name := `dupSubsumedThm
++    levelParams := []
++    type := .forallE `p (.sort .zero) (.forallE `h (.bvar 0) (.bvar 1) .default) .default
++    value := .sort .zero -- not re-checked when already proven in base env, matching Replay.lean:90-96
++    all := [`dupSubsumedThm]
++  }
++  for threads in [1, 4] do
++    expectAccept s!"subsumed_thm_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads (mkMap [(`dupSubsumedThm, dupMatchingThm)]) baseWithThm
++
++  let dupMismatchedTypeThm : ConstantInfo := .thmInfo {
++    name := `dupSubsumedThm
++    levelParams := []
++    type := .forallE `p (.sort .zero) (.bvar 0) .default -- mismatched statement!
++    value := .sort .zero
++    all := [`dupSubsumedThm]
++  }
++  for threads in [1, 4] do
++    expectReject s!"mismatched_dup_thm_threads_{threads}" "while replaying declaration 'dupSubsumedThm'" do
++      Comparator.ParallelReplay.checkParallel threads (mkMap [(`dupSubsumedThm, dupMismatchedTypeThm)]) baseWithThm
++
++  -- 13. String literal implicit kernel dependencies (`String.ofList`, `Char.ofNat`)
++  --     when the user theorem's `Name.hash` sorts before `String.ofList` and `Char.ofNat` in `NameSet`.
++  let fullInitEnv ← importModules #[{ module := `Init }] {}
++  let strLitThmName := `t_0
++  let mut closure : Std.HashMap Name ConstantInfo := {}
++  let mut work : Array Name := #[``String.ofList, ``Char.ofNat, ``List, ``ByteArray.mk, ``Array.mk, ``Eq, ``Eq.refl]
++  while h : work.size > 0 do
++    let n := work.back
++    work := work.pop
++    if !closure.contains n then
++      if let some ci := fullInitEnv.find? n then
++        closure := closure.insert n ci
++        for dep in ci.getUsedConstantsAsSet do
++          work := work.push dep
++        match ci with
++        | .inductInfo iv =>
++          for c in iv.ctors do work := work.push c
++        | .ctorInfo cv =>
++          work := work.push cv.induct
++        | .recInfo rv =>
++          for ind in rv.all do work := work.push ind
++          for rule in rv.rules do work := work.push rule.ctor
++        | _ => pure ()
++  let strLitExpr := Expr.lit (.strVal "a")
++  let strToByteArr := Expr.proj ``String 0 strLitExpr
++  let strLitThm : ConstantInfo := .thmInfo {
++    name := strLitThmName
++    levelParams := []
++    type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``ByteArray []) strToByteArr strToByteArr
++    value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``ByteArray []) strToByteArr
++    all := [strLitThmName]
++  }
++  -- Also test kernel reduction of `.proj String 0 (.lit (.strVal "a"))` against concrete `[97]` ByteArray
++  let u8List := mkApp3 (.const ``List.cons [.zero]) (.const ``UInt8 [])
++    (mkApp (.const ``UInt8.ofBitVec []) (mkApp2 (.const ``BitVec.ofNat []) (.lit (.natVal 8)) (.lit (.natVal 97))))
++    (mkApp (.const ``List.nil [.zero]) (.const ``UInt8 []))
++  for extra in [``UInt8, ``UInt8.ofBitVec, ``BitVec.ofNat] do
++    let mut sub : Array Name := #[extra]
++    while hs : sub.size > 0 do
++      let n := sub.back
++      sub := sub.pop
++      if !closure.contains n then
++        if let some ci := fullInitEnv.find? n then
++          closure := closure.insert n ci
++          for dep in ci.getUsedConstantsAsSet do sub := sub.push dep
++          match ci with
++          | .inductInfo iv => for c in iv.ctors do sub := sub.push c
++          | .ctorInfo cv => sub := sub.push cv.induct
++          | .recInfo rv =>
++            for ind in rv.all do sub := sub.push ind
++            for rule in rv.rules do sub := sub.push rule.ctor
++          | _ => pure ()
++  let rhsByteArr := mkApp (.const ``ByteArray.mk []) (mkApp2 (.const ``Array.mk [.zero]) (.const ``UInt8 []) u8List)
++  let strReduceThm : ConstantInfo := .thmInfo {
++    name := `t_0
++    levelParams := []
++    type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``ByteArray []) strToByteArr rhsByteArr
++    value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``ByteArray []) rhsByteArr
++    all := [`t_0]
++  }
++  let closureWithT0 := closure.insert `t_0 strReduceThm
++  let strReduceThm11 : ConstantInfo := .thmInfo {
++    name := `t_11
++    levelParams := []
++    type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``ByteArray []) strToByteArr rhsByteArr
++    value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``ByteArray []) rhsByteArr
++    all := [`t_11]
++  }
++  let closureWithT11 := closure.insert `t_11 strReduceThm11
++  for threads in [1, 4] do
++    expectAccept s!"str_lit_reduce_t0_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads closureWithT0 emptyEnv
++    expectAccept s!"str_lit_reduce_t11_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads closureWithT11 emptyEnv
++
++  -- 14. String literal reduction with NO explicit `List.cons`/`List.nil`/`String.ofList` in theorem expr
++  --     and minimal synthetic prelude (verifying `List.nil`, `List.cons`, `Nat.zero`, `Nat.succ` deps).
++  let mut minStrClosure : Std.HashMap Name ConstantInfo := {}
++  let mut minWork : Array Name := #[``String.ofList, ``Char.ofNat, ``List, ``List.nil, ``List.cons, ``Nat, ``Eq, ``Eq.refl]
++  while hm : minWork.size > 0 do
++    let n := minWork.back
++    minWork := minWork.pop
++    if !minStrClosure.contains n then
++      if let some ci := fullInitEnv.find? n then
++        minStrClosure := minStrClosure.insert n ci
++        for dep in ci.getUsedConstantsAsSet do
++          minWork := minWork.push dep
++        match ci with
++        | .inductInfo iv =>
++          for c in iv.ctors do minWork := minWork.push c
++        | .ctorInfo cv =>
++          minWork := minWork.push cv.induct
++        | .recInfo rv =>
++          for ind in rv.all do minWork := minWork.push ind
++          for rule in rv.rules do minWork := minWork.push rule.ctor
++        | _ => pure ()
++  let emptyStrLit := Expr.lit (.strVal "")
++  let emptyListExpr := mkApp (.const ``String.ofList []) (mkApp (.const ``List.nil [.zero]) (.const ``Char []))
++  -- Helper theorem whose body has ONLY `.lit (.strVal "")` and `String.ofList`/`List.nil` is hidden behind an opaque-like def or direct `.proj String 0 ""`
++  -- Specifically: `theorem a_0 : ("").utf8ByteSize = 0 := rfl` uses ONLY `String.utf8ByteSize`, `""`, `0`, `Eq`, `Eq.refl` — zero `List` refs in the theorem!
++  let mut utf8Closure := minStrClosure
++  let mut uWork : Array Name := #[``String.utf8ByteSize]
++  while hu : uWork.size > 0 do
++    let n := uWork.back
++    uWork := uWork.pop
++    if !utf8Closure.contains n then
++      if let some ci := fullInitEnv.find? n then
++        utf8Closure := utf8Closure.insert n ci
++        for dep in ci.getUsedConstantsAsSet do uWork := uWork.push dep
++        match ci with
++        | .inductInfo iv => for c in iv.ctors do uWork := uWork.push c
++        | .ctorInfo cv => uWork := uWork.push cv.induct
++        | .recInfo rv =>
++          for ind in rv.all do uWork := uWork.push ind
++          for rule in rv.rules do uWork := uWork.push rule.ctor
++        | _ => pure ()
++  for candName in [`a_0, `t_0, `t_1, `t_11] do
++    let pureLitThm : ConstantInfo := .thmInfo {
++      name := candName
++      levelParams := []
++      type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``Nat [])
++        (mkApp (.const ``String.utf8ByteSize []) (Expr.lit (.strVal "hi")))
++        (.lit (.natVal 2))
++      value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``Nat []) (.lit (.natVal 2))
++      all := [candName]
++    }
++    let testMap := utf8Closure.insert candName pureLitThm
++    for threads in [1, 4] do
++      expectAccept s!"pure_str_lit_{candName}_threads_{threads}" do
++        Comparator.ParallelReplay.checkParallel threads testMap emptyEnv
++  -- Also test `"" = String.ofList []` via intermediate `def wrapNil : String := String.ofList []`
++  -- where the theorem `a_0 : "" = wrapNil := rfl` has NO `List`/`List.nil`/`List.cons` in its own type/value!
++  let wrapNilDef : ConstantInfo := .defnInfo {
++    name := `z_wrapNil
++    levelParams := []
++    type := .const ``String []
++    value := emptyListExpr
++    hints := .abbrev
++    safety := .safe
++    all := [`z_wrapNil]
++  }
++  for candName in [`a_0, `t_0, `t_1, `t_11] do
++    let defeqStrThm : ConstantInfo := .thmInfo {
++      name := candName
++      levelParams := []
++      type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``String [])
++        emptyStrLit (.const `z_wrapNil [])
++      value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``String []) emptyStrLit
++      all := [candName]
++    }
++    let nonEmptyWrapDef : ConstantInfo := .defnInfo {
++      name := `z_wrapA
++      levelParams := []
++      type := .const ``String []
++      value := mkApp (.const ``String.ofList [])
++        (mkApp3 (.const ``List.cons [.zero]) (.const ``Char [])
++          (mkApp (.const ``Char.ofNat []) (.lit (.natVal 97)))
++          (mkApp (.const ``List.nil [.zero]) (.const ``Char [])))
++      hints := .abbrev
++      safety := .safe
++      all := [`z_wrapA]
++    }
++    let defeqNonEmptyThm : ConstantInfo := .thmInfo {
++      name := candName
++      levelParams := []
++      type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``String [])
++        strLitExpr (.const `z_wrapA [])
++      value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``String []) strLitExpr
++      all := [candName]
++    }
++    let mapEmpty := (minStrClosure.insert `z_wrapNil wrapNilDef).insert candName defeqStrThm
++    let mapNonEmpty := (minStrClosure.insert `z_wrapA nonEmptyWrapDef).insert candName defeqNonEmptyThm
++    for threads in [1, 4] do
++      expectAccept s!"str_lit_expansion_nil_{candName}_threads_{threads}" do
++        Comparator.ParallelReplay.checkParallel threads mapEmpty emptyEnv
++      expectAccept s!"str_lit_expansion_cons_{candName}_threads_{threads}" do
++        Comparator.ParallelReplay.checkParallel threads mapNonEmpty emptyEnv
++  let _ := strLitThm
++
++  -- 15. Bounded ring queue wraparound (600-deep chain) and mid-queue failure
++  let mut chainMap : Std.HashMap Name ConstantInfo := mkMap [(propUnit, propInd), (propUnitMk, propCtor)]
++  let chainLen := 600
++  for idx in [0:chainLen] do
++    let curName := Name.mkSimple s!"chain_{idx}"
++    let valExpr := if idx == 0 then Expr.const propUnitMk [] else Expr.const (Name.mkSimple s!"chain_{idx - 1}") []
++    let thmCi : ConstantInfo := .thmInfo {
++      name := curName
++      levelParams := []
++      type := .const propUnit []
++      value := valExpr
++      all := [curName]
++    }
++    chainMap := chainMap.insert curName thmCi
++  for threads in [1, 2, 6] do
++    expectAccept s!"bounded_queue_wraparound_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads chainMap emptyEnv
++
++  let badMidName := Name.mkSimple "chain_17"
++  let badChainMap := chainMap.insert badMidName (.thmInfo {
++    name := badMidName
++    levelParams := []
++    type := .const propUnit []
++    value := .sort .zero
++    all := [badMidName]
++  })
++  for threads in [1, 2, 6] do
++    expectReject s!"bounded_queue_mid_failure_threads_{threads}" "while replaying declaration 'chain_17'" do
++      Comparator.ParallelReplay.checkParallel threads badChainMap emptyEnv
++
++  -- 16. Mixed heavy + light declarations exercising non-head ring removal (`removeRingAtOffset`)
++  let mut mixedMap : Std.HashMap Name ConstantInfo := {}
++  for base in [``Nat, ``Nat.zero, ``Nat.succ, ``Nat.add, ``Eq, ``Eq.refl, ``Eq.trans] do
++    let mut sub : Array Name := #[base]
++    while hm2 : sub.size > 0 do
++      let n := sub.back
++      sub := sub.pop
++      if !mixedMap.contains n then
++        if let some ci := fullInitEnv.find? n then
++          mixedMap := mixedMap.insert n ci
++          for dep in ci.getUsedConstantsAsSet do sub := sub.push dep
++          match ci with
++          | .inductInfo iv => for c in iv.ctors do sub := sub.push c
++          | .ctorInfo cv => sub := sub.push cv.induct
++          | .recInfo rv =>
++            for ind in rv.all do sub := sub.push ind
++            for rule in rv.rules do sub := sub.push rule.ctor
++          | _ => pure ()
++  let zeroLit := Expr.lit (.natVal 0)
++  let twoLit := Expr.lit (.natVal 2)
++  let onePlusOne := mkApp2 (.const ``Nat.add []) (.lit (.natVal 1)) (.lit (.natVal 1))
++  for idx in [0:180] do
++    let hName := Name.mkSimple s!"heavy_rfl_{idx}"
++    let hThm : ConstantInfo := .thmInfo {
++      name := hName
++      levelParams := []
++      type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``Nat []) onePlusOne twoLit
++      value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``Nat []) twoLit
++      all := [hName]
++    }
++    let lName := Name.mkSimple s!"light_rfl_{idx}"
++    let lThm : ConstantInfo := .thmInfo {
++      name := lName
++      levelParams := []
++      type := mkApp3 (.const ``Eq [.succ .zero]) (.const ``Nat []) zeroLit zeroLit
++      value := mkApp2 (.const ``Eq.refl [.succ .zero]) (.const ``Nat []) zeroLit
++      all := [lName]
++    }
++    mixedMap := (mixedMap.insert hName hThm).insert lName lThm
++  for threads in [1, 2, 6] do
++    expectAccept s!"mixed_heavy_light_threads_{threads}" do
++      Comparator.ParallelReplay.checkParallel threads mixedMap emptyEnv
++
++  IO.println "All ParallelReplay unit soundness checks passed!"
