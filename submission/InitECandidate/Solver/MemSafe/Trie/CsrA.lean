@@ -87,40 +87,45 @@ theorem ia_call {a : Act σ} (haC : a.C = Types.guestC) (hCb : a.Cb = Types.gues
 
 /-! ## Table entries of the callees -/
 
+private theorem tableSummaryAt {i : Nat} {f : MlS} {sg : Sig} {cs : List Cap}
+    (entry : ShardsJL.tab26[i]? = some (f, sg, cs)) :
+    CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) f sg cs :=
+  Rec.tab26_guestR f sg cs (List.mem_of_getElem? entry)
+
 theorem u256min_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "u256_to_be_min")
-      ⟨[.any, .buf 32], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any, .buf 32], [], [], false⟩ [] := tableSummaryAt (i := 434) (by rfl)
 
 theorem rlpEB_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "rlp_encode_bytes")
-      ⟨[.bufArg 2 1 9, .any, .any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.bufArg 2 1 9, .any, .any], [], [], false⟩ [] := tableSummaryAt (i := 627) (by rfl)
 
 theorem zero_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "u256_is_zero")
-      ⟨[.any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any], [], [], false⟩ [] := tableSummaryAt (i := 447) (by rfl)
 
 theorem item_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "htab_item")
-      ⟨[.any, .any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any, .any], [], [], false⟩ [] := tableSummaryAt (i := 432) (by rfl)
 
 theorem has_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "htab_has")
-      ⟨[.any, .any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any, .any], [], [], false⟩ [] := tableSummaryAt (i := 468) (by rfl)
 
 theorem get_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "htab_get")
-      ⟨[.any, .any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any, .any], [], [], false⟩ [] := tableSummaryAt (i := 483) (by rfl)
 
 theorem wsroot_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "ws_storage_root_of")
-      ⟨[.any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any], [], [], false⟩ [] := tableSummaryAt (i := 457) (by rfl)
 
 theorem wsacct_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "ws_get_account_optional")
-      ⟨[.any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any], [], [], false⟩ [] := tableSummaryAt (i := 458) (by rfl)
 
 theorem croot_R :
     CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "cache_get_root")
-      ⟨[.any, .any], [], [], false⟩ [] := ctab% Rec.tab26_guestR
+      ⟨[.any, .any], [], [], false⟩ [] := tableSummaryAt (i := 426) (by rfl)
 
 end InitECandidate.Solver.MemSafe.Trie

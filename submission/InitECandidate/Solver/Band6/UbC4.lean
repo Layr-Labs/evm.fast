@@ -61,7 +61,7 @@ theorem c_l2_inner_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Ty
     have := Inv.costP_of_cost (P := fun _ => True) (X := guestCtx) (σ := σ) cost_skip s' hs' trivial hg
     exact this
 
-def bIL : Nat := (2 ^ 64 + 1) * (bL2I + 1)
+def bIL : Nat := (2 ^ 32) * (bL2I + 1)
 
 /-- The slot loop. -/
 theorem c_inner_loop (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
@@ -69,17 +69,23 @@ theorem c_inner_loop (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types
     (hfr : ∀ x ∈ ubNames3, E x = none) {a2 b2 c2 IDX CIN : BitVec 64}
     (hs2 : E (nm "s2") = some (wv [a2, b2, c2])) (hidx : E (nm "idx") = some (.val (.word IDX)))
     (hk : ∀ Γ, F Γ → (SrcKey Γ b2 20 tHTb20 ∧ SrcKey Γ b2 20 tHTd20) ∧ ∃ S ∈ Γ, S.base = CIN ∧ S.ty = tHTh32) :
-    Inv.CostP σ guestCtx (PE ubc Γ0 s0 p0 (EJ E CIN (BitVec.ofNat 64 0)) F)
+    Inv.CostP σ guestCtx (fun s => PE ubc Γ0 s0 p0 (EJ E CIN (BitVec.ofNat 64 0)) F s ∧
+      BoundedInitializedLoop.LocalCap (nm "icap") (2 ^ 32) s)
       (.while (.cmp .less (lvv "j") (lvv "icap")) ubL2Inner) bIL := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   have hfe : E (nm "e") = none := hfr _ (by simp [ubNames3])
-  refine Inv.CostP.pre (costP_while_inc_less (I := fun s => ∃ JW, PE ubc Γ0 s0 p0 (EJ E CIN JW) F s)
-    (i := nm "j") (E := lvv "icap") (body := ubL2Inner)
+  refine Inv.CostP.pre (BoundedInitializedLoop.costP_while_local_cap (I := fun s => ∃ JW, PE ubc Γ0 s0 p0 (EJ E CIN JW) F s)
+    (i := nm "j") (cap := nm "icap") (body := ubL2Inner)
     (fun s ⟨JW, h⟩ => ⟨JW, pe_clk hH h⟩)
     (fun s hs ⟨⟨JW, hpe⟩, hc⟩ hg => c_l2_inner_body hGT Ent hF hfe hs2 hk JW s hs hpe hg) ?_
-    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "j") true _ (by decide_cbv))) (fun s _ h => ⟨_, h⟩)
-  intro s hs ⟨⟨JW, hpe⟩, hc⟩ ht hr
-  exact ⟨_, inv_of_hoareG (ub_l2_inner_body Ent hgs hF hfr hs2 hidx hk JW) s hs hpe ht hr⟩
+    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "j") true _ (by decide_cbv))
+    (keepsB_sound (nm "icap") _ (by decide_cbv))) ?_
+  · intro s hs ⟨⟨JW, hpe⟩, hc⟩ ht hr
+    exact ⟨_, inv_of_hoareG (ub_l2_inner_body Ent hgs hF hfr hs2 hidx hk JW) s hs hpe ht hr⟩
+  · intro s _ h
+    refine ⟨⟨_, h.1⟩, ⟨0, ?_, by decide⟩, h.2⟩
+    obtain ⟨Γ, hIV, hLL, hFF⟩ := h.1
+    exact hLL (nm "j") _ (by simp [EJ, Env.set])
 
 /-- The slot loop for a found account. -/
 theorem c_then2 (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
@@ -98,14 +104,23 @@ theorem c_then2 (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR
     exact (Option.some.inj hv).symm
   intro v hv
   subst hv
-  refine cdecU hH (by simp (config := {decide := true}) [Env.set]; exact hfr _ (by simp [ubNames3])) ?_
-  refine cdecE hH (G := fun v => v = .val (.word (BitVec.ofNat 64 0))) ?_ ?_
+  refine BuilderCapDeclarations.cdec_cap hH (C := 2 ^ 32)
+    (by simp (config := {decide := true}) [Env.set]; exact hfr _ (by simp [ubNames3])) ?_ ?_
   · intro Γ s' v hP hv
-    rw [ev_cw] at hv
-    exact (Option.some.inj hv).symm
-  intro v hv
-  subst hv
-  exact c_inner_loop hGT Ent hgs hF (E := E) hfr hs2 hidx (CIN := c2) (fun Γ h => ⟨(hk Γ h).1, (hk Γ h).2⟩)
+    obtain ⟨S, hS, hSb, hSt⟩ := (hk Γ hP.2.2).2
+    apply BuilderTableLocalFacts.typed_count_load (Struct.trk_G hP.1.1) hS
+      (by rw [hSt]; decide) ?_ hv
+    rw [hSb]
+    exact le_ev hP.2 (env_set_self _ _ _)
+  · refine BuilderCapDeclarations.cdecE_keep_cap hH
+      (G := fun v => v = .val (.word (BitVec.ofNat 64 0))) (by decide) ?_ ?_
+    · intro Γ s' v hP hv
+      rw [ev_cw] at hv
+      exact (Option.some.inj hv).symm
+    · intro v hv
+      subst hv
+      exact c_inner_loop hGT Ent hgs hF (E := E) hfr hs2 hidx (CIN := c2)
+        (fun Γ h => ⟨(hk Γ h).1, (hk Γ h).2⟩)
 
 end c5
 
@@ -157,21 +172,27 @@ theorem c_l2_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tW
   · intro s' hs' _ hg
     exact Inv.costP_of_cost (P := fun _ => True) (X := guestCtx) (σ := σ) cost_skip s' hs' trivial hg
 
-def bL2 : Nat := (2 ^ 64 + 1) * (bL2B + 1)
+def bL2 : Nat := (2 ^ 32) * (bL2B + 1)
 
 theorem c_loop2 (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
     (Ent : UbEnt Γ0 s0 p0) (hgs : HGS σ) {E : Env} (hfr : ∀ x ∈ ubNames4, E x = none)
     {IDX : BitVec 64} (hidx : E (nm "idx") = some (.val (.word IDX))) (OW : BitVec 64) :
-    Inv.CostP σ guestCtx (PE ubc Γ0 s0 p0 (EL2 E OW (BitVec.ofNat 64 0)) (FL2 OW)) ubLoop2 bL2 := by
+    Inv.CostP σ guestCtx (fun s => PE ubc Γ0 s0 p0 (EL2 E OW (BitVec.ofNat 64 0)) (FL2 OW) s ∧
+      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s) ubLoop2 bL2 := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   unfold ubLoop2
-  refine Inv.CostP.pre (costP_while_inc_less (I := fun s => ∃ IW, PE ubc Γ0 s0 p0 (EL2 E OW IW) (FL2 OW) s)
-    (i := nm "i") (E := lvv "cap") (body := ubL2Body)
+  refine Inv.CostP.pre (BoundedInitializedLoop.costP_while_local_cap (I := fun s => ∃ IW, PE ubc Γ0 s0 p0 (EL2 E OW IW) (FL2 OW) s)
+    (i := nm "i") (cap := nm "cap") (body := ubL2Body)
     (fun s ⟨IW, h⟩ => ⟨IW, pe_clk hH h⟩)
     (fun s hs ⟨⟨IW, hpe⟩, hc⟩ hg => c_l2_body hGT Ent hgs hfr hidx OW IW s hs hpe hg) ?_
-    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "i") true _ (by decide_cbv))) (fun s _ h => ⟨_, h⟩)
-  intro s hs ⟨⟨IW, hpe⟩, hc⟩ ht hr
-  exact ⟨_, inv_of_hoareG (ub_l2_body Ent hgs hfr hidx OW IW) s hs hpe ht hr⟩
+    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "i") true _ (by decide_cbv))
+    (keepsB_sound (nm "cap") _ (by decide_cbv))) ?_
+  · intro s hs ⟨⟨IW, hpe⟩, hc⟩ ht hr
+    exact ⟨_, inv_of_hoareG (ub_l2_body Ent hgs hfr hidx OW IW) s hs hpe ht hr⟩
+  · intro s _ h
+    refine ⟨⟨_, h.1⟩, ⟨0, ?_, by decide⟩, h.2⟩
+    obtain ⟨Γ, hIV, hLL, hFF⟩ := h.1
+    exact hLL (nm "i") _ (by simp [EL2, Env.set])
 
 end c6
 

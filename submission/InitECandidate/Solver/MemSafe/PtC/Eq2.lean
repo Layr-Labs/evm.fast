@@ -21,7 +21,7 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 theorem cbk_201 : cbd ptS201 = 340282366920938464441052043338374447207 := by
   unfold ptS201
   try simp only [callD, cbd]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_200 : cbd ptS200 = 340282366920938464441052043338374447207 := by
   unfold ptS200
@@ -51,7 +51,7 @@ theorem cbk_196 : cbd ptS196 = 0 := by
 theorem cbk_195 : cbd ptS195 = 680564733841876927664618977811918487622 := by
   unfold ptS195
   try simp only [callD, cbd]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_194 : cbd ptS194 = 0 := by
   unfold ptS194
@@ -66,7 +66,7 @@ theorem cbk_193 : cbd ptS193 = 680564733841876927664618977811918487622 := by
 theorem cbk_192 : cbd ptS192 = 680564733841876927664618977811918487625 := by
   unfold ptS192
   try simp only [callD, cbd, cbk_193]
-  try decide_cbv
+  decide +kernel
 
 theorem cbk_191 : cbd ptS191 = 0 := by
   unfold ptS191

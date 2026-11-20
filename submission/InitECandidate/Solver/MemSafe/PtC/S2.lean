@@ -26,7 +26,8 @@ theorem cpt_c2a {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
       CW' (PA E En' S') ptS14 (cbd ptS14) QT) :
     CW' (PA E En S) ptS7 (cbd ptS7) QT := by
   unfold ptS7
-  refine cw_decAny (locIns_resIns hQT _) tab_tx_chain_id (by simp) rfl cid_fin rfl
+  refine cw_decAny (f := nm "tx_chain_id") (k := ptS8) (hfc := by decide +kernel)
+    (locIns_resIns hQT _) tab_tx_chain_id (by simp) rfl cid_fin rfl
     (fun g ty h => (C.gl g ty h).1) ?_
   intro v hsh
   unfold ptS8
@@ -49,7 +50,13 @@ theorem cpt_c2a {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
       (addF S [Fct.obj w tB24 24, Fct.bufok0 w 24,
         Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + 24 ≤ heapEnd)]) rp rl buf n CV w :=
     ⟨C1, env_set_self _ _ _, Or.inr (by simp), Or.inr (by simp)⟩
-  refine cw_seqN (hn_callC tab_recover_sender (callOK_recover C2)) ?_
+  have recoverCost : Wg.costFin ptS13 = some (cbd ptS13) := by
+    have present : (Shards.finalState.1.lookup (nm "recover_sender_with_chain_id")).isSome = true := by
+      decide +kernel
+    obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
+    have regular : nm "recover_sender_with_chain_id" ≠ nm "encode_receipt" := by decide
+    simp only [ptS13, callD, Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some]
+  refine cw_seqN (a := ptS13) (hc := recoverCost) (hn_callC tab_recover_sender (callOK_recover C2)) ?_
   unfold ptS12
   refine cw_seqN hn_skip ?_
   exact hk w _ _ C2

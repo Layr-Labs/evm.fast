@@ -39,26 +39,40 @@ theorem sumSpecA_capsQ {f : MlS} {sg : Sig} {cs : List Cap}
     (reqOK_jrs hreq hG hJ)
   exact ⟨Γ', p, p', sumCore_pw core fun a ⟨hpc, hw⟩ => ⟨hpc, caps_pw hst hG hw⟩, hq⟩
 
-theorem aie_kp : KpSpec σ (nm "acct_is_empty") ⟨[.any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
-theorem uz_kp : KpSpec σ (nm "u256_is_zero") ⟨[.any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
-theorem gdca_kp : KpSpec σ (nm "get_delegated_code_address") ⟨[.any, .any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
-theorem iwa_kp : KpSpec σ (nm "is_warm_address") ⟨[.any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
-theorem iaa_kp : KpSpec σ (nm "is_account_alive") ⟨[.buf 20], [], [], true⟩ :=
-  sumSpecA_caps (cs := stCaps) (by exact ctab% tabJL_guestR) stCaps_g stCaps_st
-theorem wa_kp : KpSpec σ (nm "warm_address") ⟨[.buf 20], [], [], true⟩ :=
-  sumSpecA_caps (cs := stCaps) (by exact ctab% tabJL_guestR) stCaps_g stCaps_st
+/-- The summary at an indexed entry of the checked capability table. -/
+theorem tableSummaryAt {i : Nat} {f : MlS} {sg : Sig} {cs : List Cap}
+    (entry : ShardsJL.tab26[i]? = some (f, sg, cs)) :
+    CSumm σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) f sg cs :=
+  tabJL_guestR f sg cs (List.mem_of_getElem? entry)
 
-theorem aie_fp : KeepsFp σ guestCtx (nm "acct_is_empty") := keepsFp_guest (by decide_cbv)
-theorem uz_fp : KeepsFp σ guestCtx (nm "u256_is_zero") := keepsFp_guest (by decide_cbv)
-theorem gdca_fp : KeepsFp σ guestCtx (nm "get_delegated_code_address") := keepsFp_guest (by decide_cbv)
-theorem iwa_fp : KeepsFp σ guestCtx (nm "is_warm_address") := keepsFp_guest (by decide_cbv)
-theorem iaa_fp : KeepsFp σ guestCtx (nm "is_account_alive") := keepsFp_guest (by decide_cbv)
-theorem wa_fp : KeepsFp σ guestCtx (nm "warm_address") := keepsFp_guest (by decide_cbv)
-theorem gpsa_fp : KeepsFp σ guestCtx (nm "get_pre_state_account") := keepsFp_guest (by decide_cbv)
+theorem aie_kp : KpSpec σ (nm "acct_is_empty") ⟨[.any], [], [], false⟩ :=
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 446) (by rfl)) (by decide) (by decide)
+theorem uz_kp : KpSpec σ (nm "u256_is_zero") ⟨[.any], [], [], false⟩ :=
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 447) (by rfl)) (by decide) (by decide)
+theorem gdca_kp : KpSpec σ (nm "get_delegated_code_address") ⟨[.any, .any], [], [], false⟩ :=
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 396) (by rfl)) (by decide) (by decide)
+theorem iwa_kp : KpSpec σ (nm "is_warm_address") ⟨[.any], [], [], false⟩ :=
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 467) (by rfl)) (by decide) (by decide)
+theorem iaa_kp : KpSpec σ (nm "is_account_alive") ⟨[.buf 20], [], [], true⟩ :=
+  sumSpecA_caps (cs := stCaps) (tableSummaryAt (i := 394) (by rfl)) stCaps_g stCaps_st
+theorem wa_kp : KpSpec σ (nm "warm_address") ⟨[.buf 20], [], [], true⟩ :=
+  sumSpecA_caps (cs := stCaps) (tableSummaryAt (i := 393) (by rfl)) stCaps_g stCaps_st
+
+-- The indexed witnesses check the named entry without scanning the whole table.
+theorem aie_fp : KeepsFp σ guestCtx (nm "acct_is_empty") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 490) (by rfl))
+theorem uz_fp : KeepsFp σ guestCtx (nm "u256_is_zero") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 729) (by rfl))
+theorem gdca_fp : KeepsFp σ guestCtx (nm "get_delegated_code_address") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 376) (by rfl))
+theorem iwa_fp : KeepsFp σ guestCtx (nm "is_warm_address") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 447) (by rfl))
+theorem iaa_fp : KeepsFp σ guestCtx (nm "is_account_alive") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 81) (by rfl))
+theorem wa_fp : KeepsFp σ guestCtx (nm "warm_address") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 51) (by rfl))
+theorem gpsa_fp : KeepsFp σ guestCtx (nm "get_pre_state_account") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 91) (by rfl))
 
 /-- `ext_code_of(buf 20)` with `EcoQ`. -/
 theorem eco_kp : SumSpecA σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "ext_code_of") eocSg

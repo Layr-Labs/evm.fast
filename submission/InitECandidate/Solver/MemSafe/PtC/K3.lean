@@ -63,7 +63,11 @@ theorem calleeCostP_tbl {f : MlS} {PreC : List (ValueHOL 64) → State σ → Pr
     (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
     Inv.CalleeCostP σ guestCtx f PreC (tbl f) := by
   obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hf
-  have : tbl f = B := by simp [tbl, hB]
+  by_cases h : f = nm "encode_receipt"
+  · subst f
+    simpa [tbl, hB] using
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (SeventhReceipt.receipt_cost (σ := σ)))
+  have : tbl f = B := by simp [tbl, hB, h]
   rw [this]
   exact Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hB))
 

@@ -95,7 +95,7 @@ theorem cpt_c8c {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
   have hbf : addF S [Fct.obj th tVAL 32, Fct.bufok0 th 32,
       Fct.prop (th.toNat % 8 = 0 ∧ heapBase ≤ th.toNat ∧ th.toNat + 32 ≤ heapEnd)] (Fct.bufok0 th 32) := Or.inr (by simp)
   unfold ptS74
-  refine cw_seqN (hn_callC tab_keccak256 (callOK_keccak hth hbf (fun g ty h => (K1.C0.gl g ty h).1))) ?_
+  refine cw_seqN (hc := regularCallCost (f := nm "keccak256")) (hn_callC tab_keccak256 (callOK_keccak hth hbf (fun g ty h => (K1.C0.gl g ty h).1))) ?_
   unfold ptS75
   refine cw_seqN (hn_stTeK K1 (off := 176) (k := 1) (hlen_lv_w hth) (by norm_num) (by norm_num) (by norm_num)
     (Or.inr (by norm_num))) ?_

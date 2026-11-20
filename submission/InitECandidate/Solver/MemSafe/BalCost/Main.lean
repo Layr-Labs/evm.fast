@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.FourthEncoderPhase2Final
 import InitECandidate.Solver.MemSafe.BalCost.Phase2
 import InitECandidate.Solver.MemSafe.BalEnc.Bbl10
 set_option autoImplicit false
@@ -23,7 +24,7 @@ theorem tail_cost {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs} (hp0 : ptrsOf s0 = som
     (Ent : BbEnt Γ0 s0 p0) (hev : ∃ e, gword s0 nmEv = some e ∧ e.toNat < nullMax)
     (hcc : ∃ c, gword s0 nmCC = some c ∧ c.toNat < nullMax) {L : Gam → State σ → Prop} :
     Inv.CostP σ guestCtx (fun s => ∃ Γ, PI bbc Γ0 s0 p0 L Γ s)
-      phase2 InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight := by
+      phase2 FourthEncoderPhase2Final.phase2BoundTight := by
   intro s hs ⟨Γ, hIV, hL⟩ hg
   have hIV' := hIV
   obtain ⟨hT, hb4⟩ := hIV
@@ -56,7 +57,7 @@ theorem tail_cost {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs} (hp0 : ptrsOf s0 = som
   have hBA : Bal.BalNN a.s0 a.Γ0 := by
     obtain ⟨w, hw, o, ho, hob, hot⟩ := (bb_facts Ent hIV').ba
     exact ⟨o, mem_heapOf.2 ⟨ho, by rw [hot]; decide⟩, hot, by rw [hob]; exact hw⟩
-  exact InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2_cost hK ⟨rfl, rfl⟩ rfl hBA s hs
+  exact FourthEncoderPhase2Final.phase2_cost hK ⟨rfl, rfl⟩ rfl hBA s hs
     (awInv_init a hGa hp1 hB) hg
 #print axioms tail_cost
 section rules
@@ -114,11 +115,11 @@ theorem bb_rest (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
     Inv.CostP σ guestCtx (PE bbc Γ0 s0 p0 (E3 SR AR) (fun Γ => FB1 SR Γ ∧ FB2 AR Γ))
       (.seq (.assign .local cCap (.load .one (.op .add [lv cAr, cw 24])))
         (.seq (.assign .local cI (cw 0)) (.seq loopAR phase2)))
-      (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight) := by
+      (cAR + FourthEncoderPhase2Final.phase2BoundTight) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
-  refine cost_seqRR (Ba := 0) (Bb := cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight) (L := LE (E3 SR AR) (fun Γ => FB1 SR Γ ∧ FB2 AR Γ)) (hassignU hH (by
+  refine cost_seqRR (Ba := 0) (Bb := cAR + FourthEncoderPhase2Final.phase2BoundTight) (L := LE (E3 SR AR) (fun Γ => FB1 SR Γ ∧ FB2 AR Γ)) (hassignU hH (by
     simp (config := {decide := true}) [E3, E0, Env.set, cCap, cSr, cAr])) (cost_assign _ _ _) ?_
-  refine cost_seqRR (Ba := 0) (Bb := cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight) (hassignT hH (n := cI) (fun v' => v' = .val (.word (BitVec.ofNat 64 0))) ?_) (cost_assign _ _ _) ?_
+  refine cost_seqRR (Ba := 0) (Bb := cAR + FourthEncoderPhase2Final.phase2BoundTight) (hassignT hH (n := cI) (fun v' => v' = .val (.word (BitVec.ofNat 64 0))) ?_) (cost_assign _ _ _) ?_
   · intro Γ s' v' hP hv
     rw [ev_cw] at hv
     exact (Option.some.inj hv).symm
@@ -147,7 +148,7 @@ theorem bb_after_loop1 (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
       (.dec cAr .one (.load .one (.op .add [gE "bs", cw 8]))
         (.seq (.assign .local cCap (.load .one (.op .add [lv cAr, cw 24])))
           (.seq (.assign .local cI (cw 0)) (.seq loopAR phase2))))
-      (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight) := by
+      (cAR + FourthEncoderPhase2Final.phase2BoundTight) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   have hQ := bblPost_locals (s0 := s0) (Γ0 := Γ0) (p0 := p0) hH
   refine cost_decF (G := fun v Γ => ∃ AR, v = .val (.word AR) ∧ FB2 AR Γ) ?_ hH ?_
@@ -167,7 +168,7 @@ theorem bb_seq1 (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
         (.dec cAr .one (.load .one (.op .add [gE "bs", cw 8]))
           (.seq (.assign .local cCap (.load .one (.op .add [lv cAr, cw 24])))
             (.seq (.assign .local cI (cw 0)) (.seq loopAR phase2)))))
-      (cSR + (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight)) := by
+      (cSR + (cAR + FourthEncoderPhase2Final.phase2BoundTight)) := by
   refine cost_seqRR (L := fun Γ t => ∃ IW, LE (EB1 SR IW) (FB1 SR) Γ t) (bb_loop1 Ent SR) loopSR_cost ?_
   refine Inv.CostP.pre (bb_after_loop1 hp0 Ent hev hcc SR) (fun s _ ⟨Γ, hIV, IW, hl⟩ => ⟨Γ, hIV, ?_⟩)
   refine le_mono ?_ (fun Γ h => h) hl
@@ -190,7 +191,7 @@ theorem bb_after_sr (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
             (.dec cAr .one (.load .one (.op .add [gE "bs", cw 8]))
               (.seq (.assign .local cCap (.load .one (.op .add [lv cAr, cw 24])))
                 (.seq (.assign .local cI (cw 0)) (.seq loopAR phase2)))))))
-      (cSR + (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight)) := by
+      (cSR + (cAR + FourthEncoderPhase2Final.phase2BoundTight)) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   have hQ := bblPost_locals (s0 := s0) (Γ0 := Γ0) (p0 := p0) hH
   refine cost_decU (by simp (config := {decide := true}) [E0, Env.set, cCap, cSr]) hH ?_
@@ -206,7 +207,7 @@ theorem bb_after_sr (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
 theorem bblMain_cost (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
     (hev : ∃ e, gword s0 nmEv = some e ∧ e.toNat < nullMax)
     (hcc : ∃ c, gword s0 nmCC = some c ∧ c.toNat < nullMax) :
-    Inv.CostP σ guestCtx (PE bbc Γ0 s0 p0 E0 (fun _ => True)) bblBody (cSR + (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight)) := by
+    Inv.CostP σ guestCtx (PE bbc Γ0 s0 p0 E0 (fun _ => True)) bblBody (cSR + (cAR + FourthEncoderPhase2Final.phase2BoundTight)) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   have hQ := bblPost_locals (s0 := s0) (Γ0 := Γ0) (p0 := p0) hH
   unfold bblBody phase1
@@ -222,7 +223,7 @@ theorem bblMain_cost (hp0 : ptrsOf s0 = some p0) (Ent : BbEnt Γ0 s0 p0)
 #print axioms bblMain_cost
 end main
 def mainBound : Nat := cSR +
-  (cAR + InitECandidate.Solver.MemSafe.BalCost.Phase2.phase2BoundTight)
+  (cAR + FourthEncoderPhase2Final.phase2BoundTight)
 
 def mainPre (vs : List (ValueHOL 64)) (s : State σ) : Prop :=
   vs = [] ∧ ∃ Γ p, G guestC (guestHooksR (σ := σ)) Γ s ∧ ptrsOf s = some p ∧ BblPre s Γ

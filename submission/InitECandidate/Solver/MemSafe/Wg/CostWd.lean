@@ -27,8 +27,8 @@ theorem costFin_wdS5 : costFin wdS5 = some bWdLoop := by decide_cbv
 
 /-- The conditional bound of `incorporate_tx_into_block` (`Band2.incorporate_condCost` over `Band6.ub_condCost_lit`). -/
 def bInc : Nat :=
-  1 + 4081774914776526801994342856258335214786233812941513267855060749915296337060237131737786 + 0 +
-    ((1 + 115792089237316195806474190867275434631345899985535924178223997904058262225658 + 0) + 0)
+  1 + 221273461509877258520337812737445124328463924668881247860154574045184 + 0 +
+    ((1 + 28948022309329048957895649452205539439537088682940916792789893087862638772229 + 0) + 0)
 
 theorem incCost : CondCost σ guestCtx guestC (HR σ) (nm "incorporate_tx_into_block") Bal.biSig Bal.UbPre bInc := by
   refine Band2.incorporate_condCost (Hooks.guestHooksR_lawful (σ := σ)) ?_ (Band6.ub_condCost_lit (σ := σ))

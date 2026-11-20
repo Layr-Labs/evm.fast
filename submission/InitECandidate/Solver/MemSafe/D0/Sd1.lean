@@ -34,41 +34,53 @@ theorem gcCaps_g : ∀ c ∈ gcCaps, c.g ≠ anyG → (c.g = nmJr ∧ c.t = tJOU
 theorem gcCaps_st : ∀ c ∈ gcCaps, c.ks = [] ∧ (c.all = true → guestSt c.t = true) := by decide
 
 theorem htf_kp : KpSpec σ (nm "htab_has") ⟨[.any, .any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 468) (by rfl)) (by decide) (by decide)
 theorem fw_kp : KpSpec σ (nm "u256_fits_word") ⟨[.any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 356) (by rfl)) (by decide) (by decide)
 theorem mq_kp : KpSpec σ (nm "memeq") ⟨[.any, .any, .any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 484) (by rfl)) (by decide) (by decide)
 theorem ivd_kp : KpSpec σ (nm "is_valid_delegation") ⟨[.any, .any], [], [], false⟩ :=
-  sumSpecA_caps (cs := []) (by exact ctab% tabJL_guestR) (by decide) (by decide)
+  sumSpecA_caps (cs := []) (tableSummaryAt (i := 397) (by rfl)) (by decide) (by decide)
 theorem ae_kp : KpSpec σ (nm "account_exists") ⟨[.buf 20], [], [], true⟩ :=
-  sumSpecA_caps (cs := stCaps) (by exact ctab% tabJL_guestR) stCaps_g stCaps_st
+  sumSpecA_caps (cs := stCaps) (tableSummaryAt (i := 448) (by rfl)) stCaps_g stCaps_st
 theorem gc_kp : KpSpec σ (nm "get_code") ⟨[.any, .any], [], [], true⟩ :=
-  sumSpecA_caps (cs := gcCaps) (by exact ctab% tabJL_guestR) gcCaps_g gcCaps_st
+  sumSpecA_caps (cs := gcCaps) (tableSummaryAt (i := 412) (by rfl)) gcCaps_g gcCaps_st
 theorem vac_kp : KpSpec σ (nm "validate_authorization_checks") ⟨[.any, .buf 20], [], [], true⟩ :=
-  sumSpecA_caps (cs := ecoCaps) (by exact ctab% tabJL_guestR) ecoCaps_g ecoCaps_st
+  sumSpecA_caps (cs := ecoCaps) (tableSummaryAt (i := 355) (by rfl)) ecoCaps_g ecoCaps_st
 theorem inc_kp : KpSpec σ (nm "increment_nonce") ⟨[.buf 20], [], [Hooks.gJn], true⟩ :=
-  sumSpecA_caps (cs := incCaps) (by exact ctab% tabJL_guestR) incCaps_g incCaps_st
+  sumSpecA_caps (cs := incCaps) (tableSummaryAt (i := 399) (by rfl)) incCaps_g incCaps_st
 
-theorem htf_fp : KeepsFp σ guestCtx (nm "htab_has") := keepsFp_guest (by decide_cbv)
-theorem fw_fp : KeepsFp σ guestCtx (nm "u256_fits_word") := keepsFp_guest (by decide_cbv)
-theorem mq_fp : KeepsFp σ guestCtx (nm "memeq") := keepsFp_guest (by decide_cbv)
-theorem ivd_fp : KeepsFp σ guestCtx (nm "is_valid_delegation") := keepsFp_guest (by decide_cbv)
-theorem ae_fp : KeepsFp σ guestCtx (nm "account_exists") := keepsFp_guest (by decide_cbv)
-theorem gc_fp : KeepsFp σ guestCtx (nm "get_code") := keepsFp_guest (by decide_cbv)
-theorem vac_fp : KeepsFp σ guestCtx (nm "validate_authorization_checks") := keepsFp_guest (by decide_cbv)
-theorem inc_fp : KeepsFp σ guestCtx (nm "increment_nonce") := keepsFp_guest (by decide_cbv)
-theorem hn_fp : KeepsFp σ guestCtx (nm "htab_new") := keepsFp_guest (by decide_cbv)
-theorem hs_fp : KeepsFp σ guestCtx (nm "htab_set") := keepsFp_guest (by decide_cbv)
-theorem sc_fp : KeepsFp σ guestCtx (nm "set_code") := keepsFp_guest (by decide_cbv)
-theorem ra_fp : KeepsFp σ guestCtx (nm "recover_authority") := keepsFp_guest (by decide_cbv)
+theorem htf_fp : KeepsFp σ guestCtx (nm "htab_has") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 646) (by rfl))
+theorem fw_fp : KeepsFp σ guestCtx (nm "u256_fits_word") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 730) (by rfl))
+theorem mq_fp : KeepsFp σ guestCtx (nm "memeq") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 752) (by rfl))
+theorem ivd_fp : KeepsFp σ guestCtx (nm "is_valid_delegation") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 469) (by rfl))
+theorem ae_fp : KeepsFp σ guestCtx (nm "account_exists") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 85) (by rfl))
+theorem gc_fp : KeepsFp σ guestCtx (nm "get_code") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 88) (by rfl))
+theorem vac_fp : KeepsFp σ guestCtx (nm "validate_authorization_checks") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 38) (by rfl))
+theorem inc_fp : KeepsFp σ guestCtx (nm "increment_nonce") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 69) (by rfl))
+theorem hn_fp : KeepsFp σ guestCtx (nm "htab_new") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 651) (by rfl))
+theorem hs_fp : KeepsFp σ guestCtx (nm "htab_set") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 146) (by rfl))
+theorem sc_fp : KeepsFp σ guestCtx (nm "set_code") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 68) (by rfl))
+theorem ra_fp : KeepsFp σ guestCtx (nm "recover_authority") :=
+  keepsFp_guest (List.mem_of_getElem? (i := 6) (by rfl))
 
 /-- `htab_new(20, 8)`: the returned pointer is a `tHTh20` object of the post typing. -/
 theorem hn_kp : SumSpecA σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "htab_new")
     (Shards.newSig (20, 8)) (fun _ s _ => JrNZ s) (PWtopM tEV tCK [])
     (fun _ _ _ r _ Γ' => ∀ w, r = .returned (.val (.word w)) → Fits Γ' (.ptr tHTh20) w) := by
   have hc : CSumm σ guestCtx guestC (Hooks.guestHooksR (σ := σ)) (nm "htab_new")
-      (Shards.newSig (20, 8)) [] := ctab% tabJL_guestR
+      (Shards.newSig (20, 8)) [] := tableSummaryAt (i := 600) (by rfl)
   intro vs body callee rs hl s hs hloc r hr hg hna Γ hG hargs hJ
   obtain ⟨Γ', p, p', core, -⟩ := hc vs body callee rs hl s hs hloc r hr hg hna Γ hG hargs
     (fun c hc' => absurd hc' (by simp))

@@ -20,6 +20,13 @@ open InitECandidate.Solver.MemSafe.Ptx
 
 variable {σ : Type}
 
+theorem regularCallCost {dst : Option (VarKind × MlS)} {f : MlS} {args : List (ExpHOL 64)}
+    (regular : f ≠ nm "encode_receipt" := by decide)
+    (present : (Shards.finalState.1.lookup f).isSome = true := by decide +kernel) :
+    Wg.costFin (.call (some (dst, none)) f args) = some (cbd (.call (some (dst, none)) f args)) := by
+  obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
+  simp only [Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some]
+
 theorem cpt_c3A {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact 64) → State σ → Prop}
     {rp rl : BitVec 64} {buf n : Nat} {CV : List (BitVec 64)} {w : BitVec 64}
     (hQT : LocIns QT) (C : Cx2 E En S rp rl buf n CV w)
@@ -84,8 +91,19 @@ theorem cpt_c3B {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
       CW' (PA E En' S') ptS29 (cbd ptS29) QT) :
     CW' (PA E En S) ptS23 (cbd ptS23) QT := by
   obtain ⟨C2, hex2, hfx⟩ := C
+  have guardCost : Wg.costFin ptS25 = some (cbd ptS25) := by
+    have blobPresent : (Shards.finalState.1.lookup (nm "calculate_blob_gas_price")).isSome = true := by
+      decide +kernel
+    have feePresent : (Shards.finalState.1.lookup (nm "fee_mul")).isSome = true := by
+      decide +kernel
+    obtain ⟨blobPrice, blobLookup⟩ := Option.isSome_iff_exists.mp blobPresent
+    obtain ⟨feePrice, feeLookup⟩ := Option.isSome_iff_exists.mp feePresent
+    have regularBlob : nm "calculate_blob_gas_price" ≠ nm "encode_receipt" := by decide
+    have regularFee : nm "fee_mul" ≠ nm "encode_receipt" := by decide
+    simp only [ptS25, ptS222, ptS223, ptS224, Wg.costFin, costA, cbd, tbl, blobLookup, feeLookup,
+      if_neg regularBlob, if_neg regularFee, Option.getD_some]
   unfold ptS23
-  refine cw_seqN (P1 := PA E En S) ?_ ?_
+  refine cw_seqN (P1 := PA E En S) (hc := guardCost) ?_ ?_
   · unfold ptS25
     refine hn_ite ?_ (hn_pre hn_skip (fun s _ h => h.1))
     refine hn_pre ?_ (fun s _ h => h.1)
@@ -176,7 +194,7 @@ theorem cpt_c3D {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
     CW' (PA E En S) ptS32 (cbd ptS32) QT := by
   have C8 := C.1
   unfold ptS32
-  refine cw_seqN (hn_callC tab_increment_nonce
+  refine cw_seqN (hc := regularCallCost (f := nm "increment_nonce")) (hn_callC tab_increment_nonce
     (callOK_lvbufs csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) (by intro g hg; simpa using hg) incnonce_fin rfl
       (by par_tac) (by
         intro i n' h
@@ -187,15 +205,15 @@ theorem cpt_c3D {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
   unfold ptS33
   refine cw_decF (locIns_resIns hQT _) (C8.1.un _ (by decide)) ?_
   unfold ptS34
-  refine cw_seqN (hn_callAssign tab_u256_sub
+  refine cw_seqN (hc := regularCallCost (f := nm "u256_sub")) (hn_callAssign tab_u256_sub
     (callOK_any csOK_nil (by simp) rfl u256sub_fin (fun s _ vs hvs => by rw [evs_length hvs]; rfl)
       (fun g ty h => (C8.1.gl g ty h).1)) (C8.1.un _ (by decide))) ?_
   unfold ptS35
-  refine cw_seqN (hn_callAssign tab_u256_sub
+  refine cw_seqN (hc := regularCallCost (f := nm "u256_sub")) (hn_callAssign tab_u256_sub
     (callOK_any csOK_nil (by simp) rfl u256sub_fin (fun s _ vs hvs => by rw [evs_length hvs]; rfl)
       (fun g ty h => (C8.1.gl g ty h).1)) (C8.1.un _ (by decide))) ?_
   unfold ptS36
-  refine cw_seqN (hn_callC tab_set_account_balance
+  refine cw_seqN (hc := regularCallCost (f := nm "set_account_balance")) (hn_callC tab_set_account_balance
     (callOK_lvbufs csOK_tbl_jr_sk ⟨by decide, by decide⟩ (by decide) (by intro g hg; simpa using hg) setbal_fin rfl
       (by par_tac) (by
         intro i n' h

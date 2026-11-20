@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.SeventhReceipt
 import InitECandidate.Solver.MemSafe.PtC.K1
 import InitECandidate.Solver.MemSafe.Entry2.Final
 import InitECandidate.Solver.MemSafe.Wg.CostWd
@@ -28,7 +29,7 @@ def bPmc : Nat := Entry2.pmcB (2 ^ 24 + 2) Entry2.bOp
 /-- The bound of a callee: the table, else the two conditional callees of `process_transaction`. -/
 def tbl (f : MlS) : Nat :=
   match Shards.finalState.1.lookup f with
-  | some B => B
+  | some B => if f = nm "encode_receipt" then SeventhReceipt.price else B
   | none => if f = nm "process_message_call" then bPmc else if f = nm "incorporate_tx_into_block" then Wg.bInc else 0
 
 /-- The structural bound of a program of the spine (binders, sequences, branches, calls); leaves by the analyzer. -/
@@ -43,6 +44,16 @@ def cbd : ProgHOL 64 → Nat
 
 example : Wg.costFin ptS4 = some (cbd ptS4) := by decide_cbv
 example : Wg.costFin ptS212 = some (cbd ptS212) := by decide_cbv
-example : Wg.costFin ptS172 = some (cbd ptS172) := by decide_cbv
+example : Wg.costFin ptS172 = some (cbd ptS172) := by
+  have regularZero (f : MlS) (lookup : Shards.finalState.1.lookup f = some 0)
+      (regular : f ≠ nm "encode_receipt") : tbl f = 0 := by
+    simp only [tbl, lookup, if_neg regular]
+  have scratch : tbl (nm "scratch_release") = 0 := regularZero _ (by decide +kernel) (by decide)
+  have frame : tbl (nm "frame_mem_release") = 0 := regularZero _ (by decide +kernel) (by decide)
+  have analyzed : Wg.costFin ptS172 = some 2 := by decide_cbv
+  have structural : cbd ptS172 = 2 := by
+    simp only [ptS172, ptS173, ptS174, ptS175, callD, cbd, scratch, frame]
+    decide_cbv
+  rw [structural, analyzed]
 
 end InitECandidate.Solver.MemSafe.PtC
