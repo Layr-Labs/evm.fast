@@ -48,8 +48,7 @@ theorem hypPtCost : Eb.HypPtCost σ (2 ^ 24 + 2) bPt := by
   have hcw : CW' (fun t => t = s) ptBody (cbd ptBody)
       (fun r t => r = some (.returned (.val (.word 0))) ∧ PtEnd (entryE Γ s p tx idx bo be txs rcs) t) := by
     unfold ptBody
-    refine cw_seqN (hc := regularCallCost (f := nm "state_fresh_tx"))
-      (pt_enter hPX.toPtPre ⟨hlt, hli⟩) ?_
+    refine cw_seqN (pt_enter hPX.toPtPre ⟨hlt, hli⟩) ?_
     exact cchain1 hPX.toPtPre hypEncTx_closed (locIns_ptEnd _) (cx0_enter _)
       (fun En' S' rp rl buf n CV w a b c pr mg rs C3 =>
         cchain2 hPX hpre.own hpre.coinR hpm hpcm hypRcpt_closed Band6.hgs_R C3.2.2.2.1 C3)

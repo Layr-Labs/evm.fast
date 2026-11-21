@@ -1,6 +1,5 @@
-import InitECandidate.Solver.Improvements.FourthCsrStateBound
-import InitECandidate.Solver.Improvements.FourthCsrTypedItem
-import InitECandidate.Solver.MemSafe.CsrCost.Rules
+import InitECandidate.Solver.MemSafe.CsrStateCost.Tail
+import InitECandidate.Solver.MemSafe.CsrInnerCost.Item
 set_option autoImplicit false
 set_option maxHeartbeats 0
 set_option maxRecDepth 1000000
@@ -16,14 +15,14 @@ open InitECandidate.Solver.MemSafe.Trie InitECandidate.Solver.Band7
 namespace InitECandidate.Solver.MemSafe.CsrCost
 variable {σ : Type}
 def capMax : Nat := 4127616
-def bBody : Nat := 5810263748951027947803742680339476626084563194610165308274146556441
-def bState : Nat := 2908403606610727028852000654541137464875385422026401625811279711168
-def bLoop : Nat := capMax * (bBody + 1)
-def bI : Nat := bLoop + bState
- theorem body_eq : FourthCsrCaller.cb csr_s_1 = bBody := by decide +kernel
- theorem state_eq : FourthCsrState.stateBound = bState := by decide +kernel
- theorem loop_eq : capMax * (bBody + 1) = bLoop := by rfl
- theorem i_eq : bLoop + bState = bI := by rfl
+def bBody : Nat := InitECandidate.Solver.MemSafe.CsrInnerCost.cellCb csr_s_1
+def bState : Nat := InitECandidate.Solver.MemSafe.CsrStateCost.stateBound
+def bLoop : Nat := (capMax + 1) * (bBody + 1)
+def bI : Nat := bLoop+bState
+ theorem body_eq : InitECandidate.Solver.MemSafe.CsrInnerCost.cellCb csr_s_1 = bBody := rfl
+ theorem state_eq : InitECandidate.Solver.MemSafe.CsrStateCost.stateBound = bState := rfl
+ theorem loop_eq : (capMax + 1) * (bBody + 1) = bLoop := rfl
+ theorem i_eq : bLoop + bState = bI := rfl
 
 theorem ch_cast {P : State σ → Prop} {p q : ProgHOL 64}
     {Q : Option (PanSemResultExact 64) → State σ → Prop} {B B' : Nat}
@@ -58,21 +57,21 @@ theorem stage_i {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = guestC)
   let L : LocalsH → Prop := fun m => ∃ I : BitVec 64, Trie.LV ((nm "i", .val (.word I)) :: B) m
   let E : Gam → Ptrs → Mem → Prop := IB a (fun _ => True) C NR SW AW ND
   let J : State σ → Prop := GI a L E
-  have hb0 : CH σ J csr_s_1 (GP a L E Rv) (FourthCsrCaller.cb csr_s_1) :=
-    FourthCsrCaller.cstage_item_typed ha haC hCb haH hgr hcI hcH hcC hsw hcache hnd hnr
+  have hb0 : CH σ J csr_s_1 (GP a L E Rv) (InitECandidate.Solver.MemSafe.CsrInnerCost.cellCb csr_s_1) :=
+    InitECandidate.Solver.MemSafe.CsrInnerCost.cell_item ha haC hCb haH hgr hcI hcH hcC hsw hcache hnd hnr
       (fun p hp w hw => hfr p hp w (by simp only [nsAll, List.mem_cons, List.mem_append] at hw ⊢; tauto))
   have hb : CH σ (fun s => J s ∧ CondTrue s (.cmp .less (lv (nm "i")) (lv (nm "cap"))))
       csr_s_1 (GP a L E Rv) bBody :=
     ch_pre (ch_cast rfl body_eq hb0) (fun s hs h => h.1)
-  have hw0 := FourthCsrExactCH.gc_while_bounded_exact ha.hH (by decide : capMax < 2 ^ 63) hb
+  have hw0 := CsrCost.gc_while_bounded ha.hH (by decide : capMax < 2 ^ 63) hb
     (fun s hs h _ => h) (noContB_sound _ (by decide_cbv))
     (stepsB_sound (nm "i") true _ (by decide_cbv))
     (fun s hs ⟨⟨I, hL⟩, Γ, q, he, hh, hsc, hE⟩ =>
       ⟨CP, Trie.lv_ev hL (List.mem_cons_of_mem _ hcap), hCP⟩)
   have hw := ch_cast rfl loop_eq hw0
   have ht0 : CH σ J csr_state_mpt_1 (GP a (fun _ => False) (fun _ _ _ => True) Rv)
-      (FourthCsrState.stateBound) :=
-    FourthCsrState.cstage_state_bounded ha haC hCb haH hgr hcI hcC hcap hCP hnd hsw hcache haw hout
+      (InitECandidate.Solver.MemSafe.CsrStateCost.stateBound) :=
+    InitECandidate.Solver.MemSafe.CsrStateCost.state ha haC hCb haH hgr hcI hcC hcap hCP hnd hsw hcache haw hout
       (fun p hp w hw => hfr p hp w (by simp only [nsAll, List.mem_cons, List.mem_append] at hw ⊢; tauto))
       hOutB hOutF hRv
   have ht := ch_cast rfl state_eq ht0
@@ -88,7 +87,7 @@ theorem stage_i {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = guestC)
     Trie.lv_cons (Trie.lv_set hL (fun p hp => hfr p hp (nm "i") (by simp [nsAll])) _)
       (by simp [setVarHOLFinite, FUPDATE])
   have hp0 : J (setVarHOLFinite (nm "i") (.val (.word (0 : BitVec 64))) s) ∧
-      FourthCsrExactLoop.CounterAtMost (nm "i") capMax
+      InitECandidate.Solver.MemSafe.CsrCost.DataLoop.CounterAtMost (nm "i") capMax
         (setVarHOLFinite (nm "i") (.val (.word (0 : BitVec 64))) s) :=
     ⟨⟨⟨0, hL0⟩, Γ, q, he, heap_congr (s := s) ha.hH rfl rfl rfl rfl hh, hsc, hE⟩,
       0, by simp [setVarHOLFinite, FUPDATE], by decide⟩

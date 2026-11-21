@@ -1,4 +1,5 @@
-import InitECandidate.Solver.Improvements.ThirdMergeCallees
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
+import InitECandidate.Solver.MemSafe.InitCost.Callers.C40
 import InitECandidate.Solver.Band.Attempt
 import InitECandidate.Solver.Band.Disp
 
@@ -46,8 +47,7 @@ theorem code_itb : guestCode (nm "incorporate_tx_into_block") = some ([], itbBod
   code_of_entry (List.getElem_mem (l := Guest.Software.guestAst) (n := 428) (by decide)) ⟨_, rfl⟩
     entry_itb
 
-def bMerge : Nat :=
-  28948022309329048957895649452205539439537088682940916792789893087862638772229
+def bMerge : Nat := MemSafe.IncorpCost.Retable.b_merge_tx_into_block
 
 theorem incorporate_condCost {C : Cfg} {H : Hooks σ} (hH : HooksLawful C H) {sg : Sig}
     {Pre : List (ValueHOL 64) → State σ → Gam → Prop}
@@ -62,7 +62,7 @@ theorem incorporate_condCost {C : Cfg} {H : Hooks σ} (hH : HooksLawful C H) {sg
   unfold itbBody
   refine Inv.costP_seq (R := fun _ => True) (Inv.costP_callD hU ?_) (fun _ _ _ _ _ => trivial)
     (Inv.costP_of_cost (cost_seq (cost_call
-      (ThirdMergeCallees.merge_cost (σ := σ))
+      (MemSafe.IncorpCost.Retable.cc_merge_tx_into_block)
       (by intro _ _ _ _ h; cases h)) (cost_return _)))
   rintro s _ ⟨hloc, Γ, p, hG, hp, hargs, hpre⟩ vs' hvs' callee'
   rw [evs_nil] at hvs'

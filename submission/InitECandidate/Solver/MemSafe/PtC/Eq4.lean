@@ -18,21 +18,19 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_177 : cbd ptS177 = 231584178474632412584745290207647128933190931493979098325776965133417748406398 := by
+theorem cbk_177 : cbd ptS177 = 3251538701502543536065462153080071383792048613435617459643606 := by
   unfold ptS177
   try simp only [callD, cbd, cbk_178]
   try decide_cbv
 
-theorem cbk_176 : cbd ptS176 = 231584178474632412584745290207647128933190931493979098325776965133417748406398 := by
+theorem cbk_176 : cbd ptS176 = 3251538701502543536065462153080071383792048613435617459643606 := by
   unfold ptS176
   try simp only [callD, cbd, cbk_177]
   try decide_cbv
 
 theorem cbk_175 : cbd ptS175 = 2 := by
-  have callPrice1 : tbl (nm "scratch_release") = 0 := by decide +kernel
-  have callPrice2 : tbl (nm "frame_mem_release") = 0 := by decide +kernel
   unfold ptS175
-  try simp only [callD, cbd, callPrice1, callPrice2]
+  try simp only [callD, cbd]
   try decide_cbv
 
 theorem cbk_174 : cbd ptS174 = 2 := by
@@ -50,27 +48,27 @@ theorem cbk_172 : cbd ptS172 = 2 := by
   try simp only [callD, cbd, cbk_173]
   try decide_cbv
 
-theorem cbk_171 : cbd ptS171 = 231584178474632412584745290207647128933190931493979098325776965133417748406398 := by
+theorem cbk_171 : cbd ptS171 = 3251538701502543536065462153080071383792048613435617459643606 := by
   unfold ptS171
   try simp only [callD, cbd, cbk_176]
   try decide_cbv
 
-theorem cbk_170 : cbd ptS170 = 28948022530602510467772907972543352176982213011404841461671140948017212817418 := by
+theorem cbk_170 : cbd ptS170 = 6499002642658325612841247990644181427160375942773676 := by
   unfold ptS170
   try simp only [callD, cbd, tbl_inc, cbk_172]
   try decide_cbv
 
-theorem cbk_169 : cbd ptS169 = 260532201005234923052518198180190481110173144505383939787448106081434961223816 := by
+theorem cbk_169 : cbd ptS169 = 3251538708001546178723787765921319374436230040595993402417282 := by
   unfold ptS169
   try simp only [callD, cbd, cbk_170, cbk_171]
   try decide_cbv
 
-theorem cbk_168 : cbd ptS168 = 260532201005234923052518198180190481110173144505383939787448106081434961223816 := by
+theorem cbk_168 : cbd ptS168 = 3251538708001546178723787765921319374436230040595993402417282 := by
   unfold ptS168
   try simp only [callD, cbd, cbk_169]
   try decide_cbv
 
-theorem cbk_167 : cbd ptS167 = 260532201005234923052518198180190481110173144505383939787448106081434961223816 := by
+theorem cbk_167 : cbd ptS167 = 3251538708001546178723787765921319374436230040595993402417282 := by
   unfold ptS167
   try simp only [callD, cbd, cbk_168]
   try decide_cbv

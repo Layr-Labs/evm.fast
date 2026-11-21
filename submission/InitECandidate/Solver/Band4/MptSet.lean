@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.ReaderCost.Insert
 import InitECandidate.Solver.Band4.Mnk
 import InitECandidate.Solver.Band2.DeleteNode
 import InitECandidate.Solver.Band2.NodeRlp
@@ -113,7 +114,7 @@ def MsPre (vs : List (ValueHOL 64)) (s : State σ) (Γ : Gam) : Prop :=
     MRec Γ s m ∧ 2 * klen.toNat < 2 ^ 64
 
 def bMnk : Nat := 680564733841876927461704793001113419818
-def bIns : Nat := 351517697181654122901389248194218427720216074606996541669506
+def bIns : Nat := 654752733765164423206263670827865450960699850228066
 
 /-- `mpt_set`'s bound. -/
 def msB : Nat := 1 + bMnk + (max (1 + Band2.dnB + 0) (1 + bIns + 0) + (0 + 0))
@@ -271,8 +272,7 @@ theorem mpt_set_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
       rw [hum, hub, hbe]; exact hKN
     exact Band.delPre_of_G (MemSafe.G_congr hF.hH hum hug hud hub hG') (fits_of_rootOK hroot') hKN'
   · -- insert
-    exact Inv.costP_of_cost (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "_mpt_insert_node")
-      (B := bIns) rfl) (by intro _ _ _ _ h; cases h))
+    exact Inv.costP_of_cost (cost_call (InitECandidate.Solver.MemSafe.ReaderCost.Insert.callee_cost) (by intro _ _ _ _ h; cases h))
 
 end InitECandidate.Solver.Band4
 

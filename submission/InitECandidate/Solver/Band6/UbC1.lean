@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Improvements.BuilderCapDeclarations
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band6.Loop
 import InitECandidate.Solver.MemSafe.Frames.FinCost
 
@@ -87,33 +87,28 @@ end c1
 
 /-! ## Loop 1 -/
 
-def bL1 : Nat := 1138584800289170520087426632502556961578547
+def bL1 : Nat := 337828885944495763781766038495084
 
 set_option cbv.maxSteps 4000000000 in
-theorem cost_l1 : Cost σ guestCtx ubL1Body bL1 := cost_guest_of_costA (by decide_cbv)
+theorem cost_l1 : Cost σ guestCtx ubL1Body bL1 := FqCost.CombCore.analyze_sound IncorpCost.Retable.table13_sound (by cbv)
 
 section c2
 variable {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs}
 
 /-- The account loop. -/
-theorem c_loop1 (Ent : UbEnt Γ0 s0 p0) (IDX AW CW : BitVec 64) (hCW : CW.toNat ≤ 2 ^ 32) :
+theorem c_loop1 (Ent : UbEnt Γ0 s0 p0) (IDX AW CW : BitVec 64) :
     Inv.CostP σ guestCtx (PE ubc Γ0 s0 p0 (EL IDX AW CW (BitVec.ofNat 64 0)) (FL AW)) ubLoop1
-      ((2 ^ 32) * (bL1 + 1)) := by
+      ((2 ^ 64 + 1) * (bL1 + 1)) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   unfold ubLoop1
-  refine Inv.CostP.pre (BoundedInitializedLoop.costP_while_local_cap (I := fun s => ∃ IW, PE ubc Γ0 s0 p0 (EL IDX AW CW IW) (FL AW) s)
-    (i := nm "i") (cap := nm "cap") (body := ubL1Body)
+  refine Inv.CostP.pre (costP_while_inc_less (I := fun s => ∃ IW, PE ubc Γ0 s0 p0 (EL IDX AW CW IW) (FL AW) s)
+    (i := nm "i") (E := lvv "cap") (body := ubL1Body)
     (fun s ⟨IW, h⟩ => ⟨IW, pe_clk hH h⟩) (Inv.costP_of_cost cost_l1) ?_
-    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "i") true _ (by decide_cbv))
-    (keepsB_sound (nm "cap") _ (by decide_cbv))) ?_
+    (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "i") true _ (by decide_cbv))) ?_
   · intro s hs ⟨⟨IW, hpe⟩, hc⟩ ht hr
     exact ⟨_, inv_of_hoareG (ub_l1_body Ent IDX AW CW IW) s hs hpe ht hr⟩
   · intro s _ h
-    refine ⟨⟨_, h⟩, ⟨0, ?_, by decide⟩, ⟨CW, ?_, hCW⟩⟩
-    · obtain ⟨Γ, hIV, hLL, hFF⟩ := h
-      exact hLL (nm "i") _ (by simp (config := {decide := true}) [EL, Env.set])
-    · obtain ⟨Γ, hIV, hLL, hFF⟩ := h
-      exact hLL (nm "cap") _ (by simp (config := {decide := true}) [EL, Env.set])
+    exact ⟨_, h⟩
 
 end c2
 

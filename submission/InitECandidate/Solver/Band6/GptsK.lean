@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band6.Rules
 import InitECandidate.Solver.Band5.GetPreTxStorage
 
@@ -58,7 +59,7 @@ theorem gptsK_condCost
     refine costP_guard ?_
     refine costP_seq_callD_SG (Aux' := AK ADDR) (sumSpec_record_pre_state_read_k (σ := σ)) (by decide_cbv) (PreC := fun _ _ => True)
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "record_pre_state_read") (B := bRpsr) rfl))
+        ReceiptCost.Retable.cc_record_pre_state_read)
       (fun _ _ _ _ _ _ => trivial)
       (fun s _ Γ p _ _ hA vs hvs callee => by
         obtain rfl := evs_lv1 hA.2.2 hvs

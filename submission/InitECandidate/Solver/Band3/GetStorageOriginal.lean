@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band3.WsGetStorage
 import InitECandidate.Solver.MemSafe.Shards.CtabFind
 
@@ -61,7 +62,7 @@ theorem code_gso : guestCode (nm "get_storage_original") = some (params_wgs, gso
 
 def bHas : Nat := 92233720368547758087
 def bStor : Nat := 184467440737095516176
-def bRpsr : Nat := 340282366920938464441052043338374447207
+def bRpsr : Nat := ReceiptCost.Retable.b_record_pre_state_read
 
 /-- `get_storage_original`'s signature (`Sigs3`). -/
 def gsoSig : Sig := ⟨[.buf 20, .any], [], [], true⟩
@@ -150,7 +151,7 @@ theorem gso_condCost
     refine costP_guard ?_
     refine costP_seq_callD_S hH (Aux' := AuxA (nm "addr") 20) (PreC := fun _ _ => True) cs_rpsr
       (Inv.calleeCostP_of_calleeCost
-        (Wire.calleeCost_guest (f := nm "record_pre_state_read") (B := bRpsr) rfl))
+        ReceiptCost.Retable.cc_record_pre_state_read)
       (fun _ _ _ _ _ _ => trivial)
       (fun s _ Γ p _ _ hA vs hvs callee => by
         obtain ⟨A, hAl, hb⟩ := hA

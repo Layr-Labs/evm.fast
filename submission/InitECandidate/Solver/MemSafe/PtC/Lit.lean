@@ -22,12 +22,12 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 variable {σ : Type}
 
 /-- The literal bound. -/
-def bPtLit : Nat := 434220334893224225026093352313909272739218463580890280765232669235910016745444
+def bPtLit : Nat := 3389634956725082459002367854385743802904644922513839492359180
 
 theorem bPt_eq : bPt = bPtLit := by
-  have firstPrice : tbl (nm "state_fresh_tx") = 107 := by decide +kernel
   unfold bPt ptBody
-  simp only [callD, cbd, cbk_0, firstPrice] <;> decide_cbv
+  simp only [callD, cbd, cbk_0]
+  decide_cbv
 
 /-- **`HypPtCost σ (2^24 + 2) B` for the literal `B = bPtLit`.** -/
 theorem hypPtCost_lit : Eb.HypPtCost σ (2 ^ 24 + 2) bPtLit := bPt_eq ▸ hypPtCost

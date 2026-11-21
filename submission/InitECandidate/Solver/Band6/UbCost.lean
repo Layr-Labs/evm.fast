@@ -26,7 +26,7 @@ variable {σ : Type}
 section c8
 variable {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs}
 
-def bAW : Nat := (2 ^ 32) * (bL1 + 1) + bRB
+def bAW : Nat := (2 ^ 64 + 1) * (bL1 + 1) + bRB
 
 theorem c_aw (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
     (Ent : UbEnt Γ0 s0 p0) (hgs : HGS σ) (IDX A : BitVec 64) :
@@ -34,14 +34,10 @@ theorem c_aw (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
       (.dec (nm "cap") .one (ld1 (add2 (lvv "aw") 24))
         (.dec (nm "i") .one (cw 0) (.seq ubLoop1 ubRest))) bAW := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
-  refine cdecE hH (G := fun v => ∃ w : BitVec 64, v = .val (.word w) ∧ w.toNat ≤ 2 ^ 32) ?_ ?_
+  refine cdecE hH (G := fun v => ∃ w : BitVec 64, v = .val (.word w)) ?_ ?_
   · intro Γ s' v hP hv
-    obtain ⟨S, hS, hSb, hSt⟩ := hP.2.2
-    apply BuilderTableLocalFacts.typed_count_load (Struct.trk_G hP.1.1) hS
-      (by rw [hSt]; decide) ?_ hv
-    rw [hSb]
-    exact le_ev hP.2 (env_set_self _ _ _)
-  rintro v ⟨CW, rfl, hCW⟩
+    exact ev_load1w (by unfold ld1 at hv; exact hv)
+  rintro v ⟨CW, rfl⟩
   refine cdecE hH (G := fun v => v = .val (.word (BitVec.ofNat 64 0))) ?_ ?_
   · intro Γ s' v hP hv
     rw [ev_cw] at hv
@@ -49,7 +45,7 @@ theorem c_aw (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.tWSR))
   intro v hv
   subst hv
   refine Inv.costP_seq (R := fun t => ∃ IW, PE ubc Γ0 s0 p0 (EL IDX A CW IW) (FL A) t)
-    (c_loop1 Ent IDX A CW hCW) ?_ ?_
+    (c_loop1 Ent IDX A CW) ?_ ?_
   · intro s hs hp ht hr
     obtain ⟨Γ, hIV, IW, hl⟩ := inv_of_hoareG (ub_loop1 Ent IDX A CW) s hs hp ht hr
     exact ⟨IW, Γ, hIV, hl⟩
@@ -105,17 +101,15 @@ theorem ub_condCost :
     ⟨Γ, ⟨Struct.trk_refl hG hp, fun g _ => rfl⟩, fun x w h => absurd h (by simp [E0]), trivial⟩ hg
 
 /-- The literal bound. -/
-def bUB : Nat :=
-  221273461509877258520337812737445124328463924668881247860154574045184
+def bUB : Nat := bAW
 
-theorem bAW_eq : bAW = bUB := by decide +kernel
+theorem bAW_eq : bAW = bUB := rfl
 
 /-- **`update_builder_from_tx`'s conditional cost, literal bound.**
 `CondCost … (nm "update_builder_from_tx") biSig UbPre bUB` (the shape of F3's `Ptx.HypUbCost σ bUB`). -/
 theorem ub_condCost_lit :
     CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "update_builder_from_tx") biSig UbPre
-      221273461509877258520337812737445124328463924668881247860154574045184 :=
-  Inv.CalleeCostP.mono ub_condCost (by decide +kernel)
+      bUB := ub_condCost
 
 end InitECandidate.Solver.Band6
 

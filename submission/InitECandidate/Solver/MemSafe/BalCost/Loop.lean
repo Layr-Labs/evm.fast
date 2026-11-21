@@ -1,4 +1,3 @@
-import InitECandidate.Solver.Improvements.AcceptedBalEncodeCallee
 import InitECandidate.Solver.SourceCost.Checkers
 import InitECandidate.Solver.Spec.Inv.CostI
 import InitECandidate.Solver.MemSafe.BalEnc.BblDefs
@@ -180,7 +179,7 @@ theorem enc_keeps {σ : Type} : Keeps σ cAddrs encBody :=
   keepsB_sound cAddrs encBody (by decide +kernel)
 
 def sizeB : Nat := (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin sizeBody).getD 0
-def encB : Nat := 2 + AcceptedBalEncodeCore.cG + AcceptedBalEncodeCore.tighterCost
+def encB : Nat := (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin encBody).getD 0
 
 theorem cost_size {σ : Type} : Cost σ guestCtx sizeBody sizeB := by
   have hs : (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin sizeBody).isSome = true := by decide_cbv
@@ -188,17 +187,9 @@ theorem cost_size {σ : Type} : Cost σ guestCtx sizeBody sizeB := by
   simpa [sizeB, hB] using (InitECandidate.Solver.MemSafe.BalCost.Analyzer.cost_guest_costA (σ := σ) hB)
 
 theorem cost_enc {σ : Type} : Cost σ guestCtx encBody encB := by
-  have hget : CalleeCost σ guestCtx (nm "htab_get") AcceptedBalEncodeCore.cG :=
-    (AcceptedBalEncodeCallee.accepted_callees (σ := σ)).htab_get
-  have h : Cost σ guestCtx encBody
-      (1 + AcceptedBalEncodeCore.cG + (1 + AcceptedBalEncodeCore.tighterCost + (0 + 0))) := by
-    unfold encBody encLoop
-    exact cost_decCall hget (cost_decCall AcceptedBalEncodeCallee.callee_cost
-      (cost_seq (cost_assign _ _ _) (cost_assign _ _ _)))
-  have hB : 1 + AcceptedBalEncodeCore.cG +
-      (1 + AcceptedBalEncodeCore.tighterCost + (0 + 0)) = encB := by decide
-  rw [hB] at h
-  exact h
+  have hs : (InitECandidate.Solver.MemSafe.BalCost.Analyzer.costFin encBody).isSome = true := by decide_cbv
+  obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hs
+  simpa [encB, hB] using (InitECandidate.Solver.MemSafe.BalCost.Analyzer.cost_guest_costA (σ := σ) hB)
 
 theorem ev_field_congr {σ : Type} {s t : PanSemStateFiniteExact 64 σ}
     {j : MlS} {f : Nat} (h : t.locals.lookup j = s.locals.lookup j) :

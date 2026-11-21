@@ -43,7 +43,7 @@ theorem costP_prog_congr {X : Ctx 64} {P : PanSemStateFiniteExact 64 σ → Prop
   cases heq
   exact h
 
-def phase2BoundTight : Nat := 512986004353356583166721329339317580246404070128266439416768762074054926456758579758527
+def phase2BoundTight : Nat := 3285743502578284304474093661130322651618019499008068133558969155200607
 
 theorem phase2Bound_eq : 1 + 6 + (1 + keysB + afterKeysBound 10485759) = phase2BoundTight := by
   decide_cbv

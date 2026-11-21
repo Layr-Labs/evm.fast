@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.IncorpCost.Retable.S013
 import InitECandidate.Solver.Band6.UbC2
 import InitECandidate.Solver.MemSafe.Bal.Ub8
 
@@ -33,10 +34,10 @@ def ubInnerRest : ProgHOL 64 :=
 theorem ubInner_eq : ubInner = .decCall (nm "pre_v") Bal.sh4 (nm "idx_start_storage")
     [.rfield 1 (lvv "s2"), .rfield 1 (lvv "e")] ubInnerRest := rfl
 
-def bIR : Nat := 1361129467683753854314667031569811636257
+def bIR : Nat := 2535301201157435078447204401316
 
 set_option cbv.maxSteps 4000000000 in
-theorem cost_ir : Cost σ guestCtx ubInnerRest bIR := cost_guest_of_costA (by decide_cbv)
+theorem cost_ir : Cost σ guestCtx ubInnerRest bIR := FqCost.CombCore.analyze_sound IncorpCost.Retable.table13_sound (by cbv)
 
 def bInner : Nat := 1 + Band5.isB + bIR
 

@@ -92,7 +92,7 @@ theorem cpt_c10 {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
   unfold ptS89
   refine cw_seqN hn_skip ?_
   unfold ptS90
-  refine cw_seqN (hc := regularCallCost (f := nm "htab_set")) (hn_hset (th := tHTh20) (n := 20) (m := 24) (kw := w) (csOK_htab_set tHTh20 (by decide))
+  refine cw_seqN (hn_hset (th := tHTh20) (n := 20) (m := 24) (kw := w) (csOK_htab_set tHTh20 (by decide))
     tab_htab_set_20 (aaE := nm "aa") (kE := lv (nm "sender")) (env_set_self _ _ _) (Or.inr (by simp)) ?_
     K1.A.C0.bsd (by norm_num) (fun g ty h => (K1.A.C0.gl g ty h).1)) ?_
   · intro s hpa

@@ -1,3 +1,4 @@
+import InitECandidate.Solver.MemSafe.BalEnc.Defs
 import InitECandidate.Solver.MemSafe.Aw.Eh
 
 set_option autoImplicit false

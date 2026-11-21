@@ -38,21 +38,8 @@ theorem cpt_branch {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultEx
       CW' (PA E En (Sc S wm v32 v96 v120 (rd E.s0.memory (E.tx + BitVec.ofNat 64 152)))) ptS108 (cbd ptS108) QT) :
     CW' (PA E En S) ptS105 (cbd ptS105) QT := by
   have htx := K.A.C0.tx
-  have branchCost : Wg.costFin ptS107 = some (cbd ptS107) := by
-    have tableEntry (f : MlS) (present : (Shards.finalState.1.lookup f).isSome = true)
-        (regular : f ≠ nm "encode_receipt") :
-        ∃ bound, Shards.finalState.1.lookup f = some bound ∧ tbl f = bound := by
-      obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
-      exact ⟨bound, lookup, by simp only [tbl, lookup, if_neg regular]⟩
-    obtain ⟨_, getLookup, getCost⟩ := tableEntry (nm "get_account") (by decide +kernel) (by decide)
-    obtain ⟨_, allocLookup, allocCost⟩ := tableEntry (nm "alloc") (by decide +kernel) (by decide)
-    obtain ⟨_, addrLookup, addrCost⟩ := tableEntry (nm "compute_contract_address") (by decide +kernel) (by decide)
-    simp only [ptS107, ptS187, ptS192, ptS193, ptS195, ptS194, ptS196, ptS197, ptS198, ptS199,
-      ptS186, ptS188, ptS189, ptS190, ptS191, callD, Wg.costFin, costA, cbd,
-      getLookup, getCost, allocLookup, allocCost, addrLookup, addrCost, Option.map_some, Option.getD_some]
   unfold ptS105
-  refine cw_seqN (hc := branchCost)
-    (P1 := fun t => ∃ v32 v96 v120 : BitVec 64, PA E En (Sb S wm v32 v96 v120 (rd E.s0.memory (E.tx + BitVec.ofNat 64 152))) t)
+  refine cw_seqN (P1 := fun t => ∃ v32 v96 v120 : BitVec 64, PA E En (Sb S wm v32 v96 v120 (rd E.s0.memory (E.tx + BitVec.ofNat 64 152))) t)
     (hn_ite (P := PA E En S) (c := .cmp .equal (.load .one (.op .add [lv (nm "tx"), cw 152])) (cw 0)) ?_ ?_) ?_
   · by_cases hTO : rd E.s0.memory (E.tx + BitVec.ofNat 64 152) = 0
     · exact hn_pre (pt_then hP K hL hemp hsa hct hTO) (fun s _ h => h.1)
@@ -159,7 +146,7 @@ theorem cpt_c12 {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
   unfold ptS109
   have hm32 : S (Fct.memw (wm + BitVec.ofNat 64 32) v32) :=
     (K.hL (32, v32) (by simp)).2.2
-  refine cw_seqN (hc := regularCallCost (f := nm "htab_set")) (hn_hset (th := tHTh20) (n := 20) (m := 20) (kw := v32) (csOK_htab_set tHTh20 (by decide))
+  refine cw_seqN (hn_hset (th := tHTh20) (n := 20) (m := 20) (kw := v32) (csOK_htab_set tHTh20 (by decide))
     tab_htab_set_20 (aaE := nm "aa") (kE := .load .one (.op .add [lv (nm "m"), cw 32])) haa hoa ?_ hb32 le_rfl
     (fun g ty h => (K.A.C0.gl g ty h).1)) ?_
   · intro s hpa
