@@ -25,7 +25,7 @@ section lw17
 variable {E : EbE σ} {En : Env} {M : Nat} {QT : Option (PanSemResultExact 64) → State σ → Prop}
 
 /-- The cost of the loop and what follows it. -/
-def bLoop (BT Bn : Nat) : Nat := 5242876 * (bLB BT + 1) + Bn
+def bLoop (BT Bn : Nat) : Nat := 5242874 * (bLB BT + 1) + Bn
 
 theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy o.ty)
     (hPt : HypPt σ M) (hM : 2 ^ 24 + 2 ≤ M)
@@ -87,7 +87,7 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
     intro iv hlt
     have h1 : (BitVec.ofNat 64 1).toNat = 1 := by decide
     rw [BitVec.toNat_add, h1, Nat.mod_eq_of_lt (by omega)]
-  have hC : Inv.CostP σ guestCtx (PA E (EnL En X ptxs0 0) (SLs S t r 0)) ebS28 (5242876 * (bLB BT + 1)) := by
+  have hC : Inv.CostP σ guestCtx (PA E (EnL En X ptxs0 0) (SLs S t r 0)) ebS28 (5242874 * (bLB BT + 1)) := by
     unfold ebS28
     let I : State σ → Prop := fun s => ∃ iv : BitVec 64, iv.toNat ≤ ntx0.toNat ∧
       PA E (EnL En X ptxs0 iv) (SLs S t r iv.toNat) s
@@ -109,7 +109,7 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
       intro iv s hp
       have := hp.2 (nm "i") _ (hi iv)
       simp only [μ, this]
-    refine Inv.CostP.pre (P := I) (AcceptedExactWhileCost.costP_while_exact (I := I) μ 5242876 (fun s ⟨iv, hiv, hp⟩ => ⟨iv, hiv, pa_decClock hp⟩)
+    refine Inv.CostP.pre (P := I) (AcceptedExactWhileCost.costP_while_exact (I := I) μ 5242874 (fun s ⟨iv, hiv, hp⟩ => ⟨iv, hiv, pa_decClock hp⟩)
       (fun s => rfl) ?_ ?_ ?_ ?_ ?_) (fun s _ hp => ⟨0, Nat.zero_le _, hp⟩)
     · intro s hs ⟨⟨iv, hiv, hp⟩, hc⟩ hg
       have hlt := hlt_of iv s hiv hp hc
@@ -122,9 +122,10 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
       · rw [hr] at h; cases h
     · intro s _ ⟨iv, hiv, hp⟩ hc
       have := hμ iv s hp
-      have hn := AcceptedTransactionCountFacts.transaction_arrays_count_bound hp
+      have hn := AcceptedTransactionCountFacts.transaction_block_arrays_count_bound hp
         (Or.inl hpl) (Or.inl h40)
-        (Or.inl hled.otxs) (Or.inl hled.orcs) (Or.inl hled.tr)
+        (Or.inl hled.otxs) (Or.inl hled.orcs) (Or.inl hled.obe)
+        (Or.inl hled.tr) (Or.inl hled.tb) (Or.inl hled.rb)
       omega
     · intro s hs ⟨iv, hiv, hp⟩ hc
       have hlt := hlt_of iv s hiv hp hc

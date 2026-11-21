@@ -83,7 +83,53 @@ theorem transaction_objects_count
     hPlArr hPlTx hPlRc hArrTx hArrRc hTxRc
     hPlSize hArrSize hTxSize hRcSize
 
+theorem transaction_block_objects_count
+    {Γ : Gam} {q : Ptrs} {plObj arrObj txObj rcObj beObj : Obj} {N : Nat}
+    (hord : q.Ordered) (hLayout : Layout guestC q Γ)
+    (hPlMem : plObj ∈ Γ) (hArrMem : arrObj ∈ Γ)
+    (hTxMem : txObj ∈ Γ) (hRcMem : rcObj ∈ Γ) (hBeMem : beObj ∈ Γ)
+    (hPlTy : plObj.ty = tPL) (hArrTy : arrObj.ty = tSLA)
+    (hTxTy : txObj.ty = tBOS) (hRcTy : rcObj.ty = tBOS) (hBeTy : beObj.ty = tBOS)
+    (hPlSize : 136 ≤ plObj.size) (hArrSize : 16 * N ≤ arrObj.size)
+    (hTxSize : 16 * N + 16 ≤ txObj.size)
+    (hRcSize : 16 * N + 16 ≤ rcObj.size)
+    (hBeSize : 120 ≤ beObj.size)
+    (hne : txObj.base ≠ rcObj.base) (hneTxBe : txObj.base ≠ beObj.base)
+    (hneRcBe : rcObj.base ≠ beObj.base) : N ≤ 5242874 := by
+  have hPlBounds := heap_obj_bounds hord hLayout hPlMem (by rw [hPlTy]; rfl)
+  have hArrBounds := heap_obj_bounds hord hLayout hArrMem (by rw [hArrTy]; rfl)
+  have hTxBounds := heap_obj_bounds hord hLayout hTxMem (by rw [hTxTy]; rfl)
+  have hRcBounds := heap_obj_bounds hord hLayout hRcMem (by rw [hRcTy]; rfl)
+  have hBeBounds := heap_obj_bounds hord hLayout hBeMem (by rw [hBeTy]; rfl)
+  have hPlArr := Frames.lay_disj hLayout hPlMem hArrMem
+    (obj_ne_of_ty_ne hPlTy hArrTy (by decide))
+  have hPlTx := Frames.lay_disj hLayout hPlMem hTxMem
+    (obj_ne_of_ty_ne hPlTy hTxTy (by decide))
+  have hPlRc := Frames.lay_disj hLayout hPlMem hRcMem
+    (obj_ne_of_ty_ne hPlTy hRcTy (by decide))
+  have hPlBe := Frames.lay_disj hLayout hPlMem hBeMem
+    (obj_ne_of_ty_ne hPlTy hBeTy (by decide))
+  have hArrTx := Frames.lay_disj hLayout hArrMem hTxMem
+    (obj_ne_of_ty_ne hArrTy hTxTy (by decide))
+  have hArrRc := Frames.lay_disj hLayout hArrMem hRcMem
+    (obj_ne_of_ty_ne hArrTy hRcTy (by decide))
+  have hArrBe := Frames.lay_disj hLayout hArrMem hBeMem
+    (obj_ne_of_ty_ne hArrTy hBeTy (by decide))
+  have hTxRc := Frames.lay_disj hLayout hTxMem hRcMem
+    (fun he => hne (congrArg Obj.base he))
+  have hTxBe := Frames.lay_disj hLayout hTxMem hBeMem
+    (fun he => hneTxBe (congrArg Obj.base he))
+  have hRcBe := Frames.lay_disj hLayout hRcMem hBeMem
+    (fun he => hneRcBe (congrArg Obj.base he))
+  simp only [Obj.hi] at hPlArr hPlTx hPlRc hPlBe hArrTx hArrRc hArrBe hTxRc hTxBe hRcBe
+  exact AcceptedPayloadCountCap.transaction_block_count_le
+    hPlBounds.1 hPlBounds.2 hArrBounds.1 hArrBounds.2
+    hTxBounds.1 hTxBounds.2 hRcBounds.1 hRcBounds.2 hBeBounds.1 hBeBounds.2
+    hPlArr hPlTx hPlRc hPlBe hArrTx hArrRc hArrBe hTxRc hTxBe hRcBe
+    hPlSize hArrSize hTxSize hRcSize hBeSize
+
 end AcceptedHeapObjectCount
 
 #print axioms AcceptedHeapObjectCount.two_output_objects_count
 #print axioms AcceptedHeapObjectCount.transaction_objects_count
+#print axioms AcceptedHeapObjectCount.transaction_block_objects_count
