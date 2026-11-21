@@ -18,21 +18,37 @@ open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 
 variable {σ : Type}
 
+def HeapAtLeast (floor : Nat) (s : State σ) : Prop :=
+  ∀ p, ptrsOf s = some p → floor ≤ p.hp
+
+open InitECandidate.Solver.Spec.Mpt.Dec (SlPre) in
+private theorem cr_decode_grows : CallR (σ := σ) (nm "decode_transaction")
+    (fun vs s Γ p => ArgsOK guestC Γ p Rec.txSig.params vs ∧ SlPre vs s)
+    (fun _ _ _ _ => False)
+    (fun vs s Γ p v t Γ' p' => RetOK Γ' p p' vs Rec.txSig.ret v ∧ (Rec.txSig.grows = false → NewFresh Γ Γ' p p) ∧
+      Rec.TxRxIn vs Γ' t.memory v ∧ Rec.HeapGrowsBy 544 s t) :=
+  callR_mono_post (callR_of_sumSpecA (Pre := fun vs s _ => SlPre vs s) (PW := fun _ _ _ _ => False)
+    (Q := fun vs s _ r t Γ' => ∀ v, r = .returned v → Rec.TxRxIn vs Γ' t.memory v ∧ Rec.HeapGrowsBy 544 s t)
+    Rec.sumSpecA_decode_transaction_grows (by decide) (by intro g _ h; cases h) (fun _ _ _ _ _ h => h.elim))
+    (fun _ _ _ _ v _ _ _ hq => ⟨hq.1, hq.2.1, hq.2.2 v rfl⟩)
+
 section cw14
 variable {E : EbE σ} {En : Env} {S : FS} {Z : List MlS} {QT : Option (PanSemResultExact 64) → State σ → Prop}
 
-theorem cw_decDecode {Bk : Nat} (hQ : ResIns (nm "tx") QT) (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy o.ty) (hS : SafeS S)
+theorem cw_decDecode {Bk floor : Nat} (hQ : ResIns (nm "tx") QT) (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy o.ty) (hS : SafeS S)
     (hT : Tidy Z S) (hz : ∀ g ∈ Z, ¬ (tabW.contains g = true))
     {pl0 ptxs0 ntx0 iv : BitVec 64} (hptxs : En (nm "ptxs") = some (.val (.word ptxs0)))
     (hi : En (nm "i") = some (.val (.word iv))) (hlt : iv.toNat < ntx0.toNat) (hbd : ntx0.toNat < 2 ^ 50)
     (hpl : S (Fct.obj pl0 tPL 136)) (h32 : S (Fct.pcv (pl0 + BitVec.ofNat 64 32) ptxs0))
     (h40 : S (Fct.pcv (pl0 + BitVec.ofNat 64 40) ntx0)) {k : ProgHOL 64}
-    (hk : ∀ T : BitVec 64, CW (PAX E (En.set (nm "tx") (.val (.word T)))
-      (fun f => S f ∨ f = Fct.obj T tTX 0) (fun Γ p u => CPre Γ ∧ Rec.TxBuf Γ (Exb.gp0 p) u.memory T 152)) k Bk QT) :
-    CW (PA E En S) (.decCall (nm "tx") .one (nm "decode_transaction") [txArg1, txArg2] k) (1 + cDecTx + Bk) QT := by
-  refine cw_decCallK (PreC := fun _ _ => True) hQ (FunSpec.and cr_decode (gwk_tab (σ := σ) (by decide)))
+    (hk : ∀ T : BitVec 64, CW (fun s => PAX E (En.set (nm "tx") (.val (.word T)))
+      (fun f => S f ∨ f = Fct.obj T tTX 0) (fun Γ p u => CPre Γ ∧ Rec.TxBuf Γ (Exb.gp0 p) u.memory T 152) s ∧
+      HeapAtLeast (floor + 544) s) k Bk QT) :
+    CW (fun s => PA E En S s ∧ HeapAtLeast floor s)
+      (.decCall (nm "tx") .one (nm "decode_transaction") [txArg1, txArg2] k) (1 + cDecTx + Bk) QT := by
+  refine cw_decCallK (PreC := fun _ _ => True) hQ (FunSpec.and cr_decode_grows (gwk_tab (σ := σ) (by decide)))
     (Inv.calleeCostP_of_calleeCost cc_cDecTx) (fun _ _ _ _ _ _ => trivial) ?_
-  intro s hs hpa vs hvs callee v st ⟨hR, hgl⟩ hst hsh
+  intro s hs ⟨hpa, hfloor⟩ vs hvs callee v st ⟨hR, hgl⟩ hst hsh
   obtain ⟨⟨Γ, p, hr, hL⟩, hlk⟩ := hpa
   have hpa : PA E En S s := ⟨⟨Γ, p, hr, hL⟩, hlk⟩
   have hbd' : iv.toNat < 2 ^ 50 := by omega
@@ -62,10 +78,12 @@ theorem cw_decDecode {Bk : Nat} (hQ : ResIns (nm "tx") QT) (hK : HypKeepG σ) (h
     (Pre := fun vs s Γ p => ArgsOK guestC Γ p Rec.txSig.params vs ∧ Spec.Mpt.Dec.SlPre vs s)
     (D := fun _ _ _ _ => False)
     (Q := fun vs s Γ p v t Γ' p' => RetOK Γ' p p' vs Rec.txSig.ret v ∧ (Rec.txSig.grows = false → NewFresh Γ Γ' p p) ∧
-      Rec.TxRxIn vs Γ' t.memory v) hR
+      Rec.TxRxIn vs Γ' t.memory v ∧ Rec.HeapGrowsBy 544 s t) hR
     (fun g hg => hgl v rfl g hg) hr hL hpre (by intro f hf a ha h; exact h) (tidy_gmiss hT hz).1 (tidy_gmiss hT hz).2
-  obtain ⟨-, -, htxrx⟩ := hq
+  obtain ⟨-, -, htxrx, growth⟩ := hq
   obtain ⟨T, rfl⟩ := val_of_shapeEq_one' hsh
+  have newFloor : floor + 544 ≤ p'.hp :=
+    (Nat.add_le_add_right (hfloor p (ebRun_ptrs hr)) 544).trans (growth p p' (ebRun_ptrs hr) hstp.1.hp')
   obtain ⟨oT, hoT, hobT, hotT⟩ := htxrx.1 T rfl
   have hTxIn := htxrx.2 _ _ T rfl rfl
   obtain ⟨hr2, hC⟩ := ebRun_keepG hK hE0 hrun
@@ -93,10 +111,14 @@ theorem cw_decDecode {Bk : Nat} (hQ : ResIns (nm "tx") QT) (hK : HypKeepG σ) (h
     rcases hf with hf | rfl
     · exact holds_keepG (hS f hf) (hL' f hf)
     · exact ⟨oT, mem_keepG.mpr ⟨hoT, hotT ▸ keepTy_block _ (by simp [PlTys])⟩, hobT, hotT, Nat.zero_le _⟩
-  refine ⟨⟨keepG Γ', p', ebRun_set hr2 _ _, ?_, hC, hbuf⟩, lke_set (lke_restore hlk) _ _⟩
-  intro f hf
-  have := (holdsAll_loc hH s.locals st.clock) f hf
-  cases f <;> first | exact this | simpa [Fct.holds, gword, rd] using this
+  refine ⟨⟨⟨keepG Γ', p', ebRun_set hr2 _ _, ?_, hC, hbuf⟩, lke_set (lke_restore hlk) _ _⟩, ?_⟩
+  · intro f hf
+    have := (holdsAll_loc hH s.locals st.clock) f hf
+    cases f <;> first | exact this | simpa [Fct.holds, gword, rd] using this
+  · intro q hq
+    have same : q = p' := Option.some.inj (hq.symm.trans hstp.1.hp')
+    subst q
+    exact newFloor
 
 
 end cw14

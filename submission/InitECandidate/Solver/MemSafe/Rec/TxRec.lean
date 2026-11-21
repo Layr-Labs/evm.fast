@@ -1,4 +1,4 @@
-import InitECandidate.Solver.MemSafe.Rec.TxRecFirst
+import InitECandidate.Solver.MemSafe.Rec.TxHeapGrowth
 import InitECandidate.Solver.MemSafe.Shards.CtabFind
 
 set_option autoImplicit false
@@ -42,20 +42,24 @@ def TxIn (P N : BitVec 64) (m : Mem) (tx : BitVec 64) : Prop := TxK tx P N m
 def TxRxIn (vs : List (ValueHOL 64)) (Γ' : Gam) (mem : Mem) (v : ValueHOL 64) : Prop :=
   TxRx Γ' v ∧ ∀ P N tx : BitVec 64, vs = [Wd P, Wd N] → v = Wd tx → TxIn P N mem tx
 
-/-- `sumSpecA_of_heapQG` with a value fact that sees the exit memory. -/
+/-- A lower bound on the persistent heap consumed by a successful call. -/
+def HeapGrowsBy {σ : Type} (n : Nat) (s t : State σ) : Prop :=
+  ∀ p q, ptrsOf s = some p → ptrsOf t = some q → p.hp + n ≤ q.hp
+
+/-- `sumSpecA_of_heapQG` with a value fact that sees both endpoints. -/
 theorem sumSpecA_of_heapQGm {σ : Type} {X : Ctx 64} {C : Cfg} {H : Hooks σ} (hH : HooksLawful C H) (hC : CfgOK C)
     (hal : ∀ x, X.memaddrs x → x.toNat % 8 = 0) (hAC : AllocCfg C) (hNS : NullSafe X)
     {sg : Sig} {f : MlS} {Pre : List (ValueHOL 64) → State σ → Gam → Prop}
-    {Rx : List (ValueHOL 64) → Gam → Mem → ValueHOL 64 → Prop}
+    {Rx : List (ValueHOL 64) → Gam → State σ → State σ → ValueHOL 64 → Prop}
     (h : ∀ vs body callee rs, lookupCodeHOLFinite X.code.lookup f vs = some (body, callee, rs) →
       ∀ s0 : State σ, InCtx s0 X → s0.locals = callee → ∀ (Γ0 : Gam) (p0 : Ptrs),
         Pre vs s0 Γ0 →
         ActOK (actOf C H sg [] vs s0 Γ0 p0) X → Heap (actOf C H sg [] vs s0 Γ0 p0) Γ0 p0 s0 →
         HoareG σ X (fun t => t = s0) body (fun r t => ∀ r', r = some r' → ¬ Abortive r' →
           ∃ Γ' p', Ext Γ0 Γ' ∧ Heap (actOf C H sg [] vs s0 Γ0 p0) Γ' p' t ∧
-            ∀ v, r' = .returned v → RetOK Γ' p0 p' vs sg.ret v ∧ Rx vs Γ' t.memory v)) :
+            ∀ v, r' = .returned v → RetOK Γ' p0 p' vs sg.ret v ∧ Rx vs Γ' s0 t v)) :
     SumSpecA σ X C H f sg Pre (fun _ _ _ _ => False)
-      (fun vs _ _ r t Γ' => ∀ v, r = .returned v → Rx vs Γ' t.memory v) := by
+      (fun vs s _ r t Γ' => ∀ v, r = .returned v → Rx vs Γ' s t v) := by
   intro vs body callee rs hl s hs hloc r hr hgood hna Γ hG hargs hpre
   obtain ⟨p1, hps, hargs⟩ := hargs
   obtain ⟨ha, hh⟩ := act_entry hH hC hal hAC hNS (WaveHelpers.capsOK_nil C sg) hG hps hargs
@@ -69,12 +73,12 @@ theorem sumSpecA_of_heapQGm {σ : Type} {X : Ctx 64} {C : Cfg} {H : Hooks σ} (h
   cases hc
 
 set_option maxHeartbeats 0 in
-theorem sumSpecA_decode_transaction_rlp_in {σ : Type} {X : Ctx 64}
+theorem sumSpecA_decode_transaction_rlp_grows {σ : Type} {X : Ctx 64}
     (hF : FoldOK σ X Types.guestC (Hooks.guestHooksR (σ := σ)))
     (htab : CTabSound σ X Types.guestC (Hooks.guestHooksR (σ := σ)) ShardsJL.tab26) :
     SumSpecA σ X Types.guestC Hooks.guestHooksR (nm "decode_transaction_rlp") txSig
       (fun vs s _ => SlPre vs s) (fun _ _ _ _ => False)
-      (fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) := by
+      (fun vs s _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v ∧ HeapGrowsBy 544 s t) := by
   have hX := hF.hX
   have hword : CSumm σ X Types.guestC Hooks.guestHooksR (nm "tx_scalar_word") txwSig [] :=
     ctab% htab
@@ -125,7 +129,7 @@ theorem sumSpecA_decode_transaction_rlp_in {σ : Type} {X : Ctx 64}
       (fun Γ' p' mem v => RetOK Γ' (actOf Types.guestC Hooks.guestHooksR txSig [] [.val (.word Pv), .val (.word Lv)] s0 Γ0 p0).p0 p'
         (actOf Types.guestC Hooks.guestHooksR txSig [] [.val (.word Pv), .val (.word Lv)] s0 Γ0 p0).vs
         (actOf Types.guestC Hooks.guestHooksR txSig [] [.val (.word Pv), .val (.word Lv)] s0 Γ0 p0).sg.ret v ∧ TxRx Γ' v ∧
-          ∀ tx : BitVec 64, v = Wd tx → TxIn Pv Lv mem tx)) ?_ ?_ ?_
+          (∀ tx : BitVec 64, v = Wd tx → TxIn Pv Lv mem tx) ∧ p0.hp + 544 ≤ p'.hp)) ?_ ?_ ?_
   rotate_left
   · intro t _ ht
     subst ht
@@ -137,22 +141,36 @@ theorem sumSpecA_decode_transaction_rlp_in {σ : Type} {X : Ctx 64}
       simp at h2
   · intro r t _ _ h r' hr hna
     obtain ⟨Γ', p', he, hh', hv⟩ := h.2 r' hr hna
-    refine ⟨Γ', p', he, hh', fun v hv' => ⟨(hv v hv').1, (hv v hv').2.1, fun P N tx hvs hvt => ?_⟩⟩
-    simp only [Wd, List.cons.injEq, ValueHOL.val.injEq, HolWordLab.word.injEq, and_true] at hvs
-    obtain ⟨rfl, rfl⟩ := hvs
-    exact (hv v hv').2.2 tx hvt
+    refine ⟨Γ', p', he, hh', fun v hv' => ⟨(hv v hv').1, ⟨(hv v hv').2.1, ?_⟩, ?_⟩⟩
+    · intro P N tx hvs hvt
+      simp only [Wd, List.cons.injEq, ValueHOL.val.injEq, HolWordLab.word.injEq, and_true] at hvs
+      obtain ⟨rfl, rfl⟩ := hvs
+      exact (hv v hv').2.2.1 tx hvt
+    · intro p q hp hq
+      have same : p = p0 := Option.some.inj (hp.symm.trans hh.2.1)
+      have same' : q = p' := Option.some.inj (hq.symm.trans hh'.2.1)
+      subst p; subst q
+      exact (hv v hv').2.2.2
   · have hcs : TxCS X (actOf Types.guestC Hooks.guestHooksR txSig [] [.val (.word Pv), .val (.word Lv)] s0 Γ0 p0) :=
       ⟨hX, rfl, rfl, rfl, hword, hu256, hfixed, htoit, hbitem, hlitem, hrdf, hrls, hmz, halloc, hAS, hacc, hbh, hau⟩
-    refine txr_entry ha hcs ⟨hP, hPL⟩ (fun Ar B0 h1 h2 h3 hn0 => ?_)
-    refine txr_FB ha hcs rfl ⟨h1, h3⟩ h2 ⟨hP, hPL⟩ hn0 ?_
-    intro Γ' p' mem tx hx hK
-    refine ⟨hRet Γ' p' _, fun tx' hv => ?_, fun tx' hv => ?_⟩
+    refine txr_entry_grows_by_544 ha hcs rfl ⟨hP, hPL⟩ ?_
+    intro Γ' p' mem tx hx hK hAdvance
+    refine ⟨hRet Γ' p' _, (fun tx' hv => ?_), (fun tx' hv => ?_), hAdvance⟩
     · simp only [Wd, ValueHOL.val.injEq, HolWordLab.word.injEq] at hv
       subst hv
       exact hx
     · simp only [Wd, ValueHOL.val.injEq, HolWordLab.word.injEq] at hv
       subst hv
       exact hK
+
+theorem sumSpecA_decode_transaction_rlp_in {σ : Type} {X : Ctx 64}
+    (hF : FoldOK σ X Types.guestC (Hooks.guestHooksR (σ := σ)))
+    (htab : CTabSound σ X Types.guestC (Hooks.guestHooksR (σ := σ)) ShardsJL.tab26) :
+    SumSpecA σ X Types.guestC Hooks.guestHooksR (nm "decode_transaction_rlp") txSig
+      (fun vs s _ => SlPre vs s) (fun _ _ _ _ => False)
+      (fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) :=
+  sumSpecA_mono (sumSpecA_decode_transaction_rlp_grows hF htab) (fun _ _ _ h => h)
+    (fun _ _ _ _ h => h) (fun _ _ _ _ _ _ h v hv => (h v hv).1)
 
 theorem sumSpecA_decode_transaction_rlp {σ : Type} {X : Ctx 64}
     (hF : FoldOK σ X Types.guestC (Hooks.guestHooksR (σ := σ)))
@@ -180,5 +198,6 @@ theorem sumSpecA_decode_transaction_rlp_guestR {σ : Type} :
 end InitECandidate.Solver.MemSafe.Rec
 
 #print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction_rlp
+#print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction_rlp_grows
 #print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction_rlp_guestR
 #print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction_rlp_in_guestR

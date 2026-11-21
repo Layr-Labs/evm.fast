@@ -53,14 +53,7 @@ theorem ctl_end (hP : TlPre K) (hgs : Bal.HGS σ)
   unfold ptS173
   have hoL : ∀ x : ValueHOL 64, (En.set (nm "tx_frame_mark") x) (nm "out") = some (.val (.word K.out)) := fun x => by
     rw [env_set_ne _ _ (by decide)]; exact hout
-  have releaseCost : Wg.costFin ptS174 = some (cbd ptS174) := by
-    have scratch : Shards.finalState.1.lookup (nm "scratch_release") = some 0 := by decide +kernel
-    have frame : Shards.finalState.1.lookup (nm "frame_mem_release") = some 0 := by decide +kernel
-    have regularScratch : nm "scratch_release" ≠ nm "encode_receipt" := by decide
-    have regularFrame : nm "frame_mem_release" ≠ nm "encode_receipt" := by decide
-    simp only [ptS174, ptS175, callD, Wg.costFin, costA, cbd, tbl, scratch, frame,
-      if_neg regularScratch, if_neg regularFrame, Option.map_some, Option.getD_some]
-  refine cw_seqN (P1 := fun t => TailPost K t) (hc := releaseCost) ?_ ?_
+  refine cw_seqN (P1 := fun t => TailPost K t) ?_ ?_
   · unfold ptS174
     refine hn_ite ?_ ?_
     · -- release

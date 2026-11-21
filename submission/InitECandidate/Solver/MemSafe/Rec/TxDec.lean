@@ -52,13 +52,13 @@ theorem code_decode_transaction : guestCode (nm "decode_transaction") =
 
 set_option maxHeartbeats 0 in
 /-- **`decode_transaction`'s summary**, with the envelope fact. -/
-theorem sumSpecA_decode_transaction {σ : Type} :
+theorem sumSpecA_decode_transaction_grows {σ : Type} :
     SumSpecA σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "decode_transaction") txSig
       (fun vs s _ => SlPre vs s) (fun _ _ _ _ => False)
-      (fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) := by
+      (fun vs s _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v ∧ HeapGrowsBy 544 s t) := by
   have hF := foldOK_guestR (σ := σ)
   have hX := hF.hX
-  have hrlp := sumSpecA_decode_transaction_rlp_in_guestR (σ := σ)
+  have hrlp := sumSpecA_decode_transaction_rlp_grows hF (tab26_guestR (σ := σ))
   refine sumSpecA_of_heapQGm hF.hH hF.hC hF.hal hF.hAC hF.hNS ?_
   intro vs body callee rs hl s0 _ hloc Γ0 p0 hpre ha hh
   rw [hX] at hl
@@ -74,7 +74,7 @@ theorem sumSpecA_decode_transaction {σ : Type} :
   have hRet : ∀ (Γ' : Gam) (p' : Ptrs) (v : ValueHOL 64), RetOK Γ' a.p0 p' a.vs a.sg.ret v :=
     fun Γ' p' v i r w hr _ => by simp [a, actOf, txSig] at hr
   let Rv0 : Gam → Ptrs → Mem → ValueHOL 64 → Prop := fun Γ' p' mem v =>
-    RetOK Γ' a.p0 p' a.vs a.sg.ret v ∧ TxRxIn [Wd Pv, Wd Lv] Γ' mem v
+    RetOK Γ' a.p0 p' a.vs a.sg.ret v ∧ TxRxIn [Wd Pv, Wd Lv] Γ' mem v ∧ p0.hp + 544 ≤ p'.hp
   have hps : ∀ pt ∈ txSig.params, pt = .any := by simp [txSig]
   refine hoareG_conseq (P := DI a 0 0 (LV [(nm "p", Wd Pv), (nm "len", Wd Lv)]) (fun _ _ _ _ => True))
     (Q := NQM a Rv0) ?_ ?_ ?_
@@ -87,7 +87,12 @@ theorem sumSpecA_decode_transaction {σ : Type} :
     rcases hq with rfl | rfl <;> rw [hloc] <;> assumption
   · intro r t _ _ h r' hr hna
     obtain ⟨Γ', p', he, hh', hv⟩ := h.2 r' hr hna
-    exact ⟨Γ', p', he, hh', fun v hv' => hv v hv'⟩
+    refine ⟨Γ', p', he, hh', fun v hv' => ⟨(hv v hv').1, (hv v hv').2.1, ?_⟩⟩
+    intro p q hp hq
+    have same : p = p0 := Option.some.inj (hp.symm.trans hh.2.1)
+    have same' : q = p' := Option.some.inj (hq.symm.trans hh'.2.1)
+    subst p; subst q
+    exact (hv v hv').2.2
   unfold txdBody
   refine hoareG_decDIM ha.hH (L' := LV [(nm "tx", Wd (BitVec.ofNat 64 0)), (nm "p", Wd Pv), (nm "len", Wd Lv)]) ?_ ?_
   · intro s hs hL v hv
@@ -111,7 +116,7 @@ theorem sumSpecA_decode_transaction {σ : Type} :
       have e : a.p0.hp = p0.hp := rfl
       omega⟩
   refine hoareG_seq (R := fun r t => (r = none → ∃ V : ValueHOL 64, DI a 0 0 (fun m => m.lookup (nm "tx") = some V)
-      (fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V) t) ∧ (r ≠ none → NQM a Rv0 r t)) ?_
+      (fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V ∧ p0.hp + 544 ≤ q.hp) t) ∧ (r ≠ none → NQM a Rv0 r t)) ?_
     (fun r t _ hr _ h => h.2 hr) ?_
   · unfold txdTry
     refine hoareG_callH hrlp ?_ ?_ ?_
@@ -120,21 +125,26 @@ theorem sumSpecA_decode_transaction {σ : Type} :
       rw [hev s hL] at hvs
       cases hvs
       obtain ⟨Γ', q', he', hh', -, -, -, -, -, hQ⟩ := heap_callMPQ (Pre := fun vs s _ => SlPre vs s)
-        (Q := fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) (r := .returned v) (st := st) ha hh0 hR
+        (Q := fun vs s _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v ∧ HeapGrowsBy 544 s t)
+        (r := .returned v) (st := st) ha hh0 hR
         (by simp [Good]) (by simp [Abortive]) (argsOK_any hps rfl) hps (hpre' s Γ q callee hh0)
         (by simp [txSig]) (fun _ => rfl)
+      obtain ⟨hRx, growth⟩ := hQ v rfl
+      have grows : p0.hp + 544 ≤ q'.hp :=
+        le_trans (Nat.add_le_add_right hh0.2.2.1.1 544) (growth q q' hh0.2.1 hh'.2.1)
       refine ⟨fun h => absurd h (by simp), fun k x hk hval => ?_⟩
       simp only [Option.some.injEq, Prod.mk.injEq] at hk
       obtain ⟨rfl, rfl⟩ := hk
       refine ⟨fun _ => ⟨v, lk_set_self _ _ _, Γ', q', ext_trans he he',
         heap_congr (s := st) ha.hH (t := setKvarHOLFinite .local (nm "tx") v { st with locals := s.locals })
-          rfl rfl rfl rfl hh', blkF00, nob00, hQ v rfl⟩, fun h => absurd rfl h⟩
+          rfl rfl rfl rfl hh', blkF00, nob00, hRx, grows⟩, fun h => absurd rfl h⟩
     · intro s hs hD vs hvs callee v st hR hst
       obtain ⟨hL, Γ, q, he, hh0, -, -, -⟩ := hD
       rw [hev s hL] at hvs
       cases hvs
       obtain ⟨Γ', q', he', hh', -⟩ := heap_callMPQ (Pre := fun vs s _ => SlPre vs s)
-        (Q := fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) (r := .exception (nm "RlpErr") v) (st := st) ha hh0 hR
+        (Q := fun vs s _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v ∧ HeapGrowsBy 544 s t)
+        (r := .exception (nm "RlpErr") v) (st := st) ha hh0 hR
         (by simp [Good]) (by simp [Abortive]; decide) (argsOK_any hps rfl) hps (hpre' s Γ q callee hh0)
         (by simp [txSig]) (fun _ => rfl)
       refine hoareG_raise fun t _ ht w _ => ?_
@@ -150,22 +160,31 @@ theorem sumSpecA_decode_transaction {σ : Type} :
       refine ⟨fun h => absurd h (by simp), fun _ => ⟨by simp, fun r' hr' hna => ?_⟩⟩
       cases hr'
       obtain ⟨Γ', q', he', hh', -⟩ := heap_callMPQ (Pre := fun vs s _ => SlPre vs s)
-        (Q := fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) (r := r) (st := st) ha hh0 hR
+        (Q := fun vs s _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v ∧ HeapGrowsBy 544 s t)
+        (r := r) (st := st) ha hh0 hR
         (abn_good' habn) hna (argsOK_any hps rfl) hps (hpre' s Γ q callee hh0) (by simp [txSig]) (fun _ => rfl)
       refine ⟨Γ', q', ext_trans he he', heap_congr (s := st) ha.hH rfl rfl rfl rfl hh', fun v' hv' => ?_⟩
       subst hv'
       rcases habn with ⟨e, x, h⟩ | ⟨e, h⟩ <;> cases h
   · refine hoareG_pre (P := fun s => ∃ V : ValueHOL 64, DI a 0 0 (fun m => m.lookup (nm "tx") = some V)
-      (fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V) s) ?_ (fun s _ h => h.1 rfl)
+      (fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V ∧ p0.hp + 544 ≤ q.hp) s) ?_ (fun s _ h => h.1 rfl)
     intro s hs ⟨V, hD⟩ hg
     refine hoareG_retDIM (Ar := 0) (n := 0) (L := fun m => m.lookup (nm "tx") = some V)
-      (E := fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V) ha.hH ?_ s hs hD hg
+      (E := fun Γ q mem _ => TxRxIn [Wd Pv, Wd Lv] Γ mem V ∧ p0.hp + 544 ≤ q.hp) ha.hH ?_ s hs hD hg
     intro s' _ hL Γ q _ _ _ _ hE v hv
     have e : ev s' (lv (nm "tx")) = some V := hL
     rw [e] at hv
     cases hv
     exact ⟨hRet Γ q _, hE⟩
 
+theorem sumSpecA_decode_transaction {σ : Type} :
+    SumSpecA σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) (nm "decode_transaction") txSig
+      (fun vs s _ => SlPre vs s) (fun _ _ _ _ => False)
+      (fun vs _ _ r t Γ' => ∀ v, r = .returned v → TxRxIn vs Γ' t.memory v) :=
+  sumSpecA_mono sumSpecA_decode_transaction_grows (fun _ _ _ h => h)
+    (fun _ _ _ _ h => h) (fun _ _ _ _ _ _ h v hv => (h v hv).1)
+
 end InitECandidate.Solver.MemSafe.Rec
 
 #print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction
+#print axioms InitECandidate.Solver.MemSafe.Rec.sumSpecA_decode_transaction_grows

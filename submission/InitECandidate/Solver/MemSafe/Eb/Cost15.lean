@@ -55,16 +55,36 @@ theorem pt_obl (hM : 2 ^ 24 + 2 ≤ M) (hT : Tidy Z S) (hz : ∀ g ∈ Z, ¬ (pt
     obtain rfl : p = q := (Option.some.inj (hq.symm.trans (ebRun_ptrs hr))).symm
     exact dmiss_pt hled hL hord hL0 hlt e f hf a ha
 
-theorem cw_pt (hPt : HypPt σ M) (hM : 2 ^ 24 + 2 ≤ M) {BT : Nat} (hc : HypPtCost σ M BT)
+theorem cw_pt (hPt : HypPt σ M) (hM : 2 ^ 24 + 2 ≤ M) {BT floor : Nat} (hc : HypPtCost σ M BT)
     (hT : Tidy Z S) (hz : ∀ g ∈ Z, ¬ (ptW.contains g = true))
     {w t r lg rl be0 c0 wd0 ntx0 nwd0 iv T : BitVec 64}
     (hled : Led S w t r lg rl be0 c0 wd0 ntx0 nwd0 iv) (hlt : iv.toNat < ntx0.toNat)
     (hEnTx : En (nm "tx") = some (.val (.word T))) (hEnI : En (nm "i") = some (.val (.word iv)))
     (hTx : S (Fct.obj T tTX 0)) :
-    CW (PAX E En S (fun Γ p u => CPre Γ ∧ Rec.TxBuf Γ (Exb.gp0 p) u.memory T 152))
+    CW (fun s => PAX E En S (fun Γ p u => CPre Γ ∧ Rec.TxBuf Γ (Exb.gp0 p) u.memory T 152) s ∧ HeapAtLeast floor s)
       (callD (nm "process_transaction") [lv (nm "tx"), lv (nm "i")]) (1 + BT + 0)
-      (fun r' t' => r' = none ∧ PA E En (fun f => S f ∨ (f = Fct.ent t iv.toNat ∨ f = Fct.ent r iv.toNat)) t') :=
-  ⟨cp_callX hc rfl (pt_obl hM hT hz hled hlt hEnTx hEnI hTx), hn_pt hPt hM hT hz hled hlt hEnTx hEnI hTx⟩
+      (fun r' t' => r' = none ∧ PA E En (fun f => S f ∨ (f = Fct.ent t iv.toNat ∨ f = Fct.ent r iv.toNat)) t' ∧
+        HeapAtLeast floor t') := by
+  have obligations := pt_obl (E := E) hM hT hz hled hlt hEnTx hEnI hTx
+  have heap : Hoare σ guestCtx
+      (fun s => PAX E En S (fun Γ p u => CPre Γ ∧ Rec.TxBuf Γ (Exb.gp0 p) u.memory T 152) s ∧ HeapAtLeast floor s)
+      (callD (nm "process_transaction") [lv (nm "tx"), lv (nm "i")]) (fun _ t' => HeapAtLeast floor t') := by
+    unfold HypPt CallR at hPt
+    refine hoare_callD hPt ?_
+    intro s _ ⟨hpa, hfloor⟩ vs hvs callee v st hret _
+    obtain ⟨Γ, p, hrun, hholds, hbuf⟩ := hpa.1
+    have before := ebRun_loc hrun callee (s.clock - 1)
+    have hpre := obligations.pre s hpa vs hvs callee Γ p hrun hholds hbuf
+    obtain ⟨Γ', p', step, _⟩ := hret v rfl Γ p (ebRun_G before) (ebRun_ptrs before) (ebRun_jr before)
+      ⟨ebRun_ev before, ebRun_cc before⟩ hpre
+    intro q hq
+    have same : q = p' := Option.some.inj (hq.symm.trans step.1.hp')
+    subst q
+    exact (hfloor p (ebRun_ptrs hrun)).trans step.1.mono.1
+  refine ⟨(cp_callX hc rfl obligations).pre (fun _ _ h => h.1), ?_⟩
+  intro s hs hpre hgood
+  obtain ⟨normal, state⟩ := hn_pt hPt hM hT hz hled hlt hEnTx hEnI hTx s hs hpre.1 hgood
+  exact ⟨normal, state, heap s hs hpre hgood⟩
 
 end cw15
 
