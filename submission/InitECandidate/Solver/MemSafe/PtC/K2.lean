@@ -32,6 +32,22 @@ def tbl (f : MlS) : Nat :=
   | some B => if f = nm "encode_receipt" then SeventhReceipt.price else B
   | none => if f = nm "process_message_call" then bPmc else if f = nm "incorporate_tx_into_block" then Wg.bInc else 0
 
+/-- Unconditional analyzer price of the account-deletion loop body, certified in `DelLoop`. -/
+def deletionBodyPrice : Nat := 12554203470773362705388851331493776227290369235582827143293
+
+/-- The deletion table's typed count bounds the number of iterations. -/
+def deletionLoopPrice : Nat := 2 ^ 32 * (deletionBodyPrice + 1)
+
+/-- Identify the deletion loop guard in the transaction spine. The cost walk
+    establishes its conditional price at the typed load of `dcap`. -/
+private def deletionGuard : ExpHOL 64 → Bool
+  | .cmp .less (.var .local i) (.var .local cap) => i == nm "i" && cap == nm "dcap"
+  | _ => false
+
+private def leafBound : ProgHOL 64 → Nat
+  | .while c body => if deletionGuard c then deletionLoopPrice else (Wg.costFin (.while c body)).getD 0
+  | p => (Wg.costFin p).getD 0
+
 /-- The structural bound of a program of the spine (binders, sequences, branches, calls); leaves by the analyzer. -/
 def cbd : ProgHOL 64 → Nat
   | .seq a b => cbd a + cbd b
@@ -40,7 +56,9 @@ def cbd : ProgHOL 64 → Nat
   | .decCall _ _ f _ k => 1 + tbl f + cbd k
   | .call none f _ => 1 + tbl f + 0
   | .call (some (_, none)) f _ => 1 + tbl f + 0
-  | p => (Wg.costFin p).getD 0
+  | p => leafBound p
+
+theorem cbdDeletionLoop : cbd ptS178 = deletionLoopPrice := rfl
 
 example : Wg.costFin ptS4 = some (cbd ptS4) := by decide_cbv
 example : Wg.costFin ptS212 = some (cbd ptS212) := by decide_cbv
