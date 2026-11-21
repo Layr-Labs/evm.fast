@@ -1,6 +1,3 @@
-import InitECandidate.Solver.Improvements.AcceptedExactWhileCost
-import InitECandidate.Solver.Improvements.AcceptedTransactionCountFacts
-import InitECandidate.Solver.MemSafe.TxnCost.Bounds
 import InitECandidate.Solver.MemSafe.Eb.Cost16
 import InitECandidate.Solver.MemSafe.Eb.Loop14
 
@@ -24,8 +21,21 @@ variable {σ : Type}
 section lw17
 variable {E : EbE σ} {En : Env} {M : Nat} {QT : Option (PanSemResultExact 64) → State σ → Prop}
 
-/-- The cost of the loop and what follows it. -/
-def bLoop (BT Bn : Nat) : Nat := 5242874 * (bLB BT + 1) + Bn
+private def heapTxCapacity : Nat := (heapEnd - heapBase) / 544
+
+/-- The loop charges one slot beyond the heap capacity for an unsuccessful iteration. -/
+def bLoop (BT Bn : Nat) : Nat := (heapTxCapacity + 1) * (bLB BT + 1) + Bn
+
+/-- Every completed iteration leaves a 400-byte transaction record and a slice array of at least 144 bytes in the heap. -/
+private def heapTxRank (s : State σ) : Nat :=
+  match ptrsOf s with
+  | some p => (heapEnd - p.hp) / 544
+  | none => 0
+
+private theorem heapTxRank_bound {s : State σ} {p : Ptrs} (found : ptrsOf s = some p)
+    (ordered : p.Ordered) : heapTxRank s ≤ heapTxCapacity := by
+  rw [heapTxRank, found, heapTxCapacity]
+  exact Nat.div_le_div_right (Nat.sub_le_sub_left ordered.1 heapEnd)
 
 theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ) (hE0 : ∀ o ∈ E.Γ0, KeepTy o.ty)
     (hPt : HypPt σ M) (hM : 2 ^ 24 + 2 ≤ M)
@@ -65,7 +75,7 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
      simp only [ValueHOL.val.injEq, HolWordLab.word.injEq] at ex ey
      subst ex; subst ey
      have hlt : x.toNat < y.toNat := less_true' (by omega) (by omega) hcmp
-     have hbody := (cw_loop_body hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).2 s hs hp ht
+     have hbody := loop_body hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt s hs hp ht
      obtain ⟨hr, hp'⟩ := hbody
      refine ⟨fun _ => ⟨x + BitVec.ofNat 64 1, by rw [hadd x hlt]; omega, by rw [hadd x hlt]; exact hp'⟩, fun h => ?_, fun h => ?_, fun v h => ?_⟩
      all_goals (rw [hr] at h; cases h)
@@ -87,13 +97,11 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
     intro iv hlt
     have h1 : (BitVec.ofNat 64 1).toNat = 1 := by decide
     rw [BitVec.toNat_add, h1, Nat.mod_eq_of_lt (by omega)]
-  have hC : Inv.CostP σ guestCtx (PA E (EnL En X ptxs0 0) (SLs S t r 0)) ebS28 (5242874 * (bLB BT + 1)) := by
+  have hC : Inv.CostP σ guestCtx (PA E (EnL En X ptxs0 0) (SLs S t r 0)) ebS28
+      ((heapTxCapacity + 1) * (bLB BT + 1)) := by
     unfold ebS28
     let I : State σ → Prop := fun s => ∃ iv : BitVec 64, iv.toNat ≤ ntx0.toNat ∧
       PA E (EnL En X ptxs0 iv) (SLs S t r iv.toNat) s
-    let μ : State σ → Nat := fun s => match s.locals.lookup (nm "i") with
-      | some (.val (.word w)) => ntx0.toNat - w.toNat
-      | _ => 0
     have hlt_of : ∀ (iv : BitVec 64) (s : State σ), iv.toNat ≤ ntx0.toNat → PA E (EnL En X ptxs0 iv) (SLs S t r iv.toNat) s →
         CondTrue s (.cmp .less (lv (nm "i")) (lv (nm "ntx"))) → iv.toNat < ntx0.toNat := by
       intro iv s hiv hp hc
@@ -104,44 +112,45 @@ theorem cw_loop_walk {BT Bn : Nat} (hPtC : HypPtCost σ M BT) (hK : HypKeepG σ)
       simp only [ValueHOL.val.injEq, HolWordLab.word.injEq] at ex ey
       subst ex; subst ey
       exact less_true' (by omega) (by omega) hcmp
-    have hμ : ∀ (iv : BitVec 64) (s : State σ), PA E (EnL En X ptxs0 iv) (SLs S t r iv.toNat) s →
-        μ s = ntx0.toNat - iv.toNat := by
-      intro iv s hp
-      have := hp.2 (nm "i") _ (hi iv)
-      simp only [μ, this]
-    refine Inv.CostP.pre (P := I) (AcceptedExactWhileCost.costP_while_exact (I := I) μ 5242874 (fun s ⟨iv, hiv, hp⟩ => ⟨iv, hiv, pa_decClock hp⟩)
-      (fun s => rfl) ?_ ?_ ?_ ?_ ?_) (fun s _ hp => ⟨0, Nat.zero_le _, hp⟩)
+    refine Inv.CostP.pre (P := I) (Inv.costP_while (I := I) heapTxRank heapTxCapacity (fun s ⟨iv, hiv, hp⟩ => ⟨iv, hiv, pa_decClock hp⟩)
+      (fun s => rfl) ?_ ?_ ?_ ?_) (fun s _ hp => ⟨0, Nat.zero_le _, hp⟩)
     · intro s hs ⟨⟨iv, hiv, hp⟩, hc⟩ hg
       have hlt := hlt_of iv s hiv hp hc
-      exact (cw_loop_body hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).1 s hs hp hg
+      exact (cw_loop_body (floor := 0) hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).1 s hs
+        ⟨hp, fun _ _ => Nat.zero_le _⟩ hg
     · intro s hs ⟨⟨iv, hiv, hp⟩, hc⟩ ht h
       have hlt := hlt_of iv s hiv hp hc
-      obtain ⟨hr, hp'⟩ := (cw_loop_body hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).2 s hs hp ht
+      obtain ⟨hr, hp'⟩ := loop_body hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt s hs hp ht
       rcases h with h | h
       · exact ⟨iv + BitVec.ofNat 64 1, by rw [hadd iv hlt]; omega, by rw [hadd iv hlt]; exact hp'⟩
       · rw [hr] at h; cases h
-    · intro s _ ⟨iv, hiv, hp⟩ hc
-      have := hμ iv s hp
-      have hn := AcceptedTransactionCountFacts.transaction_block_arrays_count_bound hp
-        (Or.inl hpl) (Or.inl h40)
-        (Or.inl hled.otxs) (Or.inl hled.orcs) (Or.inl hled.obe)
-        (Or.inl hled.tr) (Or.inl hled.tb) (Or.inl hled.rb)
-      omega
-    · intro s hs ⟨iv, hiv, hp⟩ hc
-      have hlt := hlt_of iv s hiv hp hc
-      have he := hμ iv s hp
-      omega
+    · intro s _ ⟨iv, _, hp⟩ _
+      obtain ⟨⟨Γ, p, run, _⟩, _⟩ := hp
+      exact heapTxRank_bound (ebRun_ptrs run) (ebRun_ord run)
     · intro k s hs ⟨⟨iv, hiv, hp⟩, hc, hk⟩ ht h
       have hlt := hlt_of iv s hiv hp hc
-      obtain ⟨hr, hp'⟩ := (cw_loop_body hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).2 s hs hp ht
+      obtain ⟨Γ, p, run, _⟩ := hp.1
+      have found := ebRun_ptrs run
+      have lower : HeapAtLeast p.hp s := by
+        intro q hq
+        have same : q = p := Option.some.inj (hq.symm.trans found)
+        subst q
+        exact Nat.le_refl _
+      obtain ⟨hr, hp', grown⟩ :=
+        (cw_loop_body (floor := p.hp) hPtC hK hE0 hPt hM hled hS hT hzt hzp hpl h32 h40 hEn hlt).2 s hs
+          ⟨hp, lower⟩ ht
       rcases h with h | h
-      · have e1 := hμ iv s hp
-        have e2 := hμ (iv + BitVec.ofNat 64 1) _ (by rw [hadd iv hlt]; exact hp')
-        rw [hadd iv hlt] at e2
+      · obtain ⟨⟨Γ', p', run', _⟩, _⟩ := hp'
+        have found' := ebRun_ptrs run'
+        have growth := grown p' found'
+        have upper := (ebRun_ord run').2.1
+        rw [← hk]
+        simp only [heapTxRank, found, found']
         omega
       · rw [hr] at h; cases h
   exact cw_seq ⟨hC, hH⟩ hnext
 
 end lw17
 
+#print axioms cw_loop_walk
 end InitECandidate.Solver.MemSafe.Eb

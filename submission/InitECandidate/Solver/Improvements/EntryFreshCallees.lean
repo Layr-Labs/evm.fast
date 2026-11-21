@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Improvements.ThirdCombinedSmallCryptoTable
+import InitECandidate.Solver.Band.DispPrices
 
 /-! Actual accepted source-callee costs from the min-preserving replayed table.
 These proofs do not change source code, memory premises, or compiler facts. -/
@@ -25,7 +25,9 @@ theorem depth0_prepare_cost {σ : Type} :
 
 theorem frame_start_cost {σ : Type} :
     CalleeCost σ guestCtx (nm "frame_start") fsB :=
-  ThirdCombinedSmallCryptoTable.callee_cost (by decide_cbv)
+  ThirdCombinedSmallCryptoTable.callee_cost (by
+    simp only [InitECandidate.Solver.Band.DispPrices.state_prices]
+    decide +kernel)
 
 #print axioms frame_open_cost
 #print axioms depth0_prepare_cost

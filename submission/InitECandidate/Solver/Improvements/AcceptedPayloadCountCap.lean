@@ -104,71 +104,9 @@ theorem payload_count_le_or_zero {pl plSize arr arrSize count : Nat}
 
 end AcceptedPayloadCountCap
 
-namespace AcceptedPayloadCountCap
-
-theorem five_intervals_size_le {lo hi a aSize b bSize c cSize d dSize e eSize : Nat}
-    (haLo : lo ≤ a) (haHi : a + aSize ≤ hi)
-    (hbLo : lo ≤ b) (hbHi : b + bSize ≤ hi)
-    (hcLo : lo ≤ c) (hcHi : c + cSize ≤ hi)
-    (hdLo : lo ≤ d) (hdHi : d + dSize ≤ hi)
-    (heLo : lo ≤ e) (heHi : e + eSize ≤ hi)
-    (hab : a + aSize ≤ b ∨ b + bSize ≤ a)
-    (hac : a + aSize ≤ c ∨ c + cSize ≤ a)
-    (had : a + aSize ≤ d ∨ d + dSize ≤ a)
-    (hae : a + aSize ≤ e ∨ e + eSize ≤ a)
-    (hbc : b + bSize ≤ c ∨ c + cSize ≤ b)
-    (hbd : b + bSize ≤ d ∨ d + dSize ≤ b)
-    (hbe : b + bSize ≤ e ∨ e + eSize ≤ b)
-    (hcd : c + cSize ≤ d ∨ d + dSize ≤ c)
-    (hce : c + cSize ≤ e ∨ e + eSize ≤ c)
-    (hde : d + dSize ≤ e ∨ e + eSize ≤ d) :
-    aSize + bSize + cSize + dSize + eSize ≤ hi - lo := by
-  rcases hab with hab | hab
-  all_goals rcases hac with hac | hac
-  all_goals rcases had with had | had
-  all_goals rcases hae with hae | hae
-  all_goals rcases hbc with hbc | hbc
-  all_goals rcases hbd with hbd | hbd
-  all_goals rcases hbe with hbe | hbe
-  all_goals rcases hcd with hcd | hcd
-  all_goals rcases hce with hce | hce
-  all_goals rcases hde with hde | hde
-  all_goals omega
-
-theorem transaction_block_count_le
-    {pl plSize arr arrSize txs txSize rcs rcSize be beSize count : Nat}
-    (hplLo : 2701131776 ≤ pl) (hplHi : pl + plSize ≤ 2952790016)
-    (harrLo : 2701131776 ≤ arr) (harrHi : arr + arrSize ≤ 2952790016)
-    (htxLo : 2701131776 ≤ txs) (htxHi : txs + txSize ≤ 2952790016)
-    (hrcLo : 2701131776 ≤ rcs) (hrcHi : rcs + rcSize ≤ 2952790016)
-    (hbeLo : 2701131776 ≤ be) (hbeHi : be + beSize ≤ 2952790016)
-    (hplArr : pl + plSize ≤ arr ∨ arr + arrSize ≤ pl)
-    (hplTx : pl + plSize ≤ txs ∨ txs + txSize ≤ pl)
-    (hplRc : pl + plSize ≤ rcs ∨ rcs + rcSize ≤ pl)
-    (hplBe : pl + plSize ≤ be ∨ be + beSize ≤ pl)
-    (harrTx : arr + arrSize ≤ txs ∨ txs + txSize ≤ arr)
-    (harrRc : arr + arrSize ≤ rcs ∨ rcs + rcSize ≤ arr)
-    (harrBe : arr + arrSize ≤ be ∨ be + beSize ≤ arr)
-    (htxRc : txs + txSize ≤ rcs ∨ rcs + rcSize ≤ txs)
-    (htxBe : txs + txSize ≤ be ∨ be + beSize ≤ txs)
-    (hrcBe : rcs + rcSize ≤ be ∨ be + beSize ≤ rcs)
-    (hplSize : 136 ≤ plSize) (harrSize : 16 * count ≤ arrSize)
-    (htxSize : 16 * count + 16 ≤ txSize)
-    (hrcSize : 16 * count + 16 ≤ rcSize)
-    (hbeSize : 120 ≤ beSize) :
-    count ≤ 5242874 := by
-  have hspace := five_intervals_size_le hplLo hplHi harrLo harrHi
-    htxLo htxHi hrcLo hrcHi hbeLo hbeHi
-    hplArr hplTx hplRc hplBe harrTx harrRc harrBe htxRc htxBe hrcBe
-  omega
-
-end AcceptedPayloadCountCap
-
 #print axioms AcceptedPayloadCountCap.two_intervals_size_le
 #print axioms AcceptedPayloadCountCap.two_output_arrays_count_le
 #print axioms AcceptedPayloadCountCap.four_intervals_size_le
 #print axioms AcceptedPayloadCountCap.transaction_arrays_count_le
 #print axioms AcceptedPayloadCountCap.payload_count_le
 #print axioms AcceptedPayloadCountCap.payload_count_le_or_zero
-#print axioms AcceptedPayloadCountCap.five_intervals_size_le
-#print axioms AcceptedPayloadCountCap.transaction_block_count_le

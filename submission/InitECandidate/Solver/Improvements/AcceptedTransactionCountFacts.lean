@@ -68,41 +68,7 @@ theorem transaction_arrays_count_bound
       hPlMem hArrMem hTxMem hRcMem hPlTy hArrTy hTxTy hRcTy
       hPlSize hArrSize hTxSize hRcSize hne
 
-theorem transaction_block_arrays_count_bound
-    {E : EbE σ} {En : Env} {S : FS} {pl txs rcs be N : BitVec 64} {s : State σ}
-    (hp : PA E En S s) (hpl : S (.obj pl tPL 136))
-    (hcnt : S (.pcv (pl + BitVec.ofNat 64 40) N))
-    (htx : S (.obj txs tBOS (16 * N.toNat + 16)))
-    (hrc : S (.obj rcs tBOS (16 * N.toNat + 16)))
-    (hbe : S (.obj be tBOS 120))
-    (htr : S (.prop (txs ≠ rcs))) (htb : S (.prop (txs ≠ be)))
-    (hrb : S (.prop (rcs ≠ be))) : N.toNat ≤ 5242874 := by
-  obtain ⟨⟨Γ, p, hr, hL⟩, henv⟩ := hp
-  obtain ⟨plObj, hPlMem, hPlBase, hPlTy, hPlSize⟩ := hL _ hpl
-  have hrd := (hL _ hcnt).1
-  have hIv := (Exb.hypPlS Γ s plObj (ebRun_G hr) hPlMem hPlTy).1.1
-  rw [Exb.txF_eq hPlBase 4, Exb.txF_eq hPlBase 5, hrd] at hIv
-  rcases hIv with hzero | ⟨arrObj, hArrMem, hArrBase, hArrTy, hArrSize, hArrEnd⟩
-  · omega
-  · obtain ⟨txObj, hTxMem, hTxBase, hTxTy, hTxSize⟩ := hL _ htx
-    obtain ⟨rcObj, hRcMem, hRcBase, hRcTy, hRcSize⟩ := hL _ hrc
-    obtain ⟨beObj, hBeMem, hBeBase, hBeTy, hBeSize⟩ := hL _ hbe
-    obtain ⟨q, hq, hord, hLayout, hrest⟩ := ebRun_G hr
-    have hne : txObj.base ≠ rcObj.base := by
-      rw [hTxBase, hRcBase]
-      exact hL _ htr
-    have hneTxBe : txObj.base ≠ beObj.base := by
-      rw [hTxBase, hBeBase]
-      exact hL _ htb
-    have hneRcBe : rcObj.base ≠ beObj.base := by
-      rw [hRcBase, hBeBase]
-      exact hL _ hrb
-    exact AcceptedHeapObjectCount.transaction_block_objects_count hord hLayout
-      hPlMem hArrMem hTxMem hRcMem hBeMem hPlTy hArrTy hTxTy hRcTy hBeTy
-      hPlSize hArrSize hTxSize hRcSize hBeSize hne hneTxBe hneRcBe
-
 end AcceptedTransactionCountFacts
 
 #print axioms AcceptedTransactionCountFacts.two_output_arrays_count_bound
 #print axioms AcceptedTransactionCountFacts.transaction_arrays_count_bound
-#print axioms AcceptedTransactionCountFacts.transaction_block_arrays_count_bound
