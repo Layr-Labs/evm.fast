@@ -18,50 +18,40 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_153 : cbd ptS153 = 260532201005234923052518198180190481111534273973067693641652092648562515550371 := by
-  unfold ptS153
-  try simp only [callD, cbd, cbk_154]
-  try decide_cbv
+theorem cbk_153 : cbd ptS153 = 288673328193446617443920516695364610291120206608467569507891113099301 := by
+  rw [ptS153, cbd, cbk_154]
 
 theorem cbk_152 : cbd ptS152 = 0 := by
   unfold ptS152
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_151 : cbd ptS151 = 260532201005234923052518198180190481111534273973067693641652092648562515550371 := by
-  unfold ptS151
-  try simp only [callD, cbd, cbk_153]
-  try decide_cbv
+theorem cbk_151 : cbd ptS151 = 288673328193446617443920516695364610291120206608467569507891113099301 := by
+  rw [ptS151, cbd, cbk_153]
 
 theorem cbk_150 : cbd ptS150 = 0 := by
   unfold ptS150
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_149 : cbd ptS149 = 260532201005234923052518198180190481111534273973067693641652092648562515550371 := by
-  unfold ptS149
-  try simp only [callD, cbd, cbk_151, cbk_152]
-  try decide_cbv
+theorem cbk_149 : cbd ptS149 = 288673328193446617443920516695364610291120206608467569507891113099301 := by
+  rw [ptS149, cbd, cbk_152, cbk_151, Nat.zero_add]
 
-theorem cbk_148 : cbd ptS148 = 260532201005234923052518198180190481111534273973067693641652092648562515550371 := by
-  unfold ptS148
-  try simp only [callD, cbd, cbk_149, cbk_150]
-  try decide_cbv
+theorem cbk_148 : cbd ptS148 = 288673328193446617443920516695364610291120206608467569507891113099301 := by
+  rw [ptS148, cbd, cbk_150, cbk_149, Nat.zero_add]
 
 theorem cbk_147 : cbd ptS147 = 0 := by
   unfold ptS147
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_146 : cbd ptS146 = 318428245623893020849044564112254625374622895120959510882753481011159141228838 := by
-  unfold ptS146
-  try simp only [callD, cbd, cbk_148]
-  try decide_cbv
+theorem cbk_146 : cbd ptS146 = 288673328260925461099327334929653476949496201484061542148769906163880 := by
+  have receiptPrice : tbl (nm "encode_receipt") = SeventhReceipt.price := by decide +kernel
+  conv_lhs => rw [ptS146, cbd, receiptPrice, cbk_148]
+  decide +kernel
 
-theorem cbk_145 : cbd ptS145 = 318428245623893020849044564112254625374622895120959510882753481011159141228838 := by
-  unfold ptS145
-  try simp only [callD, cbd, cbk_146, cbk_147]
-  try decide_cbv
+theorem cbk_145 : cbd ptS145 = 288673328260925461099327334929653476949496201484061542148769906163880 := by
+  rw [ptS145, cbd, cbk_147, cbk_146, Nat.zero_add]
 
 theorem cbk_144 : cbd ptS144 = 7 := by
   have callPrice1 : tbl (nm "lst_new") = 6 := by decide +kernel
@@ -69,14 +59,13 @@ theorem cbk_144 : cbd ptS144 = 7 := by
   try simp only [callD, cbd, callPrice1]
   try decide_cbv
 
-theorem cbk_143 : cbd ptS143 = 318428245623893020849044564112254625374622895120959510882753481011159141228838 := by
-  unfold ptS143
-  try simp only [callD, cbd, cbk_145]
-  try decide_cbv
+theorem cbk_143 : cbd ptS143 = 288673328260925461099327334929653476949496201484061542148769906163880 := by
+  rw [ptS143, cbd, cbk_145]
 
-theorem cbk_142 : cbd ptS142 = 318428245623893020849044564112254625374622895120959510882753481011159141228845 := by
-  unfold ptS142
-  try simp only [callD, cbd, cbk_143, cbk_144]
-  try decide_cbv
+theorem cbk_142 : cbd ptS142 = 288673328260925461099327334929653476949496201484061542148769906163887 := by
+  conv_lhs => rw [ptS142, cbd, cbk_144, cbk_143]
 
 end InitECandidate.Solver.MemSafe.PtC
+
+#print axioms InitECandidate.Solver.MemSafe.PtC.cbk_146
+#print axioms InitECandidate.Solver.MemSafe.PtC.cbk_142

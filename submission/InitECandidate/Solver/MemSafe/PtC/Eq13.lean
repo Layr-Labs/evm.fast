@@ -18,64 +18,50 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_69 : cbd ptS69 = 434220334893224224636913044719935060539521718137139880904519157052991700233498 := by
-  unfold ptS69
-  try simp only [callD, cbd, cbk_70, cbk_71]
-  try decide_cbv
+theorem cbk_69 : cbd ptS69 = 320714611832389254214899661765723320118544805578246343795533029559452 := by
+  (conv_lhs => rw [ptS69, cbd, cbk_71, cbk_70, Nat.zero_add]) <;> decide +kernel
 
 theorem cbk_68 : cbd ptS68 = 0 := by
-  unfold ptS68
-  try simp only [callD, cbd, cbk_207]
-  try decide_cbv
+  have noCost : cbd .skip = 0 := by decide_cbv
+  (conv_lhs => rw [ptS68, cbd, cbk_207, noCost]) <;> decide +kernel
 
-theorem cbk_67 : cbd ptS67 = 434220334893224224636913044719935060539521718137139880904519157052991700233499 := by
-  unfold ptS67
-  try simp only [callD, cbd, cbk_69]
-  decide +kernel
+theorem cbk_67 : cbd ptS67 = 320714611832389254214899661765723320118544805578246343795533029559453 := by
+  have callPrice : tbl (nm "tx_is_setcode") = 0 := by decide +kernel
+  (conv_lhs => rw [ptS67, cbd, callPrice, cbk_69]) <;> decide +kernel
 
-theorem cbk_66 : cbd ptS66 = 434220334893224224636913044719935060539521718137139880904519157052991700233499 := by
-  unfold ptS66
-  try simp only [callD, cbd, cbk_67, cbk_68]
-  try decide_cbv
+theorem cbk_66 : cbd ptS66 = 320714611832389254214899661765723320118544805578246343795533029559453 := by
+  (conv_lhs => rw [ptS66, cbd, cbk_68, cbk_67, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_65 : cbd ptS65 = 434220334893224224636913044719935060539521718137139880904519157052991700233500 := by
-  unfold ptS65
-  try simp only [callD, cbd, cbk_66]
-  decide +kernel
+theorem cbk_65 : cbd ptS65 = 320714611832389254214899661765723320118544805578246343795533029559454 := by
+  have callPrice : tbl (nm "tx_is_blob") = 0 := by decide +kernel
+  (conv_lhs => rw [ptS65, cbd, callPrice, cbk_66]) <;> decide +kernel
 
-theorem cbk_64 : cbd ptS64 = 434220334893224224636913044719935060539521718137139880904519157052991700233500 := by
-  unfold ptS64
-  try simp only [callD, cbd, cbk_65]
-  try decide_cbv
+theorem cbk_64 : cbd ptS64 = 320714611832389254214899661765723320118544805578246343795533029559454 := by
+  have leftCost : cbd (.store (.op .add [(lv (nm "te")), (cw 120)]) (lv (nm "nkeys"))) = 0 := by decide_cbv
+  (conv_lhs => rw [ptS64, cbd, leftCost, cbk_65, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_63 : cbd ptS63 = 434220334893224224636913044719935060539521718137139880904519157052991700233500 := by
-  unfold ptS63
-  try simp only [callD, cbd, cbk_64]
-  try decide_cbv
+theorem cbk_63 : cbd ptS63 = 320714611832389254214899661765723320118544805578246343795533029559454 := by
+  have leftCost : cbd (.store (.op .add [(lv (nm "te")), (cw 112)]) (lv (nm "al_keys"))) = 0 := by decide_cbv
+  (conv_lhs => rw [ptS63, cbd, leftCost, cbk_64, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_62 : cbd ptS62 = 434220334893224224636913044719935060539521718137139880904519157052991700233500 := by
-  unfold ptS62
-  try simp only [callD, cbd, cbk_63]
-  try decide_cbv
+theorem cbk_62 : cbd ptS62 = 320714611832389254214899661765723320118544805578246343795533029559454 := by
+  have leftCost : cbd (.store (.op .add [(lv (nm "te")), (cw 104)]) (.op .add [(lv (nm "nal")), (cw 1)])) = 0 := by decide_cbv
+  (conv_lhs => rw [ptS62, cbd, leftCost, cbk_63, Nat.zero_add]) <;> decide +kernel
 
 theorem cbk_61 : cbd ptS61 = 50216813883093446119873939292526669842901807022655013912588 := by
   unfold ptS61
   try simp only [callD, cbd, cbk_208]
   try decide_cbv
 
-theorem cbk_60 : cbd ptS60 = 434220334893224224636913044719935060539521718137139880904519157052991700233500 := by
-  unfold ptS60
-  try simp only [callD, cbd, cbk_62]
-  try decide_cbv
+theorem cbk_60 : cbd ptS60 = 320714611832389254214899661765723320118544805578246343795533029559454 := by
+  have leftCost : cbd (.store (.op .add [(lv (nm "te")), (cw 96)]) (lv (nm "al_addrs"))) = 0 := by decide_cbv
+  (conv_lhs => rw [ptS60, cbd, leftCost, cbk_62, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_59 : cbd ptS59 = 434220334893224224687129858603028506659395657429666550747420964075646714146088 := by
-  unfold ptS59
-  try simp only [callD, cbd, cbk_60, cbk_61]
-  try decide_cbv
+theorem cbk_59 : cbd ptS59 = 320714611882606068097993107885597259411071475421148150818188043472042 := by
+  (conv_lhs => rw [ptS59, cbd, cbk_61, cbk_60]) <;> decide +kernel
 
-theorem cbk_58 : cbd ptS58 = 434220334893224224687129858603028506659395657429666550747420964075646714146088 := by
-  unfold ptS58
-  try simp only [callD, cbd, cbk_59]
-  try decide_cbv
+theorem cbk_58 : cbd ptS58 = 320714611882606068097993107885597259411071475421148150818188043472042 := by
+  have leftCost : cbd (.assign .local (nm "i") (cw 0)) = 0 := by decide_cbv
+  (conv_lhs => rw [ptS58, cbd, leftCost, cbk_59, Nat.zero_add]) <;> decide +kernel
 
 end InitECandidate.Solver.MemSafe.PtC

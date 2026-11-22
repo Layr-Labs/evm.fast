@@ -60,6 +60,7 @@ theorem c_rest {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (
 theorem c_k3 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hCb : a.Cb = Types.guestC)
     (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true) (hcI : capSub insCaps a.caps = true)
     {M MK A N OUT : BitVec 64}
+    (hN : N.toNat ≤ BmiHeapCap.maxEntries)
     (hOutB : ∀ (s : State σ) (Γ : Gam) (q : Ptrs), Heap a Γ q s → BufOK a.Cb Γ q OUT.toNat 32) :
     Inv.CostP σ guestCtx (GI a (Trie.LV (Trie.kvB M MK A N OUT)) (EL a A N M)) bmiK3 bK3 := by
   unfold bmiK3 bK3
@@ -67,7 +68,7 @@ theorem c_k3 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hC
   · rw [ev_cw] at hv
     cases hv
     exact ⟨_, lv_new hL (kvB_fresh (Or.inl rfl)) _⟩
-  · refine Inv.costP_seq (R := GI a (Lloop M MK A N OUT) (EL a A N M)) (c_loop ha haC hCb haH hgr hcI) ?_
+  · refine Inv.costP_seq (R := GI a (Lloop M MK A N OUT) (EL a A N M)) (c_loop ha haC hCb haH hgr hcI hN) ?_
       (c_rest ha haC hCb haH hOutB)
     intro s hs hp ht hr
     have := MemSafe.Frames.hoare_of_hoareG (bmi_loop ha haC hCb haH hgr hcI (M := M) (MK := MK) (A := A)

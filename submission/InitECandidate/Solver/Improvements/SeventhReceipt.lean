@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.ReceiptBloomCall
 import InitECandidate.Solver.Improvements.AcceptedIvvhCalleeCore
 import InitECandidate.Solver.Improvements.AcceptedCostOverrideRules
 import InitECandidate.Solver.SourceCost.Shards.All
@@ -42,7 +43,7 @@ private def body : ProgHOL 64 :=
         (.dec (nm "i") .one (cw 0)
           (.seq (.while (.cmp .less (v "i") (v "n")) outer) (.return (cw 0))))))
 
-private abbrev addPrice : Nat := 680564733841876927406364560779984764964
+private abbrev addPrice : Nat := ReceiptBloomCall.price
 private abbrev zeroPrice : Nat := 73786976294838206468
 private abbrev innerPrice : Nat := (1 + addPrice) + 0
 private abbrev outerPrice : Nat := (1 + addPrice) + (2^63 * (innerPrice + 1) + 0)
@@ -53,11 +54,25 @@ private theorem invoke_cost {σ : Type} {X : Ctx 64} {s : String} {B : Nat}
     Cost σ X (invoke s args) (1+B) :=
   cost_call (Bh := 0) h (by intro _ _ _ _ he; cases he)
 
-private theorem body_cost {σ : Type} {X : Ctx 64}
-    (ha : CalleeCost σ X (nm "add_to_bloom") addPrice)
-    (hz : CalleeCost σ X (nm "memzero") zeroPrice) : Cost σ X body bloomPrice := by
-  have hi : Cost σ X inner innerPrice := cost_seq (invoke_cost ha _) (cost_assign _ _ _)
-  have ho : Cost σ X outer outerPrice := cost_dec (cost_seq (invoke_cost ha _) (cost_dec
+/-- The only two bloom entry lengths at this call site are 20 and 32 bytes. -/
+private theorem invoke_short {σ : Type} (entry : ExpHOL 64) (n : Nat) (hn : n ≤ 32) :
+    Cost σ guestCtx (invoke "add_to_bloom" [v "out", entry, cw n]) (1 + addPrice) := by
+  apply Inv.cost_of_costP_true
+  refine Inv.costP_callD ReceiptBloomCall.callee_cost ?_
+  intro s _ _ vs he _
+  obtain ⟨a, b, c, rfl, _, _, hc⟩ :=
+    InitECandidate.Solver.Spec.Mpt.Leaves.evs_three_inv' he
+  rw [ev_cw] at hc
+  cases hc
+  refine ⟨BitVec.ofNat 64 n, rfl, ?_⟩
+  rw [BitVec.toNat_ofNat, Nat.mod_eq_of_lt (by omega)]
+  exact hn
+
+private theorem body_cost {σ : Type}
+    (hz : CalleeCost σ guestCtx (nm "memzero") zeroPrice) : Cost σ guestCtx body bloomPrice := by
+  have hi : Cost σ guestCtx inner innerPrice :=
+    cost_seq (invoke_short _ 32 (by decide)) (cost_assign _ _ _)
+  have ho : Cost σ guestCtx outer outerPrice := cost_dec (cost_seq (invoke_short _ 20 (by decide)) (cost_dec
     (AcceptedInitializedLoopCost.cost_initialized_seq hi (stepsB_sound _ true inner (by rfl))
       (cost_assign _ _ _))))
   exact cost_seq (invoke_cost hz _) (cost_dec (cost_dec
@@ -79,11 +94,10 @@ theorem bloom_cost {σ : Type} : CalleeCost σ guestCtx (nm "logs_bloom") bloomP
   have hb : actual = body := (congrArg (fun e => e.2.1) (Option.some.inj hc)).symm
   rw [hb]
   exact body_cost (calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl))
-    (calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl))
 
 private def receiptEntry := declPair Guest.Software.guestFn_encode_receipt
 private def receiptState := replayStep (overrideCost Shards.finalState (nm "logs_bloom") bloomPrice) receiptEntry
-abbrev price : Nat := 57896044618658097796526365932064144263088621147891817241101388362596625678466
+abbrev price : Nat := 67478843655406818234288866658375994875593972640878793064578
 
 theorem receipt_cost {σ : Type} : CalleeCost σ guestCtx (nm "encode_receipt") price := by
   have hm : Guest.Software.guestFn_encode_receipt ∈ Guest.Software.guestAst :=

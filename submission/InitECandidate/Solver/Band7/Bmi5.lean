@@ -45,6 +45,8 @@ theorem bmi_condCost7 :
     rw [hp] at hp'
     cases hp'
     exact ⟨ho, hL⟩
+  have hN_bound : N.toNat ≤ BmiHeapCap.maxEntries :=
+    BmiHeapCap.count_le hord (fun j hj => (harr j hj).1.1)
   have hkv : Trie.LV (kvA A N OUT) s.locals := by
     intro q hq
     simp only [Trie.kvA, List.mem_cons, List.not_mem_nil, or_false] at hq
@@ -85,7 +87,7 @@ theorem bmi_condCost7 :
   have hgr0 := gr_preserved grClosed_trie bmiBody s (zeroSt s) grFree_bmi (by rw [hs.1]; exact hX) (grRel_zero s)
   have hgood : Good (evaluateHOLFiniteState (zeroSt s) bmiBody).1 := by rw [hgr0.1]; exact hg
   have hs0 : InCtx (zeroSt s) guestCtx := InCtx.of_eq hs rfl rfl rfl
-  have HG := c_top ha rfl rfl rfl rfl (show capSub insCaps insCaps = true by decide) (A := A) (N := N) hOutB
+  have HG := c_top ha rfl rfl rfl rfl (show capSub insCaps insCaps = true by decide) (A := A) (N := N) hN_bound hOutB
     (zeroSt s) hs0
     ⟨hkv, kept Γ, p, ext_refl _, hh, scrOld_refl _, hArr0, rfl⟩ hgood
   obtain ⟨gl, he, -⟩ := hgr0.2

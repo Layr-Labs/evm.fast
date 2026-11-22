@@ -22,12 +22,22 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 variable {σ : Type}
 
 /-- The literal bound. -/
-def bPtLit : Nat := 434220334893224225026093352313909272739218463580890280765232669235910016745444
+def bPtLit : Nat := 320714612221569561808873873965420065562295205438959855978451346071398
 
 theorem bPt_eq : bPt = bPtLit := by
+  let callCost := cbd (callD (nm "state_fresh_tx") [])
+  let tailCost := cbd ptS0
+  have splitCost : bPt = callCost + tailCost := by
+    conv_lhs => rw [bPt, ptBody, cbd]
   have firstPrice : tbl (nm "state_fresh_tx") = 107 := by decide +kernel
-  unfold bPt ptBody
-  simp only [callD, cbd, cbk_0, firstPrice] <;> decide_cbv
+  have callValue : callCost = 108 := by
+    dsimp only [callCost]
+    conv_lhs => rw [callD, cbd, firstPrice]
+  have tailValue : tailCost = 320714612221569561808873873965420065562295205438959855978451346071290 :=
+    cbk_0
+  have total : 108 + 320714612221569561808873873965420065562295205438959855978451346071290 = bPtLit := by
+    decide +kernel
+  exact splitCost.trans (addCostValues callValue tailValue total)
 
 /-- **`HypPtCost σ (2^24 + 2) B` for the literal `B = bPtLit`.** -/
 theorem hypPtCost_lit : Eb.HypPtCost σ (2 ^ 24 + 2) bPtLit := bPt_eq ▸ hypPtCost
