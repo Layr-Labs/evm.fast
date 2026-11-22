@@ -22,7 +22,7 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 variable {σ : Type}
 
 /-- The literal bound. -/
-def bPtLit : Nat := 434220334893224225026093352313909272739218463580890280765232669235910016745444
+def bPtLit : Nat := 202636156472511705775649346753853343237799355810665581002048466182161104052070
 
 theorem bPt_eq : bPt = bPtLit := by
   have firstPrice : tbl (nm "state_fresh_tx") = 107 := by decide +kernel
