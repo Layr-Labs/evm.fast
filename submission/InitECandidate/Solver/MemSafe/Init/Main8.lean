@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.PayloadMerkleCost
 import InitECandidate.Solver.MemSafe.Init.Main7
 
 /-!
@@ -26,8 +27,9 @@ theorem cost_htr_verify {Bv : Nat}
     Inv.CostP σ guestCtx PD2
       (.seq (.call (some (none, none)) (nm "htr_new_payload_request") [.var .local (nm "si"), .var .local (nm "root")])
         (.decCall succ sh (nm "verify_stateless_new_payload") [.var .local (nm "si")] k))
-      ((1 + tbN "htr_new_payload_request" + 0) + (1 + Bv + Bk)) :=
-  Inv.costP_seq (R := PV) (Inv.costP_of_cost (cost_tb "htr_new_payload_request" tb_htr))
+      ((1 + PayloadMerkleCost.price + 0) + (1 + Bv + Bk)) :=
+  Inv.costP_seq (R := PV) (Inv.costP_callD (Pre := fun _ _ => True)
+    (Inv.calleeCostP_of_calleeCost PayloadMerkleCost.callee_cost) (fun _ _ _ _ _ _ => trivial))
     (Spec.hoare_post hoare_htr fun r t _ _ h _ => h.2) (cost_verify_step hV hk)
 
 theorem cost_decs {K : ProgHOL 64} {B : Nat} (hK : Inv.CostP σ guestCtx PI K B) :

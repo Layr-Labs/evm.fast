@@ -25,6 +25,7 @@ variable {σ : Type}
 theorem c_k2 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hCb : a.Cb = Types.guestC)
     (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true) (hcI : capSub insCaps a.caps = true)
     {MK A N OUT : BitVec 64}
+    (hN : N.toNat ≤ BmiHeapCap.maxEntries)
     (hOutB : ∀ (s : State σ) (Γ : Gam) (q : Ptrs), Heap a Γ q s → BufOK a.Cb Γ q OUT.toNat 32) :
     Inv.CostP σ guestCtx (GI a (Trie.LV ((nm "mark", ValueHOL.val (.word MK)) :: kvA A N OUT))
       (fun Γ _ mm => ArrE a.p0 a.s0.memory A N Γ mm)) bmiK2 bK2 := by
@@ -71,12 +72,13 @@ theorem c_k2 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hC
       · exact kvA_fresh (Or.inl rfl) p hp) v
   · intro v s hs ⟨hL, Γ, q, he, hh, hsc, hA, M, hv, hR⟩ hg
     subst hv
-    exact c_k3 ha haC hCb haH hgr hcI hOutB s hs ⟨hL, Γ, q, he, hh, hsc, ⟨hR, hA⟩⟩ hg
+    exact c_k3 ha haC hCb haH hgr hcI hN hOutB s hs ⟨hL, Γ, q, he, hh, hsc, ⟨hR, hA⟩⟩ hg
 
 /-- **The body at the ghost activation.** -/
 theorem c_top {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hCb : a.Cb = Types.guestC)
     (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true) (hcI : capSub insCaps a.caps = true)
     {A N OUT : BitVec 64}
+    (hN : N.toNat ≤ BmiHeapCap.maxEntries)
     (hOutB : ∀ (s : State σ) (Γ : Gam) (q : Ptrs), Heap a Γ q s → BufOK a.Cb Γ q OUT.toNat 32) :
     Inv.CostP σ guestCtx (GI a (Trie.LV (kvA A N OUT)) (fun Γ q mm => ArrE a.p0 a.s0.memory A N Γ mm ∧ q = a.p0))
       bmiBody bTop := by
@@ -122,7 +124,7 @@ theorem c_top {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (h
     exact lv_new (s := { st with locals := s.locals }) hL (kvA_fresh (Or.inr rfl)) v
   · intro v s hs ⟨hL, Γ, q, he, hh, hsc, hA, hv⟩ hg
     subst hv
-    exact c_k2 ha haC hCb haH hgr hcI hOutB s hs ⟨hL, Γ, q, he, hh, hsc, hA⟩ hg
+    exact c_k2 ha haC hCb haH hgr hcI hN hOutB s hs ⟨hL, Γ, q, he, hh, hsc, hA⟩ hg
 
 end InitECandidate.Solver.Band7
 

@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Improvements.SeventhDelegation
+import InitECandidate.Solver.MemSafe.D0.AuthorizationDepth
 import InitECandidate.Solver.Improvements.EntryFreshCallees
 import InitECandidate.Solver.MemSafe.Entry.Steps3
 import InitECandidate.Solver.Band3.Core
@@ -58,7 +58,7 @@ theorem d0Handler_nn (s : State σ) : (evaluateHOLFiniteState s d0Handler).1 ≠
 /-! ## Table costs -/
 
 def bFO : Nat := 239807672958224171065
-def bD0 : Nat := 115792089237316248289321826800802872450442216321045040316754590360769677917020
+def bD0 : Nat := D0.authorizationDepthPrice
 def bFS : Nat :=
   1519058619963580483919569147301215169394811446181349804834174
 def bH : Nat := 6277101735386680783572166704622097299025671267688351006725
@@ -151,10 +151,8 @@ theorem d0_block (hD0 : D0Spec σ) :
   have hcallC : Inv.CostP σ guestCtx (PI M)
       (.call (some (none, some (nm "EvmErr", nm "perr", d0Handler))) (nm "depth0_prepare") [])
       (1 + bD0 + bH) :=
-    Inv.costP_call (Pre := fun _ _ => True)
-      (Inv.calleeCostP_of_calleeCost
-        (SeventhDelegation.depth_cost))
-      (fun _ _ _ _ _ _ => trivial)
+    Inv.costP_call (D0.authorizationDepth_cost M)
+      (fun s _ h _ _ callee => pi_entry h callee)
       (fun r hid hv hp h => by
         simp only [Option.some.injEq, Prod.mk.injEq] at h
         obtain ⟨-, -, -, rfl⟩ := h

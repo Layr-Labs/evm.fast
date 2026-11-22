@@ -1,3 +1,5 @@
+import InitECandidate.Solver.Improvements.WithdrawalLoopBound
+import InitECandidate.Solver.Improvements.MergeIncorporate
 import InitECandidate.Solver.MemSafe.Wg.Cost1
 
 /-!
@@ -21,24 +23,16 @@ open InitECandidate.Solver.MemSafe.Eb
 variable {σ : Type}
 
 /-- The cost of the withdrawal loop (the analyzer's bound for `wdS5`). -/
-def bWdLoop : Nat := 115792089237316216765716895869598332870473362500653426492066893165886707900399
+def bWdLoop : Nat := 26959946667150644762311082830236212105960074658846832210948613210112
 
-theorem costFin_wdS5 : costFin wdS5 = some bWdLoop := by decide_cbv
-
-/-- The conditional bound of `incorporate_tx_into_block` (`Band2.incorporate_condCost` over `Band6.ub_condCost_lit`). -/
+/-- The conditional bound of `incorporate_tx_into_block` with the typed merge count. -/
 def bInc : Nat :=
   1 + 221273461509877258520337812737445124328463924668881247860154574045184 + 0 +
-    ((1 + 28948022309329048957895649452205539439537088682940916792789893087862638772229 + 0) + 0)
+    ((1 + 13479973349268074275991504524786532771218129522789573000940149014533 + 0) + 0)
 
 theorem incCost : CondCost σ guestCtx guestC (HR σ) (nm "incorporate_tx_into_block") Bal.biSig Bal.UbPre bInc := by
-  refine Band2.incorporate_condCost (Hooks.guestHooksR_lawful (σ := σ)) ?_ (Band6.ub_condCost_lit (σ := σ))
-  intro vs s t Γ hm hg hd hb h
-  obtain ⟨rfl, hbs, hts, hba, hkb, hia, his, hsk⟩ := h
-  have e : ∀ g, gword t g = gword s g := fun g => by unfold gword; rw [hg]
-  refine ⟨rfl, ?_⟩
-  simp only [Bal.GF] at hbs hts hba hkb hia his hsk ⊢
-  rw [e, e, e, e, e, e, e]
-  exact ⟨hbs, hts, hba, hkb, hia, his, hsk⟩
+  simpa only [bInc, MergeIncorporate.price, Band6.bUB, MergeTableBound.bodyPrice_eq] using
+    (MergeIncorporate.cost (σ := σ))
 
 section cwd
 variable {E : EbE σ} {En : Env} {Z : List MlS}
@@ -98,11 +92,14 @@ theorem cw_wd_walk (hSft : HypSft σ) (hK : HypKeepG σ) (hgs : Bal.HGS σ) {pl 
       (WdS1 (WdS E.Γ0 E.s0 pl nwd wd bs ba bk bi bs2 sk) w))
     (R := PA E (EnI ((En.set (nm "nwd") (.val (.word nwd))).set (nm "wd") (.val (.word wd))) nwd)
       (WdS1 (WdS E.Γ0 E.s0 pl nwd wd bs ba bk bi bs2 sk) w))
-    (cw_leaf (cost_guest_costA costFin_wdS5)
-      (wd_loop (Z := nm "ts" :: zBal) hnw hmin wdS1_tidy (by decide) (by decide)
+    ⟨by
+        simp only [bWdLoop, ← WithdrawalLoopBound.loopPrice_eq]
+        exact WithdrawalLoopBound.loop_cost hnw (by
+          simp (config := { decide := true }) [Env.set]),
+      wd_loop (Z := nm "ts" :: zBal) hnw hmin wdS1_tidy (by decide) (by decide)
         (by simp (config := { decide := true }) [Env.set]) (by simp (config := { decide := true }) [Env.set])
         (by simp (config := { decide := true }) [Env.set, hn4]) (by simp (config := { decide := true }) [Env.set, hn5])
-        (by simp (config := { decide := true }) [Env.set, hn6]))) ?_
+        (by simp (config := { decide := true }) [Env.set, hn6])⟩ ?_
   unfold wdS11
   refine cw_seq (P := PA E (EnI ((En.set (nm "nwd") (.val (.word nwd))).set (nm "wd") (.val (.word wd))) nwd)
       (WdS1 (WdS E.Γ0 E.s0 pl nwd wd bs ba bk bi bs2 sk) w))
