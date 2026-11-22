@@ -75,9 +75,8 @@ theorem cbk_179 : cbd ptS179 = 1255420347077336270538885133149377622729036923558
   try simp only [callD, cbd, cbk_180]
   decide +kernel
 
-theorem cbk_178 : cbd ptS178 = 231584178474632412584745290207647128933190931493979098325776965133417748406398 := by
-  unfold ptS178
-  try simp only [callD, cbd, cbk_179]
-  try decide_cbv
+theorem cbk_178 : cbd ptS178 = 53919893334301284647591199431771823723754398562592762079668835713024 := by
+  rw [cbdDeletionLoop]
+  decide +kernel
 
 end InitECandidate.Solver.MemSafe.PtC

@@ -30,7 +30,7 @@ def mainRest : ProgHOL 64 := dropSeq 14 mainBody
 
 def bTail : Nat := 1 + tbN "serialize_result" + (0 + ((1 + tbN "output_write" + 0) + (0 + 0)))
 def bVerify (Bv : Nat) : Nat := 1 + Bv + bTail
-def bHtrV (Bv : Nat) : Nat := (1 + tbN "htr_new_payload_request" + 0) + bVerify Bv
+def bHtrV (Bv : Nat) : Nat := (1 + PayloadMerkleCost.price + 0) + bVerify Bv
 def bRoot (Bv : Nat) : Nat := 1 + tbN "alloc" + bHtrV Bv
 def bDec (Bv : Nat) : Nat := (1 + tbN "decode_host_input" + bTail) + bRoot Bv
 def bMz (Bv : Nat) : Nat := (1 + tbN "memzero" + 0) + bDec Bv

@@ -1,8 +1,6 @@
 import InitECandidate.Solver.MemSafe.Init.Fold
 
-/-! Exact arithmetic bound and a conservative short-decimal public claim.
-The rounded claim avoids a score-conversion failure observed on an earlier
-accepted public submission. The kernel proves the claimed bound is sufficient. -/
+/-! The public claim is the exact step bound checked by the kernel. -/
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -11,8 +9,8 @@ set_option maxHeartbeats 0
 namespace InitECandidate.Solver.MemSafe.Init
 open InitE
 
-abbrev preciseK : Nat := 324083787754426954589482446803283798965026940477362622857062204860237607380288814695996899667574146
-abbrev kLit : Nat := 324083787754426954589482446803283798965026940477362622857062204860237607380288814695996899667574146
+abbrev preciseK : Nat := 305044456729648057612317505622866243944100727813165907285524922521989603888261585006016714
+abbrev kLit : Nat := 305044456729648057612317505622866243944100727813165907285524922521989603888261585006016714
 
 theorem preciseK_eq : Final.totalBoundSrc bMain = preciseK := by decide +kernel
 

@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.SeventhReceipt
 import InitECandidate.Solver.Improvements.FourthDecoderActual
 import InitECandidate.Solver.MemSafe.Eb.Cost5
 import InitECandidate.Solver.MemSafe.BalCost.Main
@@ -26,7 +27,7 @@ def cMax : Nat := 0
 def cLstNew : Nat := 6
 def cTrack : Nat := 0
 def cVbal : Nat := 31385508676933403825984594454457101350295778205019404238864
-def cLogsBloom : Nat := 231584178474632391048009225549749600190119114904439069012931441623018172842065
+def cLogsBloom : Nat := SeventhReceipt.bloomPrice
 def cCrh : Nat := 4083388403051261562445939004719277015092
 def cBbl : Nat := 437398452818127490379149358572514696720922162948307220338257068087520003952
 def cBalInit : Nat := 42
@@ -41,7 +42,7 @@ theorem cc_cMax : CalleeCost σ guestCtx (nm "max") cMax := Wire.calleeCost_gues
 theorem cc_cLstNew : CalleeCost σ guestCtx (nm "lst_new") cLstNew := Wire.calleeCost_guest (by rfl)
 theorem cc_cTrack : CalleeCost σ guestCtx (nm "track_ancestor_access") cTrack := Wire.calleeCost_guest (by rfl)
 theorem cc_cVbal : CalleeCost σ guestCtx (nm "validate_block_access_list_gas_limit") cVbal := Wire.calleeCost_guest (by rfl)
-theorem cc_cLogsBloom : CalleeCost σ guestCtx (nm "logs_bloom") cLogsBloom := Wire.calleeCost_guest (by rfl)
+theorem cc_cLogsBloom : CalleeCost σ guestCtx (nm "logs_bloom") cLogsBloom := SeventhReceipt.bloom_cost
 theorem cc_cCrh : CalleeCost σ guestCtx (nm "compute_requests_hash") cCrh := Wire.calleeCost_guest (by rfl)
 theorem cc_cBbl : CalleeCost σ guestCtx (nm "build_block_access_list_rlp") 1804909045353169020656890361888606632600169938960154361865870097135842364348562771478388845869804237 := Wire.calleeCost_guest (by rfl)
 theorem cc_cBalInit : CalleeCost σ guestCtx (nm "bal_init") cBalInit := Wire.calleeCost_guest (by rfl)
@@ -56,3 +57,5 @@ namespace InitECandidate.Solver.MemSafe.Eb
      InitECandidate.Solver.MemSafe.BalCost.Main.mainPre cBbl :=
    (InitECandidate.Solver.MemSafe.BalCost.Main.callee_cost).mono (by decide +kernel)
 end InitECandidate.Solver.MemSafe.Eb
+
+#print axioms InitECandidate.Solver.MemSafe.Eb.cc_cLogsBloom
