@@ -23,7 +23,7 @@ open InitECandidate.Solver.MemSafe.Eb InitECandidate.Solver.MemSafe.Att
 variable {σ : Type}
 
 /-- `build_merkle_index`'s literal bound (package Rt2). -/
-abbrev bBmiL : Nat := 6484356997289713489883399332781977854032012983525739547991540440757885346705771
+abbrev bBmiL : Nat := 5810264100468725117462607549120581772692477599993536979099629270891
 
 /-- `compute_state_root`'s literal bound (package Rt2). -/
 abbrev bCsrL : Nat :=

@@ -1,4 +1,6 @@
 import InitECandidate.Solver.Band7.Bmi1
+import InitECandidate.Solver.Improvements.BmiUnsignedCap
+import InitECandidate.Solver.Improvements.BmiHeapCap
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -95,12 +97,13 @@ theorem c_body {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (
     subst hv
     exact c_set ha haC hCb haH hgr hcI hI hKL s hs ⟨hL, Γ, q, he, hh, hsc, hE⟩ hg
 
-def bLoop : Nat := (2 ^ 64 + 1) * (bBody + 1)
+def bLoop : Nat := (BmiHeapCap.maxEntries + 1) * (bBody + 1)
 
 /-- **The loop.** -/
 theorem c_loop {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hCb : a.Cb = Types.guestC)
     (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true) (hcI : capSub insCaps a.caps = true)
-    {M MK A N OUT : BitVec 64} :
+    {M MK A N OUT : BitVec 64}
+    (hN : N.toNat ≤ BmiHeapCap.maxEntries) :
     Inv.CostP σ guestCtx (GI a (fun m => ∃ I : BitVec 64, Trie.LV ((nm "i", ValueHOL.val (.word I)) :: Trie.kvB M MK A N OUT) m)
         (EL a A N M)) bmiLoop bLoop := by
   have hIN : ∀ (s : State σ) (I : BitVec 64), Trie.LV ((nm "i", ValueHOL.val (.word I)) :: Trie.kvB M MK A N OUT) s.locals →
@@ -108,8 +111,11 @@ theorem c_loop {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (
     intro s I hL hc
     exact Struct.cmp_lower_true (cmp_true' (lv_ev hL (List.mem_cons_self ..)) (lv_ev hL (by simp [Trie.kvB])) hc)
   unfold bmiLoop bLoop
-  refine costP_while_inc_lower (i := nm "i") (E := lv (nm "n")) (body := bmiLoopBody) (fun s h => gi_clk ha.hH h) ?_ ?_
+  refine BmiUnsignedCap.costP_while_inc_bounded (C := BmiHeapCap.maxEntries) (i := nm "i") (E := lv (nm "n"))
+    (body := bmiLoopBody) ?_ (fun s h => gi_clk ha.hH h) ?_ ?_
     (noContB_sound _ (by decide_cbv)) (stepsB_sound (nm "i") true _ (by decide_cbv))
+  · rintro s ⟨⟨I, hL⟩, _⟩
+    exact ⟨N, lv_ev hL (by simp [Trie.kvB]), hN⟩
   · rintro s hs ⟨⟨⟨I, hL⟩, Γ, q, he, hh, hsc, hE⟩, hc⟩ hg
     exact c_body ha haC hCb haH hgr hcI (hIN s I hL hc) s hs ⟨hL, Γ, q, he, hh, hsc, hE⟩ hg
   · rintro s hs ⟨⟨⟨I, hL⟩, Γ, q, he, hh, hsc, hE⟩, hc⟩ ht hr
