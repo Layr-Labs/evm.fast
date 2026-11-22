@@ -20,6 +20,18 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
 variable {σ : Type}
 
+private theorem cbd_call :
+    cbd ptS113 = 1 + tbl (nm "process_message_call") + cbd ptS114 := by
+  conv_lhs =>
+    unfold ptS113
+    rw [cbd]
+
+private theorem pmc_cost :
+    CondCost σ guestCtx guestC (HR σ) (nm "process_message_call") (sg1 [])
+      (Entry.PmPre (2 ^ 24 + 2)) (tbl (nm "process_message_call")) := by
+  rw [tbl_pmc]
+  exact Entry2.pmc_condCost_final (σ := σ) (M := 2 ^ 24 + 2) (by decide)
+
 theorem cpt_call {E : PtE σ} {En : Env} {S : FS} {rp rl : BitVec 64} {buf n : Nat} {CV : List (BitVec 64)}
     {w wt wa ak nv nkv wm aaw akw v32 v96 v120 mg : BitVec 64} {nbl : Nat}
     (hP : PtPreX E) (hOH : OwnerHeap E.Γ0)
@@ -33,14 +45,9 @@ theorem cpt_call {E : PtE σ} {En : Env} {S : FS} {rp rl : BitVec 64} {buf n : N
     CW' (PA E En S) ptS113 (cbd ptS113)
       (fun r t => r = some (.returned (.val (.word 0))) ∧ PtEnd E t) := by
   have hQT := locIns_ptEnd E
-  unfold ptS113
-  have hcost : Inv.CalleeCostP σ guestCtx (nm "process_message_call")
-      (fun vs s => ∃ Γ p, G guestC (HR σ) Γ s ∧ ptrsOf s = some p ∧ ArgsOK guestC Γ p (sg1 []).params vs ∧
-        Entry.PmPre (2 ^ 24 + 2) vs s Γ) (tbl (nm "process_message_call")) := by
-    rw [tbl_pmc]
-    exact Entry2.pmc_condCost_final (σ := σ) (by norm_num)
-  refine Eb.cw_decCallK (locIns_resIns hQT _)
-    ((pmc_funSpec (hypPm_of_M hpm) hpcm).and (funSpec_pt_gw_all guestCtx_code pmc_fin)) hcost ?_ ?_
+  rw [cbd_call, ptS113]
+  refine Eb.cw_decCallK (k := ptS114) (Bk := cbd ptS114) (locIns_resIns hQT _)
+    ((pmc_funSpec (hypPm_of_M hpm) hpcm).and (funSpec_pt_gw_all guestCtx_code pmc_fin)) (pmc_cost (σ := σ)) ?_ ?_
   · intro s hs hpa vs hvs callee
     obtain ⟨D, Γ, p, hrun, hD, hHold, hlk, hfo, htc⟩ := pa_adopt_m K hoa hoak hb32 htg hp120 hd96 (K.h40 mg (by simp [MsL])) le_rfl hpa
     obtain ⟨x, rfl, hx⟩ := evs_single hvs
@@ -107,3 +114,5 @@ theorem cpt_call {E : PtE σ} {En : Env} {S : FS} {rp rl : BitVec 64} {buf n : N
     exact env_set_self _ _ _
 
 end InitECandidate.Solver.MemSafe.PtC
+
+#print axioms InitECandidate.Solver.MemSafe.PtC.cpt_call

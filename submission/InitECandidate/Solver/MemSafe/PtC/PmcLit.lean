@@ -20,7 +20,7 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
 variable {σ : Type}
 
-def bPmcLit : Nat := 115792089269331203756482971930747027840471212532423661764955815744780974811926
+def bPmcLit : Nat := 32041283540078284438638919511642232685291895837374941349711539202838
 
 theorem bPmc_eq : bPmc = bPmcLit := by
   unfold bPmc bPmcLit
