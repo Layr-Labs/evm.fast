@@ -1,3 +1,4 @@
+import InitECandidate.Solver.DeletionWork.CompactDeletionBody
 import InitECandidate.Solver.Improvements.AcceptedExactWhileCost
 import InitECandidate.Solver.MemSafe.PtC.K3
 
@@ -13,9 +14,6 @@ open Flapjack.Pancake.PanLang (ProgHOL ExpHOL MlS ShapeHOL)
 open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Ptx
-
-private theorem deletionBodyPrice_eq : Wg.costFin ptS179 = some deletionBodyPrice := by
-  decide_cbv
 
 /-- The typed count at loop entry is also the signed guard's upper limit.
     The body preserves the limit, advances the index without wraparound, and
@@ -60,7 +58,7 @@ theorem costP_deletionLoop {σ : Type} {K : TlCtx σ} {ref : BitVec 64 → BitVe
   refine Inv.CostP.pre (P := I)
     (AcceptedExactWhileCost.costP_while_exact (I := I) μ (2 ^ 32)
       (fun s ⟨x, hx, hp⟩ => ⟨x, hx, pag_decClock hB hp⟩)
-      (fun _ => rfl) (Inv.costP_of_cost (Wg.cost_guest_costA deletionBodyPrice_eq)) ?_ ?_ ?_ ?_)
+      (fun _ => rfl) (Inv.costP_of_cost CompactDeletionBody.body_cost) ?_ ?_ ?_ ?_)
     (fun s _ hp => ⟨0, Nat.zero_le _, hp⟩)
   · intro s hctx ⟨⟨x, hx, hp⟩, hc⟩ ht hexit
     have hlt := hguard x s hx hp hc

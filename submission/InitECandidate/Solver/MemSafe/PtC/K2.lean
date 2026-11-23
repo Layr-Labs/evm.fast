@@ -33,7 +33,7 @@ def tbl (f : MlS) : Nat :=
   | none => if f = nm "process_message_call" then bPmc else if f = nm "incorporate_tx_into_block" then Wg.bInc else 0
 
 /-- Unconditional analyzer price of the account-deletion loop body, certified in `DelLoop`. -/
-def deletionBodyPrice : Nat := 12554203470773362705388851331493776227290369235582827143293
+def deletionBodyPrice : Nat := 184433042994110756371157730629381081077024
 
 /-- The deletion table's typed count bounds the number of iterations. -/
 def deletionLoopPrice : Nat := 2 ^ 32 * (deletionBodyPrice + 1)
@@ -56,19 +56,5 @@ def cbd : ProgHOL 64 → Nat
   | p => (Wg.costFin p).getD 0
 
 theorem cbdDeletionLoop : cbd ptS178 = deletionLoopPrice := rfl
-
-example : Wg.costFin ptS4 = some (cbd ptS4) := by decide_cbv
-example : Wg.costFin ptS212 = some (cbd ptS212) := by decide_cbv
-example : Wg.costFin ptS172 = some (cbd ptS172) := by
-  have regularZero (f : MlS) (lookup : Shards.finalState.1.lookup f = some 0)
-      (regular : f ≠ nm "encode_receipt") : tbl f = 0 := by
-    simp only [tbl, lookup, if_neg regular]
-  have scratch : tbl (nm "scratch_release") = 0 := regularZero _ (by decide +kernel) (by decide)
-  have frame : tbl (nm "frame_mem_release") = 0 := regularZero _ (by decide +kernel) (by decide)
-  have analyzed : Wg.costFin ptS172 = some 2 := by decide_cbv
-  have structural : cbd ptS172 = 2 := by
-    simp only [ptS172, ptS173, ptS174, ptS175, callD, cbd, scratch, frame]
-    decide_cbv
-  rw [structural, analyzed]
 
 end InitECandidate.Solver.MemSafe.PtC

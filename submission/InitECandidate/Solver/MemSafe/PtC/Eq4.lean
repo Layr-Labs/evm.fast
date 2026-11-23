@@ -18,12 +18,12 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_177 : cbd ptS177 = 53919893334301284647591199431771823723754398562592762079668835713024 := by
+theorem cbk_177 : cbd ptS177 = 792133887961467619215946090710769239946946831974400 := by
   unfold ptS177
   try simp only [callD, cbd, cbk_178]
   try decide_cbv
 
-theorem cbk_176 : cbd ptS176 = 53919893334301284647591199431771823723754398562592762079668835713024 := by
+theorem cbk_176 : cbd ptS176 = 792133887961467619215946090710769239946946831974400 := by
   unfold ptS176
   try simp only [callD, cbd, cbk_177]
   try decide_cbv
@@ -50,7 +50,7 @@ theorem cbk_172 : cbd ptS172 = 2 := by
   try simp only [callD, cbd, cbk_173]
   try decide_cbv
 
-theorem cbk_171 : cbd ptS171 = 53919893334301284647591199431771823723754398562592762079668835713024 := by
+theorem cbk_171 : cbd ptS171 = 792133887961467619215946090710769239946946831974400 := by
   unfold ptS171
   try simp only [callD, cbd, cbk_176]
   try decide_cbv
@@ -60,13 +60,13 @@ theorem cbk_170 : cbd ptS170 = 1315911425325701604547330037659503741162045387389
   try simp only [callD, cbd, tbl_inc, cbk_172]
   try decide_cbv
 
-theorem cbk_169 : cbd ptS169 = 53933052448554541663636672732148418761166019016466655912319844995466 := by
+theorem cbk_169 : cbd ptS169 = 13159114253257808179361261844214253357711164643133779597841256842 := by
   conv_lhs => rw [ptS169, cbd, cbk_171, cbk_170]
 
-theorem cbk_168 : cbd ptS168 = 53933052448554541663636672732148418761166019016466655912319844995466 := by
+theorem cbk_168 : cbd ptS168 = 13159114253257808179361261844214253357711164643133779597841256842 := by
   rw [ptS168, cbd, cbk_169]
 
-theorem cbk_167 : cbd ptS167 = 53933052448554541663636672732148418761166019016466655912319844995466 := by
+theorem cbk_167 : cbd ptS167 = 13159114253257808179361261844214253357711164643133779597841256842 := by
   have storeCost : cbd (.store (lv (nm "rl")) (lv (nm "stable_logs"))) = 0 := by decide_cbv
   rw [ptS167, cbd, storeCost, cbk_168, Nat.zero_add]
 
