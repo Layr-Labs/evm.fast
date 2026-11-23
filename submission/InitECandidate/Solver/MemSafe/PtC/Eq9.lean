@@ -18,32 +18,32 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_117 : cbd ptS117 = 288673328273479664570100698770564587267872051629747994732574088970402 := by
+theorem cbk_117 : cbd ptS117 = 53933052528587588789816854808709525205601617891951067704130375193122 := by
   rw [ptS117, cbd, cbk_118]
 
-theorem cbk_116 : cbd ptS116 = 288673328273479664570100698770564587267872051629747994732574088970403 := by
+theorem cbk_116 : cbd ptS116 = 53933052528587588789816854808709525205601617891951067704130375193123 := by
   have callPrice : tbl (nm "min") = 0 := by decide +kernel
   (conv_lhs => rw [ptS116, cbd, callPrice, cbk_117]) <;> decide +kernel
 
-theorem cbk_115 : cbd ptS115 = 288673328273479664570100698770564587267872051629766441476647798522024 := by
+theorem cbk_115 : cbd ptS115 = 53933052528587588789816854808709525205601617891969514448204084744744 := by
   have callPrice : tbl (nm "udiv_small5") = 18446744073709551620 := by decide +kernel
   (conv_lhs => rw [ptS115, cbd, callPrice, cbk_116]) <;> decide +kernel
 
-theorem cbk_114 : cbd ptS114 = 288673328273479664570100698770564587267872051629766441476647798522024 := by
+theorem cbk_114 : cbd ptS114 = 53933052528587588789816854808709525205601617891969514448204084744744 := by
   rw [ptS114, cbd, cbk_115]
 
-theorem cbk_113 : cbd ptS113 = 320714611813557949008739618282206819953163947467141382826359337724863 := by
+theorem cbk_113 : cbd ptS113 = 85974336068665873228455774320351757890893513729344455797915623947583 := by
   (conv_lhs => rw [ptS113, cbd, tbl_pmc, bPmc_eq, cbk_114]) <;> decide +kernel
 
-theorem cbk_112 : cbd ptS112 = 320714611813557949008739618282206819953163947467141382826359337724863 := by
+theorem cbk_112 : cbd ptS112 = 85974336068665873228455774320351757890893513729344455797915623947583 := by
   have leftCost : cbd (.store (.op .add [(lv (nm "m")), (cw 160)]) (lv (nm "ak"))) = 0 := by decide_cbv
   (conv_lhs => rw [ptS112, cbd, leftCost, cbk_113, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_111 : cbd ptS111 = 320714611813557949008739618282206819953163947467141382826359337724863 := by
+theorem cbk_111 : cbd ptS111 = 85974336068665873228455774320351757890893513729344455797915623947583 := by
   have leftCost : cbd (.store (.op .add [(lv (nm "m")), (cw 152)]) (lv (nm "aa"))) = 0 := by decide_cbv
   (conv_lhs => rw [ptS111, cbd, leftCost, cbk_112, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_110 : cbd ptS110 = 320714611813557949008739618282206819953163947467141382826359337724863 := by
+theorem cbk_110 : cbd ptS110 = 85974336068665873228455774320351757890893513729344455797915623947583 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS110, cbd, leftCost, cbk_111, Nat.zero_add]) <;> decide +kernel
 
@@ -60,26 +60,26 @@ theorem addCostValues {callCost tailCost callValue tailValue total : Nat}
     (hTotal : callValue + tailValue = total) : callCost + tailCost = total := by
   rw [hCall, hTail, hTotal]
 
-theorem cbk_109 : cbd ptS109 = 320714611813557949008739618282547102320084885931582434869697712172070 := by
+theorem cbk_109 : cbd ptS109 = 85974336068665873228455774320692040257814452193785507841253998394790 := by
   let args : List (ExpHOL 64) := [(lv (nm "aa")), (.load .one (.op .add [(lv (nm "m")), (cw 32)])), (cw 1)]
   let callCost := cbd (callD (nm "htab_set") args)
   let tailCost := cbd ptS110
   have splitCost : cbd ptS109 = callCost + tailCost := by
     conv_lhs => rw [ptS109, cbd]
   have callValue : callCost = 340282366920938464441052043338374447207 := cbd_htabSet args
-  have tailValue : tailCost = 320714611813557949008739618282206819953163947467141382826359337724863 := cbk_110
-  have total : 340282366920938464441052043338374447207 + 320714611813557949008739618282206819953163947467141382826359337724863 = 320714611813557949008739618282547102320084885931582434869697712172070 := by
+  have tailValue : tailCost = 85974336068665873228455774320351757890893513729344455797915623947583 := cbk_110
+  have total : 340282366920938464441052043338374447207 + 85974336068665873228455774320351757890893513729344455797915623947583 = 85974336068665873228455774320692040257814452193785507841253998394790 := by
     decide +kernel
   exact splitCost.trans (addCostValues callValue tailValue total)
 
-theorem cbk_108 : cbd ptS108 = 320714611813557949008739618282547102320084885931582434869697712172070 := by
+theorem cbk_108 : cbd ptS108 = 85974336068665873228455774320692040257814452193785507841253998394790 := by
   have leftCost : cbd (.store (.op .add [(lv (nm "m")), (cw 136)]) (cw 1)) = 0 := by decide_cbv
   (conv_lhs => rw [ptS108, cbd, leftCost, cbk_109, Nat.zero_add]) <;> decide +kernel
 
 theorem cbk_107 : cbd ptS107 = 1135522258986882073916698982893440076914320 := by
   (conv_lhs => rw [ptS107, cbd, cbk_187, cbk_186]) <;> decide +kernel
 
-theorem cbk_106 : cbd ptS106 = 320714611813557949008739618282547102320084885931582434869697712172070 := by
+theorem cbk_106 : cbd ptS106 = 85974336068665873228455774320692040257814452193785507841253998394790 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS106, cbd, leftCost, cbk_108, Nat.zero_add]) <;> decide +kernel
 

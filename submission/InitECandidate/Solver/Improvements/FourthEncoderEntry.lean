@@ -46,6 +46,6 @@ theorem callee_cost {a : AwE σ} (hK : AwOK a) (hc : FourthEncoderPrefix.PrefixF
   exact hcost
 
 theorem encoderCost_eq : encoderCost =
-    41713567048847405185401701990816677726508866420125617849867660959028 := by decide
+    3208735998555252714819233928615786852737430723290857917009996847028 := by decide
 #print axioms callee_cost
 end FourthEncoderEntry

@@ -27,8 +27,8 @@ def bWdLoop : Nat := 26959946667150644762311082830236212105960074658846832210948
 
 /-- The conditional bound of `incorporate_tx_into_block` with the typed merge count. -/
 def bInc : Nat :=
-  1 + 221273461509877258520337812737445124328463924668881247860154574045184 + 0 +
-    ((1 + 13479973349268074275991504524786532771218129522789573000940149014533 + 0) + 0)
+  1 + 204365782197762686295671890706245486622928797157505331555929344 + 0 +
+    ((1 + 12954748471059253359177628485888791924997525076736327319453353093 + 0) + 0)
 
 theorem incCost : CondCost σ guestCtx guestC (HR σ) (nm "incorporate_tx_into_block") Bal.biSig Bal.UbPre bInc := by
   simpa only [bInc, MergeIncorporate.price, Band6.bUB, MergeTableBound.bodyPrice_eq] using

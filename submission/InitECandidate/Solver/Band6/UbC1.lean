@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.BuilderHeapCount
 import InitECandidate.Solver.Improvements.BuilderCapDeclarations
 import InitECandidate.Solver.Band6.Loop
 import InitECandidate.Solver.MemSafe.Frames.FinCost
@@ -96,9 +97,9 @@ section c2
 variable {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs}
 
 /-- The account loop. -/
-theorem c_loop1 (Ent : UbEnt Γ0 s0 p0) (IDX AW CW : BitVec 64) (hCW : CW.toNat ≤ 2 ^ 32) :
+theorem c_loop1 (Ent : UbEnt Γ0 s0 p0) (IDX AW CW : BitVec 64) (hCW : CW.toNat ≤ BuilderHeapCount.cap) :
     Inv.CostP σ guestCtx (PE ubc Γ0 s0 p0 (EL IDX AW CW (BitVec.ofNat 64 0)) (FL AW)) ubLoop1
-      ((2 ^ 32) * (bL1 + 1)) := by
+      ((BuilderHeapCount.cap) * (bL1 + 1)) := by
   have hH := (Rec.foldOK_guestR (σ := σ)).hH
   unfold ubLoop1
   refine Inv.CostP.pre (BoundedInitializedLoop.costP_while_local_cap (I := fun s => ∃ IW, PE ubc Γ0 s0 p0 (EL IDX AW CW IW) (FL AW) s)

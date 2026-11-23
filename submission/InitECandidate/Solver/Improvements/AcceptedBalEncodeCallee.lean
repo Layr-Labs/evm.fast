@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.BoundedCopySortCost
 import InitECandidate.Solver.Improvements.AcceptedBalEncodeIdentity
 import InitECandidate.Solver.SourceCost.Shards.All
 import InitECandidate.Solver.Spec.Bridge
@@ -26,7 +27,7 @@ theorem code_encode : guestCode (AcceptedIvvhCalleeCore.nm "bal_encode_account")
 
 theorem accepted_callees {σ : Type} : CalleeCosts σ guestCtx where
   htab_get := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
-  sort_elems := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
+  sort_elems := BoundedCopySortCost.sort_cost
   u256_from_be := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   rlp_put_u256 := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   rlp_encode_word := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
@@ -34,7 +35,7 @@ theorem accepted_callees {σ : Type} : CalleeCosts σ guestCtx where
   memcpy := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   rlp_encode_list_header := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   rlp_encode_bytes := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
-  sorted_keys32 := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
+  sorted_keys32 := BoundedCopySortCost.keys_cost
   htab_keys := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   htab_has := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   heap_mark := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)

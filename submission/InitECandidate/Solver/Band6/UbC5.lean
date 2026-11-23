@@ -35,18 +35,18 @@ theorem c_rest_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.
   have hcapPost : Hoare σ guestCtx
       (PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
       (.assign .local (nm "cap") (ld1 (add2 (lvv "outer") 24)))
-      (fun r t => r = none → BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) t) := by
+      (fun r t => r = none → BoundedInitializedLoop.LocalCap (nm "cap") (BuilderHeapCount.cap) t) := by
     refine BuilderTableLocalFacts.assign_local_cap ?_
     intro s' hs' hP v hv
     obtain ⟨Γ, hIV, hLE⟩ := hP
     obtain ⟨S, hS, hSb, hSt⟩ := hLE.2
-    apply BuilderTableLocalFacts.typed_count_load (Struct.trk_G hIV.1) hS
+    apply BuilderHeapCount.count_load (Struct.trk_G hIV.1) hS
       (by rw [hSt]; decide) ?_ hv
     rw [hSb]
     exact le_ev hLE (env_set_self _ _ _)
   refine Inv.costP_seq (R := fun s =>
     PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O) s ∧
-      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s)
+      BoundedInitializedLoop.LocalCap (nm "cap") (BuilderHeapCount.cap) s)
     (Inv.costP_of_cost (cost_assign _ _ _)) ?_ ?_
   · have hset : Hoare σ guestCtx
         (PE ubc Γ0 s0 p0 ((Eb IDX).set (nm "outer") (.val (.word O))) (FL2 O))
@@ -69,7 +69,7 @@ theorem c_rest_body (hGT : Types.guestC.GT.lookup (nm "ws") = some (.nptr Types.
       exact hl
   refine Inv.costP_seq (R := fun s =>
     PE ubc Γ0 s0 p0 (EL2 (Eb IDX) O (BitVec.ofNat 64 0)) (FL2 O) s ∧
-      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s)
+      BoundedInitializedLoop.LocalCap (nm "cap") (BuilderHeapCount.cap) s)
     (Inv.costP_of_cost (cost_assign _ _ _)) ?_ ?_
   · intro s' hs' hP ht hr
     exact ⟨inv_of_hoareG hA2 s' hs' hP.1 ht hr,

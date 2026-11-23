@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.BuilderHeapCount
 import InitECandidate.Solver.Improvements.ThirdMergeCallees
 import InitECandidate.Solver.Improvements.BuilderTableLocalFacts
 import InitECandidate.Solver.Band6.UbC1
@@ -30,16 +31,16 @@ private theorem costs : Costs σ guestCtx 0 setB getB 12 unionB where
   new := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   union := union_cost
 
-def loopPrice : Nat := (2 ^ 32) * (mergeLoopB 0 setB getB 12 unionB + 1)
+def loopPrice : Nat := (BuilderHeapCount.cap) * (mergeLoopB 0 setB getB 12 unionB + 1)
 
 def bodyPrice : Nat := 5 * (1 + unionB) + loopPrice
 
 theorem bodyPrice_eq :
-    bodyPrice = 13479973349268074275991504524786532771218129522789573000940149014533 := by decide
+    bodyPrice = 12954748471059253359177628485888791924997525076736327319453353093 := by decide
 
 theorem loop_cost : Inv.CostP σ guestCtx
     (fun s => AcceptedInitializedLoopCost.Nonneg (nm "i") s ∧
-      BoundedInitializedLoop.LocalCap (nm "cap") (2 ^ 32) s)
+      BoundedInitializedLoop.LocalCap (nm "cap") (BuilderHeapCount.cap) s)
     (.while (.cmp .less (v "i") (v "cap")) mergeLoopBody) loopPrice := by
   refine Inv.CostP.pre
     (BoundedInitializedLoop.costP_while_local_cap (I := fun _ => True) (fun _ _ => trivial)
@@ -74,7 +75,7 @@ theorem rest_cost (E : MgEnt Γ0 s0 p0 BB TB) :
     exact (lk_set_ne _ _ (by decide)).trans (lk_set_self _ _ _)
   have hg : G guestC (guestHooksR (σ := σ)) Γ localState :=
     G_congr (s := s) hH rfl rfl rfl rfl (Struct.trk_G hIV.1)
-  obtain ⟨count, hc, hcount⟩ := BuilderTableLocalFacts.typed_count_load hg hTo
+  obtain ⟨count, hc, hcount⟩ := BuilderHeapCount.count_load hg hTo
     (by rw [hTot]; decide) (Mpt.Leaves.ev_lv' hlo) hcap
   subst cap
   refine Inv.costP_dec (fun s3 hs3 h3 i hi hshape3 => ?_)
