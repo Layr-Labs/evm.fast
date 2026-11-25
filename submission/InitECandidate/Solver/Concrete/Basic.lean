@@ -11,11 +11,11 @@ The explicit bounds `crepS`, `wordS`, `stackS` are the exact maxima of the node 
 baseline's concrete programs (computed offline, then proved below the bound by kernel-checked
 Boolean evaluation, shard by shard, in `Concrete/{Crep,Word,Stack,Flat}/…`):
 
-* `crepS = 14860`: `CrepToLoop.csize` over the crep program `FrontendStages.pass3`
+* `crepS = 448`: `CrepToLoop.csize` over the crep program `FrontendStages.pass3`
   (maximum at entry `90`, `Crep.output90`);
-* `wordS = 19619`: `WordToStack.wsize` over the post-`word_to_word` program
+* `wordS = 146`: `WordToStack.wsize` over the post-`word_to_word` program
   `BackendStages.Native.programs0` (maximum at label `877`);
-* `stackS = 20339`: `Flatten.psize` over the `stack_remove` output `BackendStages.Removed.stack`
+* `stackS = 7312`: `Flatten.psize` over the `stack_remove` output `BackendStages.Removed.stack`
   (maximum at label `877`).
 
 The checkers are per-entry Booleans; `forall_of_all` turns a checked `List.all` into the `∀`
@@ -31,11 +31,11 @@ open InitECandidate.Solver.Compiler
 open Flapjack.Basis.Pure.MlString (MlString)
 
 /-- Crep-stage bound: maximum of `csize` over the baseline crep program. -/
-def crepS : Nat := 14860
+def crepS : Nat := 448
 /-- Word-stage bound: maximum of `wsize` over the baseline post-`word_to_word` program. -/
-def wordS : Nat := 19619
+def wordS : Nat := 146
 /-- Stack-stage bound: maximum of `psize` over the baseline `stack_remove` output. -/
-def stackS : Nat := 20339
+def stackS : Nat := 7312
 
 theorem three_le_crepS : 3 ≤ crepS := by decide
 theorem one_le_wordS : 1 ≤ wordS := by decide

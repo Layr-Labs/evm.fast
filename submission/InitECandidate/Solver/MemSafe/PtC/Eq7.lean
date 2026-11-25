@@ -18,7 +18,7 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_141 : cbd ptS141 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_141 : cbd ptS141 = 67504150380230936784570876878960970498152069792132657175847 := by
   rw [ptS141, cbd, cbk_142]
 
 theorem cbk_140 : cbd ptS140 = 0 := by
@@ -26,7 +26,7 @@ theorem cbk_140 : cbd ptS140 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_139 : cbd ptS139 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_139 : cbd ptS139 = 67504150380230936784570876878960970498152069792132657175847 := by
   have skipCost : cbd .skip = 0 := by decide_cbv
   rw [ptS139, cbd, skipCost, cbk_141, Nat.zero_add]
 
@@ -35,7 +35,7 @@ theorem cbk_138 : cbd ptS138 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_137 : cbd ptS137 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_137 : cbd ptS137 = 67504150380230936784570876878960970498152069792132657175847 := by
   rw [ptS137, cbd, cbk_140, cbk_139, Nat.zero_add]
 
 theorem cbk_136 : cbd ptS136 = 0 := by
@@ -43,7 +43,7 @@ theorem cbk_136 : cbd ptS136 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_135 : cbd ptS135 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_135 : cbd ptS135 = 67504150380230936784570876878960970498152069792132657175847 := by
   rw [ptS135, cbd, cbk_138, cbk_137, Nat.zero_add]
 
 theorem cbk_134 : cbd ptS134 = 0 := by
@@ -51,10 +51,10 @@ theorem cbk_134 : cbd ptS134 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_133 : cbd ptS133 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_133 : cbd ptS133 = 67504150380230936784570876878960970498152069792132657175847 := by
   rw [ptS133, cbd, cbk_136, cbk_135, Nat.zero_add]
 
-theorem cbk_132 : cbd ptS132 = 13159181732101463586179497494210379417459894441092987604188647983 := by
+theorem cbk_132 : cbd ptS132 = 67504150380230936784570876878960970498152069792132657175847 := by
   rw [ptS132, cbd, cbk_134, cbk_133, Nat.zero_add]
 
 theorem cbk_131 : cbd ptS131 = 0 := by
@@ -62,7 +62,7 @@ theorem cbk_131 : cbd ptS131 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_130 : cbd ptS130 = 13159181732101463586179497494210379417459894441092987604188647984 := by
+theorem cbk_130 : cbd ptS130 = 67504150380230936784570876878960970498152069792132657175848 := by
   have maxPrice : tbl (nm "max") = 0 := by decide +kernel
   conv_lhs => rw [ptS130, cbd, maxPrice, cbk_132]
 

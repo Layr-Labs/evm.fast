@@ -88,7 +88,7 @@ theorem flattenCorrectFfiB (S : Nat) (s1 : StackSemStateFiniteExact width C F)
         simp only [Prod.mk.injEq] at ev
         obtain ⟨rfl, rfl⟩ := ev
         refine ⟨2, incPc (decClock (updReg t1.linkReg (.loc n l)
-          { t1 with clock := t1.clock + 2 })), le_flatBound_leaf (le_refl _), ?_, ?_, ?_⟩
+          { t1 with clock := t1.clock + 2 })), le_flatBound_leaf (le_refl _) (by simp [psize]), ?_, ?_, ?_⟩
         · rw [step, hffi]
         · simp [incPc, decClock, updReg, hffiEq]
         · simp only [incPc, decClock, updReg]; omega
@@ -104,7 +104,7 @@ theorem flattenCorrectFfiB (S : Nat) (s1 : StackSemStateFiniteExact width C F)
                 ((fun x => if x = t1.linkReg then WordLocW.loc n l else t1.regs x) r)
                 WordLocW.word
               fpRegs := fun r => t1.ioFpRegs 0 r
-              pc := t1.pc + 2 }, le_flatBound_leaf (le_refl _), fun ck1 => ?_, rfl, rfl, rfl,
+              pc := t1.pc + 2 }, le_flatBound_leaf (le_refl _) (by simp [psize]), fun ck1 => ?_, rfl, rfl, rfl,
           rfl, rfl, List.prefix_refl _, ?_, ?_⟩
         · rw [show t1.clock + 2 + ck1 = (t1.clock + ck1) + 2 by omega, step, hffi]
         · simp [flattenHOL, appListAppendList, isLabelHOL]
@@ -178,7 +178,7 @@ theorem flattenCorrectInstallB (S : Nat) (s1 : StackSemStateFiniteExact width C 
         getRegValue (t1.ccRegs 0 r) (if r = t1.linkReg then .loc n l else t1.regs r)
           WordLocW.word
       fpRegs := fun r => t1.ccFpRegs 0 r
-      compileOracle := holShiftSeq 1 t1.compileOracle }, le_flatBound_leaf (le_refl _),
+      compileOracle := holShiftSeq 1 t1.compileOracle }, le_flatBound_leaf (le_refl _) (by simp [psize]),
     fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl, List.prefix_append _ _, ?_, ?_⟩
   · rw [show t1.clock + 2 + ck1 = (t1.clock + ck1 + 1) + 1 by omega, locValueStep _ fetch0 locL]
     refine (installStep (t := { t1 with

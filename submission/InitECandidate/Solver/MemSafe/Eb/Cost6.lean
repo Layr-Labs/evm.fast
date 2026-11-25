@@ -1,5 +1,5 @@
 import InitECandidate.Solver.Improvements.SeventhReceipt
-import InitECandidate.Solver.Improvements.FourthDecoderActual
+import InitECandidate.Solver.PayloadDecoder.TransactionCost
 import InitECandidate.Solver.MemSafe.Eb.Cost5
 import InitECandidate.Solver.MemSafe.BalCost.Main
 
@@ -29,10 +29,10 @@ def cTrack : Nat := 0
 def cVbal : Nat := 31385508676933403825984594454457101350295778205019404238864
 def cLogsBloom : Nat := SeventhReceipt.bloomPrice
 def cCrh : Nat := 4083388403051261562445939004719277015092
-def cBbl : Nat := 33646035584216049689214538264611083232364593375865168024695488048474883952
+def cBbl : Nat := 752052806102686256309215008711947816653097765842947840358951683952
 def cBalInit : Nat := 42
 def cSft : Nat := 107
-def cDecTx : Nat := 56318156800241765865562386731819516950665959437935209901050505
+def cDecTx : Nat := 40916756762898298238700568878083590891
 
 theorem cc_cAlloc : CalleeCost σ guestCtx (nm "alloc") cAlloc := Wire.calleeCost_guest (by rfl)
 theorem cc_cMemzero : CalleeCost σ guestCtx (nm "memzero") cMemzero := Wire.calleeCost_guest (by rfl)
@@ -47,7 +47,7 @@ theorem cc_cCrh : CalleeCost σ guestCtx (nm "compute_requests_hash") cCrh := Wi
 theorem cc_cBbl : CalleeCost σ guestCtx (nm "build_block_access_list_rlp") 1804909045353169020656890361888606632600169938960154361865870097135842364348562771478388845869804237 := Wire.calleeCost_guest (by rfl)
 theorem cc_cBalInit : CalleeCost σ guestCtx (nm "bal_init") cBalInit := Wire.calleeCost_guest (by rfl)
 theorem cc_cSft : CalleeCost σ guestCtx (nm "state_fresh_tx") cSft := Wire.calleeCost_guest (by rfl)
-theorem cc_cDecTx : CalleeCost σ guestCtx (nm "decode_transaction") cDecTx := FourthDecoderActual.decoder_cost
+theorem cc_cDecTx : CalleeCost σ guestCtx (nm "decode_transaction") cDecTx := PayloadDecoder.transactionCost
 
 end InitECandidate.Solver.MemSafe.Eb
 

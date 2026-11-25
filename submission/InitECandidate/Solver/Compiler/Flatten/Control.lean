@@ -179,7 +179,7 @@ theorem flattenCorrectIfB (S : Nat) (s1 : StackSemStateFiniteExact width C F) (c
       have step := fun c => (jumpCmpStep (b := true) c fetch0 hcmp)
       simp only [if_true, locL] at step
       refine ⟨1, { t1 with pc := t1.pc + 1 + ((appListAppend ys).filter
-          (fun x => !isLabelHOL x)).length }, le_flatBound_leaf (by decide), runToPc step, rfl,
+          (fun x => !isLabelHOL x)).length }, le_flatBound_leaf (by decide) (by simp [psize]), runToPc step, rfl,
         rfl, rfl, rfl, rfl, List.prefix_refl _, ?_, rel⟩
       rw [hlenOf _ hflat]
       simp [List.filter_append, isLabelHOL]
@@ -202,7 +202,7 @@ theorem flattenCorrectIfB (S : Nat) (s1 : StackSemStateFiniteExact width C F) (c
       have step := fun c => (jumpCmpStep (b := true) c fetch0 hneg)
       simp only [if_true, locL] at step
       refine ⟨1, { t1 with pc := t1.pc + 1 + ((appListAppend xs).filter
-          (fun x => !isLabelHOL x)).length }, le_flatBound_leaf (by decide), runToPc step, rfl,
+          (fun x => !isLabelHOL x)).length }, le_flatBound_leaf (by decide) (by simp [psize]), runToPc step, rfl,
         rfl, rfl, rfl, rfl, List.prefix_refl _, ?_, rel⟩
       rw [hlenOf _ hflat]
       simp [List.filter_append, isLabelHOL]

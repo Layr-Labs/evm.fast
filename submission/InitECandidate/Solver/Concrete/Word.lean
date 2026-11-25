@@ -61,7 +61,7 @@ The word program the baseline feeds to `word_to_stack` (the `code` of
 proof) is `BackendStages.Native.programs0` (`= StackAnalysis.outputs`, `Native.programs_eq`; the
 baseline's optimizer equation `WordBackend.compileWith_eq` + `StackAgreement.outputs_eq`, used in
 `ArtifactComposition.lean`). Its 814 procedures (labels `64`–`877`) all have
-`wsize ≤ wordS = 19619` (attained at label `877`). Checked per baseline shard
+`wsize ≤ wordS = 146` (attained at label `714`). Checked per baseline shard
 (`Concrete/Word/Chunk*.lean`), composed along the baseline's own `Native.programs_k` chain.
 -/
 

@@ -19,10 +19,10 @@ open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 /-- The callee costs of `finish_child` for the final hook family `guestHooksR`. -/
 theorem finCosts_guestR {σ : Type} :
     Frames.FinCosts σ guestCtx Types.guestC (Hooks.guestHooksR (σ := σ)) Types.tEV finBsGuest where
-  sr := calleeCost_guest (by decide_cbv)
+  sr := CompactChildEffects.restore_cost
   rf := calleeCost_guest (by decide_cbv)
   fh := calleeCost_guest (by decide_cbv)
-  cf := calleeCost_guest (by decide_cbv)
+  cf := CompactCreateFinish.cost
   rb := by
     have h := Frames.rb_condCost (hF := Rec.foldOK_guestR (σ := σ)) (hT := Hooks.htabHooks_guestR)
       (calleeCost_guest (B := 92233720368547758087) (by decide_cbv))
@@ -32,7 +32,7 @@ theorem finCosts_guestR {σ : Type} :
   cr := calleeCost_guest (by decide_cbv)
   sd := calleeCost_guest (by decide_cbv)
   sp := calleeCost_guest (by decide_cbv)
-  ios := calleeCost_guest (by decide_cbv)
+  ios := CompactChildEffects.success_cost
   au := calleeCost_guest (by decide_cbv)
   mn := calleeCost_guest (by decide_cbv)
   mc := calleeCost_guest (by decide_cbv)

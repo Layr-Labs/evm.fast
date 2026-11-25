@@ -18,34 +18,34 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_21 : cbd ptS21 = 32054442847352420609958720124757368383797885354120222332797921189530 := by
+theorem cbk_21 : cbd ptS21 = 193448679295947181733909784299246135685151455988944239984501 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS21, cbd, leftCost, cbk_22, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_20 : cbd ptS20 = 32054442847352420609958721259599062636838082343154586248426079616225 := by
+theorem cbk_20 : cbd ptS20 = 193448679295947182868751478552286332674185819904572398411196 := by
   have callPrice : tbl (nm "get_account") = 1134841694253040196989034363915628158426694 := by decide +kernel
   (conv_lhs => rw [ptS20, cbd, callPrice, cbk_21]) <;> decide +kernel
 
-theorem cbk_19 : cbd ptS19 = 32054442847352420609958721259599062636838082343154586248426079616226 := by
+theorem cbk_19 : cbd ptS19 = 193448679295947182868751478552286332674185819904572398411197 := by
   have callPrice : tbl (nm "calculate_total_blob_gas") = 0 := by decide +kernel
   (conv_lhs => rw [ptS19, cbd, callPrice, cbk_20]) <;> decide +kernel
 
-theorem cbk_18 : cbd ptS18 = 32054442847352420609958721259599062636838082343154586248426079616226 := by
+theorem cbk_18 : cbd ptS18 = 193448679295947182868751478552286332674185819904572398411197 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS18, cbd, leftCost, cbk_19, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_17 : cbd ptS17 = 32054442878737929286892126225189304481228519174107919365649021017190 := by
+theorem cbk_17 : cbd ptS17 = 224834187972880587834341720396676769505139153021795339812161 := by
   have callPrice : tbl (nm "check_transaction") = 31385508676933404965590241844390436830953333117222941400963 := by decide +kernel
   (conv_lhs => rw [ptS17, cbd, callPrice, cbk_18]) <;> decide +kernel
 
-theorem cbk_16 : cbd ptS16 = 32054442878737929286892126225189304481228519174107919365649021017190 := by
+theorem cbk_16 : cbd ptS16 = 224834187972880587834341720396676769505139153021795339812161 := by
   (conv_lhs => rw [ptS16, cbd, cbk_17]) <;> decide +kernel
 
-theorem cbk_15 : cbd ptS15 = 32054442878737929286892126225189304481228519174107919365649021017190 := by
+theorem cbk_15 : cbd ptS15 = 224834187972880587834341720396676769505139153021795339812161 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS15, cbd, leftCost, cbk_16, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_14 : cbd ptS14 = 32054442878737929286892126225189304481228519174218599830091278326898 := by
+theorem cbk_14 : cbd ptS14 = 224834187972880587834341720396676769505249833486237597121869 := by
   have callPrice : tbl (nm "validate_transaction") = 110680464442257309707 := by decide +kernel
   (conv_lhs => rw [ptS14, cbd, callPrice, cbk_15]) <;> decide +kernel
 
@@ -54,11 +54,11 @@ theorem cbk_13 : cbd ptS13 = 225975662473920507694771627315778422922075979890255
   try simp only [callD, cbd]
   decide +kernel
 
-theorem cbk_12 : cbd ptS12 = 32054442878737929286892126225189304481228519174218599830091278326898 := by
+theorem cbk_12 : cbd ptS12 = 224834187972880587834341720396676769505249833486237597121869 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS12, cbd, leftCost, cbk_14, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_11 : cbd ptS11 = 32054443104713591760812633919960931797006942096294579720347009740357 := by
+theorem cbk_11 : cbd ptS11 = 450809850446801095529113347712455192427325813376493328535328 := by
   (conv_lhs => rw [ptS11, cbd, cbk_13, cbk_12]) <;> decide +kernel
 
 theorem cbk_10 : cbd ptS10 = 0 := by

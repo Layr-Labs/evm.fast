@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.CompactTrieCalls
 import InitECandidate.Solver.Band7.Ms
 import InitECandidate.Solver.MemSafe.Trie.MpsPost
 
@@ -31,13 +32,16 @@ def MsPre8 (vs : List (ValueHOL 64)) (s : State σ) (Γ : Gam) : Prop :=
     vs = [.val (.word m), .val (.word key), .val (.word klen), .val (.word vptr), .val (.word vlen)] ∧
     MemSafe.Trie.MRecF Γ s m ∧ 2 * klen.toNat < 2 ^ 64
 
-theorem ms8_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
+def msPriceAt (insert : Nat) : Nat := 1 + bMnk + (max (1 + Band2.dnB + 0) (1 + insert + 0) + (0 + 0))
+
+theorem ms8_condCostAt (insert : Nat)
+    (hi : CalleeCost σ guestCtx (nm "_mpt_insert_node") insert) {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
     (hK : CSumm σ guestCtx guestC H (nm "keccak256") (MemSafe.WaveHelpers.sigKeccak 32 false) []) :
-    CondCost σ guestCtx guestC H (nm "mpt_set") msSig MsPre8 msB := by
+    CondCost σ guestCtx guestC H (nm "mpt_set") msSig MsPre8 (msPriceAt insert) := by
   intro vs body callee rs hl
   rw [guestCtx_code] at hl
   obtain ⟨rfl, -, -, hbind⟩ := MemSafe.lookupCode_gen code_ms hl
-  unfold msBody msB
+  unfold msBody msPriceAt
   refine Band.costP_decCall (Pre := fun _ _ => True)
     (Inv.calleeCostP_of_calleeCost (MemSafe.Wire.calleeCost_guest (f := nm "mpt_nibble_key")
       (B := bMnk) rfl)) (fun _ _ _ _ _ _ => trivial)
@@ -114,13 +118,23 @@ theorem ms8_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
       rw [hum, hub, hbe]; exact hKN
     exact Band.delPre_of_G (MemSafe.G_congr hF.hH hum hug hud hub hG') hroot' hKN'
   · -- insert
-    exact Inv.costP_of_cost (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "_mpt_insert_node")
-      (B := bIns) rfl) (by intro _ _ _ _ h; cases h))
+    exact Inv.costP_of_cost (cost_call hi (by intro _ _ _ _ h; cases h))
+
+theorem ms8_condCost {H : Hooks σ} (hF : FoldOK σ guestCtx guestC H)
+    (hK : CSumm σ guestCtx guestC H (nm "keccak256") (MemSafe.WaveHelpers.sigKeccak 32 false) []) :
+    CondCost σ guestCtx guestC H (nm "mpt_set") msSig MsPre8 msB :=
+  ms8_condCostAt bIns (MemSafe.Wire.calleeCost_guest (B := bIns) rfl) hF hK
 
 theorem ms8_condCost_R :
     CondCost σ guestCtx guestC (MemSafe.Hooks.guestHooksR (σ := σ)) (nm "mpt_set") msSig MsPre8 msB :=
   ms8_condCost MemSafe.Rec.foldOK_guestR (MemSafe.WaveHelpers.csumm_keccak256 MemSafe.Rec.foldOK_guestR
     Mpt.Leaves.domTop_guestCtx (le_refl _) false)
+
+abbrev tightMsPrice := msPriceAt CompactTrieCalls.price
+theorem ms8_condCostTight_R :
+    CondCost σ guestCtx guestC (MemSafe.Hooks.guestHooksR (σ := σ)) (nm "mpt_set") msSig MsPre8 tightMsPrice :=
+  ms8_condCostAt _ CompactTrieCalls.callee_cost MemSafe.Rec.foldOK_guestR
+    (MemSafe.WaveHelpers.csumm_keccak256 MemSafe.Rec.foldOK_guestR Mpt.Leaves.domTop_guestCtx (le_refl _) false)
 
 end InitECandidate.Solver.Band7
 
