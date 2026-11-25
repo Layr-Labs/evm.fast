@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.TrieFinish
 import InitECandidate.Solver.Band.RootPre
 import InitECandidate.Solver.Spec.Mpt.Leaves.FillDone
 import InitECandidate.Solver.MemSafe.Struct.Eval
@@ -72,7 +73,7 @@ def NrPre (vs : List (ValueHOL 64)) (s : State σ) : Prop :=
 
 def bNeedsRlp : Nat := 0
 def bRlpBegin : Nat := 55340232221128654862
-def bRlpFinish : Nat := 12554203470773361540942591156331932909176335218359113089111
+def bRlpFinish : Nat := 54196534092956709165919
 
 /-- The fill root's bound with the table costs of its callees. -/
 def fillBG : Nat := Spec.Mpt.fillB bNeedsRlp 2 bRlpBegin bRlpFinish 0 0
@@ -81,7 +82,7 @@ theorem fillRoot : Inv.CalleeCostP σ guestCtx (nm "_node_rlp_fill") FillPre fil
   Spec.Mpt.Leaves.node_rlp_fill_costP_final guestCtx_code MemSafe.nullSafe_guestCtx
     MemSafe.Helpers.alignedDom_guestCtx Spec.Mpt.Leaves.domTop_guestCtx
     (MemSafe.Wire.calleeCost_guest rfl) (MemSafe.Wire.calleeCost_guest rfl)
-    (MemSafe.Wire.calleeCost_guest rfl) (MemSafe.Wire.calleeCost_guest rfl)
+    (MemSafe.Wire.calleeCost_guest rfl) TrieFinish.callee
     (MemSafe.Wire.calleeCost_guest rfl) (MemSafe.Wire.calleeCost_guest rfl)
 
 def nrB : Nat := max 0 0 + (max (1 + 0 + 0) 0 + ((1 + fillBG + 0) + 0))

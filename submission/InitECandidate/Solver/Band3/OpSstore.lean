@@ -98,7 +98,7 @@ theorem code_oss : guestCode (nm "op_sstore") = some ([], ossBody, .one) :=
 
 /-! ## The cost -/
 
-def ossSufB : Nat := 326409290240107399936220917735436454888450552777895168705506
+def ossSufB : Nat := 1135522258986882073918340743116000227008344
 
 set_option cbv.maxSteps 4000000000 in
 theorem ossSuf_cost : Cost σ guestCtx ossSuf ossSufB :=

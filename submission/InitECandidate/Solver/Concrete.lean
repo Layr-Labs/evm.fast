@@ -14,10 +14,10 @@ baseline's own shard literals (no recomputation of the compiler), with explicit 
 
 | stage | concrete term | property | bound |
 |---|---|---|---|
-| crep → loop | `FrontendStages.pass3` (`Crep.crep_code_eq`) | `csize e.2.2 ≤ crepS` (`Crep.pass3_csize`) | `crepS = 14860` |
-| word → stack | `BackendStages.Native.programs0` (`= StackAnalysis.outputs`) | `wsize e.2.2 ≤ wordS` (`Word.programs_wsize`) | `wordS = 19619` |
+| crep → loop | `FrontendStages.pass3` (`Crep.crep_code_eq`) | `csize e.2.2 ≤ crepS` (`Crep.pass3_csize`) | `crepS = 448` |
+| word → stack | `BackendStages.Native.programs0` (`= StackAnalysis.outputs`) | `wsize e.2.2 ≤ wordS` (`Word.programs_wsize`) | `wordS = 146` |
 | stack sub-passes | `BackendStages.Native.stack` (`Stack.stack_of_compileNative`) | `noA` (`Stack.stack_noA`), `okP [storeConstsStubLocation]` off label `6` (`Stack.stack_okP`) | — |
-| flatten | `BackendStages.Removed.stack` (`Flat.code2_eq`) | `psize np.2 ≤ stackS` (`Flat.code2_psize`) | `stackS = 20339` |
+| flatten | `BackendStages.Removed.stack` (`Flat.code2_eq`) | `psize np.2 ≤ stackS` (`Flat.code2_psize`) | `stackS = 7312` |
 
 The compile oracles of Flapjack's pan-to-target proof are constant and install nothing, so the
 oracle hypotheses hold vacuously (`Stack.constOracle_okP`, `Flat.constOracle_psize`,

@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.CompactChildEffects
 import InitECandidate.Solver.Improvements.BuilderHeapCount
 import InitECandidate.Solver.Improvements.ThirdMergeCallees
 import InitECandidate.Solver.Improvements.BuilderTableLocalFacts
@@ -24,19 +25,19 @@ open ThirdMergeCallees
 
 variable {σ : Type}
 
-private theorem costs : Costs σ guestCtx 0 setB getB 12 unionB where
+private theorem costs : Costs σ guestCtx 0 110680466263323443733 getB 12 CompactChildEffects.unionPrice where
   item := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
-  set := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
+  set := CompactHtabPrices.set_cost
   get := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
   new := calleeCost_of_tbl (Shards.finalState_sound_guest (σ := σ)).1 (by rfl)
-  union := union_cost
+  union := CompactChildEffects.union_cost
 
-def loopPrice : Nat := (BuilderHeapCount.cap) * (mergeLoopB 0 setB getB 12 unionB + 1)
+def loopPrice : Nat := (BuilderHeapCount.cap) * (mergeLoopB 0 110680466263323443733 getB 12 CompactChildEffects.unionPrice + 1)
 
-def bodyPrice : Nat := 5 * (1 + unionB) + loopPrice
+def bodyPrice : Nat := 5 * (1 + CompactChildEffects.unionPrice) + loopPrice
 
 theorem bodyPrice_eq :
-    bodyPrice = 12954748471059253359177628485888791924997525076736327319453353093 := by decide
+    bodyPrice = 8427340000453528502464090055817377111901392765 := by decide
 
 theorem loop_cost : Inv.CostP σ guestCtx
     (fun s => AcceptedInitializedLoopCost.Nonneg (nm "i") s ∧
@@ -93,10 +94,10 @@ theorem body_cost (E : MgEnt Γ0 s0 p0 BB TB)
     (hG : G guestC (guestHooksR (σ := σ)) Γ0 s0) (hp : ptrsOf s0 = some p0) :
     Inv.CostP σ guestCtx (fun s => s = s0) mergeBody bodyPrice := by
   let P : State σ → Prop := fun s => ∃ Γ, PI mgc Γ0 s0 p0 (fun _ _ => True) Γ s
-  have cu (k : Nat) : Inv.CostP σ guestCtx P (mergeU k) (1 + unionB) :=
-    Inv.costP_of_cost (callD_cost union_cost)
+  have cu (k : Nat) : Inv.CostP σ guestCtx P (mergeU k) (1 + CompactChildEffects.unionPrice) :=
+    Inv.costP_of_cost (callD_cost CompactChildEffects.union_cost)
   have walk : Inv.CostP σ guestCtx P mergeBody
-      ((1 + unionB) + ((1 + unionB) + ((1 + unionB) + ((1 + unionB) + ((1 + unionB) + loopPrice))))) := by
+      ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + loopPrice))))) := by
     unfold mergeBody
     refine Inv.costP_seq (cu 24) (Band6.inv_of_hoareG (mg_union E (j := 3) (th := tHTb52) (tt := tHTh52)
       (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide))) ?_
@@ -109,7 +110,7 @@ theorem body_cost (E : MgEnt Γ0 s0 p0 BB TB)
     refine Inv.costP_seq (cu 48) (Band6.inv_of_hoareG (mg_union E (j := 6) (th := tHTbc32) (tt := tHTc32)
       (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide) (by decide))) ?_
     exact rest_cost E
-  have eq : (1 + unionB) + ((1 + unionB) + ((1 + unionB) + ((1 + unionB) + ((1 + unionB) + loopPrice))))
+  have eq : (1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + ((1 + CompactChildEffects.unionPrice) + loopPrice))))
       = bodyPrice := by unfold bodyPrice; omega
   rw [eq] at walk
   refine Inv.CostP.pre walk (fun s _ hs => ?_)

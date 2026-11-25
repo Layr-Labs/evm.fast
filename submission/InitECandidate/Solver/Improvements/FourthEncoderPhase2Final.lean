@@ -13,7 +13,7 @@ open InitECandidate.Solver.MemSafe.BalEnc
 variable {σ : Type}
 
 def phase2BoundTight : Nat :=
-  33646035584216030857909332104568733196429213351450192912256744019088901567
+  752052787271381050149172658676012436628682790730509096329565701567
 open InitECandidate.Solver.MemSafe.BalCost FourthEncoderPhase2Prices
 
 /-- Shared arithmetic for the sort, size loop, allocator, encoding loop, and tail. -/

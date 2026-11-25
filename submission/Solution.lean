@@ -6,10 +6,10 @@ open Flapjack
 
 /-- The baseline ROM (bootstrap, data initializer, literal image), claimed at a finite score. -/
 def submission : InitE.Submission :=
-  InitECandidate.Solver.Final.withScore InitE.baselineSubmission (.finite 32127644728999812151736984351159308479076810407300922011101681262600401697347111444251850)
+  InitECandidate.Solver.Final.withScore InitE.baselineSubmission (.finite 9025508623131851736992317654426995989520558167119604908573454725526549900114)
 
 /-- The certified step bound. -/
-def claimedScore : InitE.NatE := .finite 32127644728999812151736984351159308479076810407300922011101681262600401697347111444251850
+def claimedScore : InitE.NatE := .finite 9025508623131851736992317654426995989520558167119604908573454725526549900114
 
 theorem certificate : InitE.Certificate submission claimedScore :=
   InitECandidate.Solver.MemSafe.Init.certificate_lit

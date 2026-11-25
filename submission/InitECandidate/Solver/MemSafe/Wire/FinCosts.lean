@@ -1,3 +1,5 @@
+import InitECandidate.Solver.Improvements.CompactChildEffects
+import InitECandidate.Solver.Improvements.CompactCreateFinish
 import InitECandidate.Solver.MemSafe.Wire.Guest
 import InitECandidate.Solver.MemSafe.Frames.FinRb
 
@@ -27,16 +29,16 @@ open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 /-- The `finish_child` callee bounds in the challenge context: the cost table's literals, and
 `rollback_child_access`'s conditional bound with `htab_del`'s table cost. -/
 def finBsGuest : Frames.FinBs where
-  sr := 6277101735386680783572166704622097299025671267688351006720
+  sr := 3743106069723064014143335109362662244352
   rf := 0
   fh := 0
-  cf := 332686391975494080722175061008505121435095600463094745138463
+  cf := 179669089823624876969428176797339282904788
   rb := 2 + 2 * (576460752303423488 * (92233720368547758087 + 2))
   ie := 0
   cr := 1
   sd := 73786976294838206472
   sp := 73786976294838206472
-  ios := 6277101735386680783572166704622097300169369400258343207030
+  ios := 3402823702802125550956661664857603441189
   au := 18446744073709551622
   mn := 0
   mc := 73786976294838206468
@@ -47,10 +49,10 @@ def finBsGuest : Frames.FinBs where
 /-- The callee costs of `finish_child` hold in the challenge context. -/
 theorem finCosts_guest {σ : Type} :
     Frames.FinCosts σ guestCtx Types.guestC (Hooks.guestHooks (σ := σ)) Types.tEV finBsGuest where
-  sr := calleeCost_guest (by decide_cbv)
+  sr := CompactChildEffects.restore_cost
   rf := calleeCost_guest (by decide_cbv)
   fh := calleeCost_guest (by decide_cbv)
-  cf := calleeCost_guest (by decide_cbv)
+  cf := CompactCreateFinish.cost
   rb := by
     have h := Frames.rb_condCost (hF := foldOK_guest (σ := σ)) (hT := HtabEntries.htabHooks_guest)
       (calleeCost_guest (B := 92233720368547758087) (by decide_cbv))
@@ -60,7 +62,7 @@ theorem finCosts_guest {σ : Type} :
   cr := calleeCost_guest (by decide_cbv)
   sd := calleeCost_guest (by decide_cbv)
   sp := calleeCost_guest (by decide_cbv)
-  ios := calleeCost_guest (by decide_cbv)
+  ios := CompactChildEffects.success_cost
   au := calleeCost_guest (by decide_cbv)
   mn := calleeCost_guest (by decide_cbv)
   mc := calleeCost_guest (by decide_cbv)
@@ -71,10 +73,10 @@ theorem finCosts_guest {σ : Type} :
 /-- The callee costs of `finish_child` for the final hook family `guestHooksJ`. -/
 theorem finCosts_guestJ {σ : Type} :
     Frames.FinCosts σ guestCtx Types.guestC (Hooks.guestHooksJ (σ := σ)) Types.tEV finBsGuest where
-  sr := calleeCost_guest (by decide_cbv)
+  sr := CompactChildEffects.restore_cost
   rf := calleeCost_guest (by decide_cbv)
   fh := calleeCost_guest (by decide_cbv)
-  cf := calleeCost_guest (by decide_cbv)
+  cf := CompactCreateFinish.cost
   rb := by
     have h := Frames.rb_condCost (hF := foldOK_guestJ (σ := σ)) (hT := Hooks.htabHooks_guestJ)
       (calleeCost_guest (B := 92233720368547758087) (by decide_cbv))
@@ -84,7 +86,7 @@ theorem finCosts_guestJ {σ : Type} :
   cr := calleeCost_guest (by decide_cbv)
   sd := calleeCost_guest (by decide_cbv)
   sp := calleeCost_guest (by decide_cbv)
-  ios := calleeCost_guest (by decide_cbv)
+  ios := CompactChildEffects.success_cost
   au := calleeCost_guest (by decide_cbv)
   mn := calleeCost_guest (by decide_cbv)
   mc := calleeCost_guest (by decide_cbv)
@@ -95,10 +97,10 @@ theorem finCosts_guestJ {σ : Type} :
 /-- The callee costs of `finish_child` for the final hook family `guestHooksJL`. -/
 theorem finCosts_guestJL {σ : Type} :
     Frames.FinCosts σ guestCtx Types.guestC (Hooks.guestHooksJL (σ := σ)) Types.tEV finBsGuest where
-  sr := calleeCost_guest (by decide_cbv)
+  sr := CompactChildEffects.restore_cost
   rf := calleeCost_guest (by decide_cbv)
   fh := calleeCost_guest (by decide_cbv)
-  cf := calleeCost_guest (by decide_cbv)
+  cf := CompactCreateFinish.cost
   rb := by
     have h := Frames.rb_condCost (hF := foldOK_guestJL (σ := σ)) (hT := Hooks.htabHooks_guestJL)
       (calleeCost_guest (B := 92233720368547758087) (by decide_cbv))
@@ -108,7 +110,7 @@ theorem finCosts_guestJL {σ : Type} :
   cr := calleeCost_guest (by decide_cbv)
   sd := calleeCost_guest (by decide_cbv)
   sp := calleeCost_guest (by decide_cbv)
-  ios := calleeCost_guest (by decide_cbv)
+  ios := CompactChildEffects.success_cost
   au := calleeCost_guest (by decide_cbv)
   mn := calleeCost_guest (by decide_cbv)
   mc := calleeCost_guest (by decide_cbv)

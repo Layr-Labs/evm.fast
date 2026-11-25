@@ -1,6 +1,6 @@
 import InitECandidate.Solver.AuthorizationWork.InitializedSignedCounter
 import InitECandidate.Solver.Spec.Mpt.Leaves.Keccak
-import InitECandidate.Solver.MemSafe.Wg.CostBase
+import InitECandidate.Solver.Improvements.CompactCostReplay
 
 /-! The installed Keccak permutation initializes its round index to zero
 and increments it up to 24. Every round body and the store tail cost zero
@@ -17,7 +17,6 @@ open Flapjack Flapjack.PanSemStateFiniteExact
 open Flapjack.Pancake.PanLang (MlS ProgHOL)
 open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 open InitECandidate.Solver.Spec.Inv InitECandidate.Solver.Spec.Mpt.Leaves
-open InitECandidate.Solver.MemSafe
 
 private theorem decChain_cost {σ : Type} {x : MlS} {b : ProgHOL 64} {B : Nat}
     (hb : Cost σ guestCtx b B) (decls : List (MlS × Nat)) :
@@ -31,10 +30,10 @@ private theorem decChain_cost {σ : Type} {x : MlS} {b : ProgHOL 64} {B : Nat}
 theorem bodyCost {σ : Type} : Cost σ guestCtx (kfBody kfW) 24 := by
   unfold kfBody
   apply decChain_cost
-  have hRound : Cost σ guestCtx kfW 0 := Wg.cost_guest_costA (by decide_cbv)
+  have hRound : Cost σ guestCtx kfW 0 := CompactCostReplay.program_cost (Shards.finalState_sound_guest (σ := σ)) (by decide_cbv)
   have hStep : Steps σ (nm "r") (· + 1) kfW := stepsB_sound _ true _ (by decide_cbv)
   have hTail : Cost σ guestCtx (stChain (nm "stp") kfSts) 0 :=
-    Wg.cost_guest_costA (by decide_cbv)
+    CompactCostReplay.program_cost (Shards.finalState_sound_guest (σ := σ)) (by decide_cbv)
   have h : Inv.CostP σ guestCtx (fun _ => True)
       (.dec (nm "r") .one (cw 0) (.seq (.while (.cmp .less (lv (nm "r")) (cw 24)) kfW)
         (stChain (nm "stp") kfSts))) 24 := by

@@ -37,16 +37,17 @@ open Flapjack.Compiler.Backend.StackToLab.Proofs.FlattenCorrect
 
 set_option autoImplicit false
 
-/-- Node count of a stack program: `1` per constructor, plus the sizes of the sub-programs
-of `Seq`, `If`, `Loop` and of the return/exception handlers of `Call`. -/
+/-- Flattening allowance for the instructions along a selected branch. Sequence and skip
+introduce no additional Lab instructions. -/
 def psize {width : Nat} [NeZero width] : HolProg width → Nat
-  | .seq c1 c2 => psize c1 + psize c2 + 1
-  | .ite _ _ _ c1 c2 => psize c1 + psize c2 + 1
+  | .seq c1 c2 => psize c1 + psize c2
+  | .ite _ _ _ c1 c2 => max (psize c1) (psize c2) + 1
   | .loop b => psize b + 1
   | .call none _ none => 1
   | .call (some (r, _, _, _)) _ none => psize r + 1
   | .call none _ (some (h, _, _)) => psize h + 1
   | .call (some (r, _, _, _)) _ (some (h, _, _)) => psize r + psize h + 1
+  | .skip => 0
   | _ => 1
 
 /-- The explicit bound: `(2 * S + 2)` per StackSem clock tick consumed, `2` per node. -/
@@ -55,12 +56,6 @@ def flatBound {width : Nat} [NeZero width] (S Δ : Nat) (p : HolProg width) : Na
 
 section
 variable {width : Nat} [NeZero width] {C F : Type}
-
-theorem psize_pos (p : HolProg width) : 1 ≤ psize p := by
-  cases p with
-  | call ret dest handler =>
-    rcases ret with _ | ⟨r, a, b, c⟩ <;> rcases handler with _ | ⟨h, d, e⟩ <;> simp [psize]
-  | _ => simp [psize]
 
 /-- Every procedure body and every program the compile oracle can install has
 `psize ≤ S`. -/
@@ -351,7 +346,6 @@ theorem flatBound_enter {S a a' c e ck : Nat} {q p : HolProg width}
     (h : ck ≤ flatBound S (a' - c) q) (hq : psize q ≤ S) (ha : a = a' + 1) (hc : c ≤ a')
     (he : e ≤ 2) : e + ck ≤ flatBound S (a - c) p := by
   unfold flatBound at *
-  have := psize_pos p
   rw [show a - c = (a' - c) + 1 by omega, Nat.mul_add]
   omega
 

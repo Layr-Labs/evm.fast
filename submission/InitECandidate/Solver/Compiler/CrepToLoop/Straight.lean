@@ -82,7 +82,7 @@ theorem clock_le_straight : ∀ (p : HolLoopProg width) (s : LoopSemStateFiniteE
           have hc := cutRes_clock_ge live (evaluate b s)
           simp only [slc]
           omega
-      · simp only [slc]; omega
+      · simp only [slc] <;> omega
   | .mark p, s, h => by
       simp only [straight] at h
       rw [evaluate]
@@ -185,12 +185,12 @@ theorem compileExp_straight (ct : CrepToLoopContextExact) (tmp : Nat) (l : NumSe
       have ih := compileExp_straight ct tmp l a
       rcases hA : compileExpHOLExact ct tmp l a with ⟨c, v, m, o⟩
       rw [hA] at ih; simp only at ih
-      simp [compileExpHOLExact, hA, esize, straight, slc, ih.1]; omega
+      simp [compileExpHOLExact, hA, esize, straight, slc, ih.1] <;> omega
   | .loadByte a => by
       have ih := compileExp_straight ct tmp l a
       rcases hA : compileExpHOLExact ct tmp l a with ⟨c, v, m, o⟩
       rw [hA] at ih; simp only at ih
-      simp [compileExpHOLExact, hA, esize, straight, slc, ih.1]; omega
+      simp [compileExpHOLExact, hA, esize, straight, slc, ih.1] <;> omega
   | .op o es => by
       have ih := compileExps_straight ct tmp l es
       rcases hA : compileExpsHOLExact ct tmp l es with ⟨c, vs, m, ol⟩
@@ -206,8 +206,8 @@ theorem compileExp_straight (ct : CrepToLoopContextExact) (tmp : Nat) (l : NumSe
       cases o
       simp only [compileCrepopHOLExact]
       split
-      · simp [straight, slc, ih.1, hz]; omega
-      · simp [straight, slc, ih.1, hz]; omega
+      · simp [straight, slc, ih.1, hz] <;> omega
+      · simp [straight, slc, ih.1, hz] <;> omega
   | .cmp o a b => by
       have iha := compileExp_straight ct tmp l a
       rcases hA : compileExpHOLExact ct tmp l a with ⟨c, v, m, ol⟩
@@ -215,8 +215,7 @@ theorem compileExp_straight (ct : CrepToLoopContextExact) (tmp : Nat) (l : NumSe
       have ihb := compileExp_straight ct m ol b
       rcases hB : compileExpHOLExact ct m ol b with ⟨c', v', m', ol'⟩
       rw [hB] at ihb; simp only at ihb
-      simp [compileExpHOLExact, hA, hB, progIfHOLExact, esize, straight, slc, iha.1, ihb.1]
-      omega
+      simp [compileExpHOLExact, hA, hB, progIfHOLExact, esize, straight, slc, iha.1, ihb.1] <;> omega
   | .shift o a b => by
       have iha := compileExp_straight ct tmp l a
       rcases hA : compileExpHOLExact ct tmp l a with ⟨c, v, m, ol⟩
@@ -224,8 +223,7 @@ theorem compileExp_straight (ct : CrepToLoopContextExact) (tmp : Nat) (l : NumSe
       have ihb := compileExp_straight ct m ol b
       rcases hB : compileExpHOLExact ct m ol b with ⟨c', v', m', ol'⟩
       rw [hB] at ihb; simp only at ihb
-      simp [compileExpHOLExact, hA, hB, esize, iha.1, ihb.1]
-      omega
+      simp [compileExpHOLExact, hA, hB, esize, iha.1, ihb.1] <;> omega
 termination_by e => sizeOf e
 
 /-- List version of `compileExp_straight`. -/
@@ -241,8 +239,7 @@ theorem compileExps_straight (ct : CrepToLoopContextExact) (tmp : Nat) (l : NumS
       have ihb := compileExps_straight ct m ol es
       rcases hB : compileExpsHOLExact ct m ol es with ⟨c', vs', m', ol'⟩
       rw [hB] at ihb; simp only at ihb
-      simp [compileExpsHOLExact, hA, hB, esizeL, iha.1, ihb.1]
-      omega
+      simp [compileExpsHOLExact, hA, hB, esizeL, iha.1, ihb.1] <;> omega
 termination_by es => sizeOf es
 end
 
@@ -294,7 +291,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
         rw [hA] at this; simp only at this
         simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
           List.sum_append, this.1]
-        simp [straight, slc, csize]; omega
+        simp [straight, slc, csize] <;> omega
   | .shMem op n e, _ => by
       simp only [compileHOLExact]
       split
@@ -304,7 +301,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
         rw [hA] at this; simp only at this
         simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
           List.sum_append, this.1]
-        simp [straight, slc, csize]; omega
+        simp [straight, slc, csize] <;> omega
   | .storeGlob a e, _ => by
       simp only [compileHOLExact]
       rcases hA : compileExpHOLExact ct (ct.vmax + 1) l e with ⟨c, v, m, o⟩
@@ -312,7 +309,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
       rw [hA] at this; simp only at this
       simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
         List.sum_append, this.1]
-      simp [straight, slc, csize]; omega
+      simp [straight, slc, csize] <;> omega
   | .return es, _ => by
       simp only [compileHOLExact]
       rcases hA : compileExpsHOLExact ct (ct.vmax + 1) l es with ⟨c, vs, m, o⟩
@@ -321,7 +318,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
       have hz := zipWith_assign_straight (width := width) (fun x => x) (genTemps m vs.length) vs
       simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
         List.sum_append, this.1]
-      simp [straight, slc, csize, hz]; omega
+      simp [straight, slc, csize, hz] <;> omega
   | .store a v, _ => by
       simp only [compileHOLExact]
       rcases hA : compileExpHOLExact ct (ct.vmax + 1) l a with ⟨c, x, m, o⟩
@@ -331,7 +328,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
       rw [hA] at ha; rw [hB] at hb; simp only at ha hb
       simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
         List.sum_append, ha.1, hb.1]
-      simp [straight, slc, csize]; omega
+      simp [straight, slc, csize] <;> omega
   | .store32 a v, _ => by
       simp only [compileHOLExact]
       rcases hA : compileExpHOLExact ct (ct.vmax + 1) l a with ⟨c, x, m, o⟩
@@ -341,7 +338,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
       rw [hA] at ha; rw [hB] at hb; simp only at ha hb
       simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
         List.sum_append, ha.1, hb.1]
-      simp [straight, slc, csize]; omega
+      simp [straight, slc, csize] <;> omega
   | .storeByte a v, _ => by
       simp only [compileHOLExact]
       rcases hA : compileExpHOLExact ct (ct.vmax + 1) l a with ⟨c, x, m, o⟩
@@ -351,7 +348,7 @@ theorem compile_leaf_straight (ct : CrepToLoopContextExact) (l : NumSet) :
       rw [hA] at ha; rw [hB] at hb; simp only at ha hb
       simp only [straight_nestedSeq, slc_nestedSeq, List.all_append, List.map_append,
         List.sum_append, ha.1, hb.1]
-      simp [straight, slc, csize]; omega
+      simp [straight, slc, csize] <;> omega
 
 end CompileStraight
 
