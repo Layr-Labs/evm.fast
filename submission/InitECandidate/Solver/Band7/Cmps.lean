@@ -29,11 +29,11 @@ def PreMs (vs : List (ValueHOL 64)) (s : State σ) : Prop :=
   ∃ Γ p, G guestC (guestHooksR (σ := σ)) Γ s ∧ ptrsOf s = some p ∧
     ArgsOK guestC Γ p Band4.msSig.params vs ∧ MsPre8 vs s Γ
 
-theorem tb_ms : tb (nm "mpt_set") = Band4.msB := by
+theorem tb_ms : tb (nm "mpt_set") = tightMsPrice := by
   unfold tb; simp
 
 theorem cc_ms : Inv.CalleeCostP σ guestCtx (nm "mpt_set") PreMs (tb (nm "mpt_set")) := by
-  rw [tb_ms]; exact ms8_condCost_R
+  rw [tb_ms]; exact ms8_condCostTight_R
 
 theorem preMs_of_heap {a : Act σ} (haC : a.C = Types.guestC) (haH : a.H = Hooks.guestHooksR (σ := σ))
     {s : State σ} {Γ : Gam} {q : Ptrs} (hh : Heap a Γ q s) (callee : HolFiniteMapExact MlS (ValueHOL 64))

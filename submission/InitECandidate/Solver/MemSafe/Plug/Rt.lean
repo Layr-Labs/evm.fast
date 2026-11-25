@@ -23,11 +23,11 @@ open InitECandidate.Solver.MemSafe.Eb InitECandidate.Solver.MemSafe.Att
 variable {σ : Type}
 
 /-- `build_merkle_index`'s literal bound (package Rt2). -/
-abbrev bBmiL : Nat := 5810264100468725117462607549120581772692477599993536979099629270891
+abbrev bBmiL : Nat := 6949460632004596789485027832616145239543168717527527731265
 
 /-- `compute_state_root`'s literal bound (package Rt2). -/
 abbrev bCsrL : Nat :=
-  23982540522793852784528921999252763694590125270469454410626830703347439342
+  14342355103761081219915168802647066395658948945530229878572031858
 
 theorem condCost_run_attempt_rt {M Bpuc BT : Nat} (hPucC : HypPucCost σ Bpuc) (hPtC : HypPtCost σ M BT)
     (hPuc : HypPuc σ) (hM : 2 ^ 24 + 2 ≤ M) :

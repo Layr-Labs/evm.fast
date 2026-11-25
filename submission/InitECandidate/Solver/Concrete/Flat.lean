@@ -62,7 +62,7 @@ code. For the baseline (`code = Native.stack`, the baseline backend configuratio
 `Sections.compile_eq`) this is `BackendStages.Removed.stack` (`code2_eq`, from the baseline's
 `Raw.compile_eq`, `Alloc.compile_eq`, `Removed.compile_eq`): the six `stack_remove` stubs
 (`RemovedStubs`, labels `0, 1, 2, 4, 5, 6`) and the 814 procedures. All have
-`psize ≤ stackS = 20339` (attained at label `877`). Checked per baseline shard
+`psize ≤ stackS = 7312` (attained at label `154`). Checked per baseline shard
 (`Concrete/Flat/{Stubs,Chunk*}.lean`), composed along the baseline's `Removed.bodies_k` chain.
 -/
 

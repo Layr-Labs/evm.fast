@@ -24,7 +24,7 @@ open InitECandidate.Solver.MemSafe.PtC (CW' cw_decCall_gen cw_dec_gen shEq_wv sz
 variable {σ : Type}
 
 /-- The bound of `process_message_call` at `M = 30000002`. -/
-def bPmcP : Nat := Entry2.pmcB (30000002) Entry2.bOp
+def bPmcP : Nat := 719715646851808695671909423410592291457106353605589292025
 
 /-- The bound of a callee: the table, else the two conditional callees of `process_unchecked_system_transaction`. -/
 def tblP (f : MlS) : Nat :=

@@ -73,7 +73,7 @@ theorem node_hash7_costP : Inv.CalleeCostP σ guestCtx (nm "node_hash") NhPre7 n
   · intro u _ _ _ _ _ _ _ _ _ _
     exact Inv.costP_of_cost (cost_decCall
       (MemSafe.Wire.calleeCost_guest (f := nm "alloc") (B := 2) rfl)
-      (cost_seq (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "keccak256") (B := bKeccak) rfl)
+      (cost_seq (cost_call TrieReference.hashCost
         (by intro _ _ _ _ h; cases h)) (cost_seq (cost_store _ _) (cost_return _))))
 
 def MrPre7 (vs : List (ValueHOL 64)) (s : State σ) : Prop :=

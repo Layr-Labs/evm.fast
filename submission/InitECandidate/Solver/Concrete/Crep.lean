@@ -59,7 +59,7 @@ The crep program of the baseline's chain (the `crep_code` of
 whose loop compilation `compileProgHOLExact` the loop code is) is `FrontendStages.pass3`
 (`= FrontendStages.Crep.outputs`, 814 functions; `crep_code_eq`, from the baseline's
 `pass0_eq` … `pass3_eq`; `FrontendStages.pass4_eq` is its loop compilation). Every body has
-`csize ≤ crepS = 14860` (attained at entry `90`). Checked one entry at a time
+`csize ≤ crepS = 448` (attained at entry `531`). Checked one entry at a time
 (`Concrete/Crep/Part*.lean`, through the baseline's structural `crepProgToHOL`), composed along
 `outputs = Part0.part ++ … ++ Part50.part`.
 -/

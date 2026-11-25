@@ -1,3 +1,4 @@
+import InitECandidate.Solver.AuthorizationWork.AuthorizationTransactionPrices
 import InitECandidate.Solver.MemSafe.PtC.S13
 
 /-!
@@ -29,8 +30,10 @@ private theorem cbd_call :
 private theorem pmc_cost :
     CondCost σ guestCtx guestC (HR σ) (nm "process_message_call") (sg1 [])
       (Entry.PmPre (2 ^ 24 + 2)) (tbl (nm "process_message_call")) := by
-  rw [tbl_pmc]
-  exact Entry2.pmc_condCost_final (σ := σ) (M := 2 ^ 24 + 2) (by decide)
+  rw [tbl_pmc, bPmc]
+  exact Inv.CalleeCostP.mono
+    (AuthorizationBothFinal.pmc_condCost_final (σ := σ) (M := 2 ^ 24 + 2) (by decide))
+    AuthorizationTransactionPrices.regular
 
 theorem cpt_call {E : PtE σ} {En : Env} {S : FS} {rp rl : BitVec 64} {buf n : Nat} {CV : List (BitVec 64)}
     {w wt wa ak nv nkv wm aaw akw v32 v96 v120 mg : BitVec 64} {nbl : Nat}

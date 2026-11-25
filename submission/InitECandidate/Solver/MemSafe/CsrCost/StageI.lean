@@ -16,12 +16,12 @@ open InitECandidate.Solver.MemSafe.Trie InitECandidate.Solver.Band7
 namespace InitECandidate.Solver.MemSafe.CsrCost
 variable {σ : Type}
 def capMax : Nat := 4127616
-def bBody : Nat := 5810263748951027947803742680339476626084563194610165308274146556441
-def bState : Nat := 2908403606610727028852000654541137464875385422026401625811279711168
+def bBody : Nat := 3474730117586266338059797418701692037457527461178454818461
+def bState : Nat := 3474730126902678140020455263114776658981182755735258359364
 def bLoop : Nat := capMax * (bBody + 1)
 def bI : Nat := bLoop + bState
- theorem body_eq : FourthCsrCaller.cb csr_s_1 = bBody := by decide +kernel
- theorem state_eq : FourthCsrState.stateBound = bState := by decide +kernel
+theorem body_le : FourthCsrCaller.cb csr_s_1 ≤ bBody := by decide +kernel
+theorem state_le : FourthCsrState.stateBound ≤ bState := by decide +kernel
  theorem loop_eq : capMax * (bBody + 1) = bLoop := by rfl
  theorem i_eq : bLoop + bState = bI := by rfl
 
@@ -63,7 +63,7 @@ theorem stage_i {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = guestC)
       (fun p hp w hw => hfr p hp w (by simp only [nsAll, List.mem_cons, List.mem_append] at hw ⊢; tauto))
   have hb : CH σ (fun s => J s ∧ CondTrue s (.cmp .less (lv (nm "i")) (lv (nm "cap"))))
       csr_s_1 (GP a L E Rv) bBody :=
-    ch_pre (ch_cast rfl body_eq hb0) (fun s hs h => h.1)
+    ch_pre ⟨hb0.1, hb0.2.mono body_le⟩ (fun s hs h => h.1)
   have hw0 := FourthCsrExactCH.gc_while_bounded_exact ha.hH (by decide : capMax < 2 ^ 63) hb
     (fun s hs h _ => h) (noContB_sound _ (by decide_cbv))
     (stepsB_sound (nm "i") true _ (by decide_cbv))
@@ -75,9 +75,8 @@ theorem stage_i {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = guestC)
     FourthCsrState.cstage_state_bounded ha haC hCb haH hgr hcI hcC hcap hCP hnd hsw hcache haw hout
       (fun p hp w hw => hfr p hp w (by simp only [nsAll, List.mem_cons, List.mem_append] at hw ⊢; tauto))
       hOutB hOutF hRv
-  have ht := ch_cast rfl state_eq ht0
   have hseq := cost_bound_cast i_eq (Inv.costP_seq hw.2
-    (fun s hs hp hg hr => (Frames.hoare_of_hoareG hw.1 s hs hp hg).1 hr) ht.2)
+    (fun s hs hp hg hr => (Frames.hoare_of_hoareG hw.1 s hs hp hg).1 hr) (ht0.2.mono state_le))
   unfold csr_i_1
   refine Inv.costP_dec fun s hs hp v hv hsh => ?_
   rw [ev_cw] at hv

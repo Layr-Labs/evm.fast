@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.CompactChildEffects
 import InitECandidate.Solver.MemSafe.Wire.Guest
 import InitECandidate.Solver.MemSafe.Frames.BundleJ
 import InitECandidate.Solver.MemSafe.HtabEntries.JL
@@ -28,7 +29,7 @@ open InitECandidate.Solver.MemSafe.Frames
 open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 
 /-- `state_restore`'s table cost. -/
-abbrev srBGuest : Nat := 6277101735386680783572166704622097299025671267688351006720
+abbrev srBGuest : Nat := 3743106069723064014143335109362662244352
 
 /-- **The `run_frames` bundle for `guestHooksJL`**, from the summaries and conditional costs of
 `op_dispatch` and `finish_child`. -/
@@ -45,7 +46,7 @@ theorem bundle_ofA_JL {σ : Type} {M Bop Bfin : Nat}
       Bfin :=
   bundle_ofA guestCtx_code Hooks.frameCfg_guestHooksJL
     (HtabEntries.csumm_state_restoreL foldOK_guestJL) opSum opCost finSum finCost
-    (keepsFp_guest (by decide_cbv)) (calleeCost_guest (by decide_cbv))
+    (keepsFp_guest (by decide_cbv)) CompactChildEffects.restore_cost
 
 end InitECandidate.Solver.MemSafe.Wire
 
