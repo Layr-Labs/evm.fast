@@ -1,5 +1,5 @@
 import InitECandidate.Solver.AuthorizationWork.CompactAccountPricesFast
-import InitECandidate.Solver.AuthorizationWork.CompactCostReplay
+import InitECandidate.Solver.Improvements.CompactCostReplay
 import InitECandidate.Solver.MemSafe.Ptx.PtCode
 
 set_option autoImplicit false

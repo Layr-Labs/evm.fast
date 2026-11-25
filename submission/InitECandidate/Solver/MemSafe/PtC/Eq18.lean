@@ -18,14 +18,14 @@ open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 open InitECandidate.Solver.MemSafe.Frames InitECandidate.Solver.MemSafe.Entry
 open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 
-theorem cbk_9 : cbd ptS9 = 32054443104713591760812633919960931797006942096294579720347009740360 := by
+theorem cbk_9 : cbd ptS9 = 25709375648552500513535474202492268891719610094234064926495153377468 := by
   have callPrice : tbl (nm "alloc") = 2 := by decide +kernel
   (conv_lhs => rw [ptS9, cbd, callPrice, cbk_11]) <;> decide +kernel
 
-theorem cbk_8 : cbd ptS8 = 32054443104713591760812633919960931797006942096294579720347009740360 := by
+theorem cbk_8 : cbd ptS8 = 25709375648552500513535474202492268891719610094234064926495153377468 := by
   (conv_lhs => rw [ptS8, cbd, cbk_10, cbk_9, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_7 : cbd ptS7 = 32054443104713591760812633919960931797006942096294579720347009740365 := by
+theorem cbk_7 : cbd ptS7 = 25709375648552500513535474202492268891719610094234064926495153377473 := by
   have callPrice : tbl (nm "tx_chain_id") = 4 := by decide +kernel
   (conv_lhs => rw [ptS7, cbd, callPrice, cbk_8]) <;> decide +kernel
 
@@ -34,7 +34,7 @@ theorem cbk_6 : cbd ptS6 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_5 : cbd ptS5 = 32054443104713591760812633919960931797006942096294579720347009740365 := by
+theorem cbk_5 : cbd ptS5 = 25709375648552500513535474202492268891719610094234064926495153377473 := by
   have leftCost : cbd .skip = 0 := by decide_cbv
   (conv_lhs => rw [ptS5, cbd, leftCost, cbk_7, Nat.zero_add]) <;> decide +kernel
 
@@ -43,17 +43,17 @@ theorem cbk_4 : cbd ptS4 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_3 : cbd ptS3 = 32054443104713591760812633919960931797006942096294579720347009740365 := by
+theorem cbk_3 : cbd ptS3 = 25709375648552500513535474202492268891719610094234064926495153377473 := by
   (conv_lhs => rw [ptS3, cbd, cbk_6, cbk_5, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_2 : cbd ptS2 = 32054443104713591760812633919960931797006942096294579720347009740365 := by
+theorem cbk_2 : cbd ptS2 = 25709375648552500513535474202492268891719610094234064926495153377473 := by
   (conv_lhs => rw [ptS2, cbd, cbk_4, cbk_3, Nat.zero_add]) <;> decide +kernel
 
-theorem cbk_1 : cbd ptS1 = 32054443142376202173132718533260798992216463849339406817285628555386 := by
+theorem cbk_1 : cbd ptS1 = 25709375686215110925855558815792136086929131847278892023433772192494 := by
   have callPrice : tbl (nm "encode_transaction") = 37662610412320084613299867195209521753044827096938618815020 := by decide +kernel
   (conv_lhs => rw [ptS1, cbd, callPrice, cbk_2]) <;> decide +kernel
 
-theorem cbk_0 : cbd ptS0 = 32054443142376202173132718533260798992216463849339406817285628555386 := by
+theorem cbk_0 : cbd ptS0 = 25709375686215110925855558815792136086929131847278892023433772192494 := by
   have leftCost : cbd (.assign .global (nm "bal_index") (.op .add [(lv (nm "index")), (cw 1)])) = 0 := by decide_cbv
   (conv_lhs => rw [ptS0, cbd, leftCost, cbk_1, Nat.zero_add]) <;> decide +kernel
 

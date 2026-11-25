@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Improvements.WithdrawalLoopBound
+import InitECandidate.Solver.AuthorizationWork.CompactWithdrawalLoop
 import InitECandidate.Solver.Improvements.MergeIncorporate
 import InitECandidate.Solver.MemSafe.Wg.Cost1
 
@@ -23,7 +23,7 @@ open InitECandidate.Solver.MemSafe.Eb
 variable {σ : Type}
 
 /-- The cost of the withdrawal loop (the analyzer's bound for `wdS5`). -/
-def bWdLoop : Nat := 26959946667150644762311082830236212105960074658846832210948613210112
+def bWdLoop : Nat := 771672864894555254740981172927642470366598433603584
 
 /-- The conditional bound of `incorporate_tx_into_block` with the typed merge count. -/
 def bInc : Nat :=
@@ -93,8 +93,7 @@ theorem cw_wd_walk (hSft : HypSft σ) (hK : HypKeepG σ) (hgs : Bal.HGS σ) {pl 
     (R := PA E (EnI ((En.set (nm "nwd") (.val (.word nwd))).set (nm "wd") (.val (.word wd))) nwd)
       (WdS1 (WdS E.Γ0 E.s0 pl nwd wd bs ba bk bi bs2 sk) w))
     ⟨by
-        simp only [bWdLoop, ← WithdrawalLoopBound.loopPrice_eq]
-        exact WithdrawalLoopBound.loop_cost hnw (by
+        exact CompactWithdrawalLoop.loop_cost hnw (by
           simp (config := { decide := true }) [Env.set]),
       wd_loop (Z := nm "ts" :: zBal) hnw hmin wdS1_tidy (by decide) (by decide)
         (by simp (config := { decide := true }) [Env.set]) (by simp (config := { decide := true }) [Env.set])
