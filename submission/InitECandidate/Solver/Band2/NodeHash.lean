@@ -52,7 +52,7 @@ theorem code_nh : guestCode (nm "node_hash") = some (params_nh, nhBody, .one) :=
   code_of_entry (List.getElem_mem (l := Guest.Software.guestAst) (n := 290) (by decide)) ⟨_, rfl⟩
     entry_nh
 
-def bKeccak : Nat := 680564733841876927387917816706275213341
+def bKeccak : Nat := TrieReference.hashPrice
 
 def nhB : Nat := max 0 0 + (1 + nrB + (1 + 2 + ((1 + bKeccak + 0) + (0 + 0))))
 
@@ -79,7 +79,7 @@ theorem node_hash_costP : Inv.CalleeCostP σ guestCtx (nm "node_hash") NrPre nhB
   · intro u _ _ _ _ _ _ _ _ _ _
     exact Inv.costP_of_cost (cost_decCall
       (MemSafe.Wire.calleeCost_guest (f := nm "alloc") (B := 2) rfl)
-      (cost_seq (cost_call (MemSafe.Wire.calleeCost_guest (f := nm "keccak256") (B := bKeccak) rfl)
+      (cost_seq (cost_call TrieReference.hashCost
         (by intro _ _ _ _ h; cases h)) (cost_seq (cost_store _ _) (cost_return _))))
 
 end InitECandidate.Solver.Band2

@@ -72,9 +72,7 @@ theorem hypSiCostNJ : CondCost σ guestCtx guestC (Eb.HR σ) (nm "state_init") (
       exact hfr a.toNat d1 d2 (Or.inl ⟨h1, h2⟩)
     · intro _ _ _ _ _ _ _ _ _ _ _
       exact Inv.costP_of_cost (cost_guest_costA costFin_siK)
-  have := key s hs rfl hgood
-  rw [bSiE_eq] at this
-  exact this
+  exact (key.mono bSiE_le) s hs rfl hgood
 
 end InitECandidate.Solver.MemSafe.Sp
 

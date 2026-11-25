@@ -121,7 +121,7 @@ def bSiE : Nat := (1 + 2 + 0) + (0 + (0 + (0 + (1 + Band.dwtmB + 113))))
 /-- **The cost of `state_init`.** -/
 def bSi : Nat := 11995256898787295895331913460614438285804549968127
 
-theorem bSiE_eq : bSiE = bSi := by decide
+theorem bSiE_le : bSiE ≤ bSi := by decide
 
 theorem hypSiCost : HypSiCost σ bSi := by
   have hX := (Rec.foldOK_guestR (σ := σ)).hX
@@ -171,9 +171,7 @@ theorem hypSiCost : HypSiCost σ bSi := by
       exact hfr a.toNat d1 d2 (Or.inl ⟨h1, h2⟩)
     · intro _ _ _ _ _ _ _ _ _ _ _
       exact Inv.costP_of_cost (cost_guest_costA costFin_siK)
-  have := key s hs rfl hgood
-  rw [bSiE_eq] at this
-  exact this
+  exact (key.mono bSiE_le) s hs rfl hgood
 
 end InitECandidate.Solver.MemSafe.Sp
 

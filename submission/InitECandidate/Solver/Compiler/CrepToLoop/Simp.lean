@@ -19,7 +19,7 @@ set_option autoImplicit false
 variable {width : Nat} [NeZero width]
 
 theorem esize_mulConst (e : CrepExpHOL width) (c : BitVec width) :
-    esize (crepMulConstHOL e c) ≤ esize e + 2 := by
+    esize (crepMulConstHOL e c) ≤ esize e := by
   unfold crepMulConstHOL
   split
   · simp [esize]
@@ -27,8 +27,8 @@ theorem esize_mulConst (e : CrepExpHOL width) (c : BitVec width) :
     · omega
     · split <;> simp [esize, esizeL]
 
-theorem esize_eq_one_of_destConst {e : CrepExpHOL width} {c : BitVec width}
-    (h : crepDestConstHOL e = some c) : esize e = 1 := by
+theorem esize_eq_zero_of_destConst {e : CrepExpHOL width} {c : BitVec width}
+    (h : crepDestConstHOL e = some c) : esize e = 0 := by
   cases e <;> simp [crepDestConstHOL] at h
   simp [esize]
 
@@ -45,12 +45,12 @@ theorem esize_simp : ∀ e : CrepExpHOL width, esize (crepSimpExpHOL e) ≤ esiz
           cases h2 : crepDestConstHOL (crepSimpExpHOL b)
         · simp only [esize, esizeL, List.map_cons, List.map_nil]; omega
         · have := esize_mulConst (crepSimpExpHOL a) ‹BitVec width›
-          have := esize_eq_one_of_destConst h2
-          simp only [esize, esizeL]; omega
+          have := esize_eq_zero_of_destConst h2
+          simp only [esize, esizeL] <;> omega
         · have := esize_mulConst (crepSimpExpHOL b) ‹BitVec width›
-          have := esize_eq_one_of_destConst h1
-          simp only [esize, esizeL]; omega
-        · simp only [esize, esizeL]; have := one_le_esize a; omega
+          have := esize_eq_zero_of_destConst h1
+          simp only [esize, esizeL] <;> omega
+        · simp only [esize, esizeL] <;> omega
       · rw [crepSimpExpHOL.eq_2 es op (by
           intro first second _ h
           apply hshape

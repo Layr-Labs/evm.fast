@@ -16,12 +16,12 @@ variable {σ : Type}
 def bCsr : Nat :=
   717691644069425908740956491496255224662883633612362210178552783119512950620233820187476079056773459
 
-theorem bCsr_eq : cb csr_cache_1 = bCsr := by decide +kernel
+theorem bCsr_le : cb csr_cache_1 ≤ bCsr := by decide +kernel
 
 /-- **`compute_state_root`'s conditional cost, literal bound** (about `2^328`), at `CsrPre` (`ArgsOK` only). -/
 theorem hypCsrCost_lit :
     Eb.HypCsrCost σ 717691644069425908740956491496255224662883633612362210178552783119512950620233820187476079056773459 :=
-  Inv.CalleeCostP.mono csr_condCost8 (by rw [bCsr_eq]; exact le_refl _)
+  Inv.CalleeCostP.mono csr_condCost8 bCsr_le
 
 end InitECandidate.Solver.Band7
 

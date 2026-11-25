@@ -8,11 +8,8 @@ Bounded counterpart of Flapjack's `NCompileCorrect.PropertyAt`
 (`Flapjack/Pancake/CrepToLoop/Proofs/NCompileCorrect/Property.lean`), pinned flapjack rev
 034bb5a1ed0b757082768d5406206bd2f8e31b7c.
 
-* `esize e` counts the nodes of a crep expression (`1` per constructor, children added);
-  `esizeL` sums a list. The compiled code of `e` contains at most `esize e` clock-ticking
-  `If`s (one per `Cmp`), see `Straight.lean`.
-* `csize p` counts crep program nodes *including* expression nodes. `While` counts `2`,
-  `Call` counts `3`, every other constructor `1`.
+* `esize e` counts comparisons, whose compiled conditional consumes a clock tick.
+* `csize p` counts comparisons, conditionals, loops, calls, and explicit ticks.
 * `CodeBoundedC S s`: every body of `s.code` has `csize ≤ S`. Crep evaluation never changes
   `code` (`evaluateCodeInvariantHOL`), so the bound is preserved (`CodeBoundedC.of_eval`).
 * `PropertyAtB S p s` is `PropertyAt p s` (same premises, same conclusion) under
@@ -30,59 +27,50 @@ section Sizes
 variable {width : Nat} [NeZero width]
 
 mutual
-/-- Node count of a crep expression. -/
+/-- Number of comparisons in an expression. -/
 def esize : CrepExpHOL width → Nat
-  | .load a => esize a + 1
-  | .load32 a => esize a + 1
-  | .loadByte a => esize a + 1
-  | .op _ es => esizeL es + 1
-  | .crepOp _ es => esizeL es + 1
+  | .load a => esize a
+  | .load32 a => esize a
+  | .loadByte a => esize a
+  | .op _ es => esizeL es
+  | .crepOp _ es => esizeL es
   | .cmp _ a b => esize a + esize b + 1
-  | .shift _ a b => esize a + esize b + 1
-  | .const _ => 1
-  | .var _ => 1
-  | .loadGlob _ => 1
-  | .baseAddr => 1
-  | .topAddr => 1
+  | .shift _ a b => esize a + esize b
+  | .const _ => 0
+  | .var _ => 0
+  | .loadGlob _ => 0
+  | .baseAddr => 0
+  | .topAddr => 0
 
-/-- Summed node count of a list of crep expressions. -/
+/-- Number of comparisons in an expression list. -/
 def esizeL : List (CrepExpHOL width) → Nat
   | [] => 0
   | e :: es => esize e + esizeL es
 end
 
-/-- Node count of a crep program, including its expression nodes. -/
+/-- Clock allowance for compiled straight-line code, calls, and loop control. -/
 def csize : CrepProgHOL width → Nat
-  | .skip => 1
-  | .dec _ e b => esize e + csize b + 1
-  | .assign _ e => esize e + 1
-  | .primitive _ _ _ => 1
-  | .store a v => esize a + esize v + 1
-  | .store32 a v => esize a + esize v + 1
-  | .storeByte a v => esize a + esize v + 1
-  | .storeGlob _ e => esize e + 1
-  | .seq a b => csize a + csize b + 1
+  | .skip => 0
+  | .dec _ e b => esize e + csize b
+  | .assign _ e => esize e
+  | .primitive _ _ _ => 0
+  | .store a v => esize a + esize v
+  | .store32 a v => esize a + esize v
+  | .storeByte a v => esize a + esize v
+  | .storeGlob _ e => esize e
+  | .seq a b => csize a + csize b
   | .ite e a b => esize e + csize a + csize b + 1
   | .while e b => esize e + csize b + 2
-  | .break _ => 1
-  | .continue _ => 1
+  | .break _ => 0
+  | .continue _ => 0
   | .call none _ args => esizeL args + 3
   | .call (some (_, none)) _ args => esizeL args + 3
   | .call (some (_, some (_, h))) _ args => esizeL args + csize h + 3
-  | .extCall _ _ _ _ _ => 1
-  | .raise _ => 1
-  | .return es => esizeL es + 1
-  | .shMem _ _ e => esize e + 1
+  | .extCall _ _ _ _ _ => 0
+  | .raise _ => 0
+  | .return es => esizeL es
+  | .shMem _ _ e => esize e
   | .tick => 1
-
-theorem one_le_esize (e : CrepExpHOL width) : 1 ≤ esize e := by
-  cases e <;> simp [esize]
-
-theorem one_le_csize (p : CrepProgHOL width) : 1 ≤ csize p := by
-  cases p with
-  | call ret f args =>
-    rcases ret with _ | ⟨_, _ | ⟨_, h⟩⟩ <;> simp [csize]
-  | _ => simp [csize]
 
 theorem csize_call_ge (c : Option (List Nat × Option (BitVec width × CrepProgHOL width)))
     (f : Flapjack.Basis.Pure.MlString.MlString) (args : List (CrepExpHOL width)) :

@@ -33,7 +33,7 @@ theorem bundle_ofA_R {σ : Type} {M Bop Bfin : Nat}
       Bfin :=
   bundle_ofA guestCtx_code Hooks.frameCfg_guestHooksR
     (HtabEntries.csumm_state_restoreG Hooks.jHooks_guestR Rec.foldOK_guestR) opSum opCost finSum finCost
-    (keepsFp_guest (by decide_cbv)) (calleeCost_guest (by decide_cbv))
+    (keepsFp_guest (by decide_cbv)) CompactChildEffects.restore_cost
 
 end InitECandidate.Solver.MemSafe.Wire
 

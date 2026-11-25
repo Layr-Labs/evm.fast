@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.SortCompare32
 import InitECandidate.Solver.Improvements.BoundedCopyCosts
 import InitECandidate.Solver.Improvements.ThirdNamedCostReplay
 import InitECandidate.Solver.SourceCost.Shards.All
@@ -19,14 +20,14 @@ open AcceptedCostOverrideRules
 private def names : List String := ["sort_elems", "sorted_keys32"]
 private def state : TblState :=
   ThirdNamedCostReplay.replayNamed names
-    (overrideCost Shards.finalState (nm "memcpy") BoundedCopyCosts.copyPrice)
+    (overrideCost (overrideCost Shards.finalState (nm "memcpy") BoundedCopyCosts.copyPrice) (nm "bal_sort_gt") 32)
 
-abbrev sortPrice : Nat := 408011621919904469204126277371857156418936296100332308536864
+abbrev sortPrice : Nat := 9119770220196232226509327843073885667471311515952639
 abbrev keysPrice : Nat := sortPrice + 1361129467683753854037965870464168361995
 
 private theorem sound {σ : Type} : StateSound σ guestCtx state :=
   ThirdNamedCostReplay.replayNamed_sound names
-    (overrideCost_sound Shards.finalState_sound_guest BoundedCopyCosts.memcpy_cost)
+    (overrideCost_sound (overrideCost_sound Shards.finalState_sound_guest BoundedCopyCosts.memcpy_cost) SortCompare32.callee_cost)
 
 theorem sort_cost {σ : Type} : CalleeCost σ guestCtx (nm "sort_elems") sortPrice :=
   calleeCost_of_tbl (sound (σ := σ)).1 (by decide_cbv)

@@ -10,9 +10,9 @@ Bounded counterpart of Flapjack's `Seq.Simulation`
 `comp_correct` induction motive), pinned flapjack rev
 034bb5a1ed0b757082768d5406206bd2f8e31b7c.
 
-* `wsize p` is a hand-made node count of a word program: every constructor counts `1`, and
-  `Seq`, `If`, `Loop`, `MustTerminate` and the return/exception handlers of `Call` add the
-  sizes of their sub-programs. Numeric payloads are ignored (unlike `sizeOf`).
+* `wsize p` bounds extra Stack clock spent in the Word-to-Stack simulation.
+  Calls, loops, shared-memory instructions, and raises retain an allowance. A conditional
+  selects one branch. Instructions with a zero-extra-clock simulation add no allowance.
 * `CodeBoundedW S s`: every procedure body in `s.code`, and every program the compile oracle
   of `s` can install, has `wsize ≤ S`. It is preserved by evaluation
   (`codeBoundedW_evaluate`, `CodeBoundedW/Preserve.lean`).
@@ -32,24 +32,18 @@ open Flapjack.Compiler.Backend.WordToStack.Native
 
 set_option autoImplicit false
 
-/-- Node count of a word program. -/
+/-- Allowance for additional stack clock used by the translation. -/
 def wsize {α : Type} : WordLangProgHOL α → Nat
   | .mustTerminate p => wsize p + 1
   | .call none _ _ none => 1
   | .call (some (_, _, r, _, _)) _ _ none => wsize r + 1
   | .call none _ _ (some (_, h, _, _)) => wsize h + 1
   | .call (some (_, _, r, _, _)) _ _ (some (_, h, _, _)) => wsize r + wsize h + 1
-  | .seq a b => wsize a + wsize b + 1
-  | .ite _ _ _ a b => wsize a + wsize b + 1
+  | .seq a b => wsize a + wsize b
+  | .ite _ _ _ a b => max (wsize a) (wsize b)
   | .loop _ b _ => wsize b + 1
-  | _ => 1
-
-theorem one_le_wsize {α : Type} (p : WordLangProgHOL α) : 1 ≤ wsize p := by
-  cases p with
-  | call ret dest args handler =>
-    rcases ret with _ | ⟨_, _, r, _, _⟩ <;> rcases handler with _ | ⟨_, h, _, _⟩ <;>
-      simp [wsize]
-  | _ => simp [wsize]
+  | .raise _ | .shareInst _ _ _ => 1
+  | _ => 0
 
 section
 variable {width : Nat} [NeZero width] {C F : Type}
@@ -117,14 +111,13 @@ theorem boundZero (S : Nat) {p : WordLangProgHOL (BitVec width)}
   have := Nat.mul_le_mul_left (S + 1) this
   omega
 
-/-- Witness `1` satisfies the bound (every program has `wsize ≥ 1`). -/
+/-- A one-tick simulation at an instruction carrying a unit allowance. -/
 theorem boundOne (S : Nat) {p : WordLangProgHOL (BitVec width)}
     {s s' : WordSemStateFiniteExact width (Nat × C) F} {r : Option (WordSemResult width)}
-    (h : WordSemStateFiniteExact.evaluate p s = (r, s')) :
+    (h : WordSemStateFiniteExact.evaluate p s = (r, s')) (hp : 1 ≤ wsize p) :
     1 + (S + 1) * s'.clock ≤ (S + 1) * s.clock + wsize p := by
   have := (WordSemStateFiniteExact.evaluate_clock p s r s' h).1
   have := Nat.mul_le_mul_left (S + 1) this
-  have := one_le_wsize p
   omega
 
 /-- The potential form gives the `Δ` form. -/

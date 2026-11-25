@@ -24,7 +24,7 @@ open InitECandidate.Solver.MemSafe.Ptx
 variable {σ : Type}
 
 /-- The bound of `process_message_call` at `M = 2^24 + 2`. -/
-def bPmc : Nat := Entry2.pmcB (2 ^ 24 + 2) Entry2.bOp
+def bPmc : Nat := 402494207982623833717982101196635564695198201329389469945
 
 /-- The bound of a callee: the table, else the two conditional callees of `process_transaction`. -/
 def tbl (f : MlS) : Nat :=

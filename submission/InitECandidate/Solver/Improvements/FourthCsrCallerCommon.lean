@@ -1,3 +1,4 @@
+import InitECandidate.Solver.Improvements.StorageDeleteInner
 import InitECandidate.Solver.Improvements.FourthCsrExactCH
 import InitECandidate.Solver.Improvements.FourthCsrInnerLink
 import InitECandidate.Solver.Band7.CsrRules
@@ -22,7 +23,7 @@ def capMax : Nat := 4127616
 
 def cb : ProgHOL 64 → Nat
   | .decCall _ _ f _ k => 1 + tb f + cb k
-  | .call _ f _ => 1 + tb f + 0
+  | .call _ f args => 1 + debitCall f args + 0
   | .dec _ _ _ k => cb k
   | .seq a b => cb a + cb b
   | .ite _ a b => max (cb a) (cb b)

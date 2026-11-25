@@ -1284,7 +1284,7 @@ theorem compCorrectRaiseB {width : Nat} [NeZero width] {C F : Type}
     (source : WordSemStateFiniteExact width (Nat × C) F) :
     SimB ac S (.raise name) source := by
   intro k f frame sourcePost target result bs bsPost n nPost compiled lens premises _hsize _hcode
-  have hbound := boundOne S premises.1
+  have hbound := boundOne S premises.1 (by simp [wsize])
   rcases premises with ⟨execution,notError,related,conventions,flat,compilation,
     lengthBound,bitmapBound,bitmapPrefix,labels,maxBound⟩
   have compiledEq := congrArg Prod.fst compilation
@@ -1518,7 +1518,7 @@ theorem compCorrectShareInstB {width : Nat} [NeZero width] {C F : Type}
     (source : WordSemStateFiniteExact width (Nat × C) F) :
     SimB ac S (.shareInst op v exp) source := by
   intro k f frame sourcePost target result bs bsPost n nPost compiled lens premises _hsize _hcode
-  have hbound := boundOne S premises.1
+  have hbound := boundOne S premises.1 (by simp [wsize])
   obtain ⟨execution, notError, related, conventions, flat, compilation, -, -, -, -,
     maxBound⟩ := premises
   rcases flatExpConventionsShareInstExpSimp flat with ⟨ad, rfl⟩ | ⟨ad, offset, rfl⟩
