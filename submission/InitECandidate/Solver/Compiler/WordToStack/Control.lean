@@ -380,7 +380,7 @@ theorem compCorrectIfB {width : Nat} [NeZero width] {C F : Type}
       selectedSize hcode
   refine ⟨extraClock,post,targetResult,?_,conclusion,?_⟩
   swap
-  · have : wsize (if value then first else second) ≤ wsize first + wsize second := by
+  · have : wsize (if value then first else second) ≤ max (wsize first) (wsize second) := by
       cases value <;> simp only [Bool.false_eq_true, if_false, if_true] <;> omega
     simp only [wsize]
     omega

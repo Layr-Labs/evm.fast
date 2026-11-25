@@ -76,8 +76,8 @@ theorem cstage_pass_typed {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Type
     let E : Gam → Ptrs → Mem → Prop := IA a K C NR SW AW ND M VB
     have hb : CH σ (fun s => GI a L E s ∧
           CondTrue s (.cmp .less (lv (nm "j")) (lv (nm "icount")))) csr_e_1
-        (GP a L E Rv) (InitECandidate.Solver.Band7.cb csr_e_1) :=
-      ch_pre (cstage_e ha haC hCb haH hgr hcI hK
+        (GP a L E Rv) (debitCost csr_e_1) :=
+      ch_pre (cstage_e_delete ha haC hCb haH hgr hcI hK
         (List.mem_cons_of_mem _ (List.mem_cons_of_mem _ hinn))
         (List.mem_cons_of_mem _ (List.mem_cons_of_mem _ hvb))
         (List.mem_cons_of_mem _ (List.mem_cons_of_mem _ hmpt)) hfrI)

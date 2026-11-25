@@ -1,3 +1,4 @@
+import InitECandidate.Solver.AuthorizationWork.AuthorizationTransactionPrices
 import InitECandidate.Solver.MemSafe.Puc.CTail
 
 /-!
@@ -82,8 +83,8 @@ theorem cw_pu_call {E : PtE σ} {En : Env} {S : FS} {wm wt vmw T N n aaw akw : B
   have hcost : Inv.CalleeCostP σ guestCtx (nm "process_message_call")
       (fun vs s => ∃ Γ p, G guestC (HR σ) Γ s ∧ ptrsOf s = some p ∧ ArgsOK guestC Γ p (sg1 []).params vs ∧
         Entry.PmPre (30000002) vs s Γ) (tblP (nm "process_message_call")) := by
-    rw [tblP_pmc]
-    exact Entry2.pmc_condCost_final (σ := σ) (by norm_num)
+    rw [tblP_pmc, bPmcP, ← AuthorizationTransactionPrices.system]
+    exact AuthorizationBothFinal.pmc_condCost_final (σ := σ) (by norm_num)
   refine Eb.cw_decCallK (locIns_resIns hQT _)
     ((pmc_funSpec (hypPm_of_M hpm) hpcm).and (funSpec_pt_gw_all guestCtx_code pmc_fin)) hcost ?_ ?_
   · intro s hs hpa vs hvs callee

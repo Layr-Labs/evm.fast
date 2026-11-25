@@ -106,7 +106,7 @@ theorem ub_condCost :
 
 /-- The literal bound. -/
 def bUB : Nat :=
-  204365782197762686295671890706245486622928797157505331555929344
+  25305932681803247452808008452666967529053260067576417536
 
 theorem bAW_eq : bAW = bUB := by decide +kernel
 
@@ -114,7 +114,7 @@ theorem bAW_eq : bAW = bUB := by decide +kernel
 `CondCost … (nm "update_builder_from_tx") biSig UbPre bUB` (the shape of F3's `Ptx.HypUbCost σ bUB`). -/
 theorem ub_condCost_lit :
     CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "update_builder_from_tx") biSig UbPre
-      204365782197762686295671890706245486622928797157505331555929344 :=
+      25305932681803247452808008452666967529053260067576417536 :=
   Inv.CalleeCostP.mono ub_condCost (by decide +kernel)
 
 end InitECandidate.Solver.Band6

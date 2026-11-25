@@ -39,7 +39,7 @@ theorem bundle_ofX_R {σ : Type} {M Bop Bfin : Nat}
       (max (1 + srBGuest + 0) 0 + 0) Bfin :=
   bundle_ofX guestCtx_code Hooks.frameCfg_guestHooksR
     (HtabEntries.csumm_state_restoreG Hooks.jHooks_guestR Rec.foldOK_guestR) opSum opCost finSum finCost
-    (keepsFp_guest (by decide_cbv)) (calleeCost_guest (by decide_cbv))
+    (keepsFp_guest (by decide_cbv)) CompactChildEffects.restore_cost
 
 /-- **`run_frames`' conditional cost on the extension for `guestHooksR`**. -/
 theorem run_frames_condCost_ofX_R {σ : Type} {M Bop Bfin : Nat}

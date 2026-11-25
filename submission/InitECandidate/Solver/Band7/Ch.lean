@@ -29,7 +29,7 @@ variable {σ : Type}
 
 /-- The cost bound of a callee. -/
 def tb (f : MlS) : Nat :=
-  if f = nm "mpt_set" then Band4.msB
+  if f = nm "mpt_set" then tightMsPrice
   else if f = nm "mpt_root" then Band2.mrB
   else if f = nm "mpt_from_witness" then Band2.mfwB
   else (SourceCost.Shards.finalState.1.lookup f).getD 0

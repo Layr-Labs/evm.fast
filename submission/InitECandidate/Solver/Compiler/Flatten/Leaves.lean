@@ -27,9 +27,8 @@ section
 variable {width : Nat} [NeZero width] {C F : Type}
 
 /-- A witness of at most `2` is within the bound of any program. -/
-theorem le_flatBound_leaf {S Δ ck : Nat} {p : HolProg width} (h : ck ≤ 2) :
+theorem le_flatBound_leaf {S Δ ck : Nat} {p : HolProg width} (h : ck ≤ 2) (hp : 1 ≤ psize p) :
     ck ≤ flatBound S Δ p := by
-  have := psize_pos p
   unfold flatBound
   omega
 
@@ -56,7 +55,7 @@ theorem flattenCorrectHaltB (S : Nat) (s1 : StackSemStateFiniteExact width C F) 
     obtain ⟨rfl, rfl⟩ := ev
     have hreg : t1.regs t1.ptrReg = w := by
       rw [← ca]; exact InstCorrect.regOfLookup rel hw
-    refine ⟨1, { t1 with clock := t1.clock + 1 }, le_flatBound_leaf (by decide), ?_, ?_, ?_⟩
+    refine ⟨1, { t1 with clock := t1.clock + 1 }, le_flatBound_leaf (by decide) (by simp [psize]), ?_, ?_, ?_⟩
     · rw [evaluate]
       simp only [Nat.add_one_ne_zero, if_false, asmFetch, fetch, hreg]
       cases w with
@@ -85,7 +84,7 @@ theorem flattenCorrectInstB (S : Nat) (s1 : StackSemStateFiniteExact width C F)
     obtain ⟨cpc, ccode, cclock, -, -, -, -, -, cptr, clen, cptr2, clen2, clink⟩ :=
       asmInstConsts i t1
     have nf := InstCorrect.notFailed rel2
-    refine ⟨1, incPc (asmInst i t1), le_flatBound_leaf (by decide), fun ck1 => ?_, ?_, ?_, ?_,
+    refine ⟨1, incPc (asmInst i t1), le_flatBound_leaf (by decide) (by simp [psize]), fun ck1 => ?_, ?_, ?_, ?_,
       ?_, ?_, ?_, ?_, rel2⟩
     · rw [evaluate]
       simp only [show t1.clock + 1 + ck1 ≠ 0 by omega, if_false, asmFetch, fetch,
@@ -110,7 +109,7 @@ theorem flattenCorrectTickB (S : Nat) (s1 : StackSemStateFiniteExact width C F) 
   split_ifs at ev with h0
   · simp only [Prod.mk.injEq] at ev
     obtain ⟨rfl, rfl⟩ := ev
-    refine ⟨1, incPc t1, le_flatBound_leaf (by decide), fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl,
+    refine ⟨1, incPc t1, le_flatBound_leaf (by decide) (by simp [psize]), fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl,
       List.prefix_refl _, ?_, ?_⟩
     · rw [evaluate]
       simp only [show t1.clock + 1 + ck1 ≠ 0 by omega, if_false, asmFetch, fetch, asmInst, nf,
@@ -176,7 +175,7 @@ theorem flattenCorrectRetB (S : Nat) (s1 : StackSemStateFiniteExact width C F) (
     simp only [Prod.mk.injEq] at ev
     obtain ⟨rfl, rfl⟩ := ev
     obtain ⟨ck, t2, hck, h⟩ := jumpRegLocB rel fetch (InstCorrect.regOfLookup rel hv)
-    exact ⟨ck, t2, le_flatBound_leaf (by omega), h⟩
+    exact ⟨ck, t2, le_flatBound_leaf (by omega) (by simp [psize]), h⟩
   · simp only [Prod.mk.injEq] at ev
     exact absurd ev.1.symm nerr
 
@@ -192,7 +191,7 @@ theorem flattenCorrectRaiseB (S : Nat) (s1 : StackSemStateFiniteExact width C F)
     simp only [Prod.mk.injEq] at ev
     obtain ⟨rfl, rfl⟩ := ev
     obtain ⟨ck, t2, hck, h⟩ := jumpRegLocB rel fetch (InstCorrect.regOfLookup rel hv)
-    exact ⟨ck, t2, le_flatBound_leaf (by omega), h⟩
+    exact ⟨ck, t2, le_flatBound_leaf (by omega) (by simp [psize]), h⟩
   · simp only [Prod.mk.injEq] at ev
     exact absurd ev.1.symm nerr
 
@@ -211,7 +210,7 @@ theorem flattenCorrectBreakB (S : Nat) (s1 : StackSemStateFiniteExact width C F)
     · exact labs _ (by simp [hm])
     · rw [notMemFindLabImp bs k hm]; exact labs 0 (by simp)
   obtain ⟨pc, hpc⟩ := Option.isSome_iff_exists.mp some_
-  refine ⟨1, updPc pc t1, le_flatBound_leaf (by decide), fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl,
+  refine ⟨1, updPc pc t1, le_flatBound_leaf (by decide) (by simp [psize]), fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl,
     List.prefix_refl _, codeLookupLocToPc rel, fun w hw => ?_⟩
   · rw [evaluate]
     simp only [show t1.clock + 1 + ck1 ≠ 0 by omega, if_false, asmFetch, fetch, getPcValue, hpc]
@@ -235,7 +234,7 @@ theorem flattenCorrectLocValueB (S : Nat) (s1 : StackSemStateFiniteExact width C
   · simp only [Prod.mk.injEq] at ev
     obtain ⟨rfl, rfl⟩ := ev
     obtain ⟨pc, hpc⟩ := StateRel.locCheckImpLocToPc ⟨check, rel⟩
-    refine ⟨1, incPc (updReg reg (.loc l1 l2) t1), le_flatBound_leaf (by decide), fun ck1 => ?_,
+    refine ⟨1, incPc (updReg reg (.loc l1 l2) t1), le_flatBound_leaf (by decide) (by simp [psize]), fun ck1 => ?_,
       rfl, rfl, rfl, rfl, rfl, List.prefix_refl _, ?_, StateRel.setVarUpdReg rel⟩
     · rw [evaluate]
       simp only [show t1.clock + 1 + ck1 ≠ 0 by omega, if_false, asmFetch, fetch, getPcValue,
@@ -262,7 +261,7 @@ theorem flattenCorrectCodeBufferWriteB (S : Nat) (s1 : StackSemStateFiniteExact 
     · rename_i cb hcb
       simp only [Prod.mk.injEq] at ev
       obtain ⟨rfl, rfl⟩ := ev
-      refine ⟨1, incPc { t1 with codeBuffer := cb }, le_flatBound_leaf (by decide),
+      refine ⟨1, incPc { t1 with codeBuffer := cb }, le_flatBound_leaf (by decide) (by simp [psize]),
         fun ck1 => ?_, rfl, rfl, rfl, rfl, rfl, List.prefix_refl _, ?_,
         stateRelWithCodeBuffer rel cb⟩
       · rw [evaluate]

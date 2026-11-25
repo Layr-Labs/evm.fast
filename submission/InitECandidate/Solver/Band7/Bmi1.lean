@@ -94,7 +94,7 @@ def NonEmpty (m0 : Mem) (A N : BitVec 64) : Prop :=
   ∀ j : BitVec 64, j.toNat < N.toNat → rd m0 (A + j * 16#64) ≠ 0 ∧ rd m0 (A + (j * 16#64 + 8#64)) ≠ 0
 
 def bRlpW : Nat := 36893488147419103236
-def bSet : Nat := 1 + Band4.msB + 0
+def bSet : Nat := 1 + tightMsPrice + 0
 def bBody : Nat := 1 + bRlpW + (bSet + 0)
 
 theorem cc_rlp : CalleeCost σ guestCtx (nm "rlp_encode_word") bRlpW := Wire.calleeCost_guest (by rfl)
@@ -109,8 +109,8 @@ theorem c_set {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (h
         (.assign .local (nm "i") (.op .add [lv (nm "i"), cw 1]))) (bSet + 0) := by
   refine Inv.costP_seq (R := fun _ => True) ?_ (fun s _ _ _ _ => trivial)
     (Inv.costP_of_cost (cost_assign _ _ _))
-  have hcc : CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "mpt_set") Band4.msSig MsPre8 Band4.msB :=
-    ms8_condCost_R
+  have hcc : CondCost σ guestCtx guestC (guestHooksR (σ := σ)) (nm "mpt_set") Band4.msSig MsPre8 tightMsPrice :=
+    ms8_condCostTight_R
   refine Inv.costP_callD (hcc.mono (le_refl _)) ?_
   intro s hs ⟨hL, Γ, q, he, hh, hsc, hE⟩ vs hvs callee
   have hG : G Types.guestC (Hooks.guestHooksR (σ := σ)) Γ s := by rw [← haC, ← haH]; exact hh.1

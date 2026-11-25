@@ -72,7 +72,7 @@ theorem storage_cost (hc : CalleeCosts σ X) :
   exact hq s hs (count_eval hslots) hg
 
 theorem boundedCost_eq : boundedCost =
-    3208735998555252714819233928615786852737430723290857917009996847028 := by decide
+    71720836936990227547066326010565115438297933972370061573903 := by decide
 
 #print axioms storage_cost
 end FourthBalEncodeContinuation

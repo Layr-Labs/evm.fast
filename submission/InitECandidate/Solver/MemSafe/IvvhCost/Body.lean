@@ -34,7 +34,7 @@ theorem cost_dec_other {n : MlS} {sh : ShapeHOL} {e : ExpHOL 64} {k : ProgHOL 64
     Inv.CostP σ guestCtx (CountEq N) (.dec n sh e k) B :=
   cost_dec_transform (fun s hs hp v hv => count_update hn hp) hk
 
-def loopBound : Nat := 885808070092711448505506452724704177776342116485391481200798261955218
+def loopBound : Nat := 22052281729726815355037019101162557098461350644
 
 theorem loopBound_eq : (ntxMax + 1) * (outerB + 1) + 0 = loopBound := by decide_cbv
 

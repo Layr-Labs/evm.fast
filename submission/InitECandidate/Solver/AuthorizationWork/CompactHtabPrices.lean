@@ -1,4 +1,4 @@
-import InitECandidate.Solver.AuthorizationWork.CompactCostReplay
+import InitECandidate.Solver.Improvements.CompactCostReplay
 import InitECandidate.Solver.AuthorizationWork.FirstDiffAddress
 import InitECandidate.Solver.Improvements.BoundedCopyCosts
 import InitECandidate.Solver.SourceCost.Shard

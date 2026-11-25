@@ -111,7 +111,7 @@ theorem flattenCorrectJumpLowerB (S : Nat) (s1 : StackSemStateFiniteExact width 
     obtain ⟨rfl, rfl⟩ := ev
     have step := fun c => (jumpCmpStep (b := false) c fetch hcmp)
     simp only [Bool.false_eq_true, if_false] at step
-    refine ⟨1, { t1 with pc := t1.pc + 1 }, le_flatBound_leaf (by decide), runToPc step, rfl,
+    refine ⟨1, { t1 with pc := t1.pc + 1 }, le_flatBound_leaf (by decide) (by simp [psize]), runToPc step, rfl,
       rfl, rfl, rfl, rfl, List.prefix_refl _, ?_, rel⟩
     simp [flattenHOL, appListAppendList, isLabelHOL]
 
