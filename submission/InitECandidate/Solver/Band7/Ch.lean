@@ -1,6 +1,7 @@
 import InitECandidate.Solver.MemSafe.Trie.CsrFinal
 import InitECandidate.Solver.Band7.Bmi1
 import InitECandidate.Solver.Band7.Ms8
+import InitECandidate.Solver.InsW.Ms8W
 
 set_option autoImplicit false
 set_option maxRecDepth 100000
@@ -29,7 +30,7 @@ variable {σ : Type}
 
 /-- The cost bound of a callee. -/
 def tb (f : MlS) : Nat :=
-  if f = nm "mpt_set" then tightMsPrice
+  if f = nm "mpt_set" then msPriceAt InsW.priceW
   else if f = nm "mpt_root" then Band2.mrB
   else if f = nm "mpt_from_witness" then Band2.mfwB
   else (SourceCost.Shards.finalState.1.lookup f).getD 0

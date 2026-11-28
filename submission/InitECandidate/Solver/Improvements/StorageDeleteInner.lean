@@ -87,7 +87,7 @@ theorem cstage_z_delete {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.
           exact evs_cons (lv_ev hL hmpt') (evs_cons (ev_rfield_wv (x := lv (nm "e")) (ws := [e0, e1, e2])
             (by rw [ev_lv]; exact lv_ev hL he') (i := 1) (by simp))
             (evs_cons (ev_cw s 32) (evs_cons (ev_cw s 0) (evs_cons (ev_cw s 0) evs_nil))))
-        exact ⟨(cmps_ia ha haC hCb haH hgr hcI hK hev (by decide)
+        exact ⟨(cmps_ia ha haC hCb haH hgr hcI hK hev (by decide) (by decide)
             (fun Γ q mm _ => Or.inl rfl) (Rv := Rv)).1,
           (cstage_delete 0 ha haC hCb haH hgr hcI hK (k := e1) (kl := BitVec.ofNat 64 32)
               (C := C) (NR := NR) (SW := SW) (AW := AW) (ND := ND) (M := M) (VB := VB)

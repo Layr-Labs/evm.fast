@@ -46,13 +46,13 @@ theorem cmps_ia {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) 
     {args : List (ExpHOL 64)} {L : LocalsH → Prop} {C NR SW AW ND M VB k kl vp vl : BitVec 64}
     (hev : ∀ s : State σ, L s.locals → evs s args =
       some [.val (.word M), .val (.word k), .val (.word kl), .val (.word vp), .val (.word vl)])
-    (hKL : 2 * kl.toNat < 2 ^ 64)
+    (hKL : 2 * kl.toNat < 2 ^ 64) (hKL32 : kl.toNat ≤ 32)
     (hVin : ∀ Γ q mm, IA a K C NR SW AW ND M VB Γ q mm → Hooks.VInR Types.tVAL Γ vp vl)
     {Rv : Gam → Ptrs → Mem → ValueHOL 64 → Prop} :
     CH σ (GI a L (IA a K C NR SW AW ND M VB))
       (.call (some (none, none)) (nm "mpt_set") args) (GP a L (IA a K C NR SW AW ND M VB) Rv)
       (cb (.call (some (none, none)) (nm "mpt_set") args)) :=
-  cmps_stmt ha haC hCb haH hgr hcI hev hKL (fun Γ q mm h => h.2.2.1) hVin
+  cmps_stmt ha haC hCb haH hgr hcI hev hKL hKL32 (fun Γ q mm h => h.2.2.1) hVin
     (fun s st Γ Γ' q q' hext hh hh' hmo hnf hmd hE hHR' =>
       ia_mps haC hCb hK hext hh hh' hmo hnf hmd hHR' hE)
 

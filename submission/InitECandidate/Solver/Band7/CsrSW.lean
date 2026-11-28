@@ -296,7 +296,7 @@ theorem cstage_write {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.gue
       rw [hevm s hL] at hvs
       cases hvs
       obtain ⟨⟨hIA, hW33⟩, hVO⟩ := hE
-      exact preMs_of_heap haC haH hh callee ⟨M, e1, BitVec.ofNat 64 32, H, W, rfl, mrecF_of_hRec hh.2.1 hIA.2.2.1.1, by decide⟩
+      exact preMs_of_heap haC haH hh callee ⟨M, e1, BitVec.ofNat 64 32, H, W, rfl, mrecF_of_hRec hh.2.1 hIA.2.2.1.1, by decide⟩ (by decide)
     · intro s Γ q hs hL hh hE vs hvs
       rw [hevm s hL] at hvs
       cases hvs

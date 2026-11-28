@@ -103,7 +103,7 @@ theorem cstage_ea2 {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guest
       (fun Γ q mm h => h.1) ?_)
     refine cmps_stmt ha haC hCb haH hgr hcI (args := [lv (nm "state_mpt"), lv (nm "addr3"), cw 20,
       lv (nm "enc2"), lv (nm "n2")]) (L := LV B') (K := y) (KL := BitVec.ofNat 64 20) (VP := H) (VL := N)
-      (M := M) ?_ (by decide) (fun Γ q mm h => h.1.2.2.1) ?_ ?_
+      (M := M) ?_ (by decide) (by decide) (fun Γ q mm h => h.1.2.2.1) ?_ ?_
     · intro s hL
       exact evs_cons (lv_ev hL (List.mem_cons_of_mem _ hstate))
         (evs_cons (lv_ev hL (List.mem_cons_of_mem _ haddr3))
@@ -245,7 +245,7 @@ theorem cstage_acct {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.gues
     refine gc_ite ?_ ?_
     · refine ch_pre (cmps_stmt ha haC hCb haH hgr hcI (args := [lv (nm "state_mpt"), lv (nm "addr3"), cw 20,
         cw 0, cw 0]) (L := LV B') (K := y) (KL := BitVec.ofNat 64 20) (VP := BitVec.ofNat 64 0)
-        (VL := BitVec.ofNat 64 0) (M := M) (E := IM a K C NR SW AW ND M) ?_ (by decide)
+        (VL := BitVec.ofNat 64 0) (M := M) (E := IM a K C NR SW AW ND M) ?_ (by decide) (by decide)
         (fun Γ q mm h => h.2.2.1) (fun Γ q mm _ => Or.inl rfl) ?_) (fun s _ h => h.1)
       · intro s hL
         exact evs_cons (lv_ev hL (List.mem_cons_of_mem _ hstate)) (evs_cons (lv_ev hL (List.mem_cons_of_mem _ haddr3))

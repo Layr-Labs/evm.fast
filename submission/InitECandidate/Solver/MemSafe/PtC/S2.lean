@@ -50,13 +50,18 @@ theorem cpt_c2a {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
       (addF S [Fct.obj w tB24 24, Fct.bufok0 w 24,
         Fct.prop (w.toNat % 8 = 0 ∧ heapBase ≤ w.toNat ∧ w.toNat + 24 ≤ heapEnd)]) rp rl buf n CV w :=
     ⟨C1, env_set_self _ _ _, Or.inr (by simp), Or.inr (by simp)⟩
-  have recoverCost : Wg.costFin ptS13 = some (cbd ptS13) := by
+  have recoverCost : Cost σ guestCtx ptS13 (cbd ptS13) := by
     have present : (Shards.finalState.1.lookup (nm "recover_sender_with_chain_id")).isSome = true := by
       decide +kernel
     obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
     have regular : nm "recover_sender_with_chain_id" ≠ nm "encode_receipt" := by decide
-    simp only [ptS13, callD, Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some]
-  refine cw_seqN (a := ptS13) (hc := recoverCost) (hn_callC tab_recover_sender (callOK_recover C2)) ?_
+    have hc : cbd ptS13 = 1 + InitECandidate.Solver.TxAl.recoverPrice + 0 := by
+      simp only [ptS13, callD, cbd, tbl, lookup, if_neg regular, if_true]
+    rw [hc]
+    unfold ptS13 callD
+    exact cost_call (Bh := 0) InitECandidate.Solver.TxAl.recover_cost (fun _ _ _ _ h => by simp at h)
+  refine cw_seqC (a := ptS13)
+    ⟨Inv.costP_of_cost recoverCost, hn_callC tab_recover_sender (callOK_recover C2)⟩ ?_
   unfold ptS12
   refine cw_seqN hn_skip ?_
   exact hk w _ _ C2

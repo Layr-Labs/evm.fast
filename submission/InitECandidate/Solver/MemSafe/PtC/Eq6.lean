@@ -45,12 +45,12 @@ theorem cbk_147 : cbd ptS147 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_146 : cbd ptS146 = 67504150380230936784570876878960970498152069792132657175840 := by
-  have receiptPrice : tbl (nm "encode_receipt") = SeventhReceipt.price := by decide +kernel
+theorem cbk_146 : cbd ptS146 = 25306906050321626783362313701921905286775512980433264737 := by
+  have receiptPrice : tbl (nm "encode_receipt") = InitECandidate.Solver.AddrDec.receiptPrice2 := by decide +kernel
   conv_lhs => rw [ptS146, cbd, receiptPrice, cbk_148]
   decide +kernel
 
-theorem cbk_145 : cbd ptS145 = 67504150380230936784570876878960970498152069792132657175840 := by
+theorem cbk_145 : cbd ptS145 = 25306906050321626783362313701921905286775512980433264737 := by
   rw [ptS145, cbd, cbk_147, cbk_146, Nat.zero_add]
 
 theorem cbk_144 : cbd ptS144 = 7 := by
@@ -59,10 +59,10 @@ theorem cbk_144 : cbd ptS144 = 7 := by
   try simp only [callD, cbd, callPrice1]
   try decide_cbv
 
-theorem cbk_143 : cbd ptS143 = 67504150380230936784570876878960970498152069792132657175840 := by
+theorem cbk_143 : cbd ptS143 = 25306906050321626783362313701921905286775512980433264737 := by
   rw [ptS143, cbd, cbk_145]
 
-theorem cbk_142 : cbd ptS142 = 67504150380230936784570876878960970498152069792132657175847 := by
+theorem cbk_142 : cbd ptS142 = 25306906050321626783362313701921905286775512980433264744 := by
   conv_lhs => rw [ptS142, cbd, cbk_144, cbk_143]
 
 end InitECandidate.Solver.MemSafe.PtC

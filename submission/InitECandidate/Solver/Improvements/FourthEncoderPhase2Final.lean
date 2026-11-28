@@ -13,7 +13,7 @@ open InitECandidate.Solver.MemSafe.BalEnc
 variable {σ : Type}
 
 def phase2BoundTight : Nat :=
-  5304151443438720788488305691972043139370448065876499518981567
+  477036975542029619383908525565193879640796917071168022
 open InitECandidate.Solver.MemSafe.BalCost FourthEncoderPhase2Prices
 
 /-- Shared arithmetic for the sort, size loop, allocator, encoding loop, and tail. -/
@@ -22,10 +22,10 @@ private def atPrices (sort size alloc tail body : Nat) : Nat :=
     (1 + alloc + ((10485759 + 1) * (body + 1) + tail)))))
 
 private def tableBudget (body : Nat) : Nat :=
-  atPrices (Suffix.oldB Suffix.sortCall) Loop.sizeB Suffix.allocB (Suffix.oldB Suffix.encTail) body
+  atPrices (1 + InitECandidate.Solver.SortAddr.sortPrice2) Loop.sizeB Suffix.allocB (Suffix.oldB Suffix.encTail) body
 
 private def literalBudget (body : Nat) : Nat :=
-  atPrices 5304150966401745246458686339704084127426802285468111480030625
+  atPrices 31640566553250233860388529032217080
     147573952589676412939 2 55340232221128654858 body
 
 private theorem prices_congr {s s' z z' a a' t t' : Nat}
@@ -35,7 +35,7 @@ private theorem prices_congr {s s' z z' a a' t t' : Nat}
   rfl
 
 private theorem budget_eq (body : Nat) : tableBudget body = literalBudget body :=
-  prices_congr sortPrice sizePrice allocPrice tailPrice body
+  prices_congr rfl sizePrice allocPrice tailPrice body
 
 private theorem phase_at_prices (E : Nat) :
     FourthEncoderTypedPhase2.phase2Bound E = tableBudget (FourthEncoderCallerBody.encBodyBound E) := by

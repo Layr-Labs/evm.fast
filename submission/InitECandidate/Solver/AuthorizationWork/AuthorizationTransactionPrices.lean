@@ -9,12 +9,12 @@ open InitECandidate.Solver.MemSafe
 
 theorem regular :
     AuthorizationBothEntry2.pmcB (2 ^ 24 + 2) AuthorizationBothFinal.bOp ≤
-      402494207982623833717982101196635564695198201329389469945 := by
+      62436485732800163323110907244123401516386363636453625 := by
   decide +kernel
 
 theorem system :
     AuthorizationBothEntry2.pmcB 30000002 AuthorizationBothFinal.bOp ≤
-      719715646851808695671909423410592291457106353605589292025 := by
+      111638879461847135387644038461247316526470663132177401 := by
   decide +kernel
 
 #print axioms regular

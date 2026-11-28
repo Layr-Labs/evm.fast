@@ -37,19 +37,29 @@ theorem sz_comb (k : Nat) (hk : k ≤ 32) : ∀ c : Flapjack.Pancake.PanLang.Str
 
 /-! ## Leaves -/
 
-theorem cost_cbd {c : ProgHOL 64} (h : Wg.costFin c = some (cbd c)) : Cost σ guestCtx c (cbd c) :=
-  Wg.cost_guest_costA h
+/-- A leaf priced by the accepted analyzer or by the analyzer over the improved table. -/
+def CostLeaf (c : ProgHOL 64) : Prop :=
+  Wg.costFin c = some (cbd c) ∨ InitECandidate.Solver.HtFd.costFinH c = some (cbd c)
+
+theorem cost_cbd {c : ProgHOL 64} (h : CostLeaf c) : Cost σ guestCtx c (cbd c) := by
+  rcases h with h | h
+  · exact Wg.cost_guest_costA h
+  · exact InitECandidate.Solver.HtFd.cost_guest_costAH h
 
 theorem cw_hnN {P P1 : State σ → Prop} {c : ProgHOL 64} (hn : HN P c P1)
-    (hc : Wg.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) (fun r t => r = none ∧ P1 t) :=
+    (hc : CostLeaf c := by first | exact Or.inl (by decide_cbv) | exact Or.inr (by decide_cbv)) :
+    CW' P c (cbd c) (fun r t => r = none ∧ P1 t) :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hn⟩
 
 theorem cw_leafN {P : State σ → Prop} {c : ProgHOL 64} {Q : Option (PanSemResultExact 64) → State σ → Prop}
-    (hh : Hoare σ guestCtx P c Q) (hc : Wg.costFin c = some (cbd c) := by decide_cbv) : CW' P c (cbd c) Q :=
+    (hh : Hoare σ guestCtx P c Q)
+    (hc : CostLeaf c := by first | exact Or.inl (by decide_cbv) | exact Or.inr (by decide_cbv)) :
+    CW' P c (cbd c) Q :=
   ⟨Inv.costP_of_cost (cost_cbd hc), hh⟩
 
 theorem cw_seqN {P P1 : State σ → Prop} {Q : Option (PanSemResultExact 64) → State σ → Prop} {a b : ProgHOL 64}
-    (ha : HN P a P1) (hb : CW' P1 b (cbd b) Q) (hc : Wg.costFin a = some (cbd a) := by decide_cbv) :
+    (ha : HN P a P1) (hb : CW' P1 b (cbd b) Q)
+    (hc : CostLeaf a := by first | exact Or.inl (by decide_cbv) | exact Or.inr (by decide_cbv)) :
     CW' P (.seq a b) (cbd (.seq a b)) Q :=
   Eb.cw_seq (cw_hnN ha hc) hb
 
@@ -66,10 +76,87 @@ theorem calleeCostP_tbl {f : MlS} {PreC : List (ValueHOL 64) → State σ → Pr
   by_cases h : f = nm "encode_receipt"
   · subst f
     simpa [tbl, hB] using
-      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (SeventhReceipt.receipt_cost (σ := σ)))
-  have : tbl f = B := by simp [tbl, hB, h]
-  rw [this]
-  exact Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hB))
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (InitECandidate.Solver.AddrDec.receipt_cost2 (σ := σ)))
+  by_cases h2 : f = nm "recover_sender_with_chain_id"
+  · subst f
+    have hne : nm "recover_sender_with_chain_id" ≠ nm "encode_receipt" := by decide
+    simpa [tbl, hB, hne] using
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (InitECandidate.Solver.TxAl.recover_cost (σ := σ)))
+  by_cases h3 : f = nm "encode_transaction"
+  · subst f
+    have hne : nm "encode_transaction" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "encode_transaction" ≠ nm "recover_sender_with_chain_id" := by decide
+    simpa [tbl, hB, hne, hne2] using
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (InitECandidate.Solver.TxAl.encode_cost (σ := σ)))
+  by_cases h4 : f = nm "check_transaction"
+  · subst f
+    have hne : nm "check_transaction" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "check_transaction" ≠ nm "recover_sender_with_chain_id" := by decide
+    have hne3 : nm "check_transaction" ≠ nm "encode_transaction" := by decide
+    simpa [tbl, hB, hne, hne2, hne3] using
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (InitECandidate.Solver.Divm.check_cost (σ := σ)))
+  by_cases h5 : f = nm "calculate_blob_gas_price"
+  · subst f
+    have hne : nm "calculate_blob_gas_price" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "calculate_blob_gas_price" ≠ nm "recover_sender_with_chain_id" := by decide
+    have hne3 : nm "calculate_blob_gas_price" ≠ nm "encode_transaction" := by decide
+    have hne4 : nm "calculate_blob_gas_price" ≠ nm "check_transaction" := by decide
+    simpa [tbl, hB, hne, hne2, hne3, hne4] using
+      (Inv.calleeCostP_of_calleeCost (Pre := PreC) (InitECandidate.Solver.Divm.blob_cost (σ := σ)))
+  cases hh : InitECandidate.Solver.HtFd.htFind f with
+  | some B' =>
+    have : tbl f = B' := by simp [tbl, hB, h, h2, h3, h4, h5, hh]
+    rw [this]
+    exact Inv.calleeCostP_of_calleeCost (InitECandidate.Solver.HtFd.htFind_cost hh)
+  | none =>
+    have : tbl f = B := by simp [tbl, hB, h, h2, h3, h4, h5, hh]
+    rw [this]
+    exact Inv.calleeCostP_of_calleeCost (Wire.calleeCost_guest (Wire.tbLe_of_eq hB))
+
+/-- A table callee (plain cost). -/
+theorem calleeCost_tbl {f : MlS}
+    (hf : (Shards.finalState.1.lookup f).isSome = true := by decide_cbv) :
+    CalleeCost σ guestCtx f (tbl f) := by
+  obtain ⟨B, hB⟩ := Option.isSome_iff_exists.mp hf
+  by_cases h : f = nm "encode_receipt"
+  · subst f
+    simpa [tbl, hB] using
+      (InitECandidate.Solver.AddrDec.receipt_cost2 (σ := σ))
+  by_cases h2 : f = nm "recover_sender_with_chain_id"
+  · subst f
+    have hne : nm "recover_sender_with_chain_id" ≠ nm "encode_receipt" := by decide
+    simpa [tbl, hB, hne] using
+      (InitECandidate.Solver.TxAl.recover_cost (σ := σ))
+  by_cases h3 : f = nm "encode_transaction"
+  · subst f
+    have hne : nm "encode_transaction" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "encode_transaction" ≠ nm "recover_sender_with_chain_id" := by decide
+    simpa [tbl, hB, hne, hne2] using
+      (InitECandidate.Solver.TxAl.encode_cost (σ := σ))
+  by_cases h4 : f = nm "check_transaction"
+  · subst f
+    have hne : nm "check_transaction" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "check_transaction" ≠ nm "recover_sender_with_chain_id" := by decide
+    have hne3 : nm "check_transaction" ≠ nm "encode_transaction" := by decide
+    simpa [tbl, hB, hne, hne2, hne3] using
+      (InitECandidate.Solver.Divm.check_cost (σ := σ))
+  by_cases h5 : f = nm "calculate_blob_gas_price"
+  · subst f
+    have hne : nm "calculate_blob_gas_price" ≠ nm "encode_receipt" := by decide
+    have hne2 : nm "calculate_blob_gas_price" ≠ nm "recover_sender_with_chain_id" := by decide
+    have hne3 : nm "calculate_blob_gas_price" ≠ nm "encode_transaction" := by decide
+    have hne4 : nm "calculate_blob_gas_price" ≠ nm "check_transaction" := by decide
+    simpa [tbl, hB, hne, hne2, hne3, hne4] using
+      (InitECandidate.Solver.Divm.blob_cost (σ := σ))
+  cases hh : InitECandidate.Solver.HtFd.htFind f with
+  | some B' =>
+    have : tbl f = B' := by simp [tbl, hB, h, h2, h3, h4, h5, hh]
+    rw [this]
+    exact InitECandidate.Solver.HtFd.htFind_cost hh
+  | none =>
+    have : tbl f = B := by simp [tbl, hB, h, h2, h3, h4, h5, hh]
+    rw [this]
+    exact Wire.calleeCost_guest (Wire.tbLe_of_eq hB)
 
 theorem hszW (sh : ShapeHOL) (h : ∀ c : Flapjack.Pancake.PanLang.StructContextExact,
       Flapjack.Pancake.PanLang.sizeOfShapeWithContextHOL c sh ≤ 32) :

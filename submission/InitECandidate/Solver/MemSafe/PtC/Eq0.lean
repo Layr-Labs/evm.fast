@@ -33,7 +33,7 @@ theorem cbk_223 : cbd ptS223 = 18 := by
   try simp only [callD, cbd, cbk_224]
   decide +kernel
 
-theorem cbk_222 : cbd ptS222 = 31385508676933403830408265224429301376813834371602864668800 := by
+theorem cbk_222 : cbd ptS222 = 187072209629057646236785706460502983180348263760404 := by
   unfold ptS222
   try simp only [callD, cbd, cbk_223]
   decide +kernel

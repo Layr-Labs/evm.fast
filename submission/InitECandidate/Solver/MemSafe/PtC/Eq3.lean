@@ -28,7 +28,7 @@ theorem cbk_188 : cbd ptS188 = 0 := by
   try simp only [callD, cbd, cbk_189]
   try decide_cbv
 
-theorem cbk_187 : cbd ptS187 = 1135522258986882073916698982893440076914320 := by
+theorem cbk_187 : cbd ptS187 = 1134501411886119258526142838375512178466712 := by
   unfold ptS187
   try simp only [callD, cbd, cbk_192]
   decide +kernel
@@ -58,19 +58,18 @@ theorem cbk_182 : cbd ptS182 = 0 := by
   try simp only [callD, cbd, cbk_183]
   try decide_cbv
 
-theorem cbk_181 : cbd ptS181 = 12554203470773362705388851331493776227290369235582827143292 := by
-  have clearPrice : tbl (nm "clear_account_preserving_balance") =
-      12554203470773362705388851331493776227290369235582827143291 := by decide +kernel
+theorem cbk_181 : cbd ptS181 = 1173293601727782749375203327798838965609188 := by
+  have clearPrice : tbl (nm "clear_account_preserving_balance") = 1173293601727782749375203327798838965609187 := by decide +kernel
   unfold ptS181
   try simp only [callD, cbd, clearPrice]
   try decide_cbv
 
-theorem cbk_180 : cbd ptS180 = 12554203470773362705388851331493776227290369235582827143292 := by
+theorem cbk_180 : cbd ptS180 = 1173293601727782749375203327798838965609188 := by
   unfold ptS180
   try simp only [callD, cbd, cbk_181]
   try decide_cbv
 
-theorem cbk_179 : cbd ptS179 = 12554203470773362705388851331493776227290369235582827143293 := by
+theorem cbk_179 : cbd ptS179 = 1173293601727782749375203327798838965609189 := by
   unfold ptS179
   try simp only [callD, cbd, cbk_180]
   decide +kernel

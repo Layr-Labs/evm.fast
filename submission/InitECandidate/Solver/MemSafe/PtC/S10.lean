@@ -130,11 +130,19 @@ theorem ctl_p3 {K : TlCtx σ} {O : List Obj} {QT : Option (PanSemResultExact 64)
       some (.val (.word (K.ref0 (K.out + BitVec.ofNat 64 16)))) := env_set_self _ _ _
   let Qm : State σ → Prop := fun t => ∃ (ref : BitVec 64 → BitVec 64) (Z : BitVec 64 → Prop) (lw : BitVec 64),
     LgOut K ref Z O lw ∧ PAg (TL K.A ref Z O) ((EnT0 K).set (nm "logs") (.val (.word lw))) t
-  have logInitCost : Wg.costFin ptS144 = some (cbd ptS144) := by
+  have logInitCost : CostLeaf ptS144 := by
     have present : (Shards.finalState.1.lookup (nm "lst_new")).isSome = true := by decide +kernel
     obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
     have regular : nm "lst_new" ≠ nm "encode_receipt" := by decide
-    simp only [ptS144, Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some, Option.getD_some]
+    have regular2 : nm "lst_new" ≠ nm "recover_sender_with_chain_id" := by decide
+    have regular3 : nm "lst_new" ≠ nm "encode_transaction" := by decide
+    have regular4 : nm "lst_new" ≠ nm "check_transaction" := by decide
+    have regular5 : nm "lst_new" ≠ nm "calculate_blob_gas_price" := by decide
+    refine Or.inr ?_
+    simp only [ptS144, InitECandidate.Solver.HtFd.costFinH, InitECandidate.Solver.HtFd.tblH, Wg.costFin, costA, cbd, tbl,
+      lookup, if_neg regular, if_neg regular2, if_neg regular3, if_neg regular4, if_neg regular5, Option.map_some,
+      Option.getD_some]
+    cases InitECandidate.Solver.HtFd.htFind (nm "lst_new") <;> rfl
   refine cw_seqN (P1 := Qm) (hc := logInitCost) ?_ ?_
   · refine hn_ite ?_ ?_
     · refine hn_post (hn_pre (hn_lstNew1 (K := K) (ref := K.ref0) (Z := Za K) hP.B

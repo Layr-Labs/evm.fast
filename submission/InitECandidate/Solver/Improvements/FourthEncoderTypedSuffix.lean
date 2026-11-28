@@ -2,6 +2,7 @@ import InitECandidate.Solver.Improvements.FourthEncoderCallerHoare
 import InitECandidate.Solver.Improvements.FourthEncoderTypedLoop
 import InitECandidate.Solver.Improvements.FourthEncoderCountRules
 import InitECandidate.Solver.MemSafe.BalCost.Suffix
+import InitECandidate.Solver.SortAddr.Final
 
 /-! Conditional suffix walk: captured key count and Bbl4's real typed facts are
 retained together. Existing sort, size-body, allocator and final-tail bounds
@@ -25,7 +26,17 @@ variable {σ : Type}
 def cBound (encoderB M : Nat) : Nat :=
   1 + allocB + ((M + 1) * (encBodyBound encoderB + 1) + oldB encTail)
 def afterKeysBound (encoderB M : Nat) : Nat :=
-  oldB sortCall + ((M + 1) * (sizeB + 1) + cBound encoderB M)
+  (1 + InitECandidate.Solver.SortAddr.sortPrice2) + ((M + 1) * (sizeB + 1) + cBound encoderB M)
+
+/-- The account-address sort has the literal element size `24`, so the address-bounded merge sort
+price applies (instead of the analyzer price of the call). -/
+theorem sortCall_eq : sortCall = .call (some (none, none)) (nm "sort_elems")
+    [.rfield 0 (.var .local cAddrs), .rfield 1 (.var .local cAddrs), cw 24, cw 1, .var .local cTmp] := by
+  rfl
+
+theorem sortCall_cost2 : Cost σ guestCtx sortCall (1 + InitECandidate.Solver.SortAddr.sortPrice2) := by
+  rw [sortCall_eq]
+  exact InitECandidate.Solver.SortAddr.sortCall_cost (by decide) (by decide)
 
 theorem phase2c_cost {a : AwE σ} (hK : AwOK a) (hc : CsE a)
     (hgw : a.gw = []) (hBA : Bal.BalNN a.s0 a.Γ0) {encoderB M : Nat} {C : BitVec 64}
@@ -101,9 +112,9 @@ theorem afterKeys_cost {a : AwE σ} (hK : AwOK a) (hc : CsE a)
     (.seq sortCall (.dec cTotal .one (.const 1024)
       (.seq (.assign .local cI (.const 0))
         (.seq (.while (.cmp .less (.var .local cI) countE) sizeBody) phase2c))))
-    (oldB sortCall + ((M + 1) * (sizeB + 1) + cBound encoderB M))
+    ((1 + InitECandidate.Solver.SortAddr.sortPrice2) + ((M + 1) * (sizeB + 1) + cBound encoderB M))
   refine Inv.costP_seq (R := fun s => APre a (Hs (f2Facts a.p0.hp)) s ∧ CountEq C s)
-    (Inv.costP_of_cost sort_cost) ?_ ?_
+    (Inv.costP_of_cost sortCall_cost2) ?_ ?_
   · intro s hs hp ht hr
     exact ⟨(Frames.hoare_of_hoareG hsortM s hs hp.1 ht).2.1 hr,
       hoare_count_keep (keepsB_sound cAddrs sortCall (by decide)) s hs hp.2 ht hr⟩

@@ -27,25 +27,25 @@ variable {σ : Type}
 /-- The precondition of `mpt_set`'s conditional cost, as `CondCost` unfolds it. -/
 def PreMs (vs : List (ValueHOL 64)) (s : State σ) : Prop :=
   ∃ Γ p, G guestC (guestHooksR (σ := σ)) Γ s ∧ ptrsOf s = some p ∧
-    ArgsOK guestC Γ p Band4.msSig.params vs ∧ MsPre8 vs s Γ
+    ArgsOK guestC Γ p Band4.msSig.params vs ∧ InsW.MsPre8K vs s Γ
 
-theorem tb_ms : tb (nm "mpt_set") = tightMsPrice := by
+theorem tb_ms : tb (nm "mpt_set") = msPriceAt InsW.priceW := by
   unfold tb; simp
 
 theorem cc_ms : Inv.CalleeCostP σ guestCtx (nm "mpt_set") PreMs (tb (nm "mpt_set")) := by
-  rw [tb_ms]; exact ms8_condCostTight_R
+  rw [tb_ms]; exact InsW.ms8_condCostW_R
 
 theorem preMs_of_heap {a : Act σ} (haC : a.C = Types.guestC) (haH : a.H = Hooks.guestHooksR (σ := σ))
     {s : State σ} {Γ : Gam} {q : Ptrs} (hh : Heap a Γ q s) (callee : HolFiniteMapExact MlS (ValueHOL 64))
     {m k kl vp vl : BitVec 64}
     (h8 : MsPre8 [.val (.word m), .val (.word k), .val (.word kl), .val (.word vp), .val (.word vl)]
-      (callEntryStateHOLFinite s callee) Γ) :
+      (callEntryStateHOLFinite s callee) Γ) (hkl : kl.toNat ≤ 32) :
     PreMs [.val (.word m), .val (.word k), .val (.word kl), .val (.word vp), .val (.word vl)]
       (callEntryStateHOLFinite s callee) := by
   have hF := Rec.foldOK_guestR (σ := σ)
   have hG : G Types.guestC (Hooks.guestHooksR (σ := σ)) Γ s := by rw [← haC, ← haH]; exact hh.1
   exact ⟨Γ, q, MemSafe.G_congr hF.hH rfl rfl rfl rfl hG, (AllocImpl.ptrsOf_congr rfl).trans hh.2.1,
-    argsOK_any5, h8⟩
+    argsOK_any5, h8, kl, rfl, hkl⟩
 
 theorem cmps_stmt {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC) (hCb : a.Cb = Types.guestC)
     (haH : a.H = Hooks.guestHooksR (σ := σ)) (hgr : a.sg.grows = true)
@@ -54,7 +54,7 @@ theorem cmps_stmt {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC
     {M K KL VP VL : BitVec 64}
     (hev : ∀ s : State σ, L s.locals → evs s args =
       some [.val (.word M), .val (.word K), .val (.word KL), .val (.word VP), .val (.word VL)])
-    (hKL : 2 * KL.toNat < 2 ^ 64)
+    (hKL : 2 * KL.toNat < 2 ^ 64) (hKL32 : KL.toNat ≤ 32)
     (hHR : ∀ Γ q mm, E Γ q mm → HRecU a.p0 Γ q mm M)
     (hVin : ∀ Γ q mm, E Γ q mm → Hooks.VInR Types.tVAL Γ VP VL)
     (hpres : ∀ (s st : State σ) (Γ Γ' : Gam) (q q' : Ptrs),
@@ -71,7 +71,7 @@ theorem cmps_stmt {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC
   rw [hev s hL] at hvs
   cases hvs
   exact preMs_of_heap haC haH hh callee ⟨M, K, KL, VP, VL, rfl, mrecF_of_hRec hh.2.1 (hHR Γ q s.memory hE).1,
-    hKL⟩
+    hKL⟩ hKL32
 
 /-- `mpt_root`'s conditional precondition. -/
 def PreMr (vs : List (ValueHOL 64)) (s : State σ) : Prop :=

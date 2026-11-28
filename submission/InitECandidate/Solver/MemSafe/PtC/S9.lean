@@ -38,18 +38,23 @@ theorem cpt_branch {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultEx
       CW' (PA E En (Sc S wm v32 v96 v120 (rd E.s0.memory (E.tx + BitVec.ofNat 64 152)))) ptS108 (cbd ptS108) QT) :
     CW' (PA E En S) ptS105 (cbd ptS105) QT := by
   have htx := K.A.C0.tx
-  have branchCost : Wg.costFin ptS107 = some (cbd ptS107) := by
+  have branchCost : CostLeaf ptS107 := by
     have tableEntry (f : MlS) (present : (Shards.finalState.1.lookup f).isSome = true)
-        (regular : f ≠ nm "encode_receipt") :
-        ∃ bound, Shards.finalState.1.lookup f = some bound ∧ tbl f = bound := by
+        (regular : f ≠ nm "encode_receipt") (regular2 : f ≠ nm "recover_sender_with_chain_id")
+        (regular3 : f ≠ nm "encode_transaction")
+        (regular4 : f ≠ nm "check_transaction") (regular5 : f ≠ nm "calculate_blob_gas_price") :
+        InitECandidate.Solver.HtFd.tblH f = some (tbl f) := by
       obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
-      exact ⟨bound, lookup, by simp only [tbl, lookup, if_neg regular]⟩
-    obtain ⟨_, getLookup, getCost⟩ := tableEntry (nm "get_account") (by decide +kernel) (by decide)
-    obtain ⟨_, allocLookup, allocCost⟩ := tableEntry (nm "alloc") (by decide +kernel) (by decide)
-    obtain ⟨_, addrLookup, addrCost⟩ := tableEntry (nm "compute_contract_address") (by decide +kernel) (by decide)
+      simp only [InitECandidate.Solver.HtFd.tblH, tbl, lookup, if_neg regular, if_neg regular2, if_neg regular3,
+        if_neg regular4, if_neg regular5]
+      cases InitECandidate.Solver.HtFd.htFind f <;> rfl
+    have getCost := tableEntry (nm "get_account") (by decide +kernel) (by decide) (by decide) (by decide) (by decide) (by decide)
+    have allocCost := tableEntry (nm "alloc") (by decide +kernel) (by decide) (by decide) (by decide) (by decide) (by decide)
+    have addrCost := tableEntry (nm "compute_contract_address") (by decide +kernel) (by decide) (by decide) (by decide) (by decide) (by decide)
+    refine Or.inr ?_
     simp only [ptS107, ptS187, ptS192, ptS193, ptS195, ptS194, ptS196, ptS197, ptS198, ptS199,
-      ptS186, ptS188, ptS189, ptS190, ptS191, callD, Wg.costFin, costA, cbd,
-      getLookup, getCost, allocLookup, allocCost, addrLookup, addrCost, Option.map_some, Option.getD_some]
+      ptS186, ptS188, ptS189, ptS190, ptS191, callD, InitECandidate.Solver.HtFd.costFinH, Wg.costFin, costA, cbd,
+      getCost, allocCost, addrCost, Option.map_some, Option.getD_some]
   unfold ptS105
   refine cw_seqN (hc := branchCost)
     (P1 := fun t => ∃ v32 v96 v120 : BitVec 64, PA E En (Sb S wm v32 v96 v120 (rd E.s0.memory (E.tx + BitVec.ofNat 64 152))) t)
