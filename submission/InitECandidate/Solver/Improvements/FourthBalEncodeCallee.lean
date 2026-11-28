@@ -17,6 +17,6 @@ theorem callee_cost {a : AwE σ} (hK : AwOK a) (hc : CsE a) :
   FourthEncoderEntry.callee_cost hK
     ⟨asp_sorted_keys32 hK hc, @obj_field σ a hc⟩
 
-theorem encoderCost_eq : encoderCost = 71720836936990227547066326010565115438297933972370061573903 := FourthEncoderEntry.encoderCost_eq
+theorem encoderCost_eq : encoderCost = 45493791155054879972724940561630615966403676903 := FourthEncoderEntry.encoderCost_eq
 #print axioms callee_cost
 end FourthBalEncodeCallee

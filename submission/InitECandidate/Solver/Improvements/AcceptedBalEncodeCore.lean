@@ -218,7 +218,7 @@ def balBody : ProgHOL 64 :=
 
 /-- Accepted unconditional callee constants. -/
 def cG : Nat := 92233720368547758087
-def cS : Nat := 9119770220196232226509327843073885667471311515952639
+def cS : Nat := 31640566553250233860388529032217079
 def cU : Nat := 18446744073709551621
 def cP : Nat := 147573952589676412953
 def cW : Nat := 36893488147419103236
@@ -226,7 +226,7 @@ def cL : Nat := 18446744073709551619
 def cM : Nat := 73786976294838206468
 def cH : Nat := 36893488147419103237
 def cB : Nat := 110680464442257309706
-def cK : Nat := 9119770220197593355977011596927923633341775684314634
+def cK : Nat := 1361161108250307104271826258993200579074
 def cHK : Nat := 1361129467683753854037965870464168361993
 def cHH : Nat := 92233720368547758087
 
@@ -248,14 +248,19 @@ def tailB : Nat :=
 def tighterCost : Nat := 3 + cB + cK + h * (outerB + 1) + tailB
 
 theorem tighterCost_eq : tighterCost =
-    84115033631552205119640362528445559759188595842951596106590988751912719 := by decide
+    53355656583503564021078450528452545366302627953606175902439 := by decide
 
 theorem oldCost_eq : 3 + cB + cK + q * (outerB + 1) + tailB =
-    168230067263104410202801644176089857058727675267358087148206738846573957 := by decide
+    106711313167007128025823220882433831482107419263103629495637 := by decide
+
+/-- A merge-sort call with a literal element size in `[1, 4096]` costs `1 + B`. -/
+def SortCall (σ : Type) (X : Ctx 64) (B : Nat) : Prop :=
+  ∀ (a b k t : ExpHOL 64) (E : Nat), 1 ≤ E → E ≤ 4096 →
+    Cost σ X (callD (nm "sort_elems") [a, b, cw E, k, t]) (1 + B)
 
 structure CalleeCosts (σ : Type) (X : Ctx 64) : Prop where
   htab_get : CalleeBound σ X (nm "htab_get") cG
-  sort_elems : CalleeBound σ X (nm "sort_elems") cS
+  sort_elems : SortCall σ X cS
   u256_from_be : CalleeBound σ X (nm "u256_from_be") cU
   rlp_put_u256 : CalleeBound σ X (nm "rlp_put_u256") cP
   rlp_encode_word : CalleeBound σ X (nm "rlp_encode_word") cW
@@ -329,14 +334,15 @@ theorem entryLoop_cost (hc : CalleeCosts σ X) {i n b lp e c hl : MlS} {E F : Na
 theorem listSec_cost (hc : CalleeCosts σ X) {off E : Nat} {l n lp e c hlE hlP f2 : MlS}
     {args2 : List (ExpHOL 64)} {k : ProgHOL 64} {F B : Nat}
     (hf : CalleeBound σ X f2 F) (hk : Cost σ X k B)
-    (hs : stepsB bI true (entryBody bI bQ lp e c hlE E f2 args2) = true) :
+    (hs : stepsB bI true (entryBody bI bQ lp e c hlE E f2 args2) = true)
+    (hE1 : 1 ≤ E) (hE2 : E ≤ 4096) :
     Cost σ X (listSec off E l n lp e c hlE hlP f2 args2 k)
       ((1 + cS) + q * (entryCost F + 1) + wrapCost + B) := by
   have hp : Cost σ X (listSec off E l n lp e c hlE hlP f2 args2 k)
       ((1 + cS) + (0 + (0 + (q * (entryCost F + 1) + (wrapCost + B))))) := by
     unfold listSec
     exact cost_dec (cost_dec (cost_dec
-      (cost_seq (callD_cost hc.sort_elems)
+      (cost_seq (hc.sort_elems _ _ _ _ E hE1 hE2)
         (cost_seq (cost_assign _ _ _) (cost_seq (cost_assign _ _ _)
           (cost_seq (entryLoop_cost hc hf hs) (wrapS_cost hc hk)))))))
   have heq : (1 + cS) + (0 + (0 + (q * (entryCost F + 1) + (wrapCost + B)))) =
@@ -353,7 +359,7 @@ theorem slotBody_cost (hc : CalleeCosts σ X) : Cost σ X slotBody outerB := by
         (0 + (q * (entryCost cP + 1) + (wrapCost + (wrapCost + 0)))))))) := by
     unfold slotBody
     exact cost_dec (cost_decCall hc.htab_get (cost_dec (cost_dec (cost_dec
-      (cost_seq (callD_cost hc.sort_elems)
+      (cost_seq (hc.sort_elems _ _ _ _ 40 (by decide) (by decide))
         (cost_dec (cost_decCall hc.u256_from_be
           (cost_seq (callW_cost hc.rlp_put_u256)
             (cost_seq (cost_assign _ _ _)
@@ -421,20 +427,20 @@ theorem tailS_cost (hc : CalleeCosts σ X) : Cost σ X tailS (1 + wrapCost) := b
 theorem codeSec_cost (hc : CalleeCosts σ X) : Cost σ X codeSec
     ((1 + cS) + q * (entryCost cB + 1) + wrapCost + (1 + wrapCost)) := by
   unfold codeSec
-  exact listSec_cost hc hc.rlp_encode_bytes (tailS_cost hc) (by rfl)
+  exact listSec_cost hc hc.rlp_encode_bytes (tailS_cost hc) (by rfl) (by decide) (by decide)
 
 theorem nonceSec_cost (hc : CalleeCosts σ X) : Cost σ X nonceSec
     ((1 + cS) + q * (entryCost cW + 1) + wrapCost +
       ((1 + cS) + q * (entryCost cB + 1) + wrapCost + (1 + wrapCost))) := by
   unfold nonceSec
-  exact listSec_cost hc hc.rlp_encode_word (codeSec_cost hc) (by rfl)
+  exact listSec_cost hc hc.rlp_encode_word (codeSec_cost hc) (by rfl) (by decide) (by decide)
 
 theorem balSec_cost (hc : CalleeCosts σ X) : Cost σ X balSec
     ((1 + cS) + q * (entryCost cP + 1) + wrapCost +
       ((1 + cS) + q * (entryCost cW + 1) + wrapCost +
         ((1 + cS) + q * (entryCost cB + 1) + wrapCost + (1 + wrapCost)))) := by
   unfold balSec
-  exact listSec_cost hc hc.rlp_put_u256 (nonceSec_cost hc) (by rfl)
+  exact listSec_cost hc hc.rlp_put_u256 (nonceSec_cost hc) (by rfl) (by decide) (by decide)
 
 def keysCost : Nat :=
   (1 + cHK) + q * (2 + cHH) + (1 + cS) + q * (3 + cU + cP) + wrapCost +
@@ -452,7 +458,7 @@ theorem keysSec_cost (hc : CalleeCosts σ X) : Cost σ X keysSec keysCost := by
     unfold keysSec
     exact cost_dec (cost_decCall hc.htab_keys (cost_dec
       (cost_seq (cost_assign _ _ _) (cost_seq (filterLoop_cost hc)
-        (cost_seq (callD_cost hc.sort_elems)
+        (cost_seq (hc.sort_elems _ _ _ _ 32 (by decide) (by decide))
           (cost_seq (cost_assign _ _ _) (cost_seq (cost_assign _ _ _)
             (cost_seq (keysLoop_cost hc) (wrapS_cost hc (balSec_cost hc))))))))))
   have heq : 1 + cHK + (0 + (q * (2 + cHH) + ((1 + cS) + (0 +
