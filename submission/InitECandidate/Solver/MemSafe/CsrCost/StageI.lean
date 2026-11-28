@@ -16,7 +16,7 @@ open InitECandidate.Solver.MemSafe.Trie InitECandidate.Solver.Band7
 namespace InitECandidate.Solver.MemSafe.CsrCost
 variable {σ : Type}
 def capMax : Nat := 4127616
-def bBody : Nat := 3474730117586266338059797418701692037457527461178454818461
+def bBody : Nat := 1930405634270260511136175888347944969186304128424297416349
 def bState : Nat := 3474730126902678140020455263114776658981182755735258359364
 def bLoop : Nat := capMax * (bBody + 1)
 def bI : Nat := bLoop + bState

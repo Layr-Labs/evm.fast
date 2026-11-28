@@ -1,4 +1,4 @@
-import InitECandidate.Solver.Improvements.BoundedZero
+import InitECandidate.Solver.Improvements.FixedTrieBranch
 import InitECandidate.Solver.Improvements.BoundedEqual
 import InitECandidate.Solver.Improvements.CommonPrefixAddress
 import InitECandidate.Solver.Improvements.TightTrieInsert
@@ -15,19 +15,13 @@ open AcceptedCostOverrideRules
 variable {σ : Type}
 
 abbrev slots : Nat := 2^35 + alignSlack 64 + 1
-abbrev branchPrice := 4 * slots + 4
+abbrev branchPrice : Nat := 708
 abbrev createPrice := branchPrice + 9
 abbrev splitPrice := branchPrice + 10
 abbrev leafPrice := BoundedEqual.price + CommonPrefixAddress.price + createPrice + 7
 
-private def branchRows : TblState := ([(nm "memzero", BoundedZero.zeroPrice), (nm "alloc", 2)], [], [])
-private theorem branchRows_sound : StateSound σ guestCtx branchRows := (overrideCost_sound (overrideCost_sound stateSound_empty (CompactCostReplay.accepted (f := nm "alloc") (B := 2) (by decide_cbv))) BoundedZero.memzero_cost)
-private def branchEntry := declPair Guest.Software.guestFn_node_new_branch
-#eval CompactCostReplay.price branchRows branchEntry.2.2
 theorem branch_cost : CalleeCost σ guestCtx (nm "node_new_branch") branchPrice :=
-  CompactCostReplay.callee_cost (p := branchEntry) branchRows_sound
-    (declPair_valid (List.getElem_mem (l := Guest.Software.guestAst) (n := 258) (by decide)) ⟨_,rfl⟩)
-    (by decide_cbv)
+  FixedTrieBranch.branchCost
 
 private def createRows : TblState := ([(nm "node_new_leaf", 3), (nm "node_new_branch", branchPrice)], [], [])
 private theorem createRows_sound : StateSound σ guestCtx createRows := (overrideCost_sound (overrideCost_sound stateSound_empty branch_cost) (CompactCostReplay.accepted (f := nm "node_new_leaf") (B := 3) (by decide_cbv)))
