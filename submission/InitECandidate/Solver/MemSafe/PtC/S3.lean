@@ -22,10 +22,17 @@ variable {σ : Type}
 
 theorem regularCallCost {dst : Option (VarKind × MlS)} {f : MlS} {args : List (ExpHOL 64)}
     (regular : f ≠ nm "encode_receipt" := by decide)
+    (regular2 : f ≠ nm "recover_sender_with_chain_id" := by decide)
+    (regular3 : f ≠ nm "encode_transaction" := by decide)
+    (regular4 : f ≠ nm "check_transaction" := by decide)
+    (regular5 : f ≠ nm "calculate_blob_gas_price" := by decide)
     (present : (Shards.finalState.1.lookup f).isSome = true := by decide +kernel) :
-    Wg.costFin (.call (some (dst, none)) f args) = some (cbd (.call (some (dst, none)) f args)) := by
+    CostLeaf (.call (some (dst, none)) f args) := by
   obtain ⟨bound, lookup⟩ := Option.isSome_iff_exists.mp present
-  simp only [Wg.costFin, costA, cbd, tbl, lookup, if_neg regular, Option.map_some]
+  refine Or.inr ?_
+  simp only [InitECandidate.Solver.HtFd.costFinH, costA, cbd, tbl, InitECandidate.Solver.HtFd.tblH, lookup,
+    if_neg regular, if_neg regular2, if_neg regular3, if_neg regular4, if_neg regular5, Option.map_some]
+  cases InitECandidate.Solver.HtFd.htFind f <;> rfl
 
 theorem cpt_c3A {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact 64) → State σ → Prop}
     {rp rl : BitVec 64} {buf n : Nat} {CV : List (BitVec 64)} {w : BitVec 64}
@@ -91,7 +98,7 @@ theorem cpt_c3B {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
       CW' (PA E En' S') ptS29 (cbd ptS29) QT) :
     CW' (PA E En S) ptS23 (cbd ptS23) QT := by
   obtain ⟨C2, hex2, hfx⟩ := C
-  have guardCost : Wg.costFin ptS25 = some (cbd ptS25) := by
+  have guardCost : Cost σ guestCtx ptS25 (cbd ptS25) := by
     have blobPresent : (Shards.finalState.1.lookup (nm "calculate_blob_gas_price")).isSome = true := by
       decide +kernel
     have feePresent : (Shards.finalState.1.lookup (nm "fee_mul")).isSome = true := by
@@ -100,10 +107,28 @@ theorem cpt_c3B {E : PtE σ} {En : Env} {S : FS} {QT : Option (PanSemResultExact
     obtain ⟨feePrice, feeLookup⟩ := Option.isSome_iff_exists.mp feePresent
     have regularBlob : nm "calculate_blob_gas_price" ≠ nm "encode_receipt" := by decide
     have regularFee : nm "fee_mul" ≠ nm "encode_receipt" := by decide
-    simp only [ptS25, ptS222, ptS223, ptS224, Wg.costFin, costA, cbd, tbl, blobLookup, feeLookup,
-      if_neg regularBlob, if_neg regularFee, Option.getD_some]
+    have regularBlob2 : nm "calculate_blob_gas_price" ≠ nm "recover_sender_with_chain_id" := by decide
+    have regularFee2 : nm "fee_mul" ≠ nm "recover_sender_with_chain_id" := by decide
+    have regularBlob3 : nm "calculate_blob_gas_price" ≠ nm "encode_transaction" := by decide
+    have regularFee3 : nm "fee_mul" ≠ nm "encode_transaction" := by decide
+    have regularBlob4 : nm "calculate_blob_gas_price" ≠ nm "check_transaction" := by decide
+    have regularFee4 : nm "fee_mul" ≠ nm "check_transaction" := by decide
+    have regularFee5 : nm "fee_mul" ≠ nm "calculate_blob_gas_price" := by decide
+    have e : cbd ptS25 = max (1 + InitECandidate.Solver.Divm.blobPrice5 + (1 + tbl (nm "fee_mul") + 0)) 0 := by
+      have h224 : cbd ptS224 = 0 := by decide_cbv
+      have hb : tbl (nm "calculate_blob_gas_price") = InitECandidate.Solver.Divm.blobPrice5 := by
+        simp only [tbl, blobLookup, if_neg regularBlob, if_neg regularBlob2, if_neg regularBlob3,
+          if_neg regularBlob4, if_true]
+      have hsk : cbd .skip = 0 := by decide_cbv
+      simp only [ptS25, ptS222, ptS223, cbd, hb, h224] at hsk ⊢
+      rw [show (Wg.costFin ProgHOL.skip).getD 0 = 0 from hsk]
+    rw [e]
+    unfold ptS25 ptS222 ptS223 ptS224
+    exact cost_ite (cost_decCall InitECandidate.Solver.Divm.blob_cost
+      (cost_decCall (calleeCost_tbl (σ := σ) feePresent)
+        (cost_assign _ _ _))) cost_skip
   unfold ptS23
-  refine cw_seqN (P1 := PA E En S) (hc := guardCost) ?_ ?_
+  refine cw_seqC (P1 := PA E En S) ⟨Inv.costP_of_cost guardCost, (?_ : HN (PA E En S) ptS25 (PA E En S))⟩ ?_
   · unfold ptS25
     refine hn_ite ?_ (hn_pre hn_skip (fun s _ h => h.1))
     refine hn_pre ?_ (fun s _ h => h.1)

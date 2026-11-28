@@ -103,7 +103,7 @@ theorem cstage_ea {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC
       (fun Γ q mm h => h.1) ?_)
     refine cmps_stmt ha haC hCb haH hgr hcI (args := [lv (nm "state_mpt"), .rfield 1 (lv (nm "s2")), cw 20,
       lv (nm "enc"), lv (nm "n")]) (L := LV B') (K := y) (KL := BitVec.ofNat 64 20) (VP := H) (VL := N)
-      (M := M) ?_ (by decide) (fun Γ q mm h => h.1.2.2.1) ?_ ?_
+      (M := M) ?_ (by decide) (by decide) (fun Γ q mm h => h.1.2.2.1) ?_ ?_
     · intro s hL
       exact evs_cons (lv_ev hL (List.mem_cons_of_mem _ hstate))
         (evs_cons (ev_rfield_wv (x := lv (nm "s2")) (ws := [x, y, z]) (lv_ev hL (List.mem_cons_of_mem _ hs2))

@@ -64,7 +64,7 @@ theorem cstage_z {a : Act σ} (ha : ActOK a guestCtx) (haC : a.C = Types.guestC)
       · exact gc_skip (fun s h => h.1)
     · refine gc_ite ?_ ?_
       · refine ch_pre (cmps_ia ha haC hCb haH hgr hcI hK (L := LV kv') (k := e1) (kl := BitVec.ofNat 64 32)
-          (vp := BitVec.ofNat 64 0) (vl := BitVec.ofNat 64 0) ?_ (by decide) (fun Γ q mm _ => Or.inl rfl))
+          (vp := BitVec.ofNat 64 0) (vl := BitVec.ofNat 64 0) ?_ (by decide) (by decide) (fun Γ q mm _ => Or.inl rfl))
           (fun s _ h => h.1)
         intro s hL
         exact evs_cons (lv_ev hL hmpt') (evs_cons (ev_rfield_wv (x := lv (nm "e")) (ws := [e0, e1, e2])

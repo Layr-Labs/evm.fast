@@ -13,7 +13,7 @@ open Flapjack.Pancake.PanLang (ProgHOL ExpHOL MlS ShapeHOL)
 open InitECandidate.Solver.SourceCost InitECandidate.Solver.Spec
 open InitECandidate.Solver.MemSafe InitECandidate.Solver.MemSafe.Types
 
-def bPmcPLit : Nat := 719715646851808695671909423410592291457106353605589292025
+def bPmcPLit : Nat := 111638879461847135387644038461247316526470663132177401
 
 theorem bPmcP_eq : bPmcP = bPmcPLit := by
   unfold bPmcP bPmcPLit
@@ -64,142 +64,142 @@ theorem cbk_pucS27 : cbdP pucS27 = 253059326902305874532615369551310576586576134
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28]
   try decide_cbv
 
-theorem cbk_pucS26 : cbdP pucS26 = 745021579542039283125170960365723349115763967079905308804 := by
+theorem cbk_pucS26 : cbdP pucS26 = 25417571569692434588649180993592304975184084137448194180 := by
   unfold pucS26
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27]
   try decide_cbv
 
-theorem cbk_pucS25 : cbdP pucS25 = 745021579542039283125170960365723349115763967079905308804 := by
+theorem cbk_pucS25 : cbdP pucS25 = 25417571569692434588649180993592304975184084137448194180 := by
   unfold pucS25
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26]
   try decide_cbv
 
-theorem cbk_pucS24 : cbdP pucS24 = 745021579542039283125170960365723349115763967079905308804 := by
+theorem cbk_pucS24 : cbdP pucS24 = 25417571569692434588649180993592304975184084137448194180 := by
   unfold pucS24
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25]
   try decide_cbv
 
-theorem cbk_pucS23 : cbdP pucS23 = 745021579542039283125170960365723349115763967079905308817 := by
+theorem cbk_pucS23 : cbdP pucS23 = 25417571569692434588649180993592304975184084137448194193 := by
   unfold pucS23
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24]
   try decide_cbv
 
-theorem cbk_pucS22 : cbdP pucS22 = 745021579542039283125170960365723349115763967079905308817 := by
+theorem cbk_pucS22 : cbdP pucS22 = 25417571569692434588649180993592304975184084137448194193 := by
   unfold pucS22
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23]
   try decide_cbv
 
-theorem cbk_pucS21 : cbdP pucS21 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS21 : cbdP pucS21 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS21
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22]
   try decide_cbv
 
-theorem cbk_pucS20 : cbdP pucS20 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS20 : cbdP pucS20 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS20
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21]
   try decide_cbv
 
-theorem cbk_pucS19 : cbdP pucS19 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS19 : cbdP pucS19 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS19
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20]
   try decide_cbv
 
-theorem cbk_pucS18 : cbdP pucS18 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS18 : cbdP pucS18 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS18
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19]
   try decide_cbv
 
-theorem cbk_pucS17 : cbdP pucS17 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS17 : cbdP pucS17 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS17
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18]
   try decide_cbv
 
-theorem cbk_pucS16 : cbdP pucS16 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS16 : cbdP pucS16 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS16
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17]
   try decide_cbv
 
-theorem cbk_pucS15 : cbdP pucS15 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS15 : cbdP pucS15 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS15
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16]
   try decide_cbv
 
-theorem cbk_pucS14 : cbdP pucS14 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS14 : cbdP pucS14 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS14
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15]
   try decide_cbv
 
-theorem cbk_pucS13 : cbdP pucS13 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS13 : cbdP pucS13 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS13
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14]
   try decide_cbv
 
-theorem cbk_pucS12 : cbdP pucS12 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS12 : cbdP pucS12 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS12
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13]
   try decide_cbv
 
-theorem cbk_pucS11 : cbdP pucS11 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS11 : cbdP pucS11 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS11
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12]
   try decide_cbv
 
-theorem cbk_pucS10 : cbdP pucS10 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS10 : cbdP pucS10 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS10
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11]
   try decide_cbv
 
-theorem cbk_pucS9 : cbdP pucS9 = 745021579542039283125170960365723349115763967079905308830 := by
+theorem cbk_pucS9 : cbdP pucS9 = 25417571569692434588649180993592304975184084137448194206 := by
   unfold pucS9
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10]
   try decide_cbv
 
-theorem cbk_pucS8 : cbdP pucS8 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS8 : cbdP pucS8 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS8
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9]
   try decide_cbv
 
-theorem cbk_pucS7 : cbdP pucS7 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS7 : cbdP pucS7 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS7
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8]
   try decide_cbv
 
-theorem cbk_pucS6 : cbdP pucS6 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS6 : cbdP pucS6 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS6
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7]
   try decide_cbv
 
-theorem cbk_pucS5 : cbdP pucS5 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS5 : cbdP pucS5 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS5
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6]
   try decide_cbv
 
-theorem cbk_pucS4 : cbdP pucS4 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS4 : cbdP pucS4 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS4
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6, cbk_pucS5]
   try decide_cbv
 
-theorem cbk_pucS3 : cbdP pucS3 = 745021579542039283125170960365723349189550943374743515303 := by
+theorem cbk_pucS3 : cbdP pucS3 = 25417571569692434588649180993592305048971060432286400679 := by
   unfold pucS3
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6, cbk_pucS5, cbk_pucS4]
   try decide_cbv
 
-theorem cbk_pucS2 : cbdP pucS2 = 745021579542039283125170960365723349263337919669581721776 := by
+theorem cbk_pucS2 : cbdP pucS2 = 25417571569692434588649180993592305122758036727124607152 := by
   unfold pucS2
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6, cbk_pucS5, cbk_pucS4, cbk_pucS3]
   try decide_cbv
 
-theorem cbk_pucS1 : cbdP pucS1 = 745021579542040418307147580326858803310602944921110695823 := by
+theorem cbk_pucS1 : cbdP pucS1 = 25417571569693569770625800954727759170023061978653581199 := by
   unfold pucS1
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6, cbk_pucS5, cbk_pucS4, cbk_pucS3, cbk_pucS2]
   try decide_cbv
 
-theorem cbk_pucS0 : cbdP pucS0 = 745021579542040418307147580326858803310602944921110695931 := by
+theorem cbk_pucS0 : cbdP pucS0 = 25417571569693569770625800954727759170023061978653581307 := by
   unfold pucS0
   try simp only [callD, cbdP, tblP_inc, tblP_pmc, bPmcP_eq, cbk_pucC, cbk_pucD, cbk_pucB, cbk_pucA, cbk_pucS31, cbk_pucS30, cbk_pucS29, cbk_pucS28, cbk_pucS27, cbk_pucS26, cbk_pucS25, cbk_pucS24, cbk_pucS23, cbk_pucS22, cbk_pucS21, cbk_pucS20, cbk_pucS19, cbk_pucS18, cbk_pucS17, cbk_pucS16, cbk_pucS15, cbk_pucS14, cbk_pucS13, cbk_pucS12, cbk_pucS11, cbk_pucS10, cbk_pucS9, cbk_pucS8, cbk_pucS7, cbk_pucS6, cbk_pucS5, cbk_pucS4, cbk_pucS3, cbk_pucS2, cbk_pucS1]
   try decide_cbv
 
-def bPucLit : Nat := 745021579542040418307147580326858803310602944921110695931
+def bPucLit : Nat := 25417571569693569770625800954727759170023061978653581307
 
 theorem bPuc_eq : bPuc = bPucLit := by
   unfold bPuc bPucLit pucBody

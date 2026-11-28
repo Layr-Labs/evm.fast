@@ -53,13 +53,27 @@ theorem ctl_end (hP : TlPre K) (hgs : Bal.HGS σ)
   unfold ptS173
   have hoL : ∀ x : ValueHOL 64, (En.set (nm "tx_frame_mark") x) (nm "out") = some (.val (.word K.out)) := fun x => by
     rw [env_set_ne _ _ (by decide)]; exact hout
-  have releaseCost : Wg.costFin ptS174 = some (cbd ptS174) := by
+  have releaseCost : CostLeaf ptS174 := by
     have scratch : Shards.finalState.1.lookup (nm "scratch_release") = some 0 := by decide +kernel
     have frame : Shards.finalState.1.lookup (nm "frame_mem_release") = some 0 := by decide +kernel
     have regularScratch : nm "scratch_release" ≠ nm "encode_receipt" := by decide
     have regularFrame : nm "frame_mem_release" ≠ nm "encode_receipt" := by decide
-    simp only [ptS174, ptS175, callD, Wg.costFin, costA, cbd, tbl, scratch, frame,
-      if_neg regularScratch, if_neg regularFrame, Option.map_some, Option.getD_some]
+    have regularScratch2 : nm "scratch_release" ≠ nm "recover_sender_with_chain_id" := by decide
+    have regularFrame2 : nm "frame_mem_release" ≠ nm "recover_sender_with_chain_id" := by decide
+    have regularScratch3 : nm "scratch_release" ≠ nm "encode_transaction" := by decide
+    have regularFrame3 : nm "frame_mem_release" ≠ nm "encode_transaction" := by decide
+    have regularScratch4 : nm "scratch_release" ≠ nm "check_transaction" := by decide
+    have regularFrame4 : nm "frame_mem_release" ≠ nm "check_transaction" := by decide
+    have regularScratch5 : nm "scratch_release" ≠ nm "calculate_blob_gas_price" := by decide
+    have regularFrame5 : nm "frame_mem_release" ≠ nm "calculate_blob_gas_price" := by decide
+    refine Or.inr ?_
+    simp only [ptS174, ptS175, callD, InitECandidate.Solver.HtFd.costFinH, InitECandidate.Solver.HtFd.tblH,
+      Wg.costFin, costA, cbd, tbl, scratch, frame,
+      if_neg regularScratch, if_neg regularFrame, if_neg regularScratch2, if_neg regularFrame2, if_neg regularScratch3, if_neg regularFrame3, if_neg regularScratch4, if_neg regularFrame4,
+      if_neg regularScratch5, if_neg regularFrame5, Option.map_some,
+      Option.getD_some]
+    cases InitECandidate.Solver.HtFd.htFind (nm "scratch_release") <;>
+      cases InitECandidate.Solver.HtFd.htFind (nm "frame_mem_release") <;> rfl
   refine cw_seqN (P1 := fun t => TailPost K t) (hc := releaseCost) ?_ ?_
   · unfold ptS174
     refine hn_ite ?_ ?_

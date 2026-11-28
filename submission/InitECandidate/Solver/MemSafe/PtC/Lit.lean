@@ -22,7 +22,7 @@ open InitECandidate.Solver.MemSafe.Ptx InitECandidate.Solver.MemSafe.Hooks
 variable {σ : Type}
 
 /-- The literal bound. -/
-def bPtLit : Nat := 488472460859121180142413214907664714180370640473431947350465
+def bPtLit : Nat := 50242184090838478289801244582038102369297508177384405155058
 
 theorem bPt_eq : bPt = bPtLit := by
   let callCost := cbd (callD (nm "state_fresh_tx") [])
@@ -33,9 +33,9 @@ theorem bPt_eq : bPt = bPtLit := by
   have callValue : callCost = 108 := by
     dsimp only [callCost]
     conv_lhs => rw [callD, cbd, firstPrice]
-  have tailValue : tailCost = 488472460859121180142413214907664714180370640473431947350357 :=
+  have tailValue : tailCost = 50242184090838478289801244582038102369297508177384405154950 :=
     cbk_0
-  have total : 108 + 488472460859121180142413214907664714180370640473431947350357 = bPtLit := by
+  have total : 108 + 50242184090838478289801244582038102369297508177384405154950 = bPtLit := by
     decide +kernel
   exact splitCost.trans (addCostValues callValue tailValue total)
 

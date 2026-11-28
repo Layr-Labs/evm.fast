@@ -58,22 +58,22 @@ theorem cbk_206 : cbd ptS206 = 0 := by
   try simp only [callD, cbd]
   try decide_cbv
 
-theorem cbk_205 : cbd ptS205 = 340282366920938464441052043338374447207 := by
+theorem cbk_205 : cbd ptS205 = 922337204029074964671 := by
   unfold ptS205
   try simp only [callD, cbd]
   decide +kernel
 
-theorem cbk_204 : cbd ptS204 = 340282366920938464441052043338374447207 := by
+theorem cbk_204 : cbd ptS204 = 922337204029074964671 := by
   unfold ptS204
   try simp only [callD, cbd, cbk_205]
   try decide_cbv
 
-theorem cbk_203 : cbd ptS203 = 340282366920938464441052043338374447207 := by
+theorem cbk_203 : cbd ptS203 = 922337204029074964671 := by
   unfold ptS203
   try simp only [callD, cbd]
   decide +kernel
 
-theorem cbk_202 : cbd ptS202 = 340282366920938464441052043338374447207 := by
+theorem cbk_202 : cbd ptS202 = 922337204029074964671 := by
   unfold ptS202
   try simp only [callD, cbd, cbk_203]
   try decide_cbv

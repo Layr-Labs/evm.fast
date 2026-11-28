@@ -27,7 +27,7 @@ abbrev bBmiL : Nat := 6949460632004596789485027832616145239543168717527527731265
 
 /-- `compute_state_root`'s literal bound (package Rt2). -/
 abbrev bCsrL : Nat :=
-  14342355103761081219915168802647066395658948945530229878572031858
+  13566081819207937242379493078611882501060745395467336482
 
 theorem condCost_run_attempt_rt {M Bpuc BT : Nat} (hPucC : HypPucCost σ Bpuc) (hPtC : HypPtCost σ M BT)
     (hPuc : HypPuc σ) (hM : 2 ^ 24 + 2 ≤ M) :

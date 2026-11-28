@@ -1,5 +1,6 @@
 import InitECandidate.Solver.Improvements.FourthEncoderPhase2Final
 import InitECandidate.Solver.MemSafe.BalCost.Phase2
+import InitECandidate.Solver.HtFd.Analyzer
 import InitECandidate.Solver.MemSafe.BalEnc.Bbl10
 set_option autoImplicit false
 set_option linter.unusedVariables false
@@ -16,10 +17,10 @@ open InitECandidate.Solver.MemSafe.BalEnc
 open InitECandidate.Solver.MemSafe.Aw (Below G_heapOnly AwInv AwE awInv_init)
 namespace InitECandidate.Solver.MemSafe.BalCost.Main
 variable {σ : Type}
-def cSR : Nat := 12554203470773361566123486308481379210557357532653796983052
-def cAR : Nat := 6277101735386680783912449071543035764555081211375588999333
- theorem loopSR_cost : Cost σ guestCtx loopSR cSR := InitECandidate.Solver.MemSafe.BalCost.Analyzer.cost_guest_costA (by decide_cbv)
- theorem loopAR_cost : Cost σ guestCtx loopAR cAR := InitECandidate.Solver.MemSafe.BalCost.Analyzer.cost_guest_costA (by decide_cbv)
+def cSR : Nat := 35729648539375044676063890292456432861628
+def cAR : Nat := 18715530186989868497308347591276906938621
+ theorem loopSR_cost : Cost σ guestCtx loopSR cSR := InitECandidate.Solver.HtFd.cost_guest_costAH (by decide_cbv)
+ theorem loopAR_cost : Cost σ guestCtx loopAR cAR := InitECandidate.Solver.HtFd.cost_guest_costAH (by decide_cbv)
 theorem tail_cost {Γ0 : Gam} {s0 : State σ} {p0 : Ptrs} (hp0 : ptrsOf s0 = some p0)
     (Ent : BbEnt Γ0 s0 p0) (hev : ∃ e, gword s0 nmEv = some e ∧ e.toNat < nullMax)
     (hcc : ∃ c, gword s0 nmCC = some c ∧ c.toNat < nullMax) {L : Gam → State σ → Prop} :
